@@ -3,19 +3,20 @@ import {View, Text, TextInput, StyleSheet} from 'react-native';
 import {COLORS} from '../../utils/theme';
 import {scale, verticalScale, moderateScale} from 'react-native-size-matters';
 
-export default function CommonTextInput() {
+export default function CommonTextInput({ placeholder, value, onChangeText }) {
   return (
     <View style={styles.inputContainer}>
       <TextInput
         style={styles.input}
         underlineColor="transparent"
         selectionColor={COLORS.primary}
-        placeholder="Email"
-        //   value={}
-        onChangeText={val => {
-        //   setEmail(val);
-        //   setErrors({...error, email: ''});
-        }}
+        placeholder={placeholder}
+          value={value}
+        // onChangeText={val => {
+        // //   setEmail(val);
+        // //   setErrors({...error, email: ''});
+        // }}
+        onChangeText={onChangeText}
         placeholderTextColor={'rgba(0,0,0,0.5)'}
         ref={ref =>
           ref &&
@@ -66,10 +67,11 @@ const styles = StyleSheet.create({
     overflow: 'hidden',
     position: 'relative',
     marginBottom: 2,
-    width: '100%',
-    borderRadius: 16,
+    width: '80%',
+    borderRadius: 40,
     backgroundColor: 'transparent',
     borderWidth: 1,
     borderColor: COLORS.brgrey,
+    alignSelf:'center',
   },
 });

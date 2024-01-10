@@ -6,12 +6,16 @@ import {
   Button,
   StyleSheet,
   TouchableOpacity,
+  StatusBar,
 } from 'react-native';
 import AppIntroSlider from 'react-native-app-intro-slider';
 import {COLORS} from '../utils/theme';
-
-export default function AppIntro({navigation}) {
+import {NavigationContainer, useNavigation} from '@react-navigation/native';
+import AuthNavigator from '../Navigation/AuthNavigator';
+import { navigationRef } from '../../App';
+export default function AppIntro() {
   const [currentSlideIndex, setCurrentSlideIndex] = useState(0);
+  const navigation = useNavigation();
   const slides = [
     {
       key: 1,
@@ -46,10 +50,10 @@ export default function AppIntro({navigation}) {
     </View>
   );
   const onDone = () => {
-    navigation.navigate('MainScreen');
+    navigationRef.navigate('Login');
   };
   const onSkip = () => {
-    navigation.navigate('MainScreen');
+    navigationRef.navigate('Login');
   };
   const onNext = () => {
     if (currentSlideIndex < slides.length - 1) {

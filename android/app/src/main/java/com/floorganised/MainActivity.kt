@@ -7,7 +7,11 @@ import com.facebook.react.defaults.DefaultNewArchitectureEntryPoint.fabricEnable
 import com.facebook.react.defaults.DefaultReactActivityDelegate
 
 class MainActivity : ReactActivity() {
-
+ @Override
+  protected void onCreate(Bundle savedInstanceState) {
+    super.onCreate(null);
+     SplashScreen.show(this);  // here
+  }
   /**
    * Returns the name of the main component registered from JavaScript. This is used to schedule
    * rendering of the component.

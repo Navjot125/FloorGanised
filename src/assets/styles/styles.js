@@ -1,6 +1,6 @@
 import React from 'react';
 import {StyleSheet, Dimensions} from 'react-native';
-import {fontValue} from '../../utils/responsiveFont';
+// import {fontValue} from '../../utils/responsiveFont';
 
 export const {height, width} = Dimensions.get('window');
 
@@ -135,36 +135,37 @@ export const styles = StyleSheet.create({
     //  fontWeight: 'bold',
     fontFamily: 'FiraSans-Bold',
   },
-  fs8: {
-    fontSize: fontValue(8),
-  },
-  fs9: {
-    fontSize: fontValue(9),
-  },
-  fs10: {
-    fontSize: fontValue(10),
-  },
-  fs12: {
-    fontSize: fontValue(12),
-  },
-  fs14: {
-    fontSize: fontValue(14),
-  },
-  fs15: {
-    fontSize: fontValue(15),
-  },
-  fs16: {
-    fontSize: fontValue(16),
-  },
-  fs20: {
-    fontSize: fontValue(20),
-  },
-  fs23: {
-    fontSize: fontValue(23),
-  },
-  fs24: {
-    fontSize: fontValue(24),
-  },
+
+  // fs8: {
+  //   fontSize: fontValue(8),
+  // },
+  // fs9: {
+  //   fontSize: fontValue(9),
+  // },
+  // fs10: {
+  //   fontSize: fontValue(10),
+  // },
+  // fs12: {
+  //   fontSize: fontValue(12),
+  // },
+  // fs14: {
+  //   fontSize: fontValue(14),
+  // },
+  // fs15: {
+  //   fontSize: fontValue(15),
+  // },
+  // fs16: {
+  //   fontSize: fontValue(16),
+  // },
+  // fs20: {
+  //   fontSize: fontValue(20),
+  // },
+  // fs23: {
+  //   fontSize: fontValue(23),
+  // },
+  // fs24: {
+  //   fontSize: fontValue(24),
+  // },
   // padding
   pv5: {
     paddingVertical: '5%',

@@ -3,13 +3,13 @@ import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
 import { COLORS } from '../../utils/theme';
 import { scale, verticalScale, moderateScale } from 'react-native-size-matters';
 
-export default function CommonButton() {
+export default function CommonButton({ title, onPress }) {
   return (
     <View style={{justifyContent:'center', alignItems:'center'}} >
       <TouchableOpacity style={styles.btnlogin} 
-    //   onPress={handleResetpass}
+      onPress={onPress}
       >
-        <Text style={styles.buttonText}>Reset Password</Text>
+        <Text style={styles.buttonText}>{title}</Text>
       </TouchableOpacity>
     </View>
   );
