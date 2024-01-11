@@ -13,11 +13,11 @@ export default function Back() {
         borderRadius: 6,
         left:15
       }}>
-      <Image
+      {/* <Image
         style={{height: 15, width: 10, left:-2}}
         resizeMode="contain"
         source={require('../../assets/images/back.png')}
-      />
+      /> */}
     </View>
   );
 }

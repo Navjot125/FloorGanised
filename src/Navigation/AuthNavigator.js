@@ -54,6 +54,28 @@ const AuthNavigator = ({setIsLogedIn, checkUserRole}) => {
         })}
       />
       <Stack.Screen
+        name="Signup"
+        component={Signup}
+        options={({navigation}) => ({
+          title: '',
+          headerTransparent: true,
+          headerLeft: () => (
+            <TouchableOpacity
+              onPress={() => navigation.goBack()}
+              style={styles.backbtn}>
+              {/* <Image
+                resizeMode="contain"
+                source={BackIcon}
+                style={{
+                  width: 44,
+                  height: 44,
+                }}
+              /> */}
+            </TouchableOpacity>
+          ),
+        })}
+      />
+      <Stack.Screen
         name="ForgotPassword"
         component={ForgotPassword}
         options={({navigation}) => ({

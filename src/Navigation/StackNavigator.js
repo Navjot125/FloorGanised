@@ -1,7 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {createStackNavigator} from '@react-navigation/stack';
 import {BottomTabNavigator} from './BottomTabNavigator';
-import {BottomTabNavigatorInstructor} from '../Instructor_Routers/BottomTabNavigator';
 import {
   View,
   StyleSheet,
@@ -14,7 +12,6 @@ import {
   ToastAndroid,
   Platform,
 } from 'react-native';
-import {COLORS} from '../../services/User_Services/colors';
 import {scale} from 'react-native-size-matters';
 import {useNavigation, useIsFocused} from '@react-navigation/native';
 import Login from '../screens/auth/login/Login';

@@ -33,11 +33,11 @@ export default function CommonModal({}) {
             backgroundColor: COLORS.white,
           },
         ]}>
-        <Image
+        {/* <Image
           source={require('../../assets/images/Frame.png')}
           style={{height: '40%'}}
           resizeMode="contain"
-        />
+        /> */}
         <Text style={[styles.modalheading, {textAlign: 'center'}]}>
           Congratulations!
         </Text>
