@@ -1,5 +1,6 @@
 import {
   SafeAreaView,
+  ScrollView,
   StyleSheet,
   Text,
   TouchableOpacity,
@@ -15,25 +16,31 @@ import {RadioButton} from 'react-native-paper';
 import {COLORS} from '../../../utils/theme';
 
 const Login = () => {
-  const [text, setText] = useState('');
-  const [value, setValue] = React.useState('first');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   const [selectedOption, setSelectedOption] = useState(null);
   const options = ['Fitter', 'Surveyor'];
   const handleOptionPress = option => {
     setSelectedOption(option);
   };
   const onPress = () => {
-    navigationRef.reset({
-      index: 0,
-      routes: [{name: 'tabs'}],
-    });
+    // navigationRef.reset({
+    //   index: 0,
+    //   routes: [{name: 'tabs'}],
+    // });
+    navigationRef.navigate('VerifyOTP');
   };
 
   return (
-    <View style={{flex:1,}} >
-      <CommonBackground />
+    <View style={{flex: 1}}>
+      <CommonBackground title={'Login'} />
       <SafeAreaView />
-      <View style={{paddingTop: height / 4}}>
+      <ScrollView 
+      //  keyboardShouldPersistTaps='handled' 
+      contentContainerStyle={{marginTop: height / 4,}}
+      // style={{paddingTop: height / 4,}}
+      automaticallyAdjustKeyboardInsets
+      > 
         <View style={styles.innerBox}>
           <View style={styles.radioBox}>
             {options.map(option => (
@@ -53,23 +60,37 @@ const Login = () => {
           <View style={{height: '38%', justifyContent: 'space-between'}}>
             <CommonTextInput
               placeholder="Email Adress"
-              value={text}
-              onChangeText={newText => setText(newText)}
+              value={email}
+              onChangeText={newText => setEmail(newText)}
             />
             <CommonTextInput
               placeholder="Password"
-              value={text}
-              onChangeText={newText => setText(newText)}
+              value={password}
+              onChangeText={newText => setPassword(newText)}
             />
           </View>
-          <TouchableOpacity style={{alignSelf: 'flex-end', left: -60, top: 10}}>
-            <Text style={{fontWeight:500}} >Forgot Password?</Text>
+          <TouchableOpacity
+            style={{alignSelf: 'flex-end', left: -60, top: 10}}
+            onPress={() => navigationRef.navigate('ForgotPassword')}>
+            <Text style={{fontWeight: 500}}>Forgot Password?</Text>
           </TouchableOpacity>
           <CommonButton style={styles.Button} title="Login" onPress={onPress} />
         </View>
-      </View>
-      <Text style={{alignSelf:'center', bottom:30, position:'absolute', fontWeight:300 }} >
-        Dont't have an account ?<Text style={{fontWeight:500}} onPress={()=>navigationRef.navigate('Signup')} > Sign Up</Text>
+      </ScrollView>
+      <Text
+        style={{
+          alignSelf: 'center',
+          bottom: 30,
+          position: 'absolute',
+          fontWeight: 300,
+        }}>
+        Dont't have an account ?
+        <Text
+          style={{fontWeight: 500}}
+          onPress={() => navigationRef.navigate('Signup')}>
+          {' '}
+          Sign Up
+        </Text>
       </Text>
     </View>
   );

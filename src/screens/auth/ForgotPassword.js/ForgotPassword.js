@@ -1,14 +1,113 @@
-import { StyleSheet, Text, View } from 'react-native'
-import React from 'react'
+import {
+  SafeAreaView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
+import React, {useState} from 'react';
+import {navigationRef} from '../../../../App';
+import CommonTextInput from '../../../components/Input/InputBox';
+import CommonButton from '../../../components/CommonButton/CommonButton';
+import CommonBackground from '../../../components/CommonBG/CommonBackground';
+import {height} from '../../../assets/styles/styles';
+import {RadioButton} from 'react-native-paper';
+import {COLORS} from '../../../utils/theme';
+import Back from '../../../components/BackButton/Back';
 
 const ForgotPassword = () => {
+  const [email, setEmail] = useState('');
+  const [selectedOption, setSelectedOption] = useState(null);
+  const options = ['Fitter', 'Surveyor'];
+  const handleOptionPress = option => {
+    setSelectedOption(option);
+  };
+  const onPress = () => {
+    // navigationRef.reset({
+    //   index: 0,
+    //   routes: [{name: 'tabs'}],
+    // });
+    navigationRef.navigate('VerifyOTP', {reset:"ResetPassword"});
+  };
+  const onBackPress = () => {
+    navigationRef.goBack()
+  };
+
   return (
-    <View>
-      <Text>ForgotPassword</Text>
+    <View style={{flex: 1}}>
+      <Back onPress={onBackPress} />
+      <CommonBackground title={'Forgot Password'} />
+      <SafeAreaView />
+      <View style={{paddingTop: height / 4}}>
+        <View style={styles.innerBox}>
+          <Text
+            style={{
+              paddingHorizontal: 60,
+              color: COLORS.secondry,
+              paddingVertical: 40,
+              fontWeight: 500,
+              fontSize: 14,
+              lineHeight: 22,
+            }}>
+            Enter your email to receive an OTP for password reset.
+          </Text>
+          <View style={{height: '31%', justifyContent: 'space-between'}}>
+            <CommonTextInput
+              placeholder="Email Adress"
+              value={email}
+              onChangeText={newText => setEmail(newText)}
+            />
+          </View>
+          <CommonButton
+            style={styles.Button}
+            title="Proceed"
+            onPress={onPress}
+          />
+        </View>
+      </View>
+      <Text
+        style={{
+          alignSelf: 'center',
+          bottom: 30,
+          position: 'absolute',
+          fontWeight: 300,
+        }}>
+        Back to
+        <Text
+          style={{fontWeight: 500}}
+          onPress={() => navigationRef.navigate('Login')}>
+          {' '}
+          Login
+        </Text>
+      </Text>
     </View>
-  )
-}
+  );
+};
 
-export default ForgotPassword
+export default ForgotPassword;
 
-const styles = StyleSheet.create({})
+const styles = StyleSheet.create({
+  innerBox: {
+    height: height / 2.9,
+    width: '90%',
+    backgroundColor: 'white',
+    marginHorizontal: 20,
+    borderRadius: 40,
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 12,
+    },
+    shadowOpacity: 0.1,
+    shadowRadius: 16.27,
+    elevation: 24,
+  },
+  radioBox: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    paddingVertical: 30,
+  },
+  Button: {
+    marginTop: '2%',
+  },
+});

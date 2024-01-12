@@ -10,8 +10,9 @@ import Login from '../screens/auth/login/Login';
 import ForgotPassword from '../screens/auth/ForgotPassword.js/ForgotPassword';
 import VerifyOTP from '../screens/auth/VerifyOTP/VerifyOTP';
 import ResetPassword from '../screens/auth/ResetPassword/ResetPassword';
-import { COLORS } from '../utils/theme';
+import {COLORS} from '../utils/theme';
 import AppIntro from '../screens/AppIntroSlider';
+import Back from '../components/BackButton/Back';
 
 const Stack = createNativeStackNavigator();
 const AuthNavigator = ({setIsLogedIn, checkUserRole}) => {
@@ -23,12 +24,12 @@ const AuthNavigator = ({setIsLogedIn, checkUserRole}) => {
         options={({navigation}) => ({
           title: '',
           headerTransparent: true,
-        //   headerLeft: () => (
-        //     <TouchableOpacity
-        //       onPress={() => navigation.goBack()}
-        //       style={styles.backbtn}>
-        //     </TouchableOpacity>
-        //   ),
+          //   headerLeft: () => (
+          //     <TouchableOpacity
+          //       onPress={() => navigation.goBack()}
+          //       style={styles.backbtn}>
+          //     </TouchableOpacity>
+          //   ),
         })}
       />
       <Stack.Screen
@@ -56,46 +57,30 @@ const AuthNavigator = ({setIsLogedIn, checkUserRole}) => {
       <Stack.Screen
         name="Signup"
         component={Signup}
-        options={({navigation}) => ({
-          title: '',
-          headerTransparent: true,
-          headerLeft: () => (
-            <TouchableOpacity
-              onPress={() => navigation.goBack()}
-              style={styles.backbtn}>
-              {/* <Image
-                resizeMode="contain"
-                source={BackIcon}
-                style={{
-                  width: 44,
-                  height: 44,
-                }}
-              /> */}
-            </TouchableOpacity>
-          ),
-        })}
+        options={{
+          headerShown: false,
+        }}
+      />
+      <Stack.Screen
+        name="VerifyOTP"
+        component={VerifyOTP}
+        options={{
+          headerShown: false,
+        }}
       />
       <Stack.Screen
         name="ForgotPassword"
         component={ForgotPassword}
-        options={({navigation}) => ({
-          title: '',
-          headerTransparent: true,
-          headerLeft: () => (
-            <TouchableOpacity
-              onPress={() => navigation.goBack()}
-              style={styles.backbtn}>
-              {/* <Image
-                resizeMode="contain"
-                source={BackIcon}
-                style={{
-                  width: 44,
-                  height: 44,
-                }}
-              /> */}
-            </TouchableOpacity>
-          ),
-        })}
+        options={{
+          headerShown: false,
+        }}
+      />
+      <Stack.Screen
+        name="ResetPassword"
+        component={ResetPassword}
+        options={{
+          headerShown: false,
+        }}
       />
       {/* <Stack.Screen
         name="OTP"

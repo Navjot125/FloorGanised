@@ -4,7 +4,7 @@ import {moderateScale, scale, verticalScale} from 'react-native-size-matters';
 import {height} from '../../assets/styles/styles';
 import {COLORS} from '../../utils/theme';
 
-const CommonBackground = () => {
+const CommonBackground = ({title}) => {
   return (
     <View
       style={{
@@ -19,12 +19,22 @@ const CommonBackground = () => {
         resizeMode="cover"
         source={require('../../assets/images/HeaderBg.png')}
       />
+          <Text
+            style={{
+              color: COLORS.white,
+              fontSize: 24,
+              fontWeight: 700,
+              // marginTop: '1%',
+              bottom:30
+            }}>
+            {title}
+          </Text>
       <Text
         style={{
           color: COLORS.white,
           fontSize: 20,
           fontWeight: 500,
-          marginTop: '30%',
+          marginTop: '25%',
         }}>
         FLOORGANISED
       </Text>

@@ -1,10 +1,4 @@
-import {
-  SafeAreaView,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-} from 'react-native';
+import {SafeAreaView, ScrollView, StyleSheet, Text, View} from 'react-native';
 import React, {useState} from 'react';
 import {navigationRef} from '../../../../App';
 import CommonTextInput from '../../../components/Input/InputBox';
@@ -13,10 +7,14 @@ import CommonBackground from '../../../components/CommonBG/CommonBackground';
 import {height} from '../../../assets/styles/styles';
 import {RadioButton} from 'react-native-paper';
 import {COLORS} from '../../../utils/theme';
+import Back from '../../../components/BackButton/Back';
 
 const Signup = () => {
   const [text, setText] = useState('');
-  const [value, setValue] = React.useState('first');
+  const [name, setName] = useState('');
+  const [cPassword, setCPassword] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   const [selectedOption, setSelectedOption] = useState(null);
   const options = ['Fitter', 'Surveyor'];
   const handleOptionPress = option => {
@@ -28,11 +26,18 @@ const Signup = () => {
       routes: [{name: 'tabs'}],
     });
   };
+  const onBackPress = () => {
+    navigationRef.goBack();
+  };
   return (
     <View style={{flex: 1}}>
-      <CommonBackground />
+      <Back onPress={onBackPress} />
+      <CommonBackground title={'Sign Up'} />
       <SafeAreaView />
-      <View style={{paddingTop: height / 4}}>
+      <ScrollView
+      contentContainerStyle={{marginTop: height / 4,}}
+      automaticallyAdjustKeyboardInsets
+     >
         <View style={styles.innerBox}>
           <View style={styles.radioBox}>
             {options.map(option => (
@@ -49,31 +54,35 @@ const Signup = () => {
               </View>
             ))}
           </View>
-          <View style={{height: '66%', justifyContent: 'space-between',}}>
+          <View style={{height: '66%', justifyContent: 'space-between'}}>
             <CommonTextInput
               placeholder="Full Name"
-              value={text}
-              onChangeText={newText => setText(newText)}
+              value={name}
+              onChangeText={newText => setName(newText)}
             />
             <CommonTextInput
               placeholder="Email Address"
-              value={text}
-              onChangeText={newText => setText(newText)}
+              value={email}
+              onChangeText={newText => setEmail(newText)}
             />
             <CommonTextInput
               placeholder="Password"
-              value={text}
-              onChangeText={newText => setText(newText)}
+              value={password}
+              onChangeText={newText => setPassword(newText)}
             />
             <CommonTextInput
               placeholder="Confirm Password"
-              value={text}
-              onChangeText={newText => setText(newText)}
+              value={cPassword}
+              onChangeText={newText => setCPassword(newText)}
             />
           </View>
-          <CommonButton style={styles.Button} title="Sign Up" onPress={onPress} />
+          <CommonButton
+            style={styles.Button}
+            title="Sign Up"
+            onPress={onPress}
+          />
         </View>
-      </View>
+      </ScrollView>
       <Text
         style={{
           alignSelf: 'center',
@@ -99,7 +108,7 @@ export default Signup;
 
 const styles = StyleSheet.create({
   innerBox: {
-    height: height / 1.7,
+    height: height / 1.8,
     width: '90%',
     backgroundColor: 'white',
     marginHorizontal: 20,
@@ -112,7 +121,7 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.1,
     shadowRadius: 16.27,
     elevation: 24,
-    bottom:'6%'
+    bottom: '6%',
   },
   radioBox: {
     flexDirection: 'row',
@@ -120,6 +129,6 @@ const styles = StyleSheet.create({
     paddingVertical: 20,
   },
   Button: {
-    marginTop: '7%',
+    marginTop: '5%',
   },
 });

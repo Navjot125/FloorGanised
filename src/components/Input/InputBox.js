@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, Text, StyleSheet} from 'react-native';
+import {View, Text, StyleSheet, KeyboardAvoidingView} from 'react-native';
 import {COLORS} from '../../utils/theme';
 import {scale, verticalScale, moderateScale} from 'react-native-size-matters';
 import { TextInput } from 'react-native-paper';

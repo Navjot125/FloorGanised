@@ -11,16 +11,22 @@ import {
 } from 'react-native';
 import Modal from 'react-native-modal';
 import {COLORS} from '../../utils/theme';
+import {width} from '../../assets/styles/styles';
 // import {styles} from '../../assets/styles/styles';
-
-export default function CommonModal({}) {
+export default function CommonModal({
+  isVisible,
+  onPress,
+  img,
+  title,
+  description,
+  onModalPress,
+}) {
   return (
     <Modal
       propagateSwipe={true}
-      //   isVisible={isModalVisible}
-      isVisible={true}
+      isVisible={isVisible}
       onBackdropPress={() => {
-        // setModalVisible(false);
+        onPress;
       }}
       animationInTiming={700}
       style={[styles.mainmodal]}>
@@ -33,23 +39,13 @@ export default function CommonModal({}) {
             backgroundColor: COLORS.white,
           },
         ]}>
-        {/* <Image
-          source={require('../../assets/images/Frame.png')}
-          style={{height: '40%'}}
-          resizeMode="contain"
-        /> */}
+        <Image source={img} style={{height: '40%'}} resizeMode="contain" />
         <Text style={[styles.modalheading, {textAlign: 'center'}]}>
-          Congratulations!
+          {title}
         </Text>
-        <Text style={styles.modalsubheading}>
-          You password has been reset successfully. Kindly re-login to your
-          account with new password.
-        </Text>
+        <Text style={styles.modalsubheading}>{description}</Text>
 
-        <TouchableOpacity
-          style={styles.btnlogin2}
-          //   onPress={() => navigation.navigate('Login')}
-        >
+        <TouchableOpacity style={styles.btnlogin2} onPress={onModalPress}>
           <Text style={styles.buttonText}>Login</Text>
         </TouchableOpacity>
       </View>
@@ -77,24 +73,28 @@ const styles = StyleSheet.create({
     marginTop: 30,
     marginBottom: 15,
     textAlign: 'center',
+    fontWeight: 700,
   },
   modalsubheading: {
     // fontFamily: FONTS.MontserratRegular,
-    color: COLORS.primary,
+    color: COLORS.modalDes,
     fontSize: 14,
     textAlign: 'center',
     maxWidth: 340,
     lineHeight: 22,
+    fontWeight: 400,
   },
   btnlogin2: {
     height: 60,
     backgroundColor: COLORS.primary,
     alignItems: 'center',
-    // flexDirection: 'column',
     justifyContent: 'center',
-    minWidth: 154,
-    // paddingHorizontal: moderateScale(20),
-    borderRadius: 16,
+    borderRadius: 40,
     marginTop: 30,
+    width: width / 1.5,
+  },
+  buttonText: {
+    fontWeight: 600,
+    fontSize: 16,
   },
 });

@@ -5,9 +5,8 @@ import {
   StyleSheet,
   Image,
   Platform,
-  Pressable,
   Dimensions,
-  StatusBar,
+  TouchableOpacity,
 } from 'react-native';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import Home from '../screens/Tabs/Home';
@@ -15,23 +14,23 @@ import Notifications from '../screens/Tabs/Notifications';
 import History from '../screens/Tabs/History';
 import Profile from '../screens/Tabs/Profile';
 import {COLORS} from '../utils/theme';
-import Login from '../screens/auth/login/Login';
+import {useDispatch, useSelector} from 'react-redux';
+import {setSelecteddate, setdate} from '../redux/reducers/Dates';
+import {dateListing} from '../utils/Dates/DateLimit';
 const moment = require('moment');
 const Tab = createBottomTabNavigator();
 
 const BottomTabNavigator = ({}) => {
-  const width = Dimensions.get('window').width;
-  const height = Dimensions.get('window').height;
   const [selectedDate, setSelectedDate] = useState();
   const [open, setOpen] = useState(false);
   const [isModalVisible, setModalVisible] = useState(false);
-  // const dispatch = useDispatch();
+  const dispatch = useDispatch();
+  const date = useSelector(state => state.date.date);
   // const user = useSelector(state => state.user.data);
-  // const date = useSelector(state => state.date.date);
   const [minDate, setMinDate] = useState(
     new Date().toISOString().split('T')[0],
   );
-
+  const user = false;
   // useEffect(() => {
   //   if (user == null) {
   //     authApiPost('getProfile')
@@ -50,6 +49,14 @@ const BottomTabNavigator = ({}) => {
   //   }
   // }, [user]);
 
+  useEffect(() => {
+    if (!date) {
+      dispatch(setdate(dateListing()));
+    }
+  }, [date]);
+  useEffect(() => {
+    dispatch(setSelecteddate(dateListing()[0]));
+  }, []);
   return (
     <Tab.Navigator
       // initialRouteName="TabHome"
@@ -68,8 +75,211 @@ const BottomTabNavigator = ({}) => {
           paddingTop: Platform.OS === 'ios' ? 5 : 0,
         },
       }}>
-      <Tab.Screen name="Home" component={Home} />
-      <Tab.Screen name="Settings" component={Profile} />
+      <Tab.Screen
+        name="Home"
+        options={({navigation}) => ({
+          title: 'Home',
+          headerTitleAlign: 'left',
+          // headerShown:false,
+          headerBackground: () => (
+            <View
+              style={{
+                backgroundColor: COLORS.black,
+                height: 140,
+              }}></View>
+          ),
+          headerShadowVisible: false,
+          headerTitleStyle: {
+            // fontFamily: FONTS.PoppinsSemiBold,
+            fontSize: 20,
+            color: COLORS.white,
+            paddingLeft: 5,
+            fontWeight: 600,
+          },
+          headerRight: () => (
+            <>
+              <View style={styles.userright}>
+                <Text style={styles.usertext}>
+                  Hey,
+                  {/* {user?.firstName} */}
+                </Text>
+                <TouchableOpacity
+                  onPress={() => {
+                    navigation.navigate('TabSettings');
+                  }}
+                  style={styles.userimg}>
+                  <Image
+                    style={styles.userimg}
+                    resizeMode={Platform.OS === 'ios' ? 'cover' : 'contain'}
+                    source={
+                      user?.profilePic
+                        ? {uri: `${ImageUrl}${user?.profilePic}`}
+                        : require('../assets/images/Frame.png')
+                    }
+                  />
+                </TouchableOpacity>
+              </View>
+            </>
+          ),
+          tabBarIcon: ({focused}) => (
+            <View style={styles.iconFlex}>
+              {focused ? (
+                <View style={[styles.tabBar, {minWidth: 81}]}>
+                  <Image
+                    resizeMode="contain"
+                    style={{height: 20, width: 20}}
+                    source={require('../assets/images/Home.png')}
+                  />
+                  <Text style={{}}>Home</Text>
+                </View>
+              ) : (
+                <Image
+                  style={{height: 20, width: 20}}
+                  resizeMode="contain"
+                  source={require('../assets/images/Home.png')}
+                />
+              )}
+            </View>
+          ),
+        })}
+        component={Home}
+      />
+      <Tab.Screen
+        name="Notification"
+        options={({navigation}) => ({
+          title: 'Notifications',
+          headerTitleAlign: 'left',
+          // headerShown:false,
+          headerBackground: () => (
+            <View
+              style={{
+                backgroundColor: COLORS.black,
+                height: 140,
+              }}></View>
+          ),
+          headerShadowVisible: false,
+          headerTitleStyle: {
+            // fontFamily: FONTS.PoppinsSemiBold,
+            fontSize: 20,
+            color: COLORS.white,
+            paddingLeft: 5,
+            fontWeight: 600,
+          },
+          //headerTransparent: true,
+          tabBarIcon: ({focused}) => (
+            <View style={styles.iconFlex}>
+              {focused ? (
+                <View style={[styles.tabBar, {minWidth: 130}]}>
+                  <Image
+                    resizeMode="contain"
+                    style={{height: 20, width: 20}}
+                    source={require('../assets/images/NotificationTab.png')}
+                  />
+                  <Text style={{}}>Notifications</Text>
+                </View>
+              ) : (
+                <Image
+                  resizeMode="contain"
+                  style={{height: 20, width: 20}}
+                  source={require('../assets/images/NotificationTab.png')}
+                />
+              )}
+            </View>
+          ),
+        })}
+        component={Notifications}
+      />
+      <Tab.Screen
+        name="History"
+        options={({navigation}) => ({
+          title: 'History',
+          headerTitleAlign: 'left',
+          // headerShown:false,
+          headerBackground: () => (
+            <View
+              style={{
+                backgroundColor: COLORS.black,
+                height: 140,
+              }}></View>
+          ),
+          headerShadowVisible: false,
+          headerTitleStyle: {
+            // fontFamily: FONTS.PoppinsSemiBold,
+            fontSize: 20,
+            color: COLORS.white,
+            paddingLeft: 5,
+            fontWeight: 600,
+          },
+          //headerTransparent: true,
+          tabBarIcon: ({focused}) => (
+            <View style={styles.iconFlex}>
+              {focused ? (
+                <View style={[styles.tabBar, {minWidth: 88}]}>
+                  <Image
+                    resizeMode="contain"
+                    style={{height: 20, width: 20}}
+                    source={require('../assets/images/HistoryTab.png')}
+                  />
+                  <Text style={{}}>History</Text>
+                </View>
+              ) : (
+                <Image
+                  resizeMode="contain"
+                  style={{height: 20, width: 20}}
+                  source={require('../assets/images/HistoryTab.png')}
+                />
+              )}
+            </View>
+          ),
+        })}
+        component={History}
+      />
+      <Tab.Screen
+        name="Profile"
+        options={({navigation}) => ({
+          title: 'Profile',
+          headerTitleAlign: 'left',
+          // headerShown:false,
+          headerBackground: () => (
+            <View
+              style={{
+                backgroundColor: COLORS.black,
+                height: 140,
+              }}></View>
+          ),
+          headerShadowVisible: false,
+          headerTitleStyle: {
+            // fontFamily: FONTS.PoppinsSemiBold,
+            fontSize: 20,
+            color: COLORS.white,
+            paddingLeft: 5,
+            fontWeight: 600,
+          },
+
+          //headerTransparent: true,
+          tabBarIcon: ({focused}) => (
+            <View style={styles.iconFlex}>
+              {focused ? (
+                <View style={[styles.tabBar, {minWidth: 82}]}>
+                  <Image
+                    resizeMode="contain"
+                    style={{height: 20, width: 20}}
+                    source={require('../assets/images/ProfileTab.png')}
+                  />
+                  <Text style={{}}>Profile</Text>
+                </View>
+              ) : (
+                <Image
+                  resizeMode="contain"
+                  style={{height: 20, width: 20}}
+                  source={require('../assets/images/ProfileTab.png')}
+                />
+              )}
+            </View>
+          ),
+        })}
+        component={Profile}
+      />
     </Tab.Navigator>
   );
 };
@@ -124,5 +334,15 @@ const styles = StyleSheet.create({
     marginRight: 0,
     width: '100%',
     justifyContent: 'center',
+  },
+  tabBar: {
+    flexDirection: 'row',
+    backgroundColor: COLORS.primary,
+    borderRadius: 40,
+    height: 38,
+    // width: 81,
+    alignItems: 'center',
+    paddingHorizontal: 4,
+    justifyContent: 'space-evenly',
   },
 });

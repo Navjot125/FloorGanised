@@ -7,7 +7,8 @@ export const COLORS = {
     white: '#FFFFFF',
     grey: '#B8B8B8',
     brgrey: '#AFAEB4',
-    secondry: '#F3A204'
+    secondry: '#F3A204',
+    modalDes:'#525252'
   };
   
   const appTheme = {COLORS};

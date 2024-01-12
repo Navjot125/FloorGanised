@@ -17,15 +17,11 @@ import {BottomTabNavigator} from './src/Navigation/BottomTabNavigator';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import Login from './src/screens/auth/login/Login';
 import Notifications from './src/screens/Tabs/Notifications';
+import {Provider} from 'react-redux';
+import { store } from './src/redux/store';
 export const navigationRef = createNavigationContainerRef();
 const Stack = createNativeStackNavigator();
 
-// const Loogin = ()=>{
-//   return <View>
-//     <SafeAreaView />
-// <Text>123456</Text>
-//   </View>
-// }
 export default function App() {
   useEffect(() => {
     setTimeout(() => {
@@ -33,27 +29,18 @@ export default function App() {
     }, 2000);
   }, []);
   return (
-    // <GestureHandlerRootView>
-
-    <NavigationContainer ref={navigationRef}>
-      {/* <StatusBar
-        translucent={true}
-        backgroundColor="#fff"
-        barStyle="dark-content"
-      /> */}
-      <Stack.Navigator
-        // initialRouteName={'Login'}
-        screenOptions={{headerShown: false}}>
-        <Stack.Screen name="Root">{() => <AuthNavigator />}</Stack.Screen>
-        <Stack.Screen name="tabs">{() => <BottomTabNavigator />}</Stack.Screen>
-        <Stack.Screen name="Main">{() => <MainStackNavigator />}</Stack.Screen>
-
-        {/* <Stack.Screen name="Login" component={Login} /> */}
-        {/* <Stack.Screen name="Home" component={Notifications} /> */}
-      </Stack.Navigator>
-      {/* <AuthNavigator /> */}
-      {/* <MainStackNavigator/> */}
-    </NavigationContainer>
-    // </GestureHandlerRootView>
+    <Provider store={store}>
+      <NavigationContainer ref={navigationRef}>
+        <Stack.Navigator screenOptions={{headerShown: false}}>
+          <Stack.Screen name="Root">{() => <AuthNavigator />}</Stack.Screen>
+          <Stack.Screen name="tabs">
+            {() => <BottomTabNavigator />}
+          </Stack.Screen>
+          <Stack.Screen name="Main">
+            {() => <MainStackNavigator />}
+          </Stack.Screen>
+        </Stack.Navigator>
+      </NavigationContainer>
+    </Provider>
   );
 }
