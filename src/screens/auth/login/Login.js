@@ -35,12 +35,9 @@ const Login = () => {
     <View style={{flex: 1}}>
       <CommonBackground title={'Login'} />
       <SafeAreaView />
-      <ScrollView 
-      //  keyboardShouldPersistTaps='handled' 
-      contentContainerStyle={{marginTop: height / 4,}}
-      // style={{paddingTop: height / 4,}}
-      automaticallyAdjustKeyboardInsets
-      > 
+      <ScrollView
+        contentContainerStyle={{marginTop: height / 4}}
+        automaticallyAdjustKeyboardInsets>
         <View style={styles.innerBox}>
           <View style={styles.radioBox}>
             {options.map(option => (

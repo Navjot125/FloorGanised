@@ -56,9 +56,12 @@ const Home = () => {
               fontSize: 12,
               fontWeight: 500,
             }}>
-            ${item?.location}
+            {item?.location}
           </Text>
           <TouchableOpacity
+            onPress={() => {
+              navigationRef.navigate('Main', {screen: 'Detail'});
+            }}
             style={{
               backgroundColor: COLORS.primary,
               height: 24,
@@ -115,7 +118,7 @@ const styles = StyleSheet.create({
   container: {
     height: 141,
     backgroundColor: 'rgba(255, 255, 255, 1)',
-    marginTop: 25,
+    marginTop: 20,
     borderRadius: 16,
     shadowColor: '#000',
     shadowOffset: {

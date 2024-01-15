@@ -24,12 +24,6 @@ const AuthNavigator = ({setIsLogedIn, checkUserRole}) => {
         options={({navigation}) => ({
           title: '',
           headerTransparent: true,
-          //   headerLeft: () => (
-          //     <TouchableOpacity
-          //       onPress={() => navigation.goBack()}
-          //       style={styles.backbtn}>
-          //     </TouchableOpacity>
-          //   ),
         })}
       />
       <Stack.Screen
@@ -42,14 +36,6 @@ const AuthNavigator = ({setIsLogedIn, checkUserRole}) => {
             <TouchableOpacity
               onPress={() => navigation.goBack()}
               style={styles.backbtn}>
-              {/* <Image
-                resizeMode="contain"
-                source={BackIcon}
-                style={{
-                  width: 44,
-                  height: 44,
-                }}
-              /> */}
             </TouchableOpacity>
           ),
         })}
@@ -82,73 +68,6 @@ const AuthNavigator = ({setIsLogedIn, checkUserRole}) => {
           headerShown: false,
         }}
       />
-      {/* <Stack.Screen
-        name="OTP"
-        component={VerifyOTP}
-        options={({navigation}) => ({
-          title: '',
-          headerTransparent: true,
-          headerLeft: () => (
-            <TouchableOpacity
-              onPress={() => navigation.goBack()}
-              style={styles.backbtn}>
-              <Image
-                resizeMode="contain"
-                source={BackIcon}
-                style={{
-                  width: 44,
-                  height: 44,
-                }}
-              />
-            </TouchableOpacity>
-          ),
-        })}
-      />
-      <Stack.Screen
-        name="CreateNewPassword"
-        component={ResetPassword}
-        options={({navigation}) => ({
-          title: '',
-          headerTransparent: true,
-          headerLeft: () => (
-            <TouchableOpacity
-              onPress={() => navigation.goBack()}
-              style={styles.backbtn}>
-              <Image
-                resizeMode="contain"
-                source={BackIcon}
-                style={{
-                  width: 44,
-                  height: 44,
-                }}
-              />
-            </TouchableOpacity>
-          ),
-        })}
-      />
-
-      <Stack.Screen
-        name="Signup"
-        component={Signup}
-        options={({navigation}) => ({
-          title: '',
-          headerTransparent: true,
-          headerLeft: () => (
-            <TouchableOpacity
-              onPress={() => navigation.goBack()}
-              style={styles.backbtn}>
-              <Image
-                resizeMode="contain"
-                source={BackIcon}
-                style={{
-                  width: 44,
-                  height: 44,
-                }}
-              />
-            </TouchableOpacity>
-          ),
-        })}
-      /> */}
     </Stack.Navigator>
   );
 };

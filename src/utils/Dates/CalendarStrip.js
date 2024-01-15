@@ -88,7 +88,7 @@ const CalendarStrip = ({loader}) => {
   );
   const renderItem1 = ({item, index}) => {
     const backgroundColor =
-      item.id === SelectedDate?.id ? COLORS.black : 'rgba(233, 233, 233, 1)';
+      item.id === SelectedDate?.id ? COLORS.black : 'rgba(233, 233, 233, 0.4)';
     const color =
       item.id === SelectedDate?.id ? COLORS.white : 'rgba(0, 0, 0, 0.3)';
     return (
@@ -107,7 +107,6 @@ const CalendarStrip = ({loader}) => {
   };
   return (
     <>
-      {console.log('date', date)}
       <FlatList
         style={{marginRight: -15}}
         horizontal={true}

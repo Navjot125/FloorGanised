@@ -18,7 +18,8 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import Login from './src/screens/auth/login/Login';
 import Notifications from './src/screens/Tabs/Notifications';
 import {Provider} from 'react-redux';
-import { store } from './src/redux/store';
+import Detail from './src/screens/Detail';
+import {store} from './src/redux/store';
 export const navigationRef = createNavigationContainerRef();
 const Stack = createNativeStackNavigator();
 
