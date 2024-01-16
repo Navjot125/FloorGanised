@@ -58,3 +58,11 @@ export const HistoryData = [
     _id: 2,
   },
 ];
+
+
+ //   <Text onPress={()=>{
+    //   navigationRef.reset({
+    //     index: 0,
+    //     routes: [{ name: "Root", params: { screen: "Login" } }]
+    //   })
+    //  }}>Home</Text>

@@ -13,6 +13,7 @@ import {height} from '../../../assets/styles/styles';
 import {COLORS} from '../../../utils/theme';
 import OTPInputView from '@twotalltotems/react-native-otp-input';
 import Back from '../../../components/BackButton/Back';
+import {scale} from 'react-native-size-matters';
 
 const VerifyOTP = ({route}) => {
   const GoTo = route?.params?.reset;
@@ -31,10 +32,9 @@ const VerifyOTP = ({route}) => {
 
   return (
     <View style={{flex: 1}}>
-      <Back onPress={onBackPress} />
       <CommonBackground title={'Verify OTP'} />
       <SafeAreaView />
-      <View style={{paddingTop: height / 4}}>
+      <View style={{paddingTop: height / 9.5, marginTop: scale(144)}}>
         <View style={styles.innerBox}>
           <Text
             style={{

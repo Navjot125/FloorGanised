@@ -61,6 +61,7 @@ const BottomTabNavigator = ({}) => {
     <Tab.Navigator
       // initialRouteName="TabHome"
       screenOptions={{
+        headerShown: false,
         tabBarShowLabel: false,
         headerStyle: {
           borderBottomWidth: 0,
@@ -73,54 +74,20 @@ const BottomTabNavigator = ({}) => {
           paddingTop: 0,
           overflow: 'visible',
           paddingTop: Platform.OS === 'ios' ? 5 : 0,
+          shadowOffset: {
+            width: 0,
+            height: 12,
+          },
+          shadowOpacity: 0.48,
+          shadowRadius: 16.0,
+          elevation: 24,
         },
       }}>
       <Tab.Screen
         name="Home"
         options={({navigation}) => ({
+          headerShown: false,
           title: 'Home',
-          headerTitleAlign: 'left',
-          // headerShown:false,
-          headerBackground: () => (
-            <View
-              style={{
-                backgroundColor: COLORS.black,
-                height: 140,
-              }}></View>
-          ),
-          headerShadowVisible: false,
-          headerTitleStyle: {
-            // fontFamily: FONTS.PoppinsSemiBold,
-            fontSize: 20,
-            color: COLORS.white,
-            paddingLeft: 5,
-            fontWeight: 600,
-          },
-          headerRight: () => (
-            <>
-              <View style={styles.userright}>
-                <Text style={styles.usertext}>
-                  Hey,
-                  {/* {user?.firstName} */}
-                </Text>
-                <TouchableOpacity
-                  onPress={() => {
-                    navigation.navigate('TabSettings');
-                  }}
-                  style={styles.userimg}>
-                  <Image
-                    style={styles.userimg}
-                    resizeMode={Platform.OS === 'ios' ? 'cover' : 'contain'}
-                    source={
-                      user?.profilePic
-                        ? {uri: `${ImageUrl}${user?.profilePic}`}
-                        : require('../assets/images/Frame.png')
-                    }
-                  />
-                </TouchableOpacity>
-              </View>
-            </>
-          ),
           tabBarIcon: ({focused}) => (
             <View style={styles.iconFlex}>
               {focused ? (

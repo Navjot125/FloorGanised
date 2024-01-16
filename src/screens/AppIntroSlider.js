@@ -12,7 +12,7 @@ import AppIntroSlider from 'react-native-app-intro-slider';
 import {COLORS} from '../utils/theme';
 import {NavigationContainer, useNavigation} from '@react-navigation/native';
 import AuthNavigator from '../Navigation/AuthNavigator';
-import { navigationRef } from '../../App';
+import {navigationRef} from '../../App';
 export default function AppIntro() {
   const [currentSlideIndex, setCurrentSlideIndex] = useState(0);
   const navigation = useNavigation();
@@ -53,7 +53,11 @@ export default function AppIntro() {
     navigationRef.navigate('Login');
   };
   const onSkip = () => {
-    navigationRef.navigate('Login');
+    // navigationRef.navigate('Login');
+    navigationRef.reset({
+      index: 0,
+      routes: [{name: 'tabs'}],
+    });
   };
   const onNext = () => {
     if (currentSlideIndex < slides.length - 1) {

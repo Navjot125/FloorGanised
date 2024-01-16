@@ -2,21 +2,24 @@ import React from 'react';
 import {View, Text, StyleSheet, KeyboardAvoidingView} from 'react-native';
 import {COLORS} from '../../utils/theme';
 import {scale, verticalScale, moderateScale} from 'react-native-size-matters';
-import { TextInput } from 'react-native-paper';
+import {TextInput} from 'react-native-paper';
 
-export default function CommonTextInput({ placeholder, value, onChangeText }) {
+export default function CommonTextInput({
+  placeholder,
+  value,
+  onChangeText,
+  style,
+}) {
+  console.log('style', style);
   return (
-    <View style={styles.inputContainer}>
+    <View style={[styles.inputContainer, style]}>
+    {/* <View style={[styles.inputContainer]}> */}
       <TextInput
         style={styles.input}
         underlineColor="transparent"
         selectionColor={COLORS.primary}
         placeholder={placeholder}
-          value={value}
-        // onChangeText={val => {
-        // //   setEmail(val);
-        // //   setErrors({...error, email: ''});
-        // }}
+        value={value}
         onChangeText={onChangeText}
         placeholderTextColor={'rgba(0,0,0,0.5)'}
         ref={ref =>
@@ -28,12 +31,12 @@ export default function CommonTextInput({ placeholder, value, onChangeText }) {
             },
           })
         }
-          // left={
-          //   <TextInput.Icon
-          //     style={styles.leftpad}
-          //     icon={() => <CloseEye />}
-          //   />
-          // }
+        // left={
+        //   <TextInput.Icon
+        //     style={styles.leftpad}
+        //     icon={() => <CloseEye />}
+        //   />
+        // }
         theme={{
           colors: {
             primary: 'transparent',
@@ -73,6 +76,6 @@ const styles = StyleSheet.create({
     backgroundColor: 'transparent',
     borderWidth: 1,
     borderColor: COLORS.brgrey,
-    alignSelf:'center',
+    alignSelf: 'center',
   },
 });

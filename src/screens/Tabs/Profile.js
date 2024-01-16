@@ -5,6 +5,7 @@ import {
   View,
   TouchableOpacity,
   Image,
+  SafeAreaView,
 } from 'react-native';
 import React, {useEffect} from 'react';
 import {navigationRef} from '../../../App';
@@ -13,6 +14,8 @@ import CalendarStrip from '../../utils/Dates/CalendarStrip';
 import {height} from '../../assets/styles/styles';
 import {HistoryData, HomeData} from '../../config/DummyData';
 import {COLORS} from '../../utils/theme';
+import Header from '../../components/Header/Header';
+import {scale} from 'react-native-size-matters';
 
 const Profile = () => {
   const screens = [
@@ -55,23 +58,18 @@ const Profile = () => {
     );
   };
   return (
-    <View
-      style={{
-        backgroundColor: 'black',
-        flex: 1,
-        paddingTop: height / 29,
-      }}>
+    <View style={{flex: 1, backgroundColor: 'black'}}>
+      <SafeAreaView />
+      <Header title={'Profile'} />
       <View
         style={{
-          backgroundColor: 'white',
+          backgroundColor: COLORS.white,
           flex: 1,
-          borderTopLeftRadius: 20,
-          borderTopRightRadius: 20,
+          borderTopRightRadius: scale(20),
+          borderTopLeftRadius: scale(20),
         }}>
         <View
           style={{
-            // justifyContent: 'center',
-            // backgroundColor: 'red',
             alignItems: 'center',
             paddingVertical: 30,
           }}>

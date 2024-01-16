@@ -5,10 +5,11 @@ export const COLORS = {
     red:'#BD2323',
     dark: '#4A4E64',
     white: '#FFFFFF',
-    grey: '#B8B8B8',
+    // grey: '#B8B8B8',
     brgrey: '#AFAEB4',
     secondry: '#F3A204',
-    modalDes:'#525252'
+    modalDes:'#525252',
+    grey:'rgba(0, 0, 0, 0.2)'
   };
   
   const appTheme = {COLORS};

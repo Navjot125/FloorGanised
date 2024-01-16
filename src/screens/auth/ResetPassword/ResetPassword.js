@@ -17,6 +17,7 @@ import {COLORS} from '../../../utils/theme';
 import CommonModal from '../../../components/Modal/Modal';
 import ResetSuccess from '../../../assets/images/ResetSuccess.png';
 import Back from '../../../components/BackButton/Back';
+import { scale } from 'react-native-size-matters';
 const ResetPassword = () => {
   const [cPassword, setCPassword] = useState('');
   const [modalCondition, setModalCondition] = useState(false);
@@ -41,12 +42,11 @@ const ResetPassword = () => {
   const description =
     'Your password has been reset successfully. Click on the below button to login with the new password. ';
   return (
-    <View style={{flex: 1}}>
-      <Back onPress={onBackPress} />
+    <View style={{flex: 1, paddingTop: 110}}>
       <CommonBackground title={'Reset Password'} />
       <SafeAreaView />
       <ScrollView
-        contentContainerStyle={{marginTop: height / 4}}
+        contentContainerStyle={{paddingTop: height / 9.5, marginTop: scale(98)}}
         automaticallyAdjustKeyboardInsets>
         <View style={styles.innerBox}>
           <Text

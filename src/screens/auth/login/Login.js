@@ -33,7 +33,7 @@ const Login = () => {
 
   return (
     <View style={{flex: 1}}>
-      <CommonBackground title={'Login'} />
+      <CommonBackground back={true} title={'Login'} />
       <SafeAreaView />
       <ScrollView
         contentContainerStyle={{marginTop: height / 4}}

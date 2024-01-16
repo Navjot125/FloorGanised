@@ -8,6 +8,7 @@ import {height} from '../../../assets/styles/styles';
 import {RadioButton} from 'react-native-paper';
 import {COLORS} from '../../../utils/theme';
 import Back from '../../../components/BackButton/Back';
+import { scale } from 'react-native-size-matters';
 
 const Signup = () => {
   const [text, setText] = useState('');
@@ -30,12 +31,11 @@ const Signup = () => {
     navigationRef.goBack();
   };
   return (
-    <View style={{flex: 1}}>
-      <Back onPress={onBackPress} />
+    <View style={{flex: 1, paddingTop: 110}}>
       <CommonBackground title={'Sign Up'} />
       <SafeAreaView />
       <ScrollView
-      contentContainerStyle={{marginTop: height / 4,}}
+      contentContainerStyle={{paddingTop: height / 9.5, marginTop: scale(111)}}
       automaticallyAdjustKeyboardInsets
      >
         <View style={styles.innerBox}>

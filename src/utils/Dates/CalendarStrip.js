@@ -107,6 +107,8 @@ const CalendarStrip = ({loader}) => {
   };
   return (
     <>
+    <View >
+
       <FlatList
         style={{marginRight: -15}}
         horizontal={true}
@@ -114,7 +116,8 @@ const CalendarStrip = ({loader}) => {
         data={date ? date : ''}
         renderItem={renderItem1}
         keyExtractor={date?.id}
-      />
+        />
+        </View>
       <Modal
         backdropColor="transparent"
         propagateSwipe={true}
@@ -163,7 +166,7 @@ const styles = StyleSheet.create({
     marginRight: 10,
     alignItems: 'center',
     justifyContent: 'center',
-    marginTop: Platform.OS == 'ios' ? 30 : 0,
+    marginTop: 20,
   },
   itemdate: {
     fontSize: scale(20),

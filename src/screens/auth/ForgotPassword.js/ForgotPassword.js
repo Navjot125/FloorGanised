@@ -14,6 +14,7 @@ import {height} from '../../../assets/styles/styles';
 import {RadioButton} from 'react-native-paper';
 import {COLORS} from '../../../utils/theme';
 import Back from '../../../components/BackButton/Back';
+import { scale } from 'react-native-size-matters';
 
 const ForgotPassword = () => {
   const [email, setEmail] = useState('');
@@ -38,7 +39,7 @@ const ForgotPassword = () => {
       <Back onPress={onBackPress} />
       <CommonBackground title={'Forgot Password'} />
       <SafeAreaView />
-      <View style={{paddingTop: height / 4}}>
+      <View style={{paddingTop: height / 9.5, marginTop: scale(144)}}>
         <View style={styles.innerBox}>
           <Text
             style={{

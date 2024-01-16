@@ -22,6 +22,8 @@ import Notifications from '../screens/Tabs/Notifications';
 import Detail from '../screens/Detail';
 import {COLORS} from '../utils/theme';
 import Back from '../components/BackButton/Back';
+import {navigationRef} from '../../App';
+import MeasuringQuestionnaire from '../screens/MeasuringQuestionnaire';
 
 const Stack = createNativeStackNavigator();
 
@@ -29,45 +31,24 @@ const MainStackNavigator = ({}) => {
   const [authtoken, setauthtoken] = useState();
   const navigation = useNavigation();
   const user = false;
-
+  const onPress = () => {
+    navigationRef.goBack();
+  };
   return (
     <>
       <Stack.Navigator>
         <Stack.Screen
           name="Detail"
           options={({navigation}) => ({
-            title: '',
-            headerTitleAlign: 'left',
-            headerBackground: () => (
-              <View
-                style={{
-                  backgroundColor: COLORS.black,
-                  height: 140,
-                }}></View>
-            ),
-            headerShadowVisible: false,
-            headerLeft: () => (
-              <View style={{
-                // backgroundColor: 'red', 
-                flex: 1, height: 80,
-                flexDirection:'row',
-              }}
-                >
-                <Back />
-                <Text
-                  style={{
-                    fontSize: 20,
-                    color: COLORS.white,
-                    color: 'white',
-                    position: 'absolute',
-                    left:'15%'
-                  }}>
-                  Details
-                </Text>
-              </View>
-            ),
+            headerShown: false,
           })}
           component={Detail}></Stack.Screen>
+        <Stack.Screen
+          name="MeasuringQuestionnaire"
+          options={({navigation}) => ({
+            headerShown: false,
+          })}
+          component={MeasuringQuestionnaire}></Stack.Screen>
       </Stack.Navigator>
     </>
   );

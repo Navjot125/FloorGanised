@@ -1,4 +1,11 @@
-import {FlatList, StyleSheet, Text, View, TouchableOpacity} from 'react-native';
+import {
+  FlatList,
+  StyleSheet,
+  Text,
+  View,
+  TouchableOpacity,
+  SafeAreaView,
+} from 'react-native';
 import React, {useEffect} from 'react';
 import {navigationRef} from '../../../App';
 import {dateListing} from '../../utils/Dates/DateLimit';
@@ -6,6 +13,8 @@ import CalendarStrip from '../../utils/Dates/CalendarStrip';
 import {height} from '../../assets/styles/styles';
 import {HomeData} from '../../config/DummyData';
 import {COLORS} from '../../utils/theme';
+import Header from '../../components/Header/Header';
+import {scale} from 'react-native-size-matters';
 
 const Home = () => {
   useEffect(() => {
@@ -83,30 +92,18 @@ const Home = () => {
     );
   };
   return (
-    <View
-      style={{
-        backgroundColor: 'black',
-        flex: 1,
-        paddingTop: height / 29,
-      }}>
+    <View style={{flex: 1, backgroundColor: 'black'}}>
+      <SafeAreaView />
+      <Header title={'Home'} />
       <View
         style={{
-          backgroundColor: 'white',
+          backgroundColor: COLORS.white,
           flex: 1,
-          borderTopLeftRadius: 20,
-          borderTopRightRadius: 20,
+          borderTopRightRadius: scale(20),
+          borderTopLeftRadius: scale(20),
         }}>
-        <View style={{marginTop: -10}}>
-          <CalendarStrip />
-        </View>
+        <CalendarStrip />
         <FlatList data={HomeData} renderItem={renderItem} />
-        {/* <Text onPress={()=>{
-        navigationRef.reset({
-          index: 0,
-          routes: [{ name: "Root", params: { screen: "Login" } }]
-        })
-        // navigationRef.navigate("Login")
-      }}>Home</Text> */}
       </View>
     </View>
   );
