@@ -10,7 +10,6 @@ export default function CommonTextInput({
   onChangeText,
   style,
 }) {
-  console.log('style', style);
   return (
     <View style={[styles.inputContainer, style]}>
     {/* <View style={[styles.inputContainer]}> */}

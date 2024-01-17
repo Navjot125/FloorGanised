@@ -20,13 +20,14 @@ export default function CommonModal({
   title,
   description,
   onModalPress,
+  buttonTitle
 }) {
   return (
     <Modal
       propagateSwipe={true}
       isVisible={isVisible}
       onBackdropPress={() => {
-        onPress;
+        onPress();
       }}
       animationInTiming={700}
       style={[styles.mainmodal]}>
@@ -46,7 +47,7 @@ export default function CommonModal({
         <Text style={styles.modalsubheading}>{description}</Text>
 
         <TouchableOpacity style={styles.btnlogin2} onPress={onModalPress}>
-          <Text style={styles.buttonText}>Login</Text>
+          <Text style={styles.buttonText}>{buttonTitle}</Text>
         </TouchableOpacity>
       </View>
     </Modal>

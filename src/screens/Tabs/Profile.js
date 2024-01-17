@@ -21,7 +21,7 @@ const Profile = () => {
   const screens = [
     {
       name: 'Manage Profile',
-      screen: 'UserProfile',
+      screen: 'ManageProfile',
       _id: 0,
     },
     {
@@ -42,11 +42,12 @@ const Profile = () => {
   ];
 
   const renderItem = ({item, index}) => {
+    console.log(item?.screen);
     return (
       <TouchableOpacity
         style={styles.container}
         onPress={() => {
-          navigationRef.navigate(item?.screen);
+          navigationRef.navigate('Main', {screen: item?.screen});
         }}>
         <Text style={{fontWeight: 500, fontSize: 14}}> {item?.name} </Text>
         <Image

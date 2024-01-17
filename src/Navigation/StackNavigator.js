@@ -24,6 +24,10 @@ import {COLORS} from '../utils/theme';
 import Back from '../components/BackButton/Back';
 import {navigationRef} from '../../App';
 import MeasuringQuestionnaire from '../screens/MeasuringQuestionnaire';
+import ManageProfile from '../screens/ManageProfile';
+import TermsConditions from '../screens/TermsConditions';
+import ChangePassword from '../screens/ChangePassword';
+import ContactUs from '../screens/ContactUs';
 
 const Stack = createNativeStackNavigator();
 
@@ -49,6 +53,30 @@ const MainStackNavigator = ({}) => {
             headerShown: false,
           })}
           component={MeasuringQuestionnaire}></Stack.Screen>
+        <Stack.Screen
+          name="ManageProfile"
+          options={({navigation}) => ({
+            headerShown: false,
+          })}
+          component={ManageProfile}></Stack.Screen>
+        <Stack.Screen
+          name="TermsConditions"
+          options={({navigation}) => ({
+            headerShown: false,
+          })}
+          component={TermsConditions}></Stack.Screen>
+        <Stack.Screen
+          name="ChangePassword"
+          options={({navigation}) => ({
+            headerShown: false,
+          })}
+          component={ChangePassword}></Stack.Screen>
+        <Stack.Screen
+          name="ContactUs"
+          options={({navigation}) => ({
+            headerShown: false,
+          })}
+          component={ContactUs}></Stack.Screen>
       </Stack.Navigator>
     </>
   );
