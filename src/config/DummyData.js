@@ -2,7 +2,7 @@ export const HomeData = [
   {
     title: 'Desirae Bergson',
     price: 150,
-    location: 'Brewster Rd, Newark, NJ 07, United States',
+    location: 'Brewster Rd, Newark, NJ 07, United States shfks',
     _id: 0,
   },
   {

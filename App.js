@@ -20,6 +20,7 @@ import Notifications from './src/screens/Tabs/Notifications';
 import {Provider} from 'react-redux';
 import Detail from './src/screens/Detail';
 import {store} from './src/redux/store';
+import {FitterStackNavigator} from './src/Navigation/FitterNAvigator';
 export const navigationRef = createNavigationContainerRef();
 const Stack = createNativeStackNavigator();
 
@@ -29,18 +30,25 @@ export default function App() {
       SplashScreen.hide();
     }, 2000);
   }, []);
+  const fitter = false;
   return (
     <Provider store={store}>
-        <StatusBar barStyle="light-content" />
+      <StatusBar barStyle="light-content" />
       <NavigationContainer ref={navigationRef}>
         <Stack.Navigator screenOptions={{headerShown: false}}>
           <Stack.Screen name="Root">{() => <AuthNavigator />}</Stack.Screen>
           <Stack.Screen name="tabs">
             {() => <BottomTabNavigator />}
           </Stack.Screen>
-          <Stack.Screen name="Main">
-            {() => <MainStackNavigator />}
-          </Stack.Screen>
+          {!fitter ? (
+            <Stack.Screen name="Main">
+              {() => <MainStackNavigator />}
+            </Stack.Screen>
+          ) : (
+            <Stack.Screen name="Fitter">
+              {() => <FitterStackNavigator />}
+            </Stack.Screen>
+          )}
         </Stack.Navigator>
       </NavigationContainer>
     </Provider>

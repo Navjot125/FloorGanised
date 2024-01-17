@@ -8,6 +8,8 @@ import {HistoryData, HomeData} from '../../config/DummyData';
 import {COLORS} from '../../utils/theme';
 import Header from '../../components/Header/Header';
 import { scale } from 'react-native-size-matters';
+import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons';
+
 const History = () => {
   const renderItem = ({item, index}) => {
     return (
@@ -44,13 +46,21 @@ const History = () => {
             alignItems: 'center',
             paddingHorizontal: 20,
           }}>
+            <SimpleLineIcons
+              name="location-pin"
+              size={15}
+              color={COLORS.black}
+            />
           <Text
             style={{
               fontSize: 12,
               fontWeight: 500,
               width: '55%',
+              // backgroundColor:'red',
+              left:-15,
+              // color:COLORS.grey
             }}>
-            ${item?.location}
+            {item?.location}
           </Text>
 
           <TouchableOpacity

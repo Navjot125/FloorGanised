@@ -15,6 +15,7 @@ import {HomeData} from '../../config/DummyData';
 import {COLORS} from '../../utils/theme';
 import Header from '../../components/Header/Header';
 import {scale} from 'react-native-size-matters';
+import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons';
 
 const Home = () => {
   useEffect(() => {
@@ -28,8 +29,9 @@ const Home = () => {
           style={{
             height: '50%',
             flexDirection: 'row',
-            justifyContent: 'space-around',
+            justifyContent: 'space-between',
             alignItems: 'center',
+            paddingHorizontal:15
           }}>
           <Text
             style={{
@@ -60,10 +62,16 @@ const Home = () => {
             justifyContent: 'space-around',
             alignItems: 'center',
           }}>
+            <SimpleLineIcons
+              name="location-pin"
+              size={20}
+              color={COLORS.secondry}
+            />
           <Text
             style={{
               fontSize: 12,
               fontWeight: 500,
+              width:180,
             }}>
             {item?.location}
           </Text>
@@ -97,7 +105,7 @@ const Home = () => {
       <Header title={'Home'} />
       <View
         style={{
-          backgroundColor: COLORS.white,
+          backgroundColor: COLORS?.white,
           flex: 1,
           borderTopRightRadius: scale(20),
           borderTopLeftRadius: scale(20),
@@ -126,5 +134,6 @@ const styles = StyleSheet.create({
     shadowRadius: 11.27,
     elevation: 14,
     marginHorizontal: 20,
+    paddingHorizontal:20
   },
 });
