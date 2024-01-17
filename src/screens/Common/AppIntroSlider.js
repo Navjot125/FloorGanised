@@ -53,11 +53,11 @@ export default function AppIntro() {
     navigationRef.navigate('Login');
   };
   const onSkip = () => {
-    // navigationRef.navigate('Login');
-    navigationRef.reset({
-      index: 0,
-      routes: [{name: 'tabs'}],
-    });
+    navigationRef.navigate('Login');
+    // navigationRef.reset({
+    //   index: 0,
+    //   routes: [{name: 'tabs'}],
+    // });
   };
   const onNext = () => {
     if (currentSlideIndex < slides.length - 1) {

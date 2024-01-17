@@ -1,40 +1,16 @@
-import React, {useEffect, useState} from 'react';
-import {BottomTabNavigator} from './BottomTabNavigator';
-import {
-  View,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  Image,
-  Linking,
-  StatusBar,
-  Alert,
-  ToastAndroid,
-  Platform,
-} from 'react-native';
-import {scale} from 'react-native-size-matters';
-import {useNavigation, useIsFocused} from '@react-navigation/native';
-import Login from '../screens/auth/login/Login';
+import React, {useState} from 'react';
+import {StyleSheet} from 'react-native';
+import {useNavigation} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import AppIntro from '../screens/Common/AppIntroSlider';
-import Home from '../screens/Tabs/Home';
-import Notifications from '../screens/Tabs/Notifications';
-import Detail from '../screens/Detail';
-import {COLORS} from '../utils/theme';
-import Back from '../components/BackButton/Back';
 import {navigationRef} from '../../App';
-import MeasuringQuestionnaire from '../screens/MeasuringQuestionnaire';
-import ManageProfile from '../screens/Common/ManageProfile';
-import TermsConditions from '../screens/Common/TermsConditions';
-import ChangePassword from '../screens/Common/ChangePassword';
-import ContactUs from '../screens/Common/ContactUs';
+import FitterDetail from '../screens/Fitter/FitterDetails';
+import MeasuringQuestionnaire from '../screens/Common/MeasuringQuestionnaire';
 
 const Stack = createNativeStackNavigator();
 
 const FitterStackNavigator = ({}) => {
   const [authtoken, setauthtoken] = useState();
   const navigation = useNavigation();
-  const user = false;
   const onPress = () => {
     navigationRef.goBack();
   };
@@ -42,41 +18,17 @@ const FitterStackNavigator = ({}) => {
     <>
       <Stack.Navigator>
         <Stack.Screen
-          name="Detail"
+          name="FitterDetail"
           options={({navigation}) => ({
             headerShown: false,
           })}
-          component={Detail}></Stack.Screen>
+          component={FitterDetail}></Stack.Screen>
         <Stack.Screen
           name="MeasuringQuestionnaire"
           options={({navigation}) => ({
             headerShown: false,
           })}
           component={MeasuringQuestionnaire}></Stack.Screen>
-        <Stack.Screen
-          name="ManageProfile"
-          options={({navigation}) => ({
-            headerShown: false,
-          })}
-          component={ManageProfile}></Stack.Screen>
-        <Stack.Screen
-          name="TermsConditions"
-          options={({navigation}) => ({
-            headerShown: false,
-          })}
-          component={TermsConditions}></Stack.Screen>
-        <Stack.Screen
-          name="ChangePassword"
-          options={({navigation}) => ({
-            headerShown: false,
-          })}
-          component={ChangePassword}></Stack.Screen>
-        <Stack.Screen
-          name="ContactUs"
-          options={({navigation}) => ({
-            headerShown: false,
-          })}
-          component={ContactUs}></Stack.Screen>
       </Stack.Navigator>
     </>
   );

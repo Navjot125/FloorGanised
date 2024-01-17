@@ -14,17 +14,39 @@ import {COLORS} from '../../../utils/theme';
 import OTPInputView from '@twotalltotems/react-native-otp-input';
 import Back from '../../../components/BackButton/Back';
 import {scale} from 'react-native-size-matters';
+import {useDispatch} from 'react-redux';
+import {setUserData} from '../../../redux/reducers/User';
 
 const VerifyOTP = ({route}) => {
   const GoTo = route?.params?.reset;
   const [code, setCode] = useState();
+  const dispatch = useDispatch();
+  const userData = [
+    {
+      name: 'Navjot Singh',
+      email: 'Navjots.indiit@gmail.com',
+      phone: '7009173569',
+      _id: 0,
+      role: 1,
+      profile: '../../../assets/images/Profile1.jpg',
+    },
+    {
+      name: 'Gurmukh Singh',
+      email: 'Gurmukh.indiit@gmail.com',
+      phone: '9653719007',
+      _id: 1,
+      role: 2,
+      profile: '../../../assets/images/Profile2.jpg',
+    },
+  ];
   const onPress = () => {
     GoTo
       ? navigationRef.navigate(GoTo)
-      : navigationRef.reset({
+      : (navigationRef.reset({
           index: 0,
           routes: [{name: 'tabs'}],
-        });
+        }),
+        dispatch(setUserData(userData[1])));
   };
   const onBackPress = () => {
     navigationRef.goBack();

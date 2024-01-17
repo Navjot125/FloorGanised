@@ -18,6 +18,7 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import Login from './src/screens/auth/login/Login';
 import Notifications from './src/screens/Tabs/Notifications';
 import {Provider} from 'react-redux';
+import {useSelector} from 'react-redux';
 import Detail from './src/screens/Detail';
 import {store} from './src/redux/store';
 import {FitterStackNavigator} from './src/Navigation/FitterNavigator';
@@ -30,7 +31,7 @@ export default function App() {
       SplashScreen.hide();
     }, 2000);
   }, []);
-  const fitter = false;
+  const role = 2;
   return (
     <Provider store={store}>
       <StatusBar barStyle="light-content" />
@@ -40,7 +41,7 @@ export default function App() {
           <Stack.Screen name="tabs">
             {() => <BottomTabNavigator />}
           </Stack.Screen>
-          {!fitter ? (
+          {role == 1 ? (
             <Stack.Screen name="Main">
               {() => <MainStackNavigator />}
             </Stack.Screen>

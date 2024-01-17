@@ -16,12 +16,16 @@ import {COLORS} from '../../utils/theme';
 import Header from '../../components/Header/Header';
 import {scale} from 'react-native-size-matters';
 import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons';
+import {useSelector} from 'react-redux';
 
 const Home = () => {
   useEffect(() => {
     dateListing();
   }, []);
-
+  const userData = useSelector(state => state?.userData?.data);
+  // console.log('userData---------------l',userData);
+  const stack = userData.role == 1 ? 'Main' : 'Fitter';
+  const screen = userData.role == 1 ? 'Detail' : 'FitterDetail';
   const renderItem = ({item, index}) => {
     return (
       <View style={styles.container}>
@@ -31,7 +35,7 @@ const Home = () => {
             flexDirection: 'row',
             justifyContent: 'space-between',
             alignItems: 'center',
-            paddingHorizontal:15
+            paddingHorizontal: 15,
           }}>
           <Text
             style={{
@@ -62,22 +66,23 @@ const Home = () => {
             justifyContent: 'space-around',
             alignItems: 'center',
           }}>
-            <SimpleLineIcons
-              name="location-pin"
-              size={20}
-              color={COLORS.secondry}
-            />
+          <SimpleLineIcons
+            name="location-pin"
+            size={20}
+            color={COLORS.secondry}
+          />
           <Text
             style={{
               fontSize: 12,
               fontWeight: 500,
-              width:180,
+              width: 180,
             }}>
             {item?.location}
           </Text>
           <TouchableOpacity
             onPress={() => {
-              navigationRef.navigate('Main', {screen: 'Detail'});
+              // navigationRef.navigate(stack, {screen: screen});
+              navigationRef.navigate("Fitter", {screen: "FitterDetail"});
             }}
             style={{
               backgroundColor: COLORS.primary,
@@ -134,6 +139,6 @@ const styles = StyleSheet.create({
     shadowRadius: 11.27,
     elevation: 14,
     marginHorizontal: 20,
-    paddingHorizontal:20
+    paddingHorizontal: 20,
   },
 });

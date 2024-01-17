@@ -23,7 +23,7 @@ import Detail from '../screens/Detail';
 import {COLORS} from '../utils/theme';
 import Back from '../components/BackButton/Back';
 import {navigationRef} from '../../App';
-import MeasuringQuestionnaire from '../screens/MeasuringQuestionnaire';
+import MeasuringQuestionnaire from '../screens/Common/MeasuringQuestionnaire';
 import ManageProfile from '../screens/Common/ManageProfile';
 import TermsConditions from '../screens/Common/TermsConditions';
 import ChangePassword from '../screens/Common/ChangePassword';

@@ -8,19 +8,19 @@ import {
 } from 'react-native';
 import React, {useState} from 'react';
 import {scale} from 'react-native-size-matters';
-import Header from '../components/Header/Header';
-import {COLORS} from '../utils/theme';
+import {COLORS} from '../../utils/theme';
 import SelectDropdown from 'react-native-select-dropdown';
 import AntDesign from 'react-native-vector-icons/AntDesign';
-import DropDown from '../components/DropDown/DropDown';
+import DropDown from '../../components/DropDown/DropDown';
 import {RadioButton} from 'react-native-paper';
-import CommonTextInput from '../components/Input/InputBox';
-import CommonButton from '../components/CommonButton/CommonButton';
-import {navigationRef} from '../../App';
-import CommonModal from '../components/Modal/Modal';
-import jobComplete from '../assets/images/jobComplete.png';
+import CommonTextInput from '../../components/Input/InputBox';
+import CommonButton from '../../components/CommonButton/CommonButton';
+import {navigationRef} from '../../../App';
+import CommonModal from '../../components/Modal/Modal';
+import jobComplete from '../../assets/images/jobComplete.png';
+import Header from '../../components/Header/Header';
 
-const MeasuringQuestionnaire = () => {
+const MeasuringQuestionnaire = ({route}) => {
   const [licencseLevel, setLicencseLevel] = useState();
   const [selectedOption, setSelectedOption] = useState(null);
   const [gripperLengths, setGripperLengths] = useState(null);
@@ -239,7 +239,10 @@ const MeasuringQuestionnaire = () => {
           placeholder="Additional Notes"
         />
         <View style={{marginVertical: 20}}>
-          <CommonButton title={'Submit'} onPress={onPress} />
+          <CommonButton
+            title={route?.params ? 'Save' : 'Submit'}
+            onPress={onPress}
+          />
         </View>
       </ScrollView>
       <CommonModal

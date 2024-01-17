@@ -6,7 +6,6 @@ import { COLORS } from '../../utils/theme';
 import SelectDropdown from 'react-native-select-dropdown';
 
 const DropDown = ({data, setLicencseLevel, defaultButtonText}) => {
-    console.log('defaultButtonText', defaultButtonText);
   return (
     <View style={{marginBottom:25}} >
       <SelectDropdown

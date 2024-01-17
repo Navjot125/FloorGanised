@@ -13,6 +13,12 @@ const ChangePassword = () => {
     width: '100%',
     marginTop: 25,
   };
+  const buttonStyle = {
+    marginBottom: 25,
+  };
+  const onPress = () => {
+    navigationRef.navigate('Profile');
+  };
   return (
     <View style={{flex: 1, backgroundColor: 'black'}}>
       <SafeAreaView />
@@ -36,6 +42,7 @@ const ChangePassword = () => {
           onChangeText={newText => setConfirmPassword(newText)}
           style={style}
         />
+        <CommonButton style={buttonStyle} title={'Save'} onPress={onPress} />
       </View>
     </View>
   );
