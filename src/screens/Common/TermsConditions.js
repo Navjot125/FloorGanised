@@ -1,8 +1,8 @@
 import {SafeAreaView, ScrollView, StyleSheet, Text, View} from 'react-native';
 import React from 'react';
 import {scale} from 'react-native-size-matters';
-import {COLORS} from '../utils/theme';
-import Header from '../components/Header/Header';
+import {COLORS} from '../../utils/theme';
+import Header from '../../components/Header/Header';
 
 const TermsConditions = () => {
   return (

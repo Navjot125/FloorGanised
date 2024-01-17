@@ -5,7 +5,7 @@ import Back from './src/components/BackButton/Back';
 import CommonTextInput from './src/components/Input/InputBox';
 import CommonButton from './src/components/CommonButton/CommonButton';
 import SplashScreen from 'react-native-splash-screen';
-import AppIntro from './src/screens/AppIntroSlider';
+import AppIntro from './src/screens/Common/AppIntroSlider';
 import {
   NavigationContainer,
   createNavigationContainerRef,
@@ -20,7 +20,7 @@ import Notifications from './src/screens/Tabs/Notifications';
 import {Provider} from 'react-redux';
 import Detail from './src/screens/Detail';
 import {store} from './src/redux/store';
-import {FitterStackNavigator} from './src/Navigation/FitterNAvigator';
+import {FitterStackNavigator} from './src/Navigation/FitterNavigator';
 export const navigationRef = createNavigationContainerRef();
 const Stack = createNativeStackNavigator();
 

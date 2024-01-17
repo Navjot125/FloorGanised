@@ -16,7 +16,7 @@ import {scale} from 'react-native-size-matters';
 import {useNavigation, useIsFocused} from '@react-navigation/native';
 import Login from '../screens/auth/login/Login';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import AppIntro from '../screens/AppIntroSlider';
+import AppIntro from '../screens/Common/AppIntroSlider';
 import Home from '../screens/Tabs/Home';
 import Notifications from '../screens/Tabs/Notifications';
 import Detail from '../screens/Detail';
@@ -24,10 +24,10 @@ import {COLORS} from '../utils/theme';
 import Back from '../components/BackButton/Back';
 import {navigationRef} from '../../App';
 import MeasuringQuestionnaire from '../screens/MeasuringQuestionnaire';
-import ManageProfile from '../screens/ManageProfile';
-import TermsConditions from '../screens/TermsConditions';
-import ChangePassword from '../screens/ChangePassword';
-import ContactUs from '../screens/ContactUs';
+import ManageProfile from '../screens/Common/ManageProfile';
+import TermsConditions from '../screens/Common/TermsConditions';
+import ChangePassword from '../screens/Common/ChangePassword';
+import ContactUs from '../screens/Common/ContactUs';
 
 const Stack = createNativeStackNavigator();
 

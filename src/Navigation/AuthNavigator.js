@@ -11,7 +11,7 @@ import ForgotPassword from '../screens/auth/ForgotPassword.js/ForgotPassword';
 import VerifyOTP from '../screens/auth/VerifyOTP/VerifyOTP';
 import ResetPassword from '../screens/auth/ResetPassword/ResetPassword';
 import {COLORS} from '../utils/theme';
-import AppIntro from '../screens/AppIntroSlider';
+import AppIntro from '../screens/Common/AppIntroSlider';
 import Back from '../components/BackButton/Back';
 
 const Stack = createNativeStackNavigator();

@@ -9,10 +9,10 @@ import {
   StatusBar,
 } from 'react-native';
 import AppIntroSlider from 'react-native-app-intro-slider';
-import {COLORS} from '../utils/theme';
+import {COLORS} from '../../utils/theme';
 import {NavigationContainer, useNavigation} from '@react-navigation/native';
-import AuthNavigator from '../Navigation/AuthNavigator';
-import {navigationRef} from '../../App';
+import AuthNavigator from '../../Navigation/AuthNavigator';
+import {navigationRef} from '../../../App';
 export default function AppIntro() {
   const [currentSlideIndex, setCurrentSlideIndex] = useState(0);
   const navigation = useNavigation();
@@ -21,21 +21,21 @@ export default function AppIntro() {
       key: 1,
       title: 'Introduction 1',
       text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nisi nulla purus neque',
-      image: require('../assets/images/Introduction.png'),
+      image: require('../../assets/images/Introduction.png'),
       backgroundColor: '#59b2ab',
     },
     {
       key: 2,
       title: 'Introduction 2',
       text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nisi nulla purus neque',
-      image: require('../assets/images/Introduction1.png'),
+      image: require('../../assets/images/Introduction1.png'),
       backgroundColor: '#febe29',
     },
     {
       key: 3,
       title: 'Introduction 3',
       text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nisi nulla purus neque',
-      image: require('../assets/images/Introduction2.png'),
+      image: require('../../assets/images/Introduction2.png'),
       backgroundColor: '#22bcb5',
     },
   ];

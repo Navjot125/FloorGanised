@@ -1,9 +1,9 @@
 import {Image, SafeAreaView, StyleSheet, Text, View} from 'react-native';
 import React, {useState} from 'react';
 import {scale} from 'react-native-size-matters';
-import {COLORS} from '../utils/theme';
-import Header from '../components/Header/Header';
-import CommonTextInput from '../components/Input/InputBox';
+import {COLORS} from '../../utils/theme';
+import Header from '../../components/Header/Header';
+import CommonTextInput from '../../components/Input/InputBox';
 
 const ManageProfile = () => {
   const [name, setName] = useState();
@@ -25,7 +25,7 @@ const ManageProfile = () => {
           <Image
             style={{height: 66, width: 66}}
             resizeMode="contain"
-            source={require('../assets/images/profile.png')}
+            source={require('../../assets/images/profile.png')}
           />
           <Text style={{fontWeight: 600, fontSize: 16, marginTop: 10}}>
             John Watson

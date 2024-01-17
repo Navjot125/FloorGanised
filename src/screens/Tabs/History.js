@@ -1,4 +1,11 @@
-import {FlatList, StyleSheet, Text, View, TouchableOpacity, SafeAreaView} from 'react-native';
+import {
+  FlatList,
+  StyleSheet,
+  Text,
+  View,
+  TouchableOpacity,
+  SafeAreaView,
+} from 'react-native';
 import React, {useEffect} from 'react';
 import {navigationRef} from '../../../App';
 import {dateListing} from '../../utils/Dates/DateLimit';
@@ -7,7 +14,7 @@ import {height} from '../../assets/styles/styles';
 import {HistoryData, HomeData} from '../../config/DummyData';
 import {COLORS} from '../../utils/theme';
 import Header from '../../components/Header/Header';
-import { scale } from 'react-native-size-matters';
+import {scale} from 'react-native-size-matters';
 import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons';
 
 const History = () => {
@@ -46,18 +53,13 @@ const History = () => {
             alignItems: 'center',
             paddingHorizontal: 20,
           }}>
-            <SimpleLineIcons
-              name="location-pin"
-              size={15}
-              color={COLORS.black}
-            />
+          <SimpleLineIcons name="location-pin" size={15} color={COLORS.black} />
           <Text
             style={{
               fontSize: 12,
               fontWeight: 500,
               width: '55%',
-              // backgroundColor:'red',
-              left:-15,
+              left: -15,
               // color:COLORS.grey
             }}>
             {item?.location}
@@ -115,7 +117,7 @@ const History = () => {
           borderTopRightRadius: scale(20),
           borderTopLeftRadius: scale(20),
         }}>
-         <FlatList data={HistoryData} renderItem={renderItem} />
+        <FlatList data={HistoryData} renderItem={renderItem} />
       </View>
     </View>
   );

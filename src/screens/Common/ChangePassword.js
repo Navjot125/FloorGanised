@@ -1,9 +1,9 @@
 import {SafeAreaView, StyleSheet, Text, View} from 'react-native';
 import React, {useState} from 'react';
-import Header from '../components/Header/Header';
+import Header from '../../components/Header/Header';
 import {scale} from 'react-native-size-matters';
-import {COLORS} from '../utils/theme';
-import CommonTextInput from '../components/Input/InputBox';
+import {COLORS} from '../../utils/theme';
+import CommonTextInput from '../../components/Input/InputBox';
 
 const ChangePassword = () => {
   const [currentPassword, setCurrentPassword] = useState();
