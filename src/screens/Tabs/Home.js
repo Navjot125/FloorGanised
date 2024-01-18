@@ -23,7 +23,6 @@ const Home = () => {
     dateListing();
   }, []);
   const userData = useSelector(state => state?.userData?.data);
-  // console.log('userData---------------l',userData);
   const stack = userData.role == 1 ? 'Main' : 'Fitter';
   const screen = userData.role == 1 ? 'Detail' : 'FitterDetail';
   const renderItem = ({item, index}) => {

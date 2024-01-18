@@ -2,7 +2,6 @@ import {
   FlatList,
   Image,
   SafeAreaView,
-  ScrollView,
   StyleSheet,
   Text,
   TouchableOpacity,
@@ -12,10 +11,7 @@ import React, {useState} from 'react';
 import {scale} from 'react-native-size-matters';
 import {COLORS} from '../../utils/theme';
 import Header from '../../components/Header/Header';
-// import {Checkbox} from 'react-native-paper';
-import {JobCompleteFormData, jobForm} from '../../config/DummyData';
-import CheckBox from '@react-native-community/checkbox';
-import {Checkbox} from 'react-native-paper';
+import {jobForm} from '../../config/DummyData';
 
 const JobCompleteForm = () => {
   const [selectedItems, setSelectedItems] = useState(jobForm);
@@ -38,7 +34,6 @@ const JobCompleteForm = () => {
           flexDirection: 'row',
           justifyContent: 'space-between',
           padding: 10,
-          //   backgroundColor: 'yellow',
           width: '90%',
           alignItems: 'center',
         }}>
@@ -61,12 +56,8 @@ const JobCompleteForm = () => {
     return (
       <View
         style={{
-          //   flexDirection: 'row',
-          //   justifyContent: 'space-between',
           padding: 10,
-          //   backgroundColor: 'yellow',
           width: '90%',
-          //   alignItems: 'center',
         }}>
         <Text style={{fontSize: 12, fontWeight: 600}}>
           {Object.keys(jobForm)[index]}
@@ -76,8 +67,6 @@ const JobCompleteForm = () => {
             fontSize: 12,
             fontWeight: 400,
             top: 10,
-            // width: 70,
-            // textAlign: 'right',
           }}>
           {item?.description}
         </Text>
@@ -118,8 +107,6 @@ const JobCompleteForm = () => {
             fontSize: 12,
             fontWeight: 400,
             top: 10,
-            // width: 70,
-            // textAlign: 'right',
           }}>
           {item?.description}
         </Text>
@@ -163,25 +150,6 @@ const JobCompleteForm = () => {
         )}
         {item?.type === 'DropDown' ? (
           <View style={{flexDirection: 'row', alignItems: 'center'}}>
-            {/* {item?.status == 'pending' ? (
-              <TouchableOpacity
-                style={{height: 20, width: 20}}
-                onPress={() => toggleStatus(Object.keys(selectedItems)[index])}>
-                <Image
-                  style={{height: 20, width: 20}}
-                  source={require('../../assets/images/unchecked.png')}
-                />
-              </TouchableOpacity>
-            ) : (
-              <TouchableOpacity
-                style={{height: 20, width: 20}}
-                onPress={() => toggleStatus(Object.keys(selectedItems)[index])}>
-                <Image
-                  style={{height: 20, width: 20}}
-                  source={require('../../assets/images/checked.png')}
-                />
-              </TouchableOpacity>
-            )} */}
             <TypeDropDown item={item} index={index} />
           </View>
         ) : item?.type === 'Description' ? (
@@ -189,27 +157,7 @@ const JobCompleteForm = () => {
             style={{
               flexDirection: 'row',
               alignItems: 'center',
-              //   backgroundColor: 'red',
             }}>
-            {/* {item?.status == 'pending' ? (
-              <TouchableOpacity
-                style={{height: 20, width: 20}}
-                onPress={() => toggleStatus(Object.keys(selectedItems)[index])}>
-                <Image
-                  style={{height: 20, width: 20}}
-                  source={require('../../assets/images/unchecked.png')}
-                />
-              </TouchableOpacity>
-            ) : (
-              <TouchableOpacity
-                style={{height: 20, width: 20}}
-                onPress={() => toggleStatus(Object.keys(selectedItems)[index])}>
-                <Image
-                  style={{height: 20, width: 20}}
-                  source={require('../../assets/images/checked.png')}
-                />
-              </TouchableOpacity>
-            )} */}
             <TypeDescription item={item} index={index} />
           </View>
         ) : item?.type === 'Images' ? (
@@ -218,25 +166,6 @@ const JobCompleteForm = () => {
               flexDirection: 'row',
               alignItems: 'center',
             }}>
-            {/* {item?.status == 'pending' ? (
-              <TouchableOpacity
-                style={{height: 20, width: 20}}
-                onPress={() => toggleStatus(Object.keys(selectedItems)[index])}>
-                <Image
-                  style={{height: 20, width: 20}}
-                  source={require('../../assets/images/unchecked.png')}
-                />
-              </TouchableOpacity>
-            ) : (
-              <TouchableOpacity
-                style={{height: 20, width: 20}}
-                onPress={() => toggleStatus(Object.keys(selectedItems)[index])}>
-                <Image
-                  style={{height: 20, width: 20}}
-                  source={require('../../assets/images/checked.png')}
-                />
-              </TouchableOpacity>
-            )} */}
             <TypeImages item={item} index={index} />
           </View>
         ) : null}
