@@ -81,8 +81,9 @@ const Home = () => {
           </Text>
           <TouchableOpacity
             onPress={() => {
-              // navigationRef.navigate(stack, {screen: screen});
-              navigationRef.navigate("Fitter", {screen: "FitterDetail"});
+              index == 0 && userData.role == 2
+                ? navigationRef.navigate(stack, {screen: 'JobCompleteForm'})
+                : navigationRef.navigate(stack, {screen: screen});
             }}
             style={{
               backgroundColor: COLORS.primary,
@@ -97,7 +98,7 @@ const Home = () => {
                 fontSize: 12,
                 fontWeight: 500,
               }}>
-              Details
+              {index == 0 && userData.role == 2 ? 'On Work' : 'Details'}
             </Text>
           </TouchableOpacity>
         </View>

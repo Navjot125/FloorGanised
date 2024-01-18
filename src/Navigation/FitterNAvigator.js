@@ -5,6 +5,7 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {navigationRef} from '../../App';
 import FitterDetail from '../screens/Fitter/FitterDetails';
 import MeasuringQuestionnaire from '../screens/Common/MeasuringQuestionnaire';
+import JobCompleteForm from '../screens/Fitter/JobCompleteForm';
 
 const Stack = createNativeStackNavigator();
 
@@ -29,6 +30,12 @@ const FitterStackNavigator = ({}) => {
             headerShown: false,
           })}
           component={MeasuringQuestionnaire}></Stack.Screen>
+        <Stack.Screen
+          name="JobCompleteForm"
+          options={({navigation}) => ({
+            headerShown: false,
+          })}
+          component={JobCompleteForm}></Stack.Screen>
       </Stack.Navigator>
     </>
   );

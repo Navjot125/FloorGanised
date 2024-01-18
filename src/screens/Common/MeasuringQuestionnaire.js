@@ -43,7 +43,9 @@ const MeasuringQuestionnaire = ({route}) => {
     marginTop: 25,
   };
   const onPress = () => {
-    setModalVisible(!modalVisible);
+    route?.params
+      ? navigationRef.navigate('Home')
+      : setModalVisible(!modalVisible);
   };
   const onPressModal = () => {
     setModalVisible(!modalVisible);
