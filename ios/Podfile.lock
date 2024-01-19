@@ -1123,7 +1123,9 @@ PODS:
   - RNCCheckbox (0.5.17):
     - BEMCheckBox (~> 1.4)
     - React-Core
-  - RNGestureHandler (2.14.0):
+  - RNCClipboard (1.13.2):
+    - React-Core
+  - RNGestureHandler (2.14.1):
     - glog
     - RCT-Folly (= 2022.05.16.00)
     - React-Core
@@ -1221,6 +1223,7 @@ DEPENDENCIES:
   - ReactCommon/turbomodule/core (from `../node_modules/react-native/ReactCommon`)
   - "RNCAsyncStorage (from `../node_modules/@react-native-async-storage/async-storage`)"
   - "RNCCheckbox (from `../node_modules/@react-native-community/checkbox`)"
+  - "RNCClipboard (from `../node_modules/@react-native-clipboard/clipboard`)"
   - RNGestureHandler (from `../node_modules/react-native-gesture-handler`)
   - RNReanimated (from `../node_modules/react-native-reanimated`)
   - RNScreens (from `../node_modules/react-native-screens`)
@@ -1350,6 +1353,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/@react-native-async-storage/async-storage"
   RNCCheckbox:
     :path: "../node_modules/@react-native-community/checkbox"
+  RNCClipboard:
+    :path: "../node_modules/@react-native-clipboard/clipboard"
   RNGestureHandler:
     :path: "../node_modules/react-native-gesture-handler"
   RNReanimated:
@@ -1427,7 +1432,8 @@ SPEC CHECKSUMS:
   ReactCommon: ddb128564dcbfa0287d3d1a2d10f8c7457c971f6
   RNCAsyncStorage: 618d03a5f52fbccb3d7010076bc54712844c18ef
   RNCCheckbox: a3ca9978cb0846b981d28da4e9914bd437403d77
-  RNGestureHandler: 61bfdfc05db9b79dd61f894dcd29d3dcc6db3c02
+  RNCClipboard: 60fed4b71560d7bfe40e9d35dea9762b024da86d
+  RNGestureHandler: 25b969a1ffc806b9f9ad2e170d4a3b049c6af85e
   RNReanimated: 57f436e7aa3d277fbfed05e003230b43428157c0
   RNScreens: b582cb834dc4133307562e930e8fa914b8c04ef2
   RNVectorIcons: 210f910e834e3485af40693ad4615c1ec22fc02b

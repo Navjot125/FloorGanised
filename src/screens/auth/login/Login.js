@@ -36,7 +36,8 @@ const Login = () => {
       <CommonBackground back={true} title={'Login'} />
       <SafeAreaView />
       <ScrollView
-        contentContainerStyle={{marginTop: height / 4}}
+        contentContainerStyle={{marginTop: height / 4, flexGrow: 1}}
+        showsVerticalScrollIndicator={false}
         automaticallyAdjustKeyboardInsets>
         <View style={styles.innerBox}>
           <View style={styles.radioBox}>
@@ -73,22 +74,22 @@ const Login = () => {
           </TouchableOpacity>
           <CommonButton style={styles.Button} title="Login" onPress={onPress} />
         </View>
-      </ScrollView>
-      <Text
-        style={{
-          alignSelf: 'center',
-          bottom: 30,
-          position: 'absolute',
-          fontWeight: 300,
-        }}>
-        Dont't have an account ?
         <Text
-          style={{fontWeight: 500}}
-          onPress={() => navigationRef.navigate('Signup')}>
-          {' '}
-          Sign Up
+          style={{
+            alignSelf: 'center',
+            bottom: 30,
+            position: 'absolute',
+            fontWeight: 300,
+          }}>
+          Dont't have an account ?
+          <Text
+            style={{fontWeight: 500}}
+            onPress={() => navigationRef.navigate('Signup')}>
+            {' '}
+            Sign Up
+          </Text>
         </Text>
-      </Text>
+      </ScrollView>
     </View>
   );
 };
@@ -109,7 +110,7 @@ const styles = StyleSheet.create({
     },
     shadowOpacity: 0.1,
     shadowRadius: 16.27,
-    elevation: 24,
+    elevation: 14,
   },
   radioBox: {
     flexDirection: 'row',

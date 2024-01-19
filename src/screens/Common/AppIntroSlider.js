@@ -42,7 +42,7 @@ export default function AppIntro() {
 
   const renderItem = ({item}) => (
     <View style={styles.slideContainer}>
-      <Image source={item.image} style={styles.image} />
+      <Image source={item.image} style={styles.image} resizeMode='cover' />
       <View style={styles.textContainer}>
         <Text style={styles.title}>{item.title}</Text>
         <Text style={styles.description}>{item.text}</Text>
@@ -124,8 +124,8 @@ const styles = StyleSheet.create({
   image: {
     width: '100%',
     height: '100%',
-    resizeMode: 'cover',
     position: 'absolute',
+    backgroundColor:'black',
   },
   textContainer: {
     backgroundColor: 'rgba(0, 0, 0, 0.5)', // Adjust the opacity as needed

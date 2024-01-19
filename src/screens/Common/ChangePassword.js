@@ -4,8 +4,13 @@ import Header from '../../components/Header/Header';
 import {scale} from 'react-native-size-matters';
 import {COLORS} from '../../utils/theme';
 import CommonTextInput from '../../components/Input/InputBox';
+import CommonButton from '../../components/CommonButton/CommonButton';
+import { useSelector } from 'react-redux';
+import { navigationRef } from '../../../App';
 
 const ChangePassword = () => {
+  const userData = useSelector(state => state?.userData?.data);
+  const screen = userData?.role === 1 ? 'Main' : 'Fitter';
   const [currentPassword, setCurrentPassword] = useState();
   const [password, setPassword] = useState();
   const [confirmPassword, setConfirmPassword] = useState();
@@ -24,24 +29,26 @@ const ChangePassword = () => {
       <SafeAreaView />
       <Header title={'Change Password'} back={true} />
       <View style={styles.container}>
+        <View>
         <CommonTextInput
           placeholder={'Current Password'}
           value={currentPassword}
           onChangeText={newText => setCurrentPassword(newText)}
           style={style}
-        />
+          />
         <CommonTextInput
           placeholder={'Password'}
           value={password}
           onChangeText={newText => setPassword(newText)}
           style={style}
-        />
+          />
         <CommonTextInput
           placeholder={'Confirm Password'}
           value={confirmPassword}
           onChangeText={newText => setConfirmPassword(newText)}
           style={style}
-        />
+          />
+          </View>
         <CommonButton style={buttonStyle} title={'Save'} onPress={onPress} />
       </View>
     </View>
@@ -57,5 +64,6 @@ const styles = StyleSheet.create({
     borderTopRightRadius: scale(20),
     borderTopLeftRadius: scale(20),
     padding: 20,
+    justifyContent:'space-between',
   },
 });

@@ -12,6 +12,8 @@ import {scale} from 'react-native-size-matters';
 import {COLORS} from '../../utils/theme';
 import Header from '../../components/Header/Header';
 import {jobForm} from '../../config/DummyData';
+import CommonButton from '../../components/CommonButton/CommonButton';
+import { navigationRef } from '../../../App';
 
 const JobCompleteForm = () => {
   const [selectedItems, setSelectedItems] = useState(jobForm);
@@ -26,7 +28,13 @@ const JobCompleteForm = () => {
       ),
     );
   };
+const style ={
+  marginVertical:10,
+}
 
+const onPress = () => {
+  navigationRef.navigate('Home');
+};
   const TypeDropDown = ({item, index}) => {
     return (
       <View
@@ -127,11 +135,11 @@ const JobCompleteForm = () => {
       <View
         style={{
           flexDirection: 'row',
-          marginVertical: 5,
+          marginVertical: 5,alignItems:'center',
         }}>
         {item?.status == 'pending' ? (
           <TouchableOpacity
-            style={{height: 20, width: 20}}
+            style={{height: 20, width: 20,}}
             onPress={() => toggleStatus(Object.keys(selectedItems)[index])}>
             <Image
               style={{height: 20, width: 20}}
@@ -183,12 +191,13 @@ const JobCompleteForm = () => {
           keyExtractor={item => item._id.toString()}
           renderItem={renderItem}
           showsVerticalScrollIndicator={false}
+          ListFooterComponent={<CommonButton style={style} title={"Submit"} onPress={onPress} />}
         />
       </View>
     </View>
   );
 };
-
+// style, title, onPress
 export default JobCompleteForm;
 
 const styles = StyleSheet.create({

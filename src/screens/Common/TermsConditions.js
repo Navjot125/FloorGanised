@@ -18,7 +18,7 @@ const TermsConditions = () => {
         <Text
           style={{
             fontSize: 16,
-            colot: 'black',
+            color: 'black',
             marginVertical: 10,
             lineHeight: 20,
             fontWeight: 600,
@@ -28,7 +28,7 @@ const TermsConditions = () => {
         <Text
           style={{
             fontSize: 12,
-            colot: 'black',
+            color: 'black',
             marginVertical: 10,
             lineHeight: 20,
             fontWeight: 400,
@@ -41,7 +41,7 @@ const TermsConditions = () => {
         <Text
           style={{
             fontSize: 16,
-            colot: 'black',
+            color: 'black',
             marginVertical: 10,
             lineHeight: 20,
             fontWeight: 600,
@@ -51,7 +51,7 @@ const TermsConditions = () => {
         <Text
           style={{
             fontSize: 12,
-            colot: 'black',
+            color: 'black',
             marginVertical: 10,
             lineHeight: 20,
             fontWeight: 400,
@@ -66,7 +66,7 @@ const TermsConditions = () => {
         <Text
           style={{
             fontSize: 16,
-            colot: 'black',
+            color: 'black',
             marginVertical: 10,
             lineHeight: 20,
             fontWeight: 600,
@@ -76,7 +76,7 @@ const TermsConditions = () => {
         <Text
           style={{
             fontSize: 12,
-            colot: 'black',
+            color: 'black',
             marginVertical: 10,
             lineHeight: 20,
             fontWeight: 400,

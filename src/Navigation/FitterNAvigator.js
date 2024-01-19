@@ -6,6 +6,10 @@ import {navigationRef} from '../../App';
 import FitterDetail from '../screens/Fitter/FitterDetails';
 import MeasuringQuestionnaire from '../screens/Common/MeasuringQuestionnaire';
 import JobCompleteForm from '../screens/Fitter/JobCompleteForm';
+import ManageProfile from '../screens/Common/ManageProfile';
+import TermsConditions from '../screens/Common/TermsConditions';
+import ChangePassword from '../screens/Common/ChangePassword';
+import ContactUs from '../screens/Common/ContactUs';
 
 const Stack = createNativeStackNavigator();
 
@@ -36,6 +40,30 @@ const FitterStackNavigator = ({}) => {
             headerShown: false,
           })}
           component={JobCompleteForm}></Stack.Screen>
+        <Stack.Screen
+          name="ManageProfile"
+          options={({navigation}) => ({
+            headerShown: false,
+          })}
+          component={ManageProfile}></Stack.Screen>
+        <Stack.Screen
+          name="TermsConditions"
+          options={({navigation}) => ({
+            headerShown: false,
+          })}
+          component={TermsConditions}></Stack.Screen>
+        <Stack.Screen
+          name="ChangePassword"
+          options={({navigation}) => ({
+            headerShown: false,
+          })}
+          component={ChangePassword}></Stack.Screen>
+        <Stack.Screen
+          name="ContactUs"
+          options={({navigation}) => ({
+            headerShown: false,
+          })}
+          component={ContactUs}></Stack.Screen>
       </Stack.Navigator>
     </>
   );

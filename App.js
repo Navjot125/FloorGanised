@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {View, Text, StatusBar} from 'react-native';
+import {View, Text, StatusBar, LogBox} from 'react-native';
 import SplashScreen from 'react-native-splash-screen';
 import {
   NavigationContainer,
@@ -16,11 +16,15 @@ export const navigationRef = createNavigationContainerRef();
 const Stack = createNativeStackNavigator();
 
 export default function App() {
+  LogBox.ignoreLogs([
+    'Require cycle: src/Navigation/AuthNavigator.js -> src/screens/Common/AppIntroSlider.js -> src/Navigation/AuthNavigator.js',
+  ]);
   useEffect(() => {
     setTimeout(() => {
       SplashScreen.hide();
     }, 2000);
   }, []);
+
   const role = 2;
   return (
     <Provider store={store}>

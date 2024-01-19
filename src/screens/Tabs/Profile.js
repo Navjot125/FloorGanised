@@ -16,8 +16,11 @@ import {HistoryData, HomeData} from '../../config/DummyData';
 import {COLORS} from '../../utils/theme';
 import Header from '../../components/Header/Header';
 import {scale} from 'react-native-size-matters';
+import {useSelector} from 'react-redux';
 
 const Profile = () => {
+  const userData = useSelector(state => state?.userData?.data);
+  const screen = userData?.role === 1 ? 'Main' : 'Fitter';
   const screens = [
     {
       name: 'Manage Profile',
@@ -42,12 +45,11 @@ const Profile = () => {
   ];
 
   const renderItem = ({item, index}) => {
-    console.log(item?.screen);
     return (
       <TouchableOpacity
         style={styles.container}
         onPress={() => {
-          navigationRef.navigate('Main', {screen: item?.screen});
+          navigationRef.navigate(screen, {screen: item?.screen});
         }}>
         <Text style={{fontWeight: 500, fontSize: 14}}> {item?.name} </Text>
         <Image
@@ -83,7 +85,7 @@ const Profile = () => {
             John Watson
           </Text>
         </View>
-        <FlatList data={screens} renderItem={renderItem} />
+        <FlatList data={screens} renderItem={renderItem}  contentContainerStyle={{paddingBottom: 20}}/>
       </View>
     </View>
   );
@@ -104,7 +106,7 @@ const styles = StyleSheet.create({
     },
     shadowOpacity: 0.1,
     shadowRadius: 11.27,
-    elevation: 14,
+    elevation: 10,
     marginHorizontal: 20,
     paddingHorizontal: 25,
     flexDirection: 'row',

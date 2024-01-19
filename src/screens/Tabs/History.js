@@ -67,7 +67,7 @@ const History = () => {
 
           <TouchableOpacity
             onPress={() => {
-              navigationRef.navigate('Detail');
+              // navigationRef.navigate('Detail');
             }}
             style={{
               backgroundColor: COLORS.black,
@@ -117,7 +117,11 @@ const History = () => {
           borderTopRightRadius: scale(20),
           borderTopLeftRadius: scale(20),
         }}>
-        <FlatList data={HistoryData} renderItem={renderItem} />
+        <FlatList
+          data={HistoryData}
+          renderItem={renderItem}
+          contentContainerStyle={{paddingBottom: 20}}
+        />
       </View>
     </View>
   );
@@ -138,7 +142,7 @@ const styles = StyleSheet.create({
     },
     shadowOpacity: 0.1,
     shadowRadius: 11.27,
-    elevation: 14,
+    elevation: 10,
     marginHorizontal: 20,
     paddingVertical: 15,
   },

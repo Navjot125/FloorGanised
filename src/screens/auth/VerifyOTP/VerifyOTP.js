@@ -11,7 +11,7 @@ import CommonButton from '../../../components/CommonButton/CommonButton';
 import CommonBackground from '../../../components/CommonBG/CommonBackground';
 import {height} from '../../../assets/styles/styles';
 import {COLORS} from '../../../utils/theme';
-import OTPInputView from '@twotalltotems/react-native-otp-input';
+import OTPInputView from '@twotalltotems/react-native-otp-input'
 import Back from '../../../components/BackButton/Back';
 import {scale} from 'react-native-size-matters';
 import {useDispatch} from 'react-redux';
@@ -19,7 +19,7 @@ import {setUserData} from '../../../redux/reducers/User';
 
 const VerifyOTP = ({route}) => {
   const GoTo = route?.params?.reset;
-  const [code, setCode] = useState();
+  const [code, setCode] = useState('');
   const dispatch = useDispatch();
   const userData = [
     {
@@ -71,7 +71,7 @@ const VerifyOTP = ({route}) => {
             enter the same below.
           </Text>
           <View style={{alignSelf: 'center'}}>
-            <OTPInputView
+            {/* <OTPInputView
               style={{width: '80%', height: 100}}
               pinCount={4}
               code={code} //You can supply this prop or not. The component will be used as a controlled / uncontrolled component respectively.
@@ -84,7 +84,7 @@ const VerifyOTP = ({route}) => {
               onCodeFilled={code => {
                 console.log(`Code is ${code}, you are good to go!`);
               }}
-            />
+            /> */}
           </View>
           <CommonButton
             style={styles.Button}
@@ -126,7 +126,7 @@ const styles = StyleSheet.create({
     },
     shadowOpacity: 0.1,
     shadowRadius: 16.27,
-    elevation: 24,
+    elevation: 14,
   },
   radioBox: {
     flexDirection: 'row',

@@ -23,8 +23,8 @@ const Home = () => {
     dateListing();
   }, []);
   const userData = useSelector(state => state?.userData?.data);
-  const stack = userData.role == 1 ? 'Main' : 'Fitter';
-  const screen = userData.role == 1 ? 'Detail' : 'FitterDetail';
+  const stack = userData?.role == 1 ? 'Main' : 'Fitter';
+  const screen = userData?.role == 1 ? 'Detail' : 'FitterDetail';
   const renderItem = ({item, index}) => {
     return (
       <View style={styles.container}>
@@ -80,7 +80,7 @@ const Home = () => {
           </Text>
           <TouchableOpacity
             onPress={() => {
-              index == 0 && userData.role == 2
+              index == 0 && userData?.role == 2
                 ? navigationRef.navigate(stack, {screen: 'JobCompleteForm'})
                 : navigationRef.navigate(stack, {screen: screen});
             }}
@@ -97,7 +97,7 @@ const Home = () => {
                 fontSize: 12,
                 fontWeight: 500,
               }}>
-              {index == 0 && userData.role == 2 ? 'On Work' : 'Details'}
+              {index == 0 && userData?.role == 2 ? 'On Work' : 'Details'}
             </Text>
           </TouchableOpacity>
         </View>
@@ -116,7 +116,11 @@ const Home = () => {
           borderTopLeftRadius: scale(20),
         }}>
         <CalendarStrip />
-        <FlatList data={HomeData} renderItem={renderItem} />
+        <FlatList
+          data={HomeData}
+          renderItem={renderItem}
+          contentContainerStyle={{paddingBottom: 20}}
+        />
       </View>
     </View>
   );
@@ -137,7 +141,7 @@ const styles = StyleSheet.create({
     },
     shadowOpacity: 0.1,
     shadowRadius: 11.27,
-    elevation: 14,
+    elevation: 10,
     marginHorizontal: 20,
     paddingHorizontal: 20,
   },

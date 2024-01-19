@@ -100,7 +100,8 @@ const Notifications = () => {
           borderTopRightRadius: scale(20),
           borderTopLeftRadius: scale(20),
         }}>
-       <FlatList data={NotificationData} renderItem={renderItem} />
+       <FlatList data={NotificationData} renderItem={renderItem}
+        contentContainerStyle={{paddingBottom: 20}} />
       </View>
     </View>
   );
@@ -121,7 +122,7 @@ const styles = StyleSheet.create({
     },
     shadowOpacity: 0.1,
     shadowRadius: 11.27,
-    elevation: 14,
+    elevation: 10,
     marginHorizontal: 20,
   },
 });

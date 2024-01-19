@@ -8,9 +8,29 @@ import {height} from '../../../assets/styles/styles';
 import {RadioButton} from 'react-native-paper';
 import {COLORS} from '../../../utils/theme';
 import Back from '../../../components/BackButton/Back';
-import { scale } from 'react-native-size-matters';
+import {scale} from 'react-native-size-matters';
+import { useDispatch } from 'react-redux';
+import { setUserData } from '../../../redux/reducers/User';
 
 const Signup = () => {
+  const userData = [
+    {
+      name: 'Navjot Singh',
+      email: 'Navjots.indiit@gmail.com',
+      phone: '7009173569',
+      _id: 0,
+      role: 1,
+      profile: '../../../assets/images/Profile1.jpg',
+    },
+    {
+      name: 'Gurmukh Singh',
+      email: 'Gurmukh.indiit@gmail.com',
+      phone: '9653719007',
+      _id: 1,
+      role: 2,
+      profile: '../../../assets/images/Profile2.jpg',
+    },
+  ];
   const [text, setText] = useState('');
   const [name, setName] = useState('');
   const [cPassword, setCPassword] = useState('');
@@ -21,11 +41,13 @@ const Signup = () => {
   const handleOptionPress = option => {
     setSelectedOption(option);
   };
+  const dispatch = useDispatch();
   const onPress = () => {
     navigationRef.reset({
       index: 0,
       routes: [{name: 'tabs'}],
-    });
+    }),
+    dispatch(setUserData(userData[1]))
   };
   const onBackPress = () => {
     navigationRef.goBack();
@@ -35,9 +57,13 @@ const Signup = () => {
       <CommonBackground title={'Sign Up'} />
       <SafeAreaView />
       <ScrollView
-      contentContainerStyle={{paddingTop: height / 9.5, marginTop: scale(111)}}
-      automaticallyAdjustKeyboardInsets
-     >
+        showsVerticalScrollIndicator={false}
+        contentContainerStyle={{
+          paddingTop: height / 9.5,
+          marginTop: scale(111),
+          flexGrow: 1,
+        }}
+        automaticallyAdjustKeyboardInsets>
         <View style={styles.innerBox}>
           <View style={styles.radioBox}>
             {options.map(option => (
@@ -82,24 +108,24 @@ const Signup = () => {
             onPress={onPress}
           />
         </View>
-      </ScrollView>
-      <Text
-        style={{
-          alignSelf: 'center',
-          bottom: 30,
-          position: 'absolute',
-          fontWeight: 300,
-        }}>
-        Already have an account ?
         <Text
-          onPress={() => {
-            navigationRef.navigate('Login');
-          }}
-          style={{fontWeight: 500}}>
-          {' '}
-          Login
+          style={{
+            alignSelf: 'center',
+            bottom: 30,
+            position: 'absolute',
+            fontWeight: 300,
+          }}>
+          Already have an account ?
+          <Text
+            onPress={() => {
+              navigationRef.navigate('Login');
+            }}
+            style={{fontWeight: 500}}>
+            {' '}
+            Login
+          </Text>
         </Text>
-      </Text>
+      </ScrollView>
     </View>
   );
 };
@@ -120,7 +146,7 @@ const styles = StyleSheet.create({
     },
     shadowOpacity: 0.1,
     shadowRadius: 16.27,
-    elevation: 24,
+    elevation: 14,
     bottom: '6%',
   },
   radioBox: {

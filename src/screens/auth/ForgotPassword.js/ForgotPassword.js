@@ -1,5 +1,6 @@
 import {
   SafeAreaView,
+  ScrollView,
   StyleSheet,
   Text,
   TouchableOpacity,
@@ -14,7 +15,7 @@ import {height} from '../../../assets/styles/styles';
 import {RadioButton} from 'react-native-paper';
 import {COLORS} from '../../../utils/theme';
 import Back from '../../../components/BackButton/Back';
-import { scale } from 'react-native-size-matters';
+import {scale} from 'react-native-size-matters';
 
 const ForgotPassword = () => {
   const [email, setEmail] = useState('');
@@ -28,10 +29,10 @@ const ForgotPassword = () => {
     //   index: 0,
     //   routes: [{name: 'tabs'}],
     // });
-    navigationRef.navigate('VerifyOTP', {reset:"ResetPassword"});
+    navigationRef.navigate('VerifyOTP', {reset: 'ResetPassword'});
   };
   const onBackPress = () => {
-    navigationRef.goBack()
+    navigationRef.goBack();
   };
 
   return (
@@ -39,7 +40,16 @@ const ForgotPassword = () => {
       <Back onPress={onBackPress} />
       <CommonBackground title={'Forgot Password'} />
       <SafeAreaView />
-      <View style={{paddingTop: height / 9.5, marginTop: scale(144)}}>
+      <ScrollView
+        contentContainerStyle={{
+          paddingTop: height / 9.5,
+          marginTop: scale(144),
+          flexGrow: 1,
+        }}
+        showsVerticalScrollIndicator={false}
+        automaticallyAdjustKeyboardInsets
+        //  style={{paddingTop: height / 9.5, marginTop: scale(144)}}
+      >
         <View style={styles.innerBox}>
           <Text
             style={{
@@ -65,7 +75,6 @@ const ForgotPassword = () => {
             onPress={onPress}
           />
         </View>
-      </View>
       <Text
         style={{
           alignSelf: 'center',
@@ -81,6 +90,7 @@ const ForgotPassword = () => {
           Login
         </Text>
       </Text>
+      </ScrollView>
     </View>
   );
 };
@@ -101,7 +111,7 @@ const styles = StyleSheet.create({
     },
     shadowOpacity: 0.1,
     shadowRadius: 16.27,
-    elevation: 24,
+    elevation: 14,
   },
   radioBox: {
     flexDirection: 'row',
