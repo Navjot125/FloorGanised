@@ -21,8 +21,7 @@ import {useDispatch} from 'react-redux';
 import {setUserData} from '../../../redux/reducers/User';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import * as Yup from 'yup';
-// import {PostApi} from '../../../services/ApisMethods';
-import {PostApi, PostApi2} from '../../../services/ApisMethods';
+import {PostApi} from '../../../services/ApisMethods';
 
 const Signup = () => {
   const userData = [
@@ -81,7 +80,6 @@ const Signup = () => {
   });
 
   const handleSignUp = async () => {
-    console.log('selectedOption', selectedOption);
     try {
       // Validate form inputs
       await validationSchema.validate(
@@ -104,7 +102,7 @@ const Signup = () => {
           index: 0,
           routes: [{name: 'tabs'}],
         }),
-          dispatch(setUserData(userData[1]));
+          dispatch(setUserData(response.data));
       } else {
         console.log(response, 'res');
       }

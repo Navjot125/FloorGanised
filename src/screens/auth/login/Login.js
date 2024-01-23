@@ -16,11 +16,16 @@ import CommonBackground from '../../../components/CommonBG/CommonBackground';
 import {height} from '../../../assets/styles/styles';
 import {RadioButton} from 'react-native-paper';
 import {COLORS} from '../../../utils/theme';
+import * as Yup from 'yup';
+import { useDispatch } from 'react-redux';
+import { PostApi } from '../../../services/ApisMethods';
 
 const Login = () => {
+  const dispatch = useDispatch()
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [selectedOption, setSelectedOption] = useState(null);
+  const [error, setErrors] = useState();
   const options = ['Fitter', 'Surveyor'];
   const handleOptionPress = option => {
     setSelectedOption(option);
@@ -31,6 +36,58 @@ const Login = () => {
     //   routes: [{name: 'tabs'}],
     // });
     navigationRef.navigate('VerifyOTP');
+  };
+
+  const validationSchema = Yup.object().shape({
+    email: Yup.string()
+      .email('Invalid email format')
+      .required('Email is required'),
+    password: Yup.string()
+      .required('Password is required')
+      .min(8, 'Password must be at least 8 characters'),
+    selectedOption: Yup.string()
+      .required('Role is required')
+      .oneOf(['Fitter', 'Surveyor'], 'Role must be either Fitter or Surveyor'),
+  });
+
+  const handleLogin = async () => {
+    try {
+      // Validate form inputs
+      await validationSchema.validate(
+        {email, password, selectedOption},
+        {abortEarly: false},
+      );
+      // Form inputs are valid, proceed with signup
+      const params = {
+        email,
+        password,
+        role: selectedOption,
+      };
+      console.log('params----', params);
+      const response = await PostApi('login', params);
+      console.log(response,'[-------');
+      if (response?.data) {
+        console.log(response.data, 'res?.data');
+        navigationRef.reset({
+          index: 0,
+          routes: [{name: 'tabs'}],
+        }),
+          dispatch(setUserData(response.data));
+      } else {
+        console.log(response, 'res');
+      }
+    } catch (error) {
+      console.log(error, '------errors in login');
+      const validationErrors = {};
+      if (error.inner) {
+        error.inner.forEach(err => {
+          console.log(err, 'checking it ', err.path);
+          validationErrors[err.path] = err.message;
+        });
+      }
+      setErrors(validationErrors);
+      console.error(error.errors ? error.errors[0] : error);
+    }
   };
 
   return (
@@ -80,7 +137,7 @@ const Login = () => {
             onPress={() => navigationRef.navigate('ForgotPassword')}>
             <Text style={{fontWeight: 500}}>Forgot Password?</Text>
           </TouchableOpacity>
-          <CommonButton style={styles.Button} title="Login" onPress={onPress} />
+          <CommonButton style={styles.Button} title="Login" onPress={handleLogin} />
         </View>
         <Text
           style={{
