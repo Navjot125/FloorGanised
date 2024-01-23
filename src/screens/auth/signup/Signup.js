@@ -1,5 +1,13 @@
-import {SafeAreaView, ScrollView, StyleSheet, Text, View} from 'react-native';
-import React, {useState} from 'react';
+import {
+  KeyboardAvoidingView,
+  Platform,
+  SafeAreaView,
+  ScrollView,
+  StyleSheet,
+  Text,
+  View,
+} from 'react-native';
+import React, {useState, useEffect} from 'react';
 import {navigationRef} from '../../../../App';
 import CommonTextInput from '../../../components/Input/InputBox';
 import CommonButton from '../../../components/CommonButton/CommonButton';
@@ -9,8 +17,12 @@ import {RadioButton} from 'react-native-paper';
 import {COLORS} from '../../../utils/theme';
 import Back from '../../../components/BackButton/Back';
 import {scale} from 'react-native-size-matters';
-import { useDispatch } from 'react-redux';
-import { setUserData } from '../../../redux/reducers/User';
+import {useDispatch} from 'react-redux';
+import {setUserData} from '../../../redux/reducers/User';
+import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
+import * as Yup from 'yup';
+// import {PostApi} from '../../../services/ApisMethods';
+import {PostApi, PostApi2} from '../../../services/ApisMethods';
 
 const Signup = () => {
   const userData = [
@@ -37,6 +49,8 @@ const Signup = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [selectedOption, setSelectedOption] = useState(null);
+  const [error, setErrors] = useState();
+
   const options = ['Fitter', 'Surveyor'];
   const handleOptionPress = option => {
     setSelectedOption(option);
@@ -47,23 +61,82 @@ const Signup = () => {
       index: 0,
       routes: [{name: 'tabs'}],
     }),
-    dispatch(setUserData(userData[1]))
+      dispatch(setUserData(userData[1]));
   };
-  const onBackPress = () => {
-    navigationRef.goBack();
+
+  const validationSchema = Yup.object().shape({
+    name: Yup.string().required('First Name is required'),
+    email: Yup.string()
+      .email('Invalid email format')
+      .required('Email is required'),
+    password: Yup.string()
+      .required('Password is required')
+      .min(8, 'Password must be at least 8 characters'),
+    cPassword: Yup.string()
+      .required('Confirm Password is required')
+      .oneOf([Yup.ref('password'), null], 'Passwords must match'),
+    selectedOption: Yup.string()
+      .required('Role is required')
+      .oneOf(['Fitter', 'Surveyor'], 'Role must be either Fitter or Surveyor'),
+  });
+
+  const handleSignUp = async () => {
+    console.log('selectedOption', selectedOption);
+    try {
+      // Validate form inputs
+      await validationSchema.validate(
+        {name, email, password, cPassword, selectedOption},
+        {abortEarly: false},
+      );
+
+      // Form inputs are valid, proceed with signup
+      const params = {
+        name,
+        email,
+        password,
+        role: selectedOption,
+      };
+      console.log('params----', params);
+      const response = await PostApi('signup', params);
+      if (response?.data) {
+        console.log(response.data, 'res?.data');
+        navigationRef.reset({
+          index: 0,
+          routes: [{name: 'tabs'}],
+        }),
+          dispatch(setUserData(userData[1]));
+      } else {
+        console.log(response, 'res');
+      }
+    } catch (error) {
+      console.log(error, '------errors');
+      const validationErrors = {};
+      if (error.inner) {
+        error.inner.forEach(err => {
+          console.log(err, 'checking it ', err.path);
+          validationErrors[err.path] = err.message;
+        });
+      }
+      setErrors(validationErrors);
+      console.error(error.errors ? error.errors[0] : error);
+    }
   };
+
+  useEffect(() => {
+    console.log(error, 'here we have this');
+  }, [error]);
   return (
-    <View style={{flex: 1, paddingTop: 110}}>
+    <View
+      style={{flex: 1, paddingTop: Platform.OS === 'android' ? 0 : scale(120)}}>
       <CommonBackground title={'Sign Up'} />
-      <SafeAreaView />
       <ScrollView
         showsVerticalScrollIndicator={false}
+        automaticallyAdjustKeyboardInsets
         contentContainerStyle={{
-          paddingTop: height / 9.5,
-          marginTop: scale(111),
+          // flex:1,
           flexGrow: 1,
-        }}
-        automaticallyAdjustKeyboardInsets>
+          paddingTop: Platform?.OS === 'android' ? height / 2.8 : height / 4.1,
+        }}>
         <View style={styles.innerBox}>
           <View style={styles.radioBox}>
             {options.map(option => (
@@ -86,6 +159,9 @@ const Signup = () => {
               value={name}
               onChangeText={newText => setName(newText)}
             />
+            {error && error?.firstName && (
+              <Text style={styles.erroz}>{error && error?.firstName}</Text>
+            )}
             <CommonTextInput
               placeholder="Email Address"
               value={email}
@@ -105,27 +181,27 @@ const Signup = () => {
           <CommonButton
             style={styles.Button}
             title="Sign Up"
-            onPress={onPress}
+            onPress={handleSignUp}
           />
         </View>
-        <Text
-          style={{
-            alignSelf: 'center',
-            bottom: 30,
-            position: 'absolute',
-            fontWeight: 300,
-          }}>
-          Already have an account ?
-          <Text
-            onPress={() => {
-              navigationRef.navigate('Login');
-            }}
-            style={{fontWeight: 500}}>
-            {' '}
-            Login
-          </Text>
-        </Text>
       </ScrollView>
+      <Text
+        style={{
+          alignSelf: 'center',
+          bottom: 30,
+          position: 'absolute',
+          fontWeight: 300,
+        }}>
+        Already have an account ?
+        <Text
+          onPress={() => {
+            navigationRef.navigate('Login');
+          }}
+          style={{fontWeight: 500}}>
+          {' '}
+          Login
+        </Text>
+      </Text>
     </View>
   );
 };
@@ -134,7 +210,8 @@ export default Signup;
 
 const styles = StyleSheet.create({
   innerBox: {
-    height: height / 1.8,
+    // top:height/2.75,
+    minHeight: height / 1.8,
     width: '90%',
     backgroundColor: 'white',
     marginHorizontal: 20,
@@ -148,6 +225,7 @@ const styles = StyleSheet.create({
     shadowRadius: 16.27,
     elevation: 14,
     bottom: '6%',
+    // marginBottom:150
   },
   radioBox: {
     flexDirection: 'row',

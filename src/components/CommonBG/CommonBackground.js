@@ -1,4 +1,11 @@
-import {Image, StyleSheet, Text, View} from 'react-native';
+import {
+  Image,
+  Platform,
+  SafeAreaView,
+  StyleSheet,
+  Text,
+  View,
+} from 'react-native';
 import React from 'react';
 import {moderateScale, scale, verticalScale} from 'react-native-size-matters';
 import {height} from '../../assets/styles/styles';
@@ -8,7 +15,7 @@ import Back from '../BackButton/Back';
 
 const CommonBackground = ({back, title}) => {
   const onBackPress = () => {
-    navigationRef.goBack();
+    navigationRef.goBack(), console.log('hrllo');
   };
   const style = {
     left: 15,
@@ -24,6 +31,8 @@ const CommonBackground = ({back, title}) => {
         position: 'absolute',
         justifyContent: 'center',
         alignItems: 'center',
+        marginTop: Platform?.OS === 'android' ? -35 : 0,
+        // backgroundColor:'red'
       }}>
       {!back ? <Back style={style} onPress={onBackPress} /> : null}
       <Image

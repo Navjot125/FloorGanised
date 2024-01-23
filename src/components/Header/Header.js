@@ -1,4 +1,11 @@
-import {FlatList, StyleSheet, Text, View, TouchableOpacity} from 'react-native';
+import {
+  FlatList,
+  StyleSheet,
+  Text,
+  View,
+  TouchableOpacity,
+  Platform,
+} from 'react-native';
 import React, {useEffect} from 'react';
 import {height, width} from '../../assets/styles/styles';
 import Back from '../BackButton/Back';
@@ -21,6 +28,7 @@ const Header = ({title, back}) => {
         justifyContent: 'space-between',
         alignItems: 'center',
         marginBottom: 20,
+        marginTop: Platform?.OS === 'android' ? scale(15) : 0,
       }}>
       {back ? (
         <View

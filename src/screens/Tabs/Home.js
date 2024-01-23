@@ -35,7 +35,7 @@ const Home = () => {
             justifyContent: 'space-between',
             alignItems: 'center',
             paddingHorizontal: 15,
-          }}>
+          }}> 
           <Text
             style={{
               fontSize: 16,

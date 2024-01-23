@@ -12,6 +12,7 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {Provider} from 'react-redux';
 import {store} from './src/redux/store';
 import {FitterStackNavigator} from './src/Navigation/FitterNavigator';
+import {COLORS} from './src/utils/theme';
 export const navigationRef = createNavigationContainerRef();
 const Stack = createNativeStackNavigator();
 
@@ -28,7 +29,7 @@ export default function App() {
   const role = 2;
   return (
     <Provider store={store}>
-      <StatusBar barStyle="light-content" />
+      <StatusBar backgroundColor={COLORS.black} barStyle="light-content" />
       <NavigationContainer ref={navigationRef}>
         <Stack.Navigator screenOptions={{headerShown: false}}>
           <Stack.Screen name="Root">{() => <AuthNavigator />}</Stack.Screen>

@@ -1,4 +1,6 @@
 import {
+  KeyboardAvoidingView,
+  Platform,
   SafeAreaView,
   ScrollView,
   StyleSheet,
@@ -32,13 +34,19 @@ const Login = () => {
   };
 
   return (
-    <View style={{flex: 1}}>
+    <View
+      style={{
+        flex: 1,
+      }}>
       <CommonBackground back={true} title={'Login'} />
       <SafeAreaView />
       <ScrollView
-        contentContainerStyle={{marginTop: height / 4, flexGrow: 1}}
+        contentContainerStyle={{
+          flexGrow: 1,
+          paddingTop: Platform?.OS === 'android' ? height / 3.1 : height / 4,
+        }}
         showsVerticalScrollIndicator={false}
-        automaticallyAdjustKeyboardInsets>
+        automaticallyAdjustKeyboardInsets={true}>
         <View style={styles.innerBox}>
           <View style={styles.radioBox}>
             {options.map(option => (

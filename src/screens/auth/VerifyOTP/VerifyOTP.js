@@ -1,5 +1,8 @@
 import {
+  KeyboardAvoidingView,
+  Platform,
   SafeAreaView,
+  ScrollView,
   StyleSheet,
   Text,
   TouchableOpacity,
@@ -11,7 +14,8 @@ import CommonButton from '../../../components/CommonButton/CommonButton';
 import CommonBackground from '../../../components/CommonBG/CommonBackground';
 import {height} from '../../../assets/styles/styles';
 import {COLORS} from '../../../utils/theme';
-import OTPInputView from '@twotalltotems/react-native-otp-input'
+
+import OTPTextInput from 'react-native-otp-textinput';
 import Back from '../../../components/BackButton/Back';
 import {scale} from 'react-native-size-matters';
 import {useDispatch} from 'react-redux';
@@ -21,6 +25,9 @@ const VerifyOTP = ({route}) => {
   const GoTo = route?.params?.reset;
   const [code, setCode] = useState('');
   const dispatch = useDispatch();
+  const handleOtpChange = value => {
+    setCode(value);
+  };
   const userData = [
     {
       name: 'Navjot Singh',
@@ -53,59 +60,62 @@ const VerifyOTP = ({route}) => {
   };
 
   return (
-    <View style={{flex: 1}}>
+    <View style={{flexGrow: 1,paddingTop: Platform.OS === 'android' ? 0 : scale(120)}}>
       <CommonBackground title={'Verify OTP'} />
-      <SafeAreaView />
-      <View style={{paddingTop: height / 9.5, marginTop: scale(144)}}>
-        <View style={styles.innerBox}>
+      <KeyboardAvoidingView style={{flexGrow: 1}}>
+        <SafeAreaView />
+        <ScrollView
+          contentContainerStyle={{
+            paddingTop:
+              Platform?.OS === 'android' ? height / 3.1 : height / 4.8,
+            flexGrow: 1,
+          }}>
+          <View style={styles.innerBox}>
+            <Text
+              style={{
+                paddingHorizontal: 60,
+                color: COLORS.secondry,
+                paddingVertical: 40,
+                fontWeight: 500,
+                fontSize: 14,
+                lineHeight: 22,
+              }}>
+              Enter OTP for verification. Please check your registered email &
+              enter the same below.
+            </Text>
+            <View style={{alignSelf: 'center'}}>
+              <OTPTextInput
+                containerStyle={styles.otpContainer}
+                textInputStyle={[styles.otpInput, {color: COLORS.grey}]}
+                handleTextChange={handleOtpChange}
+                inputCount={4} 
+                // keyboardType="numeric"
+                keyboardType="numbers-and-punctuation"
+                tintColor={COLORS.primary}
+                // offTintColor={"#B79B58"}
+              />
+            </View>
+            <CommonButton
+              style={styles.Button}
+              title="Verify"
+              onPress={onPress}
+            />
+          </View>
           <Text
             style={{
-              paddingHorizontal: 60,
-              color: COLORS.secondry,
-              paddingVertical: 40,
-              fontWeight: 500,
-              fontSize: 14,
-              lineHeight: 22,
+              alignSelf: 'center',
+              bottom: 30,
+              position: 'absolute',
+              fontWeight: 300,
             }}>
-            Enter OTP for verification. Please check your registered email &
-            enter the same below.
+            Not received ?
+            <Text style={{fontWeight: 500}} onPress={() => {}}>
+              {' '}
+              Resend OTP
+            </Text>
           </Text>
-          <View style={{alignSelf: 'center'}}>
-            {/* <OTPInputView
-              style={{width: '80%', height: 100}}
-              pinCount={4}
-              code={code} //You can supply this prop or not. The component will be used as a controlled / uncontrolled component respectively.
-              onCodeChanged={code => {
-                setCode(code);
-              }}
-              autoFocusOnLoad
-              codeInputFieldStyle={styles.underlineStyleBase}
-              codeInputHighlightStyle={styles.underlineStyleHighLighted}
-              onCodeFilled={code => {
-                console.log(`Code is ${code}, you are good to go!`);
-              }}
-            /> */}
-          </View>
-          <CommonButton
-            style={styles.Button}
-            title="Verify"
-            onPress={onPress}
-          />
-        </View>
-      </View>
-      <Text
-        style={{
-          alignSelf: 'center',
-          bottom: 30,
-          position: 'absolute',
-          fontWeight: 300,
-        }}>
-        Not received ?
-        <Text style={{fontWeight: 500}} onPress={() => {}}>
-          {' '}
-          Resend OTP
-        </Text>
-      </Text>
+        </ScrollView>
+      </KeyboardAvoidingView>
     </View>
   );
 };
@@ -114,7 +124,8 @@ export default VerifyOTP;
 
 const styles = StyleSheet.create({
   innerBox: {
-    height: height / 2.4,
+    // height: height / 2.4,
+    minHeight: height / 2.6,
     width: '90%',
     backgroundColor: 'white',
     marginHorizontal: 20,
@@ -127,6 +138,8 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.1,
     shadowRadius: 16.27,
     elevation: 14,
+  
+    // marginBottom: 30,
   },
   radioBox: {
     flexDirection: 'row',
@@ -156,5 +169,17 @@ const styles = StyleSheet.create({
   },
   underlineStyleHighLighted: {
     borderColor: COLORS.secondr,
+  },
+  otpContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    color: '#30334F',
+  },
+  otpInput: {
+    width: 55,
+    height: 55,
+    borderWidth: 3,
+    textAlign: 'center',
+    borderRadius: 40,
   },
 });

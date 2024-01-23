@@ -1,4 +1,5 @@
 import {
+  Platform,
   SafeAreaView,
   ScrollView,
   StyleSheet,
@@ -17,7 +18,7 @@ import {COLORS} from '../../../utils/theme';
 import CommonModal from '../../../components/Modal/Modal';
 import ResetSuccess from '../../../assets/images/ResetSuccess.png';
 import Back from '../../../components/BackButton/Back';
-import { scale } from 'react-native-size-matters';
+import {scale} from 'react-native-size-matters';
 const ResetPassword = () => {
   const [cPassword, setCPassword] = useState('');
   const [modalCondition, setModalCondition] = useState(false);
@@ -42,11 +43,15 @@ const ResetPassword = () => {
   const description =
     'Your password has been reset successfully. Click on the below button to login with the new password. ';
   return (
-    <View style={{flex: 1, paddingTop: 110}}>
+    <View style={{flex: 1, paddingTop: scale(110)}}>
       <CommonBackground title={'Reset Password'} />
       <SafeAreaView />
       <ScrollView
-        contentContainerStyle={{paddingTop: height / 9.5, marginTop: scale(98)}}
+        contentContainerStyle={{
+          paddingTop:
+          Platform?.OS === 'android' ? height / 5.6 : height / 4.5,
+          flexGrow: 1,
+        }}
         automaticallyAdjustKeyboardInsets>
         <View style={styles.innerBox}>
           <Text
@@ -101,6 +106,7 @@ const ResetPassword = () => {
         img={ResetSuccess}
         title={title}
         description={description}
+        buttonTitle={'Login'}
       />
     </View>
   );
@@ -122,7 +128,7 @@ const styles = StyleSheet.create({
     },
     shadowOpacity: 0.1,
     shadowRadius: 16.27,
-    elevation: 24,
+    elevation: 14,
   },
   radioBox: {
     flexDirection: 'row',

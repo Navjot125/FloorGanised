@@ -1,4 +1,5 @@
 import {
+  Platform,
   SafeAreaView,
   ScrollView,
   StyleSheet,
@@ -36,19 +37,17 @@ const ForgotPassword = () => {
   };
 
   return (
-    <View style={{flex: 1}}>
-      <Back onPress={onBackPress} />
+    <View style={{flex: 1, paddingTop: Platform.OS === 'android' ? 0 : scale(120)}}>
       <CommonBackground title={'Forgot Password'} />
       <SafeAreaView />
       <ScrollView
         contentContainerStyle={{
-          paddingTop: height / 9.5,
+          paddingTop: Platform?.OS === 'android' ? height / 7.8 : height / 105.5,
           marginTop: scale(144),
           flexGrow: 1,
         }}
         showsVerticalScrollIndicator={false}
         automaticallyAdjustKeyboardInsets
-        //  style={{paddingTop: height / 9.5, marginTop: scale(144)}}
       >
         <View style={styles.innerBox}>
           <Text
@@ -75,21 +74,21 @@ const ForgotPassword = () => {
             onPress={onPress}
           />
         </View>
-      <Text
-        style={{
-          alignSelf: 'center',
-          bottom: 30,
-          position: 'absolute',
-          fontWeight: 300,
-        }}>
-        Back to
         <Text
-          style={{fontWeight: 500}}
-          onPress={() => navigationRef.navigate('Login')}>
-          {' '}
-          Login
+          style={{
+            alignSelf: 'center',
+            bottom: 30,
+            position: 'absolute',
+            fontWeight: 300,
+          }}>
+          Back to
+          <Text
+            style={{fontWeight: 500}}
+            onPress={() => navigationRef.navigate('Login')}>
+            {' '}
+            Login
+          </Text>
         </Text>
-      </Text>
       </ScrollView>
     </View>
   );
