@@ -15,6 +15,7 @@ import {Calendar, LocaleConfig} from 'react-native-calendars';
 import Modal from 'react-native-modal';
 import {setSelecteddate} from '../../redux/reducers/Dates';
 import {COLORS} from '../theme';
+import { setSelectedDateReducer } from '../../redux/actions/DateAction';
 const moment = require('moment');
 
 const CalendarStrip = ({loader}) => {
@@ -29,8 +30,10 @@ const CalendarStrip = ({loader}) => {
 
   const dispatch = useDispatch();
   const navigation = useNavigation();
-  const date = useSelector(state => state.date.date);
-  const SelectedDate = useSelector(state => state.date.selectedDate);
+  console.log('date-----------',date);
+  const date = useSelector(state => state.DateReducer.dates);
+
+  const SelectedDate = useSelector(state => state.DateReducer.selectedDate);
   const [selectedId, setSelectedId] = useState(0);
   const setdateFromCalendar = day => {
     let days = new Date(day.dateString);
@@ -95,7 +98,7 @@ const CalendarStrip = ({loader}) => {
       <Item
         item={item}
         onPress={() => {
-          setSelectedId(item?.id), dispatch(setSelecteddate(item));
+          setSelectedId(item?.id), dispatch(setSelectedDateReducer(item));
         }}
         onPress2={() => {
           setModalVisible(true), setSelectedId(item?.id);
@@ -107,17 +110,16 @@ const CalendarStrip = ({loader}) => {
   };
   return (
     <>
-    <View >
-
-      <FlatList
-        style={{marginRight: -15}}
-        horizontal={true}
-        showsHorizontalScrollIndicator={false}
-        data={date ? date : ''}
-        renderItem={renderItem1}
-        keyExtractor={date?.id}
+      <View>
+        <FlatList
+          style={{marginRight: -15}}
+          horizontal={true}
+          showsHorizontalScrollIndicator={false}
+          data={date ? date : ''}
+          renderItem={renderItem1}
+          keyExtractor={date?.id}
         />
-        </View>
+      </View>
       <Modal
         backdropColor="transparent"
         propagateSwipe={true}

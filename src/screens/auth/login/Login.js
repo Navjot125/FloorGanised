@@ -8,7 +8,7 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {navigationRef} from '../../../App';
 import CommonTextInput from '../../../components/Input/InputBox';
 import CommonButton from '../../../components/CommonButton/CommonButton';
@@ -21,6 +21,7 @@ import {useDispatch} from 'react-redux';
 import {PostApi} from '../../../services/ApisMethods';
 import {setUserData} from '../../../redux/reducers/User';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { loginRequest } from '../../../redux/actions/onBoardingAction';
 
 const Login = () => {
   const dispatch = useDispatch();
@@ -28,6 +29,14 @@ const Login = () => {
   const [password, setPassword] = useState("Delhi@1A");
   const [selectedOption, setSelectedOption] = useState(null);
   const [error, setErrors] = useState();
+  const [userDataState, setUserDataState] = useState(
+   { email,
+    password,
+    selectedOption}
+  );
+  useEffect(()=>{
+    setUserDataState({email,password,selectedOption})
+  },[email,password,selectedOption])
   const options = ['Fitter', 'Surveyor'];
   const handleOptionPress = option => {
     setSelectedOption(option);
@@ -52,6 +61,11 @@ const Login = () => {
       .oneOf(['Fitter', 'Surveyor'], 'Role must be either Fitter or Surveyor'),
   });
 
+const handleLoginSaga = ()=>{
+  // userDataState
+  dispatch(loginRequest(userDataState))
+}
+
   const handleLogin = async () => {
     try {
       // Validate form inputs
@@ -68,7 +82,7 @@ const Login = () => {
       console.log('params----', params);
       const response = await PostApi('login', params);
       if (response?.data) {
-        console.log(response.data, 'res?.data');
+        // console.log(response.data, 'res?.data');
         // navigationRef.reset({
         //   index: 0,
         //   routes: [{name: 'tabs'}],

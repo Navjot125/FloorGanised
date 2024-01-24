@@ -17,6 +17,7 @@ import {COLORS} from '../utils/theme';
 import {useDispatch, useSelector} from 'react-redux';
 import {setSelecteddate, setdate} from '../redux/reducers/Dates';
 import {dateListing} from '../utils/Dates/DateLimit';
+import { setDate, setSelectedDateReducer } from '../redux/actions/DateAction';
 const moment = require('moment');
 const Tab = createBottomTabNavigator();
 
@@ -25,7 +26,9 @@ const BottomTabNavigator = ({}) => {
   const [open, setOpen] = useState(false);
   const [isModalVisible, setModalVisible] = useState(false);
   const dispatch = useDispatch();
-  const date = useSelector(state => state.date.date);
+  // const date = useSelector(state => state.date.date);
+  const date = useSelector(state => state.DateReducer);
+  // console.log('date-----',date);
   // const user = useSelector(state => state.user.data);
   const [minDate, setMinDate] = useState(
     new Date().toISOString().split('T')[0],
@@ -46,16 +49,21 @@ const BottomTabNavigator = ({}) => {
   //       .catch(err => {
   //         console.log(err);
   //       });
-  //   }
+  //   } 
   // }, [user]);
 
+  // useEffect(() => {
+  //   if (!date) {
+  //     dispatch(setdate(dateListing()));
+  //   }
+  // }, [date]);
   useEffect(() => {
-    if (!date) {
-      dispatch(setdate(dateListing()));
-    }
-  }, [date]);
+    // if (!date) {
+      dispatch(setDate(dateListing()));
+    // }
+  }, []);
   useEffect(() => {
-    dispatch(setSelecteddate(dateListing()[0]));
+    dispatch(setSelectedDateReducer(dateListing()[0]));
   }, []);
   return (
     <>

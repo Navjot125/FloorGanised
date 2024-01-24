@@ -10,7 +10,7 @@ import AuthNavigator from './Navigation/AuthNavigator';
 import {BottomTabNavigator} from './Navigation/BottomTabNavigator';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {Provider} from 'react-redux';
-import {store} from './redux/store';
+import store from './redux/store';
 import {FitterStackNavigator} from './Navigation/FitterNavigator';
 import {COLORS} from './utils/theme';
 import RootNavigation from './Navigation/RootNavigation';
@@ -31,7 +31,7 @@ export default function App() {
       <StatusBar backgroundColor={COLORS.black} barStyle="light-content" />
       <NavigationContainer ref={navigationRef}>
         <RootNavigation />
-        </NavigationContainer>
+      </NavigationContainer>
     </Provider>
   );
 }
