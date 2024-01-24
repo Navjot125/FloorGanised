@@ -5,32 +5,34 @@ import {
   NavigationContainer,
   createNavigationContainerRef,
 } from '@react-navigation/native';
-import {MainStackNavigator} from './src/Navigation/StackNavigator';
-import AuthNavigator from './src/Navigation/AuthNavigator';
-import {BottomTabNavigator} from './src/Navigation/BottomTabNavigator';
+import {MainStackNavigator} from './Navigation/StackNavigator';
+import AuthNavigator from './Navigation/AuthNavigator';
+import {BottomTabNavigator} from './Navigation/BottomTabNavigator';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {Provider} from 'react-redux';
-import {store} from './src/redux/store';
-import {FitterStackNavigator} from './src/Navigation/FitterNavigator';
-import {COLORS} from './src/utils/theme';
+import {store} from './redux/store';
+import {FitterStackNavigator} from './Navigation/FitterNavigator';
+import {COLORS} from './utils/theme';
+import RootNavigation from './Navigation/RootNavigation';
 export const navigationRef = createNavigationContainerRef();
 const Stack = createNativeStackNavigator();
 
 export default function App() {
-  LogBox.ignoreLogs([
-    'Require cycle: src/Navigation/AuthNavigator.js -> src/screens/Common/AppIntroSlider.js -> src/Navigation/AuthNavigator.js',
-  ]);
+  // LogBox.ignoreLogs([
+  //   'Require cycle: src/Navigation/AuthNavigator.js -> src/screens/Common/AppIntroSlider.js -> src/Navigation/AuthNavigator.js',
+  // ]);
   useEffect(() => {
     setTimeout(() => {
       SplashScreen.hide();
     }, 2000);
   }, []);
-
-  const role = 2;
   return (
     <Provider store={store}>
       <StatusBar backgroundColor={COLORS.black} barStyle="light-content" />
       <NavigationContainer ref={navigationRef}>
+        <RootNavigation />
+        </NavigationContainer>
+      {/* <NavigationContainer ref={navigationRef}>
         <Stack.Navigator screenOptions={{headerShown: false}}>
           <Stack.Screen name="Root">{() => <AuthNavigator />}</Stack.Screen>
           <Stack.Screen name="tabs">
@@ -46,7 +48,25 @@ export default function App() {
             </Stack.Screen>
           )}
         </Stack.Navigator>
-      </NavigationContainer>
+      </NavigationContainer> */}
     </Provider>
   );
+}
+
+{
+  /* <Stack.Navigator screenOptions={{headerShown: false}}>
+  <Stack.Screen name="Root">{() => <AuthNavigator />}</Stack.Screen>
+  <Stack.Screen name="tabs">
+    {() => <BottomTabNavigator />}
+  </Stack.Screen>
+  {role == 1 ? (
+    <Stack.Screen name="Main">
+      {() => <MainStackNavigator />}
+    </Stack.Screen>
+  ) : (
+    <Stack.Screen name="Fitter">
+      {() => <FitterStackNavigator />}
+    </Stack.Screen>
+  )}
+</Stack.Navigator> */
 }

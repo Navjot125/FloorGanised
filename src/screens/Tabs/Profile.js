@@ -8,7 +8,7 @@ import {
   SafeAreaView,
 } from 'react-native';
 import React, {useEffect} from 'react';
-import {navigationRef} from '../../../App';
+import {navigationRef} from '../../App';
 import {dateListing} from '../../utils/Dates/DateLimit';
 import CalendarStrip from '../../utils/Dates/CalendarStrip';
 import {height} from '../../assets/styles/styles';
@@ -16,11 +16,14 @@ import {HistoryData, HomeData} from '../../config/DummyData';
 import {COLORS} from '../../utils/theme';
 import Header from '../../components/Header/Header';
 import {scale} from 'react-native-size-matters';
-import {useSelector} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
+import {removeUserData} from '../../redux/reducers/User';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const Profile = () => {
+  const dispatch = useDispatch();
   const userData = useSelector(state => state?.userData?.data);
-  const screen = userData?.role === 1 ? 'Main' : 'Fitter';
+  const screen = userData?.role === 'Surveyor' ? 'Main' : 'Fitter';
   const screens = [
     {
       name: 'Manage Profile',
@@ -30,17 +33,22 @@ const Profile = () => {
     {
       name: 'Change Password',
       screen: 'ChangePassword',
-      _id: 0,
+      _id: 1,
     },
     {
       name: 'Terms & Conditions',
       screen: 'TermsConditions',
-      _id: 0,
+      _id: 2,
     },
     {
       name: 'Contact Us',
       screen: 'ContactUs',
-      _id: 0,
+      _id: 3,
+    },
+    {
+      name: 'Log Out',
+      screen: '',
+      _id: 4,
     },
   ];
 
@@ -49,7 +57,15 @@ const Profile = () => {
       <TouchableOpacity
         style={styles.container}
         onPress={() => {
-          navigationRef.navigate(screen, {screen: item?.screen});
+          item?.name == 'Log Out'
+            ? // navigationRef.navigate('Root', {screen: 'Login'})
+              (navigationRef.reset({
+                routes: [{name: 'Root', params: {screen: 'Login'}}],
+              }),
+              dispatch(removeUserData()),
+              AsyncStorage.removeItem('token'))
+            : // item?.name == "Log Out" ? navigationRef.navigate('Login'):
+              navigationRef.navigate(screen, {screen: item?.screen});
         }}>
         <Text style={{fontWeight: 500, fontSize: 14}}> {item?.name} </Text>
         <Image
@@ -82,10 +98,14 @@ const Profile = () => {
             source={require('../../assets/images/profile.png')}
           />
           <Text style={{fontWeight: 600, fontSize: 16, marginTop: 10}}>
-            John Watson
+            {userData?.name}
           </Text>
         </View>
-        <FlatList data={screens} renderItem={renderItem}  contentContainerStyle={{paddingBottom: 20}}/>
+        <FlatList
+          data={screens}
+          renderItem={renderItem}
+          contentContainerStyle={{paddingBottom: 20}}
+        />
       </View>
     </View>
   );

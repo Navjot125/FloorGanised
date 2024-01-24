@@ -7,7 +7,7 @@ import {
   SafeAreaView,
 } from 'react-native';
 import React, {useEffect} from 'react';
-import {navigationRef} from '../../../App';
+import {navigationRef} from '../../App';
 import {dateListing} from '../../utils/Dates/DateLimit';
 import CalendarStrip from '../../utils/Dates/CalendarStrip';
 import {height} from '../../assets/styles/styles';
@@ -23,8 +23,9 @@ const Home = () => {
     dateListing();
   }, []);
   const userData = useSelector(state => state?.userData?.data);
-  const stack = userData?.role == 1 ? 'Main' : 'Fitter';
-  const screen = userData?.role == 1 ? 'Detail' : 'FitterDetail';
+  const stack = userData?.role == "Surveyor" ? 'Main' : 'Fitter';
+  const screen = userData?.role == "Surveyor" ? 'Detail' : 'FitterDetail';
+  console.log('userData', userData?.role);
   const renderItem = ({item, index}) => {
     return (
       <View style={styles.container}>
@@ -35,7 +36,7 @@ const Home = () => {
             justifyContent: 'space-between',
             alignItems: 'center',
             paddingHorizontal: 15,
-          }}> 
+          }}>
           <Text
             style={{
               fontSize: 16,
@@ -80,9 +81,11 @@ const Home = () => {
           </Text>
           <TouchableOpacity
             onPress={() => {
-              index == 0 && userData?.role == 2
-                ? navigationRef.navigate(stack, {screen: 'JobCompleteForm'})
-                : navigationRef.navigate(stack, {screen: screen});
+              // navigationRef.navigate("Main", {screen: 'Detail'})
+              navigationRef.navigate("Fitter", {screen: 'FitterDetail'})
+              // index == 0 && userData?.role == "Fitter"
+              //   ? navigationRef.navigate(stack, {screen: 'JobCompleteForm'})
+              //   : navigationRef.navigate(stack, {screen: screen});
             }}
             style={{
               backgroundColor: COLORS.primary,
@@ -97,7 +100,7 @@ const Home = () => {
                 fontSize: 12,
                 fontWeight: 500,
               }}>
-              {index == 0 && userData?.role == 2 ? 'On Work' : 'Details'}
+              {index == 0 && userData?.role == "Fitter" ? 'On Work' : 'Details'}
             </Text>
           </TouchableOpacity>
         </View>

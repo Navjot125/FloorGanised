@@ -8,7 +8,7 @@ import {
   View,
 } from 'react-native';
 import React, {useState} from 'react';
-import {navigationRef} from '../../../../App';
+import {navigationRef} from '../../../App';
 import CommonTextInput from '../../../components/Input/InputBox';
 import CommonButton from '../../../components/CommonButton/CommonButton';
 import CommonBackground from '../../../components/CommonBG/CommonBackground';

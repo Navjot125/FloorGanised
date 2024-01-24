@@ -13,7 +13,7 @@ import {COLORS} from '../../utils/theme';
 import Header from '../../components/Header/Header';
 import {jobForm} from '../../config/DummyData';
 import CommonButton from '../../components/CommonButton/CommonButton';
-import { navigationRef } from '../../../App';
+import { navigationRef } from '../../App';
 
 const JobCompleteForm = () => {
   const [selectedItems, setSelectedItems] = useState(jobForm);

@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import {StyleSheet} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import {navigationRef} from '../../App';
+import {navigationRef} from '../App';
 import FitterDetail from '../screens/Fitter/FitterDetails';
 import MeasuringQuestionnaire from '../screens/Common/MeasuringQuestionnaire';
 import JobCompleteForm from '../screens/Fitter/JobCompleteForm';
@@ -21,7 +21,7 @@ const FitterStackNavigator = ({}) => {
   };
   return (
     <>
-      <Stack.Navigator>
+      <Stack.Navigator initialRouteName='FitterDetail'>
         <Stack.Screen
           name="FitterDetail"
           options={({navigation}) => ({

@@ -11,7 +11,7 @@ import {height, width} from '../../assets/styles/styles';
 import Back from '../BackButton/Back';
 import {scale} from 'react-native-size-matters';
 import {COLORS} from '../../utils/theme';
-import {navigationRef} from '../../../App';
+import {navigationRef} from '../../App';
 
 const Header = ({title, back}) => {
   const onPress = () => {

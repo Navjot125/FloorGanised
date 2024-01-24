@@ -6,11 +6,11 @@ import {COLORS} from '../../utils/theme';
 import CommonTextInput from '../../components/Input/InputBox';
 import CommonButton from '../../components/CommonButton/CommonButton';
 import { useSelector } from 'react-redux';
-import { navigationRef } from '../../../App';
+import { navigationRef } from '../../App';
 
 const ChangePassword = () => {
   const userData = useSelector(state => state?.userData?.data);
-  const screen = userData?.role === 1 ? 'Main' : 'Fitter';
+  const screen = userData?.role === "Surveyor" ? 'Main' : 'Fitter';
   const [currentPassword, setCurrentPassword] = useState();
   const [password, setPassword] = useState();
   const [confirmPassword, setConfirmPassword] = useState();

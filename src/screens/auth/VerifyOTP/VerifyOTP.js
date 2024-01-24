@@ -9,7 +9,7 @@ import {
   View,
 } from 'react-native';
 import React, {useState} from 'react';
-import {navigationRef} from '../../../../App';
+import {navigationRef} from '../../../App';
 import CommonButton from '../../../components/CommonButton/CommonButton';
 import CommonBackground from '../../../components/CommonBG/CommonBackground';
 import {height} from '../../../assets/styles/styles';

@@ -9,7 +9,7 @@ import {
   View,
 } from 'react-native';
 import React, {useState} from 'react';
-import {navigationRef} from '../../../../App';
+import {navigationRef} from '../../../App';
 import CommonTextInput from '../../../components/Input/InputBox';
 import CommonButton from '../../../components/CommonButton/CommonButton';
 import CommonBackground from '../../../components/CommonBG/CommonBackground';
@@ -17,13 +17,15 @@ import {height} from '../../../assets/styles/styles';
 import {RadioButton} from 'react-native-paper';
 import {COLORS} from '../../../utils/theme';
 import * as Yup from 'yup';
-import { useDispatch } from 'react-redux';
-import { PostApi } from '../../../services/ApisMethods';
+import {useDispatch} from 'react-redux';
+import {PostApi} from '../../../services/ApisMethods';
+import {setUserData} from '../../../redux/reducers/User';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const Login = () => {
-  const dispatch = useDispatch()
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const dispatch = useDispatch();
+  const [email, setEmail] = useState('Navjots.indiit@gmail.com');
+  const [password, setPassword] = useState("Delhi@1A");
   const [selectedOption, setSelectedOption] = useState(null);
   const [error, setErrors] = useState();
   const options = ['Fitter', 'Surveyor'];
@@ -65,14 +67,32 @@ const Login = () => {
       };
       console.log('params----', params);
       const response = await PostApi('login', params);
-      console.log(response,'[-------');
       if (response?.data) {
         console.log(response.data, 'res?.data');
+        // navigationRef.reset({
+        //   index: 0,
+        //   routes: [{name: 'tabs'}],
+        // }),
         navigationRef.reset({
           index: 0,
-          routes: [{name: 'tabs'}],
+          routes: [{name: 'tabs', params: {screen: 'Home'}}],
         }),
-          dispatch(setUserData(response.data));
+          // navigationRef.reset({
+          //   index: 0,
+          //   routes: [
+          //     {
+          //       name: 'tabs',
+          //       screen: 'Home',
+          //       params: {},
+          //     },
+          //   ],
+          // });
+          await AsyncStorage.setItem(
+            'token',
+            JSON.stringify(response.data.token),
+          );
+        await AsyncStorage.setItem('role', JSON.stringify(response.data.role));
+        dispatch(setUserData(response.data));
       } else {
         console.log(response, 'res');
       }
@@ -137,7 +157,11 @@ const Login = () => {
             onPress={() => navigationRef.navigate('ForgotPassword')}>
             <Text style={{fontWeight: 500}}>Forgot Password?</Text>
           </TouchableOpacity>
-          <CommonButton style={styles.Button} title="Login" onPress={handleLogin} />
+          <CommonButton
+            style={styles.Button}
+            title="Login"
+            onPress={handleLogin}
+          />
         </View>
         <Text
           style={{

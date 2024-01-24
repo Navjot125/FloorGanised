@@ -15,7 +15,7 @@ import DropDown from '../../components/DropDown/DropDown';
 import {RadioButton} from 'react-native-paper';
 import CommonTextInput from '../../components/Input/InputBox';
 import CommonButton from '../../components/CommonButton/CommonButton';
-import {navigationRef} from '../../../App';
+import {navigationRef} from '../../App';
 import CommonModal from '../../components/Modal/Modal';
 import jobComplete from '../../assets/images/jobComplete.png';
 import Header from '../../components/Header/Header';

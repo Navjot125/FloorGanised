@@ -16,7 +16,7 @@ import Feather from 'react-native-vector-icons/Feather';
 import Header from '../../components/Header/Header';
 import {COLORS} from '../../utils/theme';
 import CommonButton from '../../components/CommonButton/CommonButton';
-import {navigationRef} from '../../../App';
+import {navigationRef} from '../../App';
 const FitterDetail = () => {
   const [startFitting, setStartFitting] = useState(false);
   const onStart = () => {

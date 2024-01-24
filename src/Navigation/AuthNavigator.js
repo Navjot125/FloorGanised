@@ -17,7 +17,8 @@ import Back from '../components/BackButton/Back';
 const Stack = createNativeStackNavigator();
 const AuthNavigator = ({setIsLogedIn, checkUserRole}) => {
   return (
-    <Stack.Navigator>
+    <>
+    <Stack.Navigator initialRouteName='Intro' >
       <Stack.Screen
         name="Intro"
         component={AppIntro}
@@ -69,6 +70,7 @@ const AuthNavigator = ({setIsLogedIn, checkUserRole}) => {
         }}
       />
     </Stack.Navigator>
+    </>
   );
 };
 export default AuthNavigator;

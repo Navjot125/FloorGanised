@@ -1,6 +1,6 @@
 import React from 'react';
 import {View, Text, Image, StyleSheet, TouchableOpacity} from 'react-native';
-import {navigationRef} from '../../../App';
+import {navigationRef} from '../../App';
 
 export default function Back({onPress, style}) {
   return (

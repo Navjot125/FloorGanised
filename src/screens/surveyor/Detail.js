@@ -7,14 +7,14 @@ import {
   SafeAreaView,
 } from 'react-native';
 import React, {useEffect} from 'react';
-import {height, width} from '../assets/styles/styles';
-import Header from '../components/Header/Header';
-import {COLORS} from '../utils/theme';
+import {height, width} from '../../assets/styles/styles';
+import Header from '../../components/Header/Header';
+import {COLORS} from '../../utils/theme';
 import {scale} from 'react-native-size-matters';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons';
 import Feather from 'react-native-vector-icons/Feather';
-import CommonButton from '../components/CommonButton/CommonButton';
+import CommonButton from '../../components/CommonButton/CommonButton';
 import {navigationRef} from '../../App';
 const Detail = () => {
   const onStart = () => {

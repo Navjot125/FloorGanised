@@ -58,8 +58,9 @@ const BottomTabNavigator = ({}) => {
     dispatch(setSelecteddate(dateListing()[0]));
   }, []);
   return (
+    <>
     <Tab.Navigator
-      // initialRouteName="TabHome"
+      initialRouteName="Home"
       screenOptions={{
         headerShown: false,
         tabBarShowLabel: false,
@@ -248,6 +249,7 @@ const BottomTabNavigator = ({}) => {
         component={Profile}
       />
     </Tab.Navigator>
+    </>
   );
 };
 

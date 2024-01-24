@@ -9,11 +9,13 @@ export default function CommonTextInput({
   value,
   onChangeText,
   style,
+  ...props
 }) {
   return (
     <View style={[styles.inputContainer, style]}>
-    {/* <View style={[styles.inputContainer]}> */}
+      {/* <View style={[styles.inputContainer]}> */}
       <TextInput
+        {...props}
         style={styles.input}
         underlineColor="transparent"
         selectionColor={COLORS.primary}

@@ -8,7 +8,7 @@ import {
   View,
 } from 'react-native';
 import React, {useState, useEffect} from 'react';
-import {navigationRef} from '../../../../App';
+import {navigationRef} from '../../../App';
 import CommonTextInput from '../../../components/Input/InputBox';
 import CommonButton from '../../../components/CommonButton/CommonButton';
 import CommonBackground from '../../../components/CommonBG/CommonBackground';
@@ -59,8 +59,8 @@ const Signup = () => {
     navigationRef.reset({
       index: 0,
       routes: [{name: 'tabs'}],
-    }),
-      dispatch(setUserData(userData[1]));
+    })
+      // dispatch(setUserData(userData[1]));
   };
 
   const validationSchema = Yup.object().shape({

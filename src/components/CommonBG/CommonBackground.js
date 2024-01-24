@@ -10,7 +10,7 @@ import React from 'react';
 import {moderateScale, scale, verticalScale} from 'react-native-size-matters';
 import {height} from '../../assets/styles/styles';
 import {COLORS} from '../../utils/theme';
-import {navigationRef} from '../../../App';
+import {navigationRef} from '../../App';
 import Back from '../BackButton/Back';
 
 const CommonBackground = ({back, title}) => {

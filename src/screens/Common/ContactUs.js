@@ -4,7 +4,7 @@ import {scale} from 'react-native-size-matters';
 import {COLORS} from '../../utils/theme';
 import Header from '../../components/Header/Header';
 import CommonButton from '../../components/CommonButton/CommonButton';
-import {navigationRef} from '../../../App';
+import {navigationRef} from '../../App';
 
 const ContactUs = () => {
   const onPress = () => {

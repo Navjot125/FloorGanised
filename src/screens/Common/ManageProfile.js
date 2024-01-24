@@ -5,9 +5,11 @@ import {COLORS} from '../../utils/theme';
 import Header from '../../components/Header/Header';
 import CommonTextInput from '../../components/Input/InputBox';
 import CommonButton from '../../components/CommonButton/CommonButton';
-import {navigationRef} from '../../../App';
+import {navigationRef} from '../../App';
+import { useSelector } from 'react-redux';
 
 const ManageProfile = () => {
+  const userData = useSelector(state => state?.userData?.data);
   const [name, setName] = useState();
   const [email, setEmail] = useState();
   const style = {
@@ -37,7 +39,7 @@ const ManageProfile = () => {
               source={require('../../assets/images/profile.png')}
             />
             <Text style={{fontWeight: 600, fontSize: 16, marginTop: 10}}>
-              John Watson
+            {userData?.name}
             </Text>
           </View>
           <CommonTextInput

@@ -11,8 +11,7 @@ import {
 import AppIntroSlider from 'react-native-app-intro-slider';
 import {COLORS} from '../../utils/theme';
 import {NavigationContainer, useNavigation} from '@react-navigation/native';
-import AuthNavigator from '../../Navigation/AuthNavigator';
-import {navigationRef} from '../../../App';
+import {navigationRef} from '../../App';
 export default function AppIntro() {
   const [currentSlideIndex, setCurrentSlideIndex] = useState(0);
   const navigation = useNavigation();
@@ -42,7 +41,7 @@ export default function AppIntro() {
 
   const renderItem = ({item}) => (
     <View style={styles.slideContainer}>
-      <Image source={item.image} style={styles.image} resizeMode='cover' />
+      <Image source={item.image} style={styles.image} resizeMode="cover" />
       <View style={styles.textContainer}>
         <Text style={styles.title}>{item.title}</Text>
         <Text style={styles.description}>{item.text}</Text>
@@ -53,7 +52,7 @@ export default function AppIntro() {
     navigationRef.navigate('Login');
   };
   const onSkip = () => {
-    navigationRef.navigate('Login');
+    navigationRef.reset({routes: [{name: 'Root', params: {screen: 'Login'}}]});
     // navigationRef.reset({
     //   index: 0,
     //   routes: [{name: 'tabs'}],
@@ -125,7 +124,7 @@ const styles = StyleSheet.create({
     width: '100%',
     height: '100%',
     position: 'absolute',
-    backgroundColor:'black',
+    backgroundColor: 'black',
   },
   textContainer: {
     backgroundColor: 'rgba(0, 0, 0, 0.5)', // Adjust the opacity as needed
