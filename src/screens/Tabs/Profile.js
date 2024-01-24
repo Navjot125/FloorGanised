@@ -56,14 +56,19 @@ const Profile = () => {
     return (
       <TouchableOpacity
         style={styles.container}
-        onPress={() => {
+        onPress={async () => {
           item?.name == 'Log Out'
             ? // navigationRef.navigate('Root', {screen: 'Login'})
-              (navigationRef.reset({
+            (
+              // console.log(await AsyncStorage.getItem('token'), "oweui")
+                dispatch(removeUserData()),
+                navigationRef.reset({
                 routes: [{name: 'Root', params: {screen: 'Login'}}],
               }),
-              dispatch(removeUserData()),
-              AsyncStorage.removeItem('token'))
+              setTimeout(async () => {
+                await AsyncStorage.removeItem('token');
+              }, 300)
+              )
             : // item?.name == "Log Out" ? navigationRef.navigate('Login'):
               navigationRef.navigate(screen, {screen: item?.screen});
         }}>

@@ -5,13 +5,13 @@ const {
   ApiAuthFormData,
 } = require('./Config');
 
-export const PostApi = async (url, param) => {  
+export const PostApi = async (url, param) => {
   try {
     const response = await ApiNonAuth.post(url, param);
     return response.data;
   } catch (error) {
-    console.error('Error in PostApi:', error);
-    throw error;
+    console.error('Error in PostApi:', error.response.data);
+    // throw error;
   }
 };
 

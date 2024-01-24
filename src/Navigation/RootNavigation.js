@@ -19,98 +19,49 @@ const RootNavigation = () => {
   //   console.log('userData', userData);
   const [state, setState] = useState({
     token: '',
+    route: '',
     role: '',
   });
   useEffect(() => {
     getData();
-  }, []);
+  }, [state]);
   const getData = async () => {
     const token = await AsyncStorage.getItem('token');
     const role = await AsyncStorage.getItem('role');
+
     setState(prev => ({
       ...prev,
+      route: token ? 'tabs' : 'Root',
       token: token,
       role: role,
     }));
   };
   return (
-    console.log(state, 'state'),
-    (
-      <>
-        <Stack.Navigator screenOptions={{headerShown: false}}>
-          {!state?.token ? (
+    <>
+      {state.route ? (
+        <Stack.Navigator
+          screenOptions={{headerShown: false}}
+          initialRouteName={state?.route}>
+          <>
             <Stack.Screen name="Root">{() => <AuthNavigator />}</Stack.Screen>
-          ) : (
-            <></>
-          )}
-          <Stack.Screen name="tabs">
-            {() => <BottomTabNavigator />}
-          </Stack.Screen>
-          {state?.role === 'Surveyor'  ? (
-            <Stack.Screen name="Main">
-              {() => <MainStackNavigator />}
+            <Stack.Screen name="tabs">
+              {() => <BottomTabNavigator />}
             </Stack.Screen>
-          ) : (
-            <Stack.Screen name="Fitter">
-              {() => <FitterStackNavigator />}
-            </Stack.Screen>
-          )}
+            {state?.role === 'Surveyor' ? (
+              <Stack.Screen name="Main">
+                {() => <MainStackNavigator />}
+              </Stack.Screen>
+            ) : (
+              <Stack.Screen name="Fitter">
+                {() => <FitterStackNavigator />}
+              </Stack.Screen>
+            )}
+          </>
         </Stack.Navigator>
-
-        {/* <Stack.Navigator screenOptions={{headerShown: false}}>
-          {!state?.token && (
-            <Stack.Screen name="Root">{() => <AuthNavigator />}</Stack.Screen>
-          )}
-          <Stack.Screen name="tabs">
-            {() => <BottomTabNavigator />}
-          </Stack.Screen>
-          {!state?.role === 'Fitter' && state?.token ? (
-            <Stack.Screen name="Main">
-              {() => <MainStackNavigator />}
-            </Stack.Screen>
-          ) : state?.role === 'Fitter' && state?.token ? (
-            <Stack.Screen name="Fitter">
-              {() => <FitterStackNavigator />}
-            </Stack.Screen>
-          ) : (
-            <></>
-          )}
-        </Stack.Navigator> */}
-        {/* <Stack.Navigator screenOptions={{headerShown: false}}>
-          {!state?.token ? (
-            <Stack.Screen name="Root" component={AuthNavigator} />
-          ) : state?.role === 'Fitter' ? (
-            <Stack.Screen name="Fitter" component={FitterStackNavigator} />
-          ) : (
-            <Stack.Screen name="Main" component={MainStackNavigator} />
-          )}
-          <Stack.Screen name="tabs">
-            {() => <BottomTabNavigator />}
-          </Stack.Screen>
-        </Stack.Navigator> */}
-        {/* 
-    <Stack.Navigator  screenOptions={{headerShown: false}} initialRouteName={userData?.token  ? "tabs": 'Root'}>
-      {!userData?.token ? (
-        <Stack.Screen name="Root" component={AuthNavigator} />
       ) : (
-        ((
-          <Stack.Screen name="tabs" component={BottomTabNavigator} />
-        ),
-        userData?.role == 'Fitter' && userData?.token ? (
-          <Stack.Screen name="Fitter">
-            {() => <FitterStackNavigator />}
-          </Stack.Screen>
-        ) : 
-        userData?.role == 'Surveyor' && userData?.token? (
-          <Stack.Screen name="Main">
-            {() => <MainStackNavigator />}
-          </Stack.Screen>
-        ) :<>
-        </>)
+        <></>
       )}
-    </Stack.Navigator> */}
-      </>
-    )
+    </>
   );
 };
 

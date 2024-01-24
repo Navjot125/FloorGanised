@@ -22,6 +22,7 @@ const ManageProfile = () => {
   const onPress = () => {
     navigationRef.navigate('Profile');
   };
+  console.log('userData',userData);
   return (
     <View style={{flex: 1, backgroundColor: 'black'}}>
       <SafeAreaView />

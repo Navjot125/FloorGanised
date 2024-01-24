@@ -32,41 +32,6 @@ export default function App() {
       <NavigationContainer ref={navigationRef}>
         <RootNavigation />
         </NavigationContainer>
-      {/* <NavigationContainer ref={navigationRef}>
-        <Stack.Navigator screenOptions={{headerShown: false}}>
-          <Stack.Screen name="Root">{() => <AuthNavigator />}</Stack.Screen>
-          <Stack.Screen name="tabs">
-            {() => <BottomTabNavigator />}
-          </Stack.Screen>
-          {role == 1 ? (
-            <Stack.Screen name="Main">
-              {() => <MainStackNavigator />}
-            </Stack.Screen>
-          ) : (
-            <Stack.Screen name="Fitter">
-              {() => <FitterStackNavigator />}
-            </Stack.Screen>
-          )}
-        </Stack.Navigator>
-      </NavigationContainer> */}
     </Provider>
   );
-}
-
-{
-  /* <Stack.Navigator screenOptions={{headerShown: false}}>
-  <Stack.Screen name="Root">{() => <AuthNavigator />}</Stack.Screen>
-  <Stack.Screen name="tabs">
-    {() => <BottomTabNavigator />}
-  </Stack.Screen>
-  {role == 1 ? (
-    <Stack.Screen name="Main">
-      {() => <MainStackNavigator />}
-    </Stack.Screen>
-  ) : (
-    <Stack.Screen name="Fitter">
-      {() => <FitterStackNavigator />}
-    </Stack.Screen>
-  )}
-</Stack.Navigator> */
 }
