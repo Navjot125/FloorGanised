@@ -17,7 +17,7 @@ import {height} from '../../../assets/styles/styles';
 import {RadioButton} from 'react-native-paper';
 import {COLORS} from '../../../utils/theme';
 import * as Yup from 'yup';
-import {useDispatch} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import {PostApi} from '../../../services/ApisMethods';
 import {setUserData} from '../../../redux/reducers/User';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -41,6 +41,8 @@ const Login = () => {
   const handleOptionPress = option => {
     setSelectedOption(option);
   };
+  const userData = useSelector(state => state)
+  console.log('userData from saga------------------------',userData);
   const onPress = () => {
     // navigationRef.reset({
     //   index: 0,
@@ -174,7 +176,8 @@ const handleLoginSaga = ()=>{
           <CommonButton
             style={styles.Button}
             title="Login"
-            onPress={handleLogin}
+            // onPress={handleLogin}
+            onPress={handleLoginSaga}
           />
         </View>
         <Text

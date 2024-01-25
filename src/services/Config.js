@@ -2,7 +2,7 @@ import axios from 'axios';
 // import RNSecureStorage from 'rn-secure-storage';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 // const url = 'http://192.168.1.28:4000/';
-const url = 'http://50.16.149.253:3002/api/';
+export const url = 'http://50.16.149.253:3002/api/';
 // export const SOCKET_URL = 'http://3.144.132.104:4001';
 // export const ImageUrl = 'https://inflightbucket.s3.us-east-1.amazonaws.com/'
 
