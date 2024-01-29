@@ -17,13 +17,21 @@ import Header from '../../components/Header/Header';
 import {scale} from 'react-native-size-matters';
 import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons';
 import {useDispatch, useSelector} from 'react-redux';
-import { jobDetail } from '../../redux/actions/homeAction';
+import { getJobs, jobDetail } from '../../redux/actions/homeAction';
 
 const Home = () => {
   const dispatch = useDispatch()
+  const param = {
+    status : "Pending",
+    // cb:(data)=>{
+    //   console.log(data,'data in home----');
+    // }
+  }
   useEffect(() => {
-    dateListing();
+    dateListing()
+    dispatch(getJobs(param))
   }, []);
+
   const userData = useSelector(state => state?.userData?.data);
   const stack = userData?.role == "Surveyor" ? 'Main' : 'Fitter';
   const screen = userData?.role == "Surveyor" ? 'Detail' : 'FitterDetail';

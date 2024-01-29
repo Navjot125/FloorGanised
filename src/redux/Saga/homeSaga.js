@@ -2,37 +2,28 @@ import {call, put, takeEvery} from 'redux-saga/effects';
 import {navigationRef} from '../../App';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import APIS from '../../services/apis';
-import { url } from '../../services/Config';
-import { CONTACT_US, GET_JOBS, JOB_DETAIL } from '../constants';
-import queryString from 'query-string';
+import {url} from '../../services/Config';
+import {GET_JOBS, JOB_DETAIL} from '../constants';
 
 function* getJob(action) {
-    
-    try {
-        const status = action.data;
-        const token = yield call(AsyncStorage.getItem, 'token');
-        const queryParams = `status=${encodeURIComponent(status)}`;
-        console.log(queryParams);
-
-    // const queryParams = queryString.stringify({ status });
+    console.log(action?.data,'action');
+  try {
+    const {status} = action.data;
+    const token = yield call(AsyncStorage.getItem, 'token');
+    const queryParams = `status=${encodeURIComponent(status)}`;
     const requestOptions = {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
         Authorization: `Bearer ${JSON.parse(token)}`,
-      }
+      },
     };
     const urlWithParams = `${url}${APIS.GET_JOBS}?${queryParams}`;
-console.log(urlWithParams,'urlWithParams============');
     const response = yield call(fetch, urlWithParams, requestOptions);
-    // const response = yield call(
-    //   fetch,
-    //   `${url}${APIS.GET_JOBS}?${queryParams}`,
-    //   requestOptions,
-    // );
     if (response.ok) {
       const responseData = yield response.json();
       console.log(responseData, 'getJob response --');
+    //   action?.data?.cb(responseData?.data)
     } else {
       const errorData = yield response.json();
       console.error(
@@ -47,22 +38,19 @@ console.log(urlWithParams,'urlWithParams============');
   }
 }
 function* jobDetail(action) {
-    try {
-        const job_id = action.data;
-        const token = yield call(AsyncStorage.getItem, 'token');
-        const queryParams = `job_id=${encodeURIComponent(job_id)}`;
-        console.log(queryParams);
-
-    // const queryParams = queryString.stringify({ status });
+  try {
+    const job_id = action.data;
+    const token = yield call(AsyncStorage.getItem, 'token');
+    const queryParams = `job_id=${encodeURIComponent(job_id)}`;
+    console.log(queryParams);
     const requestOptions = {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
         Authorization: `Bearer ${JSON.parse(token)}`,
-      }
+      },
     };
     const urlWithParams = `${url}${APIS.JOB_DETAIL}?${queryParams}`;
-console.log(urlWithParams,'urlWithParams============');
     const response = yield call(fetch, urlWithParams, requestOptions);
     if (response.ok) {
       const responseData = yield response.json();

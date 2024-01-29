@@ -24,8 +24,8 @@ const RootNavigation = () => {
     role: '',
   });
   useEffect(()=>{
-    dispatch(getProfile()),
-    dispatch(getJobs('Pending'))
+    dispatch(getProfile())
+    // dispatch(getJobs('Pending'))
   },[])
   useEffect(() => {
     getData()
