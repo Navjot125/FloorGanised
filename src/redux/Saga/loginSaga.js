@@ -1,16 +1,10 @@
 import {call, put, takeEvery} from 'redux-saga/effects';
-import {LOGIN_REQUEST, SET_USER_DATA, SET_USER_TOKEN} from './constants';
-import {url} from '../services/Config';
-import APIS from '../services/apis';
-import {navigationRef} from '../App';
+import {LOGIN_REQUEST, SET_USER_DATA, SET_USER_TOKEN} from '../constants';
+import {url} from '../../services/Config';
+import APIS from '../../services/apis';
+import {navigationRef} from '../../App';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-// function* login(dataa) {
-//   console.log(dataa, '---------------------------');
-//   let data = yield fetch(url);
-//   data = yield data.json();
-//   // yield put({type:SET_USER_DATA, data})
-// }
 
 function* login(action) {
   try {
@@ -60,10 +54,10 @@ function* login(action) {
   }
 }
 
-function* SagaData() {
+function* loginSaga() {
   yield takeEvery(LOGIN_REQUEST, login);
 }
-export default SagaData;
+export default loginSaga;
 
 // {
 // "data": {"email": "Navjots.indiit@gmail.com", "password": "Delhi@1A", "selectedOption": "Fitter"},

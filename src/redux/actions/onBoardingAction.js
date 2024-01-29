@@ -7,9 +7,8 @@ export function loginRequest(item){
     }
 }
 
-export function logOutRequest(item){
+export function logOutRequest(){
     return{
-        type:LOG_OUT_REQUEST,
-        data:item
+        type:LOG_OUT_REQUEST
     }
 }

@@ -1,14 +1,22 @@
 import {SafeAreaView, StyleSheet, Text, TextInput, View} from 'react-native';
-import React from 'react';
+import React, {useState} from 'react';
 import {scale} from 'react-native-size-matters';
 import {COLORS} from '../../utils/theme';
 import Header from '../../components/Header/Header';
 import CommonButton from '../../components/CommonButton/CommonButton';
 import {navigationRef} from '../../App';
+import {useDispatch, useSelector} from 'react-redux';
+import {cmsRequest} from '../../redux/actions/cmsAction';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const ContactUs = () => {
-  const onPress = () => {
-    navigationRef.navigate('Home');
+  const [message, setMessage] = useState();
+  const [token, setToken] = useState();
+  // const token = useSelector((state)=>state)
+  const dispatch = useDispatch();
+  const onPress = async () => {
+    // const token = await AsyncStorage.getItem('token');
+    dispatch(cmsRequest(message));
   };
   const style = {
     bottom: 20,
@@ -27,6 +35,7 @@ const ContactUs = () => {
             borderRadius: 16,
             paddingTop: 15,
           }}
+          onChangeText={setMessage}
           multiline={true}
           placeholder="Write Your Message"
         />

@@ -42,8 +42,8 @@ const Login = () => {
   const handleOptionPress = option => {
     setSelectedOption(option);
   };
-  const userData = useSelector(state => state)
-  console.log('userData from saga------------------------',userData);
+  // const userData = useSelector(state => state)
+  // console.log('userData from saga------------------------',userData);
   const onPress = () => {
     // navigationRef.reset({
     //   index: 0,
