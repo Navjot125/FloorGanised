@@ -12,6 +12,7 @@ import {FitterStackNavigator} from './FitterNavigator';
 import {useDispatch, useSelector} from 'react-redux';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { getProfile } from '../redux/actions/profileAction';
+import { getJobs } from '../redux/actions/homeAction';
 const Stack = createNativeStackNavigator();
 export const navigationRef = createNavigationContainerRef();
 
@@ -23,10 +24,11 @@ const RootNavigation = () => {
     role: '',
   });
   useEffect(()=>{
-    dispatch(getProfile())
+    dispatch(getProfile()),
+    dispatch(getJobs('Pending'))
   },[])
   useEffect(() => {
-    getData();
+    getData()
   }, [state]);
   const getData = async () => {
     const token = await AsyncStorage.getItem('token');

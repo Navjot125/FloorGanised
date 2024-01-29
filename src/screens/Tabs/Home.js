@@ -16,9 +16,11 @@ import {COLORS} from '../../utils/theme';
 import Header from '../../components/Header/Header';
 import {scale} from 'react-native-size-matters';
 import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons';
-import {useSelector} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
+import { jobDetail } from '../../redux/actions/homeAction';
 
 const Home = () => {
+  const dispatch = useDispatch()
   useEffect(() => {
     dateListing();
   }, []);
@@ -27,7 +29,9 @@ const Home = () => {
   const screen = userData?.role == "Surveyor" ? 'Detail' : 'FitterDetail';
   const renderItem = ({item, index}) => {
     return (
-      <View style={styles.container}>
+      <TouchableOpacity 
+      onPress={()=>{dispatch(jobDetail('65b0d89ecb58f69a88d04a7f'))}}
+      style={styles.container}>
         <View
           style={{
             height: '50%',
@@ -103,7 +107,7 @@ const Home = () => {
             </Text>
           </TouchableOpacity>
         </View>
-      </View>
+      </TouchableOpacity>
     );
   };
   return (

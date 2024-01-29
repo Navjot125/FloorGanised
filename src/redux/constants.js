@@ -14,3 +14,4 @@ export const UPDATE_PROFILE = 'UPDATE_PROFILE';
 export const DELETE_ACCOUNT = "DELETE_ACCOUNT"
 export const GET_PROFILE = "GET_PROFILE"
 export const GET_JOBS = "GET_JOBS"
+export const JOB_DETAIL = "JOB_DETAIL"

@@ -3,7 +3,16 @@ import {navigationRef} from '../../App';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import APIS from '../../services/apis';
 import {url} from '../../services/Config';
-import {CONTACT_US, DELETE_ACCOUNT, GET_JOBS, GET_PROFILE, SET_USER_DATA, SET_USER_TOKEN, UPDATE_PASSWORD, UPDATE_PROFILE} from '../constants';
+import {
+  CONTACT_US,
+  DELETE_ACCOUNT,
+  GET_JOBS,
+  GET_PROFILE,
+  SET_USER_DATA,
+  SET_USER_TOKEN,
+  UPDATE_PASSWORD,
+  UPDATE_PROFILE,
+} from '../constants';
 
 function* getProfile() {
   try {
@@ -13,7 +22,7 @@ function* getProfile() {
       headers: {
         'Content-Type': 'application/json',
         Authorization: `Bearer ${JSON.parse(token)}`,
-      }
+      },
     };
     const response = yield call(
       fetch,
@@ -25,7 +34,7 @@ function* getProfile() {
       console.log(responseData, 'getProfile response --');
       yield put({type: SET_USER_DATA, data: responseData?.data});
       yield put({type: SET_USER_TOKEN, data: responseData?.token});
-      yield put({type: GET_JOBS, data:"Pending"});
+    //   yield put({type: GET_JOBS, data: 'Pending'});
     } else {
       const errorData = yield response.json();
       console.error(
@@ -87,8 +96,8 @@ function* deleteAccount(action) {
         'Content-Type': 'application/json',
         Authorization: `Bearer ${JSON.parse(token)}`,
       },
-    //   body: JSON.stringify({
-    //   }),
+      //   body: JSON.stringify({
+      //   }),
     };
     const response = yield call(
       fetch,
@@ -126,8 +135,6 @@ function* updateProfile(action) {
         'Content-Type': 'application/json',
         Authorization: `Bearer ${JSON.parse(token)}`,
       },
-    //   body: JSON.stringify({
-    //   }),
     };
     const response = yield call(
       fetch,
@@ -137,7 +144,7 @@ function* updateProfile(action) {
     if (response.ok) {
       const responseData = yield response.json();
       console.log(responseData, 'updateProfile response --');
-      navigationRef.navigate('Home')
+      navigationRef.navigate('Home');
     } else {
       const errorData = yield response.json();
       console.error(
