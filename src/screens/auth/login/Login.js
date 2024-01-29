@@ -24,6 +24,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { loginRequest } from '../../../redux/actions/onBoardingAction';
 
 const Login = () => {
+
   const dispatch = useDispatch();
   const [email, setEmail] = useState('Navjots.indiit@gmail.com');
   const [password, setPassword] = useState("Delhi@1A");
@@ -32,7 +33,7 @@ const Login = () => {
   const [userDataState, setUserDataState] = useState(
    { email,
     password,
-    selectedOption}
+    selectedOption} 
   );
   useEffect(()=>{
     setUserDataState({email,password,selectedOption})

@@ -1,6 +1,9 @@
-import {LOGIN_REQUEST, LOG_OUT_REQUEST, SET_USER_DATA} from '../constants';
+import {LOGIN_REQUEST, LOG_OUT_REQUEST, SET_USER_DATA, SET_USER_TOKEN} from '../constants';
 
-const initialState = [];
+const initialState = {
+  userData: '',
+  token: '',
+};
 export const onBoardingreducer = (state = initialState, action) => {
   switch (action.type) {
     // case LOGIN_REQUEST:
@@ -8,7 +11,9 @@ export const onBoardingreducer = (state = initialState, action) => {
     case LOG_OUT_REQUEST:
       return [(state = [])];
     case SET_USER_DATA:
-      return [...state, action.data];
+      return {...state, userData: action.data}; 
+    case SET_USER_TOKEN:
+      return {...state, token: action.data}; 
     default:
       return state;
   }

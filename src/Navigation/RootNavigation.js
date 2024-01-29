@@ -15,8 +15,6 @@ const Stack = createNativeStackNavigator();
 export const navigationRef = createNavigationContainerRef();
 
 const RootNavigation = () => {
-  //   const userData = useSelector(state => state?.userData?.data);
-  //   console.log('userData', userData);
   const [state, setState] = useState({
     token: '',
     route: '',

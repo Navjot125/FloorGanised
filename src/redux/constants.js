@@ -1,5 +1,6 @@
 export const LOGIN_REQUEST = "LOGIN_REQUEST"
 export const SET_USER_DATA =  "SET_USER_DATA"
+export const SET_USER_TOKEN =  "SET_USER_TOKEN"
 export const LOG_OUT_REQUEST = "LOG_OUT_REQUEST"
 export const SET_DATES = "SET_DATES"
 export const SET_SELECTED_DATES = "SET_SELECTED_DATES"
