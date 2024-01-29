@@ -3,12 +3,11 @@ import {navigationRef} from '../../App';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import APIS from '../../services/apis';
 import {url} from '../../services/Config';
-import {CONTACT_US, DELETE_ACCOUNT, GET_PROFILE, SET_USER_DATA, SET_USER_TOKEN, UPDATE_PASSWORD, UPDATE_PROFILE} from '../constants';
+import {CONTACT_US, DELETE_ACCOUNT, GET_JOBS, GET_PROFILE, SET_USER_DATA, SET_USER_TOKEN, UPDATE_PASSWORD, UPDATE_PROFILE} from '../constants';
 
 function* getProfile() {
   try {
     const token = yield call(AsyncStorage.getItem, 'token');
-    console.log('token is ----', token);
     const requestOptions = {
       method: 'GET',
       headers: {
@@ -26,6 +25,7 @@ function* getProfile() {
       console.log(responseData, 'getProfile response --');
       yield put({type: SET_USER_DATA, data: responseData?.data});
       yield put({type: SET_USER_TOKEN, data: responseData?.token});
+      yield put({type: GET_JOBS, data:"Pending"});
     } else {
       const errorData = yield response.json();
       console.error(
@@ -41,11 +41,9 @@ function* getProfile() {
 }
 
 function* updatePassword(action) {
-  console.log(action.data, '---=-=action.data');
   try {
     const {old_password, new_password} = action.data;
     const token = yield call(AsyncStorage.getItem, 'token');
-    console.log('token is ----', token);
     const requestOptions = {
       method: 'POST',
       headers: {

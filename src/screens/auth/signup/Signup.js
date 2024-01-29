@@ -94,7 +94,6 @@ const Signup = () => {
         password,
         role: selectedOption,
       };
-      console.log('params----', params);
       const response = await PostApi('signup', params);
       if (response?.data) {
         console.log(response.data, 'res?.data');

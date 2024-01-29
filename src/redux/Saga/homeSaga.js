@@ -3,46 +3,44 @@ import {navigationRef} from '../../App';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import APIS from '../../services/apis';
 import { url } from '../../services/Config';
-import { CONTACT_US } from '../constants';
+import { CONTACT_US, GET_JOBS } from '../constants';
+import queryString from 'query-string';
 
-function* contactUs(action) {
+function* getJob(action) {
   try {
-    const message = action.data;
+    const status = action.data;
     const token = yield call(AsyncStorage.getItem, 'token');
+    const queryParams = queryString.stringify({ status });
     const requestOptions = {
-      method: 'POST',
+      method: 'GET',
       headers: {
         'Content-Type': 'application/json',
         Authorization: `Bearer ${JSON.parse(token)}`,
-      },
-      body: JSON.stringify({
-        message,
-      }),
+      }
     };
     const response = yield call(
       fetch,
-      `${url}${APIS.CONTACT_US}`,
+      `${url}${APIS.GET_JOBS}?${queryParams}`,
       requestOptions,
     );
     if (response.ok) {
       const responseData = yield response.json();
-      console.log(responseData, 'cms response --');
-      navigationRef.navigate('Home')
+      console.log(responseData, 'getJob response --');
     } else {
       const errorData = yield response.json();
       console.error(
-        'contactUs request failed:',
+        'getJob request failed:',
         response.status,
         response.statusText,
         errorData,
       );
     }
   } catch (error) {
-    console.error('An error occurred during contactUs:', error);
+    console.error('An error occurred during getJob:', error);
   }
 }
 
-function* cmsSaga() {
-  yield takeEvery(CONTACT_US, contactUs);
+function* homeSaga() {
+  yield takeEvery(GET_JOBS, getJob);
 }
-export default cmsSaga;
+export default homeSaga;

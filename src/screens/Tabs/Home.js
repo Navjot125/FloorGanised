@@ -25,7 +25,6 @@ const Home = () => {
   const userData = useSelector(state => state?.userData?.data);
   const stack = userData?.role == "Surveyor" ? 'Main' : 'Fitter';
   const screen = userData?.role == "Surveyor" ? 'Detail' : 'FitterDetail';
-  console.log('userData', userData?.role);
   const renderItem = ({item, index}) => {
     return (
       <View style={styles.container}>

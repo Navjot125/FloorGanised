@@ -138,7 +138,6 @@ function* verifyOtp(action) {
 }
 
 function* resetPassword(action) {
-  console.log('action',action);
   try {
     const {cPassword, unique_id} = action.data;
     const requestOptions = {

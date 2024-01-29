@@ -9,5 +9,6 @@ export const APIS = {
   DELETE_ACCOUNT:'delete_account',
   UPDATE_PROFILE:'update_profile',
   GET_PROFILE:'userProfile',
+  GET_JOBS:'get_my_jobs'
 };
 export default APIS;

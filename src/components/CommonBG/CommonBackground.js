@@ -15,7 +15,7 @@ import Back from '../BackButton/Back';
 
 const CommonBackground = ({back, title}) => {
   const onBackPress = () => {
-    navigationRef.goBack(), console.log('hrllo');
+    navigationRef.goBack();
   };
   const style = {
     left: 15,

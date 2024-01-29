@@ -28,7 +28,6 @@ const BottomTabNavigator = ({}) => {
   const dispatch = useDispatch();
   // const date = useSelector(state => state.date.date);
   const date = useSelector(state => state.DateReducer);
-  // console.log('date-----',date);
   // const user = useSelector(state => state.user.data);
   const [minDate, setMinDate] = useState(
     new Date().toISOString().split('T')[0],
@@ -47,7 +46,6 @@ const BottomTabNavigator = ({}) => {
   //         dispatch(setUserData(res?.data));
   //       })
   //       .catch(err => {
-  //         console.log(err);
   //       });
   //   } 
   // }, [user]);

@@ -43,7 +43,6 @@ const Login = () => {
     setSelectedOption(option);
   };
   // const userData = useSelector(state => state)
-  // console.log('userData from saga------------------------',userData);
   const onPress = () => {
     // navigationRef.reset({
     //   index: 0,
@@ -82,10 +81,8 @@ const handleLoginSaga = ()=>{
         password,
         role: selectedOption,
       };
-      console.log('params----', params);
       const response = await PostApi('login', params);
       if (response?.data) {
-        // console.log(response.data, 'res?.data');
         // navigationRef.reset({
         //   index: 0,
         //   routes: [{name: 'tabs'}],
