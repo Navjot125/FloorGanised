@@ -5,4 +5,4 @@ export function cmsRequest(item){
         type:CONTACT_US,
         data:item
     }
-}
+}   

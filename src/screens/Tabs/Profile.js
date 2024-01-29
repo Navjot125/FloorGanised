@@ -19,8 +19,10 @@ import {scale} from 'react-native-size-matters';
 import {useDispatch, useSelector} from 'react-redux';
 import {removeUserData} from '../../redux/reducers/User';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { deleteAccount } from '../../redux/actions/profileAction';
 
 const Profile = () => {
+  // deleteAccount
   const dispatch = useDispatch();
   const userData = useSelector(state => state?.userData?.data);
   const screen = userData?.role === 'Surveyor' ? 'Main' : 'Fitter';
@@ -46,6 +48,11 @@ const Profile = () => {
       _id: 3,
     },
     {
+      name: 'Delete Account',
+      screen: '',
+      _id: 3,
+    },
+    {
       name: 'Log Out',
       screen: '',
       _id: 4,
@@ -58,9 +65,9 @@ const Profile = () => {
         style={styles.container}
         onPress={async () => {
           item?.name == 'Log Out'
-            ? // navigationRef.navigate('Root', {screen: 'Login'})
+            ?
             (
-              // console.log(await AsyncStorage.getItem('token'), "oweui")
+              
                 dispatch(removeUserData()),
                 navigationRef.reset({
                 routes: [{name: 'Root', params: {screen: 'Login'}}],
@@ -69,7 +76,11 @@ const Profile = () => {
                 await AsyncStorage.removeItem('token');
               }, 300)
               )
-            : // item?.name == "Log Out" ? navigationRef.navigate('Login'):
+            :
+            item?.name == 'Delete Account' ?
+            dispatch(deleteAccount())
+            // item?.name == "Log Out" ? navigationRef.navigate('Login'):
+            :
               navigationRef.navigate(screen, {screen: item?.screen});
         }}>
         <Text style={{fontWeight: 500, fontSize: 14}}> {item?.name} </Text>
@@ -80,7 +91,7 @@ const Profile = () => {
         />
       </TouchableOpacity>
     );
-  };
+  };  
   return (
     <View style={{flex: 1, backgroundColor: 'black'}}>
       <SafeAreaView />

@@ -19,24 +19,31 @@ import CommonModal from '../../../components/Modal/Modal';
 import ResetSuccess from '../../../assets/images/ResetSuccess.png';
 import Back from '../../../components/BackButton/Back';
 import {scale} from 'react-native-size-matters';
-const ResetPassword = () => {
-  const [cPassword, setCPassword] = useState('');
+import { useDispatch } from 'react-redux';
+import { resetPassword } from '../../../redux/actions/onBoardingAction';
+const ResetPassword = ({route}) => {
+const unique_id = route.params?.data
+  const dispatch = useDispatch()
+  const [cPassword, setCPassword] = useState('Delhi@1A');
   const [modalCondition, setModalCondition] = useState(false);
-  const [newPassword, setNewPassword] = useState('');
+  const [newPassword, setNewPassword] = useState('Delhi@1A');
 
   const onBackPress = () => {
     navigationRef.goBack();
   };
   const onPress = () => {
-    setModalCondition(!modalCondition);
+    setModalCondition(!modalCondition),
+    dispatch(resetPassword(data={cPassword,unique_id}))
   };
   const onModalPress = () => {
-    setModalCondition(!modalCondition),
+    setModalCondition(!modalCondition)
+    // dispatch(resetPassword(data={cPassword,unique_id}))
       setTimeout(() => {
-        navigationRef.reset({
-          index: 0,
-          routes: [{name: 'tabs'}],
-        });
+        // navigationRef.reset({
+        //   index: 0,
+        //   routes: [{name: 'tabs'}],
+        // });
+        navigationRef.navigate('Login');
       }, 1000);
   };
   const title = 'Password Reset Successfully!';

@@ -1,14 +1,14 @@
 import {call, put, takeEvery} from 'redux-saga/effects';
-import {CONTACT_US} from '../constants';
-import {url} from '../../services/Config';
-import APIS from '../../services/apis';
 import {navigationRef} from '../../App';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import APIS from '../../services/apis';
+import { url } from '../../services/Config';
+import { CONTACT_US } from '../constants';
 
 function* contactUs(action) {
   console.log(action.data, '---=-=action.data');
   try {
-    const {message} = action.data;
+    const message = action.data;
     const token = yield call(AsyncStorage.getItem, 'token');
     console.log('token is ----', token);
     const requestOptions = {
@@ -21,6 +21,7 @@ function* contactUs(action) {
         message,
       }),
     };
+    console.log('requestOptions',requestOptions);
     const response = yield call(
       fetch,
       `${url}${APIS.CONTACT_US}`,
@@ -29,6 +30,7 @@ function* contactUs(action) {
     if (response.ok) {
       const responseData = yield response.json();
       console.log(responseData, 'cms response --');
+      navigationRef.navigate('Home')
     } else {
       const errorData = yield response.json();
       console.error(

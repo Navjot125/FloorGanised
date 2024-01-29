@@ -30,7 +30,6 @@ const CalendarStrip = ({loader}) => {
 
   const dispatch = useDispatch();
   const navigation = useNavigation();
-  console.log('date-----------',date);
   const date = useSelector(state => state.DateReducer.dates);
 
   const SelectedDate = useSelector(state => state.DateReducer.selectedDate);

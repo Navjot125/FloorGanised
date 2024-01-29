@@ -2,5 +2,10 @@ export const APIS = {
   SIGNUP: 'signup',
   LOGIN: 'login',
   CONTACT_US: 'submit_contact_request',
+  SEND_OTP: 'send_otp',
+  VERIFY_OTP: 'verify_otp',
+  RESET_PASSWORD: 'reset_password',
+  UPDATE_PASSWORD: 'updatePassword',
+  DELETE_ACCOUNT:'delete_account',
 };
 export default APIS;

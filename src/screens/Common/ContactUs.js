@@ -12,7 +12,6 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 const ContactUs = () => {
   const [message, setMessage] = useState();
   const [token, setToken] = useState();
-  // const token = useSelector((state)=>state)
   const dispatch = useDispatch();
   const onPress = async () => {
     // const token = await AsyncStorage.getItem('token');

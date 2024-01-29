@@ -17,9 +17,12 @@ import {RadioButton} from 'react-native-paper';
 import {COLORS} from '../../../utils/theme';
 import Back from '../../../components/BackButton/Back';
 import {scale} from 'react-native-size-matters';
+import { useDispatch } from 'react-redux';
+import { sendOtp } from '../../../redux/actions/onBoardingAction';
 
 const ForgotPassword = () => {
-  const [email, setEmail] = useState('');
+  const dispatch = useDispatch()
+  const [email, setEmail] = useState('navjots.indiit@gmail.com');
   const [selectedOption, setSelectedOption] = useState(null);
   const options = ['Fitter', 'Surveyor'];
   const handleOptionPress = option => {
@@ -30,7 +33,7 @@ const ForgotPassword = () => {
     //   index: 0,
     //   routes: [{name: 'tabs'}],
     // });
-    navigationRef.navigate('VerifyOTP', {reset: 'ResetPassword'});
+    dispatch(sendOtp(email))
   };
   const onBackPress = () => {
     navigationRef.goBack();

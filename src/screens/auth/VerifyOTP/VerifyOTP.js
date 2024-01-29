@@ -20,9 +20,13 @@ import Back from '../../../components/BackButton/Back';
 import {scale} from 'react-native-size-matters';
 import {useDispatch} from 'react-redux';
 import {setUserData} from '../../../redux/reducers/User';
+import { verifyOtp } from '../../../redux/actions/onBoardingAction';
 
 const VerifyOTP = ({route}) => {
-  const GoTo = route?.params?.reset;
+  const GoTo = route?.params?.reset
+  const email = route?.params?.data
+console.log(GoTo,'GoTo');
+
   const [code, setCode] = useState('');
   const dispatch = useDispatch();
   const handleOtpChange = value => {
@@ -48,8 +52,11 @@ const VerifyOTP = ({route}) => {
   ];
   const onPress = () => {
     GoTo
-      ? navigationRef.navigate(GoTo)
-      : (navigationRef.reset({
+      ? 
+      dispatch(verifyOtp(data={email,code}))
+      // navigationRef.navigate(GoTo)
+      : 
+      (navigationRef.reset({
           index: 0,
           routes: [{name: 'tabs'}],
         }),
