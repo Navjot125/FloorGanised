@@ -6,12 +6,14 @@ import Header from '../../components/Header/Header';
 import CommonTextInput from '../../components/Input/InputBox';
 import CommonButton from '../../components/CommonButton/CommonButton';
 import {navigationRef} from '../../App';
-import { useSelector } from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
+import {updateProfileRequest} from '../../redux/actions/profileAction';
 
 const ManageProfile = () => {
-  const userData = useSelector(state => state?.userData?.data);
-  const [name, setName] = useState();
-  const [email, setEmail] = useState();
+  const dispatch = useDispatch();
+  const userData = useSelector(state => state?.onBoardingreducer?.userData);
+  const [name, setName] = useState('Navjot Singh');
+  const [email, setEmail] = useState('Navjots.indiit@gmail.com');
   const style = {
     width: '100%',
     marginTop: 25,
@@ -20,9 +22,8 @@ const ManageProfile = () => {
     marginBottom: 25,
   };
   const onPress = () => {
-    navigationRef.navigate('Profile');
+    dispatch(updateProfileRequest((data = {name, email})));
   };
-  console.log('userData',userData);
   return (
     <View style={{flex: 1, backgroundColor: 'black'}}>
       <SafeAreaView />
@@ -40,7 +41,7 @@ const ManageProfile = () => {
               source={require('../../assets/images/profile.png')}
             />
             <Text style={{fontWeight: 600, fontSize: 16, marginTop: 10}}>
-            {userData?.name}
+              {userData?.name}
             </Text>
           </View>
           <CommonTextInput

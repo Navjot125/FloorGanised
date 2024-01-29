@@ -24,7 +24,8 @@ import { deleteAccount } from '../../redux/actions/profileAction';
 const Profile = () => {
   // deleteAccount
   const dispatch = useDispatch();
-  const userData = useSelector(state => state?.userData?.data);
+  // const userData = useSelector(state => state?.userData?.data);
+  const userData = useSelector(state => state?.onBoardingreducer?.userData);
   const screen = userData?.role === 'Surveyor' ? 'Main' : 'Fitter';
   const screens = [
     {

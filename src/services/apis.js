@@ -7,5 +7,7 @@ export const APIS = {
   RESET_PASSWORD: 'reset_password',
   UPDATE_PASSWORD: 'updatePassword',
   DELETE_ACCOUNT:'delete_account',
+  UPDATE_PROFILE:'update_profile',
+  GET_PROFILE:'userProfile',
 };
 export default APIS;
