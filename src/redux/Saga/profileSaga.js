@@ -34,7 +34,7 @@ function* getProfile() {
       console.log(responseData, 'getProfile response --');
       yield put({type: SET_USER_DATA, data: responseData?.data});
       yield put({type: SET_USER_TOKEN, data: responseData?.token});
-    //   yield put({type: GET_JOBS, data: 'Pending'});
+      //   yield put({type: GET_JOBS, data: 'Pending'});
     } else {
       const errorData = yield response.json();
       console.error(

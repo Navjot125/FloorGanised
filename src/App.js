@@ -18,9 +18,10 @@ export const navigationRef = createNavigationContainerRef();
 const Stack = createNativeStackNavigator();
 
 export default function App() {
-  // LogBox.ignoreLogs([
-  //   'Require cycle: src/Navigation/AuthNavigator.js -> src/screens/Common/AppIntroSlider.js -> src/Navigation/AuthNavigator.js',
-  // ]);
+  LogBox.ignoreLogs([
+    'A non-serializable value was detected in an action',
+    'SerializableStateInvariantMiddleware took 45ms, which is more than the warning threshold of 32ms.',
+  ]);
   useEffect(() => {
     setTimeout(() => {
       SplashScreen.hide();

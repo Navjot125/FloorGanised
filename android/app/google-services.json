@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "772792130744",
+    "project_id": "floorganised",
+    "storage_bucket": "floorganised.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:772792130744:android:bbcd499636bb76b782684d",
+        "android_client_info": {
+          "package_name": "com.floorganised"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAPOJajM0yG70Pr5QH__DvykzIsNuDIOME"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

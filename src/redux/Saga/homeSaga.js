@@ -6,7 +6,6 @@ import {url} from '../../services/Config';
 import {GET_JOBS, JOB_DETAIL} from '../constants';
 
 function* getJob(action) {
-    console.log(action?.data,'action');
   try {
     const {status} = action.data;
     const token = yield call(AsyncStorage.getItem, 'token');
@@ -23,7 +22,8 @@ function* getJob(action) {
     if (response.ok) {
       const responseData = yield response.json();
       console.log(responseData, 'getJob response --');
-    //   action?.data?.cb(responseData?.data)
+      // yield put({type: SET_USER_TOKEN, data: responseData?.token});
+      action?.data?.cb(responseData?.data)
     } else {
       const errorData = yield response.json();
       console.error(

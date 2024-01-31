@@ -6,9 +6,9 @@ import {
   TouchableOpacity,
   SafeAreaView,
 } from 'react-native';
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {navigationRef} from '../../App';
-import {dateListing} from '../../utils/Dates/DateLimit';    
+import {dateListing} from '../../utils/Dates/DateLimit';
 import CalendarStrip from '../../utils/Dates/CalendarStrip';
 import {height} from '../../assets/styles/styles';
 import {HomeData} from '../../config/DummyData';
@@ -17,29 +17,35 @@ import Header from '../../components/Header/Header';
 import {scale} from 'react-native-size-matters';
 import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons';
 import {useDispatch, useSelector} from 'react-redux';
-import { getJobs, jobDetail } from '../../redux/actions/homeAction';
+import {getJobs, jobDetail} from '../../redux/actions/homeAction';
+import SkeletonPlaceholder from 'react-native-skeleton-placeholder';
 
 const Home = () => {
-  const dispatch = useDispatch()
+  const [loader, setLoader] = useState(!true);
+  const [jobListing, setJobListing] = useState();
+  const dispatch = useDispatch();
   const param = {
-    status : "Pending",
-    // cb:(data)=>{
-    //   console.log(data,'data in home----');
-    // }
-  }
+    status: 'Pending',
+    cb: data => {
+      console.log(data, 'data in home----');
+      setJobListing(data);
+    },
+  };
   useEffect(() => {
-    dateListing()
-    dispatch(getJobs(param))
+    dateListing();
+    dispatch(getJobs(param));
   }, []);
-
-  const userData = useSelector(state => state?.userData?.data);
-  const stack = userData?.role == "Surveyor" ? 'Main' : 'Fitter';
-  const screen = userData?.role == "Surveyor" ? 'Detail' : 'FitterDetail';
+  console.log(jobListing, 'jobListing');
+  const userData = useSelector(state => state?.onBoardingreducer?.userData);
+  const stack = userData?.role == 'Surveyor' ? 'Main' : 'Fitter';
+  const screen = userData?.role == 'Surveyor' ? 'Detail' : 'FitterDetail';
   const renderItem = ({item, index}) => {
     return (
-      <TouchableOpacity 
-      onPress={()=>{dispatch(jobDetail('65b0d89ecb58f69a88d04a7f'))}}
-      style={styles.container}>
+      <TouchableOpacity
+        onPress={() => {
+          dispatch(jobDetail('65b0d89ecb58f69a88d04a7f'));
+        }}
+        style={styles.container}>
         <View
           style={{
             height: '50%',
@@ -55,13 +61,13 @@ const Home = () => {
             }}>
             {item?.title}
           </Text>
-          <Text
+          {/* <Text
             style={{
               fontSize: 16,
               fontWeight: 700,
             }}>
             ${item?.price}
-          </Text>
+          </Text> */}
         </View>
         <View
           style={{
@@ -93,7 +99,8 @@ const Home = () => {
           <TouchableOpacity
             onPress={() => {
               // navigationRef.navigate("Main", {screen: 'Detail'})
-              navigationRef.navigate("Fitter", {screen: 'FitterDetail'})
+              navigationRef.navigate(stack, {screen: screen});
+              // navigationRef.navigate('Fitter', {screen: 'FitterDetail'});
               // index == 0 && userData?.role == "Fitter"
               //   ? navigationRef.navigate(stack, {screen: 'JobCompleteForm'})
               //   : navigationRef.navigate(stack, {screen: screen});
@@ -111,7 +118,7 @@ const Home = () => {
                 fontSize: 12,
                 fontWeight: 500,
               }}>
-              {index == 0 && userData?.role == "Fitter" ? 'On Work' : 'Details'}
+              {index == 0 && userData?.role == 'Fitter' ? 'On Work' : 'Details'}
             </Text>
           </TouchableOpacity>
         </View>
@@ -130,11 +137,24 @@ const Home = () => {
           borderTopLeftRadius: scale(20),
         }}>
         <CalendarStrip />
-        <FlatList
-          data={HomeData}
-          renderItem={renderItem}
-          contentContainerStyle={{paddingBottom: 20}}
-        />
+        {loader ? (
+          <SkeletonPlaceholder borderRadius={15}>
+            <View
+              style={{height: 145, marginTop: 10, marginHorizontal: 10}}></View>
+            <View
+              style={{height: 145, marginTop: 10, marginHorizontal: 10}}></View>
+            <View
+              style={{height: 145, marginTop: 10, marginHorizontal: 10}}></View>
+            <View
+              style={{height: 145, marginTop: 10, marginHorizontal: 10}}></View>
+          </SkeletonPlaceholder>
+        ) : (
+          <FlatList
+            data={HomeData}
+            renderItem={renderItem}
+            contentContainerStyle={{paddingBottom: 20}}
+          />
+        )}
       </View>
     </View>
   );
