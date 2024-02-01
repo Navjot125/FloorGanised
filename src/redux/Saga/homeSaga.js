@@ -7,9 +7,12 @@ import {GET_JOBS, JOB_DETAIL} from '../constants';
 
 function* getJob(action) {
   try {
-    const {status} = action.data;
+    const {status, date} = action.data;
     const token = yield call(AsyncStorage.getItem, 'token');
-    const queryParams = `status=${encodeURIComponent(status)}`;
+    // const queryParams = `status=${encodeURIComponent(status)}`;
+    const queryParams = `status=${encodeURIComponent(
+      status,
+    )}&date=${encodeURIComponent(date)}`;
     const requestOptions = {
       method: 'GET',
       headers: {
@@ -21,9 +24,9 @@ function* getJob(action) {
     const response = yield call(fetch, urlWithParams, requestOptions);
     if (response.ok) {
       const responseData = yield response.json();
-      // console.log(responseData, 'getJob response --'); 
+      // console.log(responseData, 'getJob response --');
       // yield put({type: SET_USER_TOKEN, data: responseData?.token});
-      action?.data?.cb(responseData?.data)
+      action?.data?.cb(responseData?.data);
     } else {
       const errorData = yield response.json();
       console.error(

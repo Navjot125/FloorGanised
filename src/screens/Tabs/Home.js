@@ -21,11 +21,16 @@ import {getJobs, jobDetail} from '../../redux/actions/homeAction';
 import SkeletonPlaceholder from 'react-native-skeleton-placeholder';
 
 const Home = () => {
+  const selectedDate = useSelector(
+    state => state?.DateReducer?.selectedDate?.day,
+  );
+  console.log('selectedDate', selectedDate);
   const [loader, setLoader] = useState(!true);
   const [jobListing, setJobListing] = useState();
   const dispatch = useDispatch();
   const param = {
     status: 'Pending',
+    date: selectedDate ? selectedDate : new Date(),
     cb: data => {
       // console.log(data, 'data in home----');
       setJobListing(data);

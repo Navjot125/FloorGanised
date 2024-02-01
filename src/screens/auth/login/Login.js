@@ -21,23 +21,29 @@ import {useDispatch, useSelector} from 'react-redux';
 import {PostApi} from '../../../services/ApisMethods';
 import {setUserData} from '../../../redux/reducers/User';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { loginRequest } from '../../../redux/actions/onBoardingAction';
+import {loginRequest} from '../../../redux/actions/onBoardingAction';
 
 const Login = () => {
-
+  useEffect(() => {
+    getData();
+  }, []);
+  const getData = async () => {
+    const token = await AsyncStorage.getItem('fcmToken');
+     setToken(token)
+  };
   const dispatch = useDispatch();
   const [email, setEmail] = useState('Navjots.indiit@gmail.com');
-  const [password, setPassword] = useState("Delhi@1A");
-  const [selectedOption, setSelectedOption] = useState(null);
+  const [token, setToken] = useState();
+  const [password, setPassword] = useState('Delhi@1A');
+  // const [selectedOption, setSelectedOption] = useState(null);
   const [error, setErrors] = useState();
-  const [userDataState, setUserDataState] = useState(
-   { email,
+  const [userDataState, setUserDataState] = useState({
+    email,
     password,
-    selectedOption} 
-  );
-  useEffect(()=>{
-    setUserDataState({email,password,selectedOption})
-  },[email,password,selectedOption])
+  });
+  useEffect(() => {
+    setUserDataState({email, password});
+  }, [email, password]);
   const options = ['Fitter', 'Surveyor'];
   const handleOptionPress = option => {
     setSelectedOption(option);
@@ -58,28 +64,24 @@ const Login = () => {
     password: Yup.string()
       .required('Password is required')
       .min(8, 'Password must be at least 8 characters'),
-    selectedOption: Yup.string()
-      .required('Role is required')
-      .oneOf(['Fitter', 'Surveyor'], 'Role must be either Fitter or Surveyor'),
+    // selectedOption: Yup.string()
+    //   .required('Role is required')
+    //   .oneOf(['Fitter', 'Surveyor'], 'Role must be either Fitter or Surveyor'),
   });
 
-const handleLoginSaga = ()=>{
-  // userDataState
-  dispatch(loginRequest(userDataState))
-}
+  const handleLoginSaga = () => {
+    // userDataState
+    dispatch(loginRequest(userDataState));
+  };
 
   const handleLogin = async () => {
     try {
       // Validate form inputs
-      await validationSchema.validate(
-        {email, password, selectedOption},
-        {abortEarly: false},
-      );
+      await validationSchema.validate({email, password}, {abortEarly: false});
       // Form inputs are valid, proceed with signup
       const params = {
         email,
         password,
-        role: selectedOption,
       };
       const response = await PostApi('login', params);
       if (response?.data) {
@@ -139,22 +141,8 @@ const handleLoginSaga = ()=>{
         showsVerticalScrollIndicator={false}
         automaticallyAdjustKeyboardInsets={true}>
         <View style={styles.innerBox}>
-          <View style={styles.radioBox}>
-            {options.map(option => (
-              <View
-                key={option}
-                style={{flexDirection: 'row', alignItems: 'center'}}>
-                <RadioButton.Android
-                  color={COLORS.secondry}
-                  value={option}
-                  status={selectedOption === option ? 'checked' : 'unchecked'}
-                  onPress={() => handleOptionPress(option)}
-                />
-                <Text style={{color: 'black'}}>{option}</Text>
-              </View>
-            ))}
-          </View>
-          <View style={{height: '38%', justifyContent: 'space-between'}}>
+          <View style={styles.radioBox}></View>
+          <View style={{height: '42%', justifyContent: 'space-between'}}>
             <CommonTextInput
               placeholder="Email Adress"
               value={email}
@@ -202,7 +190,7 @@ export default Login;
 
 const styles = StyleSheet.create({
   innerBox: {
-    height: height / 2.1,
+    height: height / 2.2,
     width: '90%',
     backgroundColor: 'white',
     marginHorizontal: 20,
