@@ -45,9 +45,9 @@ const RootNavigation = () => {
     }));
   };
 
-  useEffect(() => {
-    requestUserPermission(), NotificationListner();
-  }, []);
+  // useEffect(() => {
+  //   requestUserPermission(), NotificationListner();
+  // }, []);
   const requestUserPermission = async () => {
     const authStatus = await messaging().requestPermission();
     const enabled =

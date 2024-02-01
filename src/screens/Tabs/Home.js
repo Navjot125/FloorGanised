@@ -27,7 +27,7 @@ const Home = () => {
   const param = {
     status: 'Pending',
     cb: data => {
-      console.log(data, 'data in home----');
+      // console.log(data, 'data in home----');
       setJobListing(data);
     },
   };
@@ -35,7 +35,6 @@ const Home = () => {
     dateListing();
     dispatch(getJobs(param));
   }, []);
-  console.log(jobListing, 'jobListing');
   const userData = useSelector(state => state?.onBoardingreducer?.userData);
   const stack = userData?.role == 'Surveyor' ? 'Main' : 'Fitter';
   const screen = userData?.role == 'Surveyor' ? 'Detail' : 'FitterDetail';

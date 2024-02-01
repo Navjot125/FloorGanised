@@ -2,10 +2,14 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>772792130744-dgs3ralha5fnnreo7sq9t30vrdalm6rf.apps.googleusercontent.com</string>
 	<key>API_KEY</key>
 	<string>AIzaSyCdXu8lMxJGDvPiB9xV19WPXFmQ_-rFUGo</string>
 	<key>BUNDLE_ID</key>
 	<string>com.floorganised</string>
+	<key>CLIENT_ID</key>
+	<string>772792130744-lt65mmm7emo9nugiael6cchfcm8pm1u9.apps.googleusercontent.com</string>
 	<key>GCM_SENDER_ID</key>
 	<string>772792130744</string>
 	<key>GOOGLE_APP_ID</key>
@@ -31,6 +35,8 @@
 	<string>1</string>
 	<key>PROJECT_ID</key>
 	<string>floorganised</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.772792130744-lt65mmm7emo9nugiael6cchfcm8pm1u9</string>
 	<key>STORAGE_BUCKET</key>
 	<string>floorganised.appspot.com</string>
 </dict>

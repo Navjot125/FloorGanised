@@ -21,7 +21,7 @@ function* getJob(action) {
     const response = yield call(fetch, urlWithParams, requestOptions);
     if (response.ok) {
       const responseData = yield response.json();
-      console.log(responseData, 'getJob response --');
+      // console.log(responseData, 'getJob response --'); 
       // yield put({type: SET_USER_TOKEN, data: responseData?.token});
       action?.data?.cb(responseData?.data)
     } else {

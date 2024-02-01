@@ -31,6 +31,7 @@
 		00E356EE1AD99517003FC87E /* FloorGanisedTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = FloorGanisedTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		00E356F11AD99517003FC87E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		00E356F21AD99517003FC87E /* FloorGanisedTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FloorGanisedTests.m; sourceTree = "<group>"; };
+		07FCABAE2B6B577300F4D482 /* FloorGanised.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = FloorGanised.entitlements; path = FloorGanised/FloorGanised.entitlements; sourceTree = "<group>"; };
 		07FFF9292B6A0B5D00D602B2 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "FloorGanised/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		118910839C6EC3261DD04974 /* Pods_FloorGanised_FloorGanisedTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_FloorGanised_FloorGanisedTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		13B07F961A680F5B00A75B9A /* FloorGanised.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FloorGanised.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -88,6 +89,7 @@
 		13B07FAE1A68108700A75B9A /* FloorGanised */ = {
 			isa = PBXGroup;
 			children = (
+				07FCABAE2B6B577300F4D482 /* FloorGanised.entitlements */,
 				07FFF9292B6A0B5D00D602B2 /* GoogleService-Info.plist */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
 				13B07FB01A68108700A75B9A /* AppDelegate.mm */,
@@ -483,6 +485,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = FloorGanised/FloorGanised.entitlements;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = VMZ7JTG4TU;
 				ENABLE_BITCODE = NO;
@@ -512,6 +515,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = FloorGanised/FloorGanised.entitlements;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = VMZ7JTG4TU;
 				INFOPLIST_FILE = FloorGanised/Info.plist;
