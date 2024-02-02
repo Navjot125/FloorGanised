@@ -24,6 +24,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import {loginRequest} from '../../../redux/actions/onBoardingAction';
 
 const Login = () => {
+  const [token, setToken] = useState();
   useEffect(() => {
     getData();
   }, []);
@@ -31,9 +32,9 @@ const Login = () => {
     const token = await AsyncStorage.getItem('fcmToken');
      setToken(token)
   };
+
   const dispatch = useDispatch();
   const [email, setEmail] = useState('Navjots.indiit@gmail.com');
-  const [token, setToken] = useState();
   const [password, setPassword] = useState('Delhi@1A');
   // const [selectedOption, setSelectedOption] = useState(null);
   const [error, setErrors] = useState();
@@ -42,7 +43,7 @@ const Login = () => {
     password,
   });
   useEffect(() => {
-    setUserDataState({email, password});
+    setUserDataState({email, password, token});
   }, [email, password]);
   const options = ['Fitter', 'Surveyor'];
   const handleOptionPress = option => {
@@ -71,7 +72,7 @@ const Login = () => {
   const handleLoginSaga = () => {
     dispatch(loginRequest(userDataState));
   };
-
+console.log('userDataState-------------------',userDataState);
   return (
     <View
       style={{

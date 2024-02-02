@@ -17,7 +17,7 @@ import {RadioButton} from 'react-native-paper';
 import {COLORS} from '../../../utils/theme';
 import Back from '../../../components/BackButton/Back';
 import {scale} from 'react-native-size-matters';
-import {useDispatch} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import {setUserData} from '../../../redux/reducers/User';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import * as Yup from 'yup';
@@ -25,24 +25,14 @@ import {PostApi} from '../../../services/ApisMethods';
 import { singUpRequest } from '../../../redux/actions/onBoardingAction';
 
 const Signup = () => {
-  const userData = [
-    {
-      name: 'Navjot Singh',
-      email: 'Navjots.indiit@gmail.com',
-      phone: '7009173569',
-      _id: 0,
-      role: 1,
-      profile: '../../../assets/images/Profile1.jpg',
-    },
-    {
-      name: 'Gurmukh Singh',
-      email: 'Gurmukh.indiit@gmail.com',
-      phone: '9653719007',
-      _id: 1,
-      role: 2,
-      profile: '../../../assets/images/Profile2.jpg',
-    },
-  ];
+  const [token, setToken] = useState();
+  useEffect(() => {
+    getData();
+  }, []);
+  const getData = async () => {
+    const token = await AsyncStorage.getItem('fcmToken');
+     setToken(token)
+  };
   const [text, setText] = useState('');
   const [name, setName] = useState('');
   const [cPassword, setCPassword] = useState('');
@@ -53,7 +43,7 @@ const Signup = () => {
   const [signUpData, setSignUpData] = useState({});
 
   useEffect(()=>{
-    setSignUpData({name, cPassword, email, password,selectedOption})
+    setSignUpData({name, cPassword, email, password,selectedOption,token})
   },[name, cPassword, email, password,selectedOption])
   const options = ['Fitter', 'Surveyor'];
   const handleOptionPress = option => {

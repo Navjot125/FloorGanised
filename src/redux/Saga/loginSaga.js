@@ -15,7 +15,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 function* signup(action) {
   try {
-    const {email, password, name, selectedOption} = action.data;
+    const {email, password, name, selectedOption, token} = action.data;
     console.log('email, password, name, selectedOption',email, password, name, selectedOption);
     const requestOptions = {
       method: 'POST',
@@ -27,6 +27,7 @@ function* signup(action) {
         password,
         role:selectedOption,
         name,
+        fcm_token:token
       }),
     };
     const response = yield call(fetch, `${url}${APIS.SIGNUP}`, requestOptions);
@@ -64,7 +65,7 @@ function* signup(action) {
 
 function* login(action) {
   try {
-    const {email, password, selectedOption} = action.data;
+    const {email, password, selectedOption, token} = action.data;
     const requestOptions = {
       method: 'POST',
       headers: {
@@ -74,6 +75,7 @@ function* login(action) {
         email,
         password,
         selectedOption,
+        fcm_token:token
       }),
     };
 
