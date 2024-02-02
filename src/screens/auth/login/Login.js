@@ -48,7 +48,6 @@ const Login = () => {
   const handleOptionPress = option => {
     setSelectedOption(option);
   };
-  // const userData = useSelector(state => state)
   const onPress = () => {
     // navigationRef.reset({
     //   index: 0,
@@ -70,60 +69,7 @@ const Login = () => {
   });
 
   const handleLoginSaga = () => {
-    // userDataState
     dispatch(loginRequest(userDataState));
-  };
-
-  const handleLogin = async () => {
-    try {
-      // Validate form inputs
-      await validationSchema.validate({email, password}, {abortEarly: false});
-      // Form inputs are valid, proceed with signup
-      const params = {
-        email,
-        password,
-      };
-      const response = await PostApi('login', params);
-      if (response?.data) {
-        // navigationRef.reset({
-        //   index: 0,
-        //   routes: [{name: 'tabs'}],
-        // }),
-        navigationRef.reset({
-          index: 0,
-          routes: [{name: 'tabs', params: {screen: 'Home'}}],
-        }),
-          // navigationRef.reset({
-          //   index: 0,
-          //   routes: [
-          //     {
-          //       name: 'tabs',
-          //       screen: 'Home',
-          //       params: {},
-          //     },
-          //   ],
-          // });
-          await AsyncStorage.setItem(
-            'token',
-            JSON.stringify(response.data.token),
-          );
-        await AsyncStorage.setItem('role', JSON.stringify(response.data.role));
-        dispatch(setUserData(response.data));
-      } else {
-        console.log(response, 'res');
-      }
-    } catch (error) {
-      console.log(error, '------errors in login');
-      const validationErrors = {};
-      if (error.inner) {
-        error.inner.forEach(err => {
-          console.log(err, 'checking it ', err.path);
-          validationErrors[err.path] = err.message;
-        });
-      }
-      setErrors(validationErrors);
-      console.error(error.errors ? error.errors[0] : error);
-    }
   };
 
   return (

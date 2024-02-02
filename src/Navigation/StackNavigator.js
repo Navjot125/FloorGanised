@@ -32,9 +32,7 @@ import ContactUs from '../screens/Common/ContactUs';
 const Stack = createNativeStackNavigator();
 
 const MainStackNavigator = ({}) => {
-  const [authtoken, setauthtoken] = useState();
   const navigation = useNavigation();
-  const user = false;
   const onPress = () => {
     navigationRef.goBack();
   };

@@ -22,6 +22,7 @@ import {setUserData} from '../../../redux/reducers/User';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import * as Yup from 'yup';
 import {PostApi} from '../../../services/ApisMethods';
+import { singUpRequest } from '../../../redux/actions/onBoardingAction';
 
 const Signup = () => {
   const userData = [
@@ -49,7 +50,11 @@ const Signup = () => {
   const [password, setPassword] = useState('');
   const [selectedOption, setSelectedOption] = useState(null);
   const [error, setErrors] = useState();
+  const [signUpData, setSignUpData] = useState({});
 
+  useEffect(()=>{
+    setSignUpData({name, cPassword, email, password,selectedOption})
+  },[name, cPassword, email, password,selectedOption])
   const options = ['Fitter', 'Surveyor'];
   const handleOptionPress = option => {
     setSelectedOption(option);
@@ -79,7 +84,30 @@ const Signup = () => {
       .oneOf(['Fitter', 'Surveyor'], 'Role must be either Fitter or Surveyor'),
   });
 
+  const handleSignup = async ()=>{
+    try {
+    await validationSchema.validate(
+      {name, email, password, cPassword, selectedOption},
+      {abortEarly: false},
+    );
+    dispatch(singUpRequest(signUpData))
+    }
+    catch (error) {
+      console.log(error, '------errors');
+      const validationErrors = {};
+      if (error.inner) {
+        error.inner.forEach(err => {
+          console.log(err, 'checking it ', err.path);
+          validationErrors[err.path] = err.message;
+        });
+      }
+      setErrors(validationErrors);
+      console.error(error.errors ? error.errors[0] : error);
+    }
+  }
+
   const handleSignUp = async () => {
+
     try {
       // Validate form inputs
       await validationSchema.validate(
@@ -178,7 +206,8 @@ const Signup = () => {
           <CommonButton
             style={styles.Button}
             title="Sign Up"
-            onPress={handleSignUp}
+            // onPress={handleSignUp}
+            onPress={handleSignup}
           />
         </View>
       </ScrollView>

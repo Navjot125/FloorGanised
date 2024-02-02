@@ -20,11 +20,10 @@ import {useDispatch, useSelector} from 'react-redux';
 import {getJobs, jobDetail} from '../../redux/actions/homeAction';
 import SkeletonPlaceholder from 'react-native-skeleton-placeholder';
 
-const Home = () => {
+const Home = (props) => {
   const selectedDate = useSelector(
     state => state?.DateReducer?.selectedDate?.day,
   );
-  console.log('selectedDate', selectedDate);
   const [loader, setLoader] = useState(!true);
   const [jobListing, setJobListing] = useState();
   const dispatch = useDispatch();
@@ -102,12 +101,8 @@ const Home = () => {
           </Text>
           <TouchableOpacity
             onPress={() => {
-              // navigationRef.navigate("Main", {screen: 'Detail'})
+              // console.log(userData?.role);
               navigationRef.navigate(stack, {screen: screen});
-              // navigationRef.navigate('Fitter', {screen: 'FitterDetail'});
-              // index == 0 && userData?.role == "Fitter"
-              //   ? navigationRef.navigate(stack, {screen: 'JobCompleteForm'})
-              //   : navigationRef.navigate(stack, {screen: screen});
             }}
             style={{
               backgroundColor: COLORS.primary,
@@ -184,3 +179,9 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
   },
 });
+
+
+
+// const userRole = useSelector(
+//   state => state?.onBoardingreducer?.userData?.role,
+// );
