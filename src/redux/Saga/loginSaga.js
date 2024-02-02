@@ -16,7 +16,13 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 function* signup(action) {
   try {
     const {email, password, name, selectedOption, token} = action.data;
-    console.log('email, password, name, selectedOption',email, password, name, selectedOption);
+    console.log(
+      'email, password, name, selectedOption',
+      email,
+      password,
+      name,
+      selectedOption,
+    );
     const requestOptions = {
       method: 'POST',
       headers: {
@@ -25,9 +31,9 @@ function* signup(action) {
       body: JSON.stringify({
         email,
         password,
-        role:selectedOption,
+        role: selectedOption,
         name,
-        fcm_token:token
+        fcm_token: token,
       }),
     };
     const response = yield call(fetch, `${url}${APIS.SIGNUP}`, requestOptions);
@@ -75,10 +81,9 @@ function* login(action) {
         email,
         password,
         selectedOption,
-        fcm_token:token
+        fcm_token: token,
       }),
     };
-
     const response = yield call(fetch, `${url}${APIS.LOGIN}`, requestOptions);
     if (response.ok) {
       const responseData = yield response.json();
@@ -133,8 +138,10 @@ function* sendOtp(action) {
     if (response.ok) {
       const responseData = yield response.json();
       console.log(responseData, 'resdponse of sendOtp');
-      navigationRef.navigate('VerifyOTP', {reset: 'ResetPassword',
-      data: action.data});
+      navigationRef.navigate('VerifyOTP', {
+        reset: 'ResetPassword',
+        data: action.data,
+      });
     } else {
       const errorData = yield response.json();
       console.error(
@@ -159,7 +166,7 @@ function* verifyOtp(action) {
       },
       body: JSON.stringify({
         email,
-        otp:code
+        otp: code,
       }),
     };
 
@@ -171,10 +178,9 @@ function* verifyOtp(action) {
     if (response.ok) {
       const responseData = yield response.json();
       console.log(responseData, 'resdponse of verifyOtp');
-      navigationRef.navigate("ResetPassword",{
-        data:responseData?.data
-      })
-      
+      navigationRef.navigate('ResetPassword', {
+        data: responseData?.data,
+      });
     } else {
       const errorData = yield response.json();
       console.error(
@@ -198,8 +204,8 @@ function* resetPassword(action) {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        id:unique_id,
-        password:cPassword
+        id: unique_id,
+        password: cPassword,
       }),
     };
 

@@ -5,6 +5,7 @@ import {
   View,
   TouchableOpacity,
   Platform,
+  Image,
 } from 'react-native';
 import React, {useEffect} from 'react';
 import {height, width} from '../../assets/styles/styles';
@@ -12,8 +13,13 @@ import Back from '../BackButton/Back';
 import {scale} from 'react-native-size-matters';
 import {COLORS} from '../../utils/theme';
 import {navigationRef} from '../../App';
+import {useSelector} from 'react-redux';
 
-const Header = ({title, back}) => {
+const Header = ({title, back, profileDetail}) => {
+  const userName = useSelector(
+    state => state?.onBoardingreducer?.userData?.name,
+  );
+  // console.log(userName,'profileDetail');
   const onPress = () => {
     navigationRef.goBack();
   };
@@ -45,12 +51,25 @@ const Header = ({title, back}) => {
           {title}
         </Text>
       </View>
-      <View
-        style={{
-          minWidth: scale(40),
-          height: '100%',
-          justifyContent: 'center',
-        }}></View>
+      {profileDetail && (
+        <View
+          style={{
+            // minWidth: scale(60),
+            height: '100%',
+            justifyContent: 'center',
+            // backgroundColor: 'yellow',
+            flexDirection: 'row',
+            alignItems: 'center',
+          }}>
+          <Text style={{fontSize: 14, fontWeight: 400, color: COLORS.white}}>
+            Hey, {userName}
+          </Text>
+          <Image
+            style={{height: 20, width: 20, marginLeft: 5}}
+            source={require('../../assets/images/profile.png')}
+          />
+        </View>
+      )}
     </View>
   );
 };

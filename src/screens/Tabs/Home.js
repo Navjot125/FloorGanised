@@ -10,7 +10,6 @@ import React, {useEffect, useState} from 'react';
 import {navigationRef} from '../../App';
 import {dateListing} from '../../utils/Dates/DateLimit';
 import CalendarStrip from '../../utils/Dates/CalendarStrip';
-import {height} from '../../assets/styles/styles';
 import {HomeData} from '../../config/DummyData';
 import {COLORS} from '../../utils/theme';
 import Header from '../../components/Header/Header';
@@ -20,7 +19,7 @@ import {useDispatch, useSelector} from 'react-redux';
 import {getJobs, jobDetail} from '../../redux/actions/homeAction';
 import SkeletonPlaceholder from 'react-native-skeleton-placeholder';
 
-const Home = (props) => {
+const Home = props => {
   const selectedDate = useSelector(
     state => state?.DateReducer?.selectedDate?.day,
   );
@@ -127,7 +126,7 @@ const Home = (props) => {
   return (
     <View style={{flex: 1, backgroundColor: 'black'}}>
       <SafeAreaView />
-      <Header title={'Home'} />
+      <Header title={'Home'} profileDetail={true}/>
       <View
         style={{
           backgroundColor: COLORS?.white,
@@ -179,9 +178,3 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
   },
 });
-
-
-
-// const userRole = useSelector(
-//   state => state?.onBoardingreducer?.userData?.role,
-// );
