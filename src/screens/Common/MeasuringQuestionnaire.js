@@ -4,6 +4,7 @@ import {
   StyleSheet,
   Text,
   TextInput,
+  TouchableOpacity,
   View,
 } from 'react-native';
 import React, {useEffect, useState} from 'react';
@@ -19,9 +20,13 @@ import {navigationRef} from '../../App';
 import CommonModal from '../../components/Modal/Modal';
 import jobComplete from '../../assets/images/jobComplete.png';
 import Header from '../../components/Header/Header';
+import ImagePicker from '../../components/ImagePicker/ImagePicker';
+import Octicons from 'react-native-vector-icons/Octicons';
+import LaunchImageLibraryAsync from '../../components/ImagePicker/ImagePicker';
 
 const MeasuringQuestionnaire = ({route}) => {
   const [licencseLevel, setLicencseLevel] = useState();
+  const [measuremntRoomImages, setMeasuremntRoomImages] = useState();
   const [doorBarType, setDoorBarType] = useState();
   const [selectedOption, setSelectedOption] = useState(null);
   const [flooringChoiceColorCheckBox, setFlooringChoiceColorCheckBox] =
@@ -70,6 +75,15 @@ const MeasuringQuestionnaire = ({route}) => {
     navigationRef.navigate('Home');
   };
   const Laminate = true;
+  console.log('measuremntRoomImages--------', measuremntRoomImages);
+  const handleLaunchImageLibraryPress = () => {
+    LaunchImageLibraryAsync(
+      measuremntRoomImages,
+      setMeasuremntRoomImages,
+      'Certifications',
+    );
+  };
+
   return (
     <View style={{flex: 1, backgroundColor: 'black'}}>
       <SafeAreaView />
@@ -147,7 +161,6 @@ const MeasuringQuestionnaire = ({route}) => {
           onChangeText={newText => setFlooringChoiceColor(newText)}
           style={style1}
         />
-
         <CommonTextInput
           placeholder={'Size'}
           value={size}
@@ -162,7 +175,22 @@ const MeasuringQuestionnaire = ({route}) => {
         />
         <View>
           <Text>Measurement of room</Text>
-          <View style={styles.dottedBox}></View>
+          <View style={styles.dottedBox}>
+            <Octicons name="device-camera" size={25} color={COLORS.secondry} />
+            <TouchableOpacity
+              style={{}}
+              onPress={() => {
+                LaunchImageLibraryAsync(
+                  measuremntRoomImages,
+                  setMeasuremntRoomImages,
+                  'Certifications',
+                );
+              }}>
+              <Text style={{fontSize: 14, fontWeight: 500, marginTop: 10}}>
+                Take Pictures
+              </Text>
+            </TouchableOpacity>
+          </View>
         </View>
         {/* {!Laminate ? (
           <> */}
@@ -510,5 +538,7 @@ const styles = StyleSheet.create({
     borderRadius: 16,
     borderColor: COLORS.grey,
     marginTop: 15,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 });
