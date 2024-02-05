@@ -6,7 +6,7 @@ import {
   TouchableOpacity,
   SafeAreaView,
 } from 'react-native';
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {navigationRef} from '../../App';
 import {dateListing} from '../../utils/Dates/DateLimit';
 import CalendarStrip from '../../utils/Dates/CalendarStrip';
@@ -16,8 +16,22 @@ import {COLORS} from '../../utils/theme';
 import Header from '../../components/Header/Header';
 import {scale} from 'react-native-size-matters';
 import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons';
+import {useDispatch} from 'react-redux';
+import {getJobs} from '../../redux/actions/homeAction';
 
 const History = () => {
+  const [jobListing, setJobListing] = useState();
+  const dispatch = useDispatch();
+  const param = {
+    status: 'Complete',
+    cb: data => {
+      setJobListing(data);
+    },
+  };
+  useEffect(() => {
+    dispatch(getJobs(param));
+  }, []);
+
   const renderItem = ({item, index}) => {
     return (
       <View style={styles.container}>
@@ -34,7 +48,7 @@ const History = () => {
               fontSize: 16,
               fontWeight: 600,
             }}>
-            {item?.title}
+            {item?.customer_id?.name}
           </Text>
           <Text
             style={{
@@ -60,15 +74,10 @@ const History = () => {
               fontWeight: 500,
               width: '55%',
               left: -15,
-              // color:COLORS.grey
             }}>
-            {item?.location}
+            {item?.address}
           </Text>
-
           <TouchableOpacity
-            onPress={() => {
-              // navigationRef.navigate('Detail');
-            }}
             style={{
               backgroundColor: COLORS.black,
               height: 24,
@@ -83,7 +92,7 @@ const History = () => {
                 fontWeight: 600,
                 color: COLORS.white,
               }}>
-              {item?.status}
+              {item?.surveyor_status}
             </Text>
           </TouchableOpacity>
         </View>
@@ -91,22 +100,6 @@ const History = () => {
     );
   };
   return (
-    // <View
-    //   style={{
-    //     backgroundColor: 'black',
-    //     flex: 1,
-    //     paddingTop: height / 29,
-    //   }}>
-    //   <View
-    //     style={{
-    //       backgroundColor: 'white',
-    //       flex: 1,
-    //       borderTopLeftRadius: 20,
-    //       borderTopRightRadius: 20,
-    //     }}>
-    //     <FlatList data={HistoryData} renderItem={renderItem} />
-    //   </View>
-    // </View>
     <View style={{flex: 1, backgroundColor: 'black'}}>
       <SafeAreaView />
       <Header title={'History'} />
@@ -117,11 +110,31 @@ const History = () => {
           borderTopRightRadius: scale(20),
           borderTopLeftRadius: scale(20),
         }}>
-        <FlatList
-          data={HistoryData}
-          renderItem={renderItem}
-          contentContainerStyle={{paddingBottom: 20}}
-        />
+        {jobListing?.length ? (
+          <FlatList
+            data={jobListing}
+            renderItem={renderItem}
+            contentContainerStyle={{paddingBottom: 20}}
+          />
+        ) : (
+          <View
+            style={{
+              flex: 1,
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}>
+            <Text
+              style={{
+                fontSize: 15,
+                fontWeight: 500,
+                textAlign: 'center',
+                paddingHorizontal: 50,
+                lineHeight: 25,
+              }}>
+              There are no job assignments for your history.
+            </Text>
+          </View>
+        )}
       </View>
     </View>
   );

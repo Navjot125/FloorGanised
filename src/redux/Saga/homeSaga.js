@@ -55,8 +55,6 @@ function* jobDetail(action) {
     const response = yield call(fetch, urlWithParams, requestOptions);
     if (response.ok) {
       const responseData = yield response.json();
-      console.log(responseData, 'jobDetail response --');
-      // navigationRef.navigate(stack, {screen: screen});
       navigationRef.navigate(stack, {
         screen: screen,
         params: {

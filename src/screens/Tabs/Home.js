@@ -48,9 +48,6 @@ const Home = props => {
     };
     return (
       <TouchableOpacity
-        // onPress={() => {
-        //   dispatch(jobDetail(item?._id));
-        // }}
         style={styles.container}>
         <View
           style={{
