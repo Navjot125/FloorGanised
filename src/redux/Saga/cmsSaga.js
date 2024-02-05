@@ -4,9 +4,11 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import APIS from '../../services/apis';
 import { url } from '../../services/Config';
 import { CONTACT_US } from '../constants';
+import { setLoader } from '../actions/Loader';
 
 function* contactUs(action) {
   try {
+    yield put(setLoader(true))
     const message = action.data;
     const token = yield call(AsyncStorage.getItem, 'token');
     const requestOptions = {
@@ -39,6 +41,8 @@ function* contactUs(action) {
     }
   } catch (error) {
     console.error('An error occurred during contactUs:', error);
+  } finally {
+    yield put(setLoader(false));
   }
 }
 

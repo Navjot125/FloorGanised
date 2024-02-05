@@ -4,9 +4,11 @@ import APIS from '../../services/apis';
 import {url} from '../../services/Config';
 import {GET_JOBS, JOB_DETAIL} from '../constants';
 import {navigationRef} from '../../App';
+import { setLoader } from '../actions/Loader';
 
 function* getJob(action) {
   try {
+    yield put(setLoader(true))
     const {status, date} = action.data;
     console.log(date, 'date');
     const token = yield call(AsyncStorage.getItem, 'token');
@@ -36,6 +38,8 @@ function* getJob(action) {
     }
   } catch (error) {
     console.error('An error occurred during getJob:', error);
+  } finally {
+    yield put(setLoader(false));
   }
 }
 function* jobDetail(action) {

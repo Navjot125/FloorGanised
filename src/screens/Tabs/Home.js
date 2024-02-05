@@ -23,7 +23,11 @@ const Home = props => {
   const selectedDate = useSelector(
     state => state?.DateReducer?.selectedDate?.day,
   );
-  const [loader, setLoader] = useState(!true);
+  const loader = useSelector(
+    state => state?.loaderReducer?.loader,
+  );
+  console.log('selectesddDate---------------',loader);
+  // const [loader, setLoader] = useState(!true);
   const [jobListing, setJobListing] = useState();
   const dispatch = useDispatch();
   const param = {
