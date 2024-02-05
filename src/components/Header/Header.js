@@ -54,10 +54,9 @@ const Header = ({title, back, profileDetail}) => {
       {profileDetail && (
         <View
           style={{
-            // minWidth: scale(60),
+            minWidth: scale(60),
             height: '100%',
             justifyContent: 'center',
-            // backgroundColor: 'yellow',
             flexDirection: 'row',
             alignItems: 'center',
           }}>

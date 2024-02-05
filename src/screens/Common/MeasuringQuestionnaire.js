@@ -6,7 +6,7 @@ import {
   TextInput,
   View,
 } from 'react-native';
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {scale} from 'react-native-size-matters';
 import {COLORS} from '../../utils/theme';
 import SelectDropdown from 'react-native-select-dropdown';
@@ -22,13 +22,27 @@ import Header from '../../components/Header/Header';
 
 const MeasuringQuestionnaire = ({route}) => {
   const [licencseLevel, setLicencseLevel] = useState();
+  const [doorBarType, setDoorBarType] = useState();
   const [selectedOption, setSelectedOption] = useState(null);
+  const [flooringChoiceColorCheckBox, setFlooringChoiceColorCheckBox] =
+    useState(null);
+  const [typeOfRoom, setTypeOfRoom] = useState(null);
+  const [surcharge, setSurcharge] = useState(null);
+  const [flooringChoiceColor, setFlooringChoiceColor] = useState(null);
+  const [size, setSize] = useState(null);
+  const [SQM, setSQM] = useState(null);
   const [gripperLengths, setGripperLengths] = useState(null);
+  const [doorBarAmount, setDoorBarAmount] = useState(null);
+  const [underlayType, setUnderlayType] = useState(null);
+  const [underlayAmount, setUnderlayAmount] = useState(null);
+  const [scotia, setScotia] = useState(null);
   const [modalVisible, setModalVisible] = useState(false);
   const handleOptionPress = option => {
     setSelectedOption(option);
   };
   const location = ['1', '2', '3', '4', '5'];
+  const doorsToCut = ['Yes', 'No'];
+  const doorBars = ['silver', 'gold', 'oak', 'other', '5'];
   const FlooringType = [
     'Carpets',
     'Vinyl',
@@ -41,6 +55,10 @@ const MeasuringQuestionnaire = ({route}) => {
   const style = {
     width: '100%',
     marginTop: 25,
+  };
+  const style1 = {
+    width: '100%',
+    marginBottom: 25,
   };
   const onPress = () => {
     route?.params
@@ -60,75 +78,148 @@ const MeasuringQuestionnaire = ({route}) => {
         showsVerticalScrollIndicator={false}
         contentContainerStyle={styles.container}
         automaticallyAdjustKeyboardInsets>
-        <DropDown
+        <View
+          style={{
+            marginBottom: 25,
+          }}>
+          <CommonTextInput
+            placeholder={'Type Of Room'}
+            value={typeOfRoom}
+            onChangeText={newText => setTypeOfRoom(newText)}
+            style={style}
+          />
+          <CommonTextInput
+            placeholder={'Surcharge '}
+            value={surcharge}
+            onChangeText={newText => setSurcharge(newText)}
+            style={style}
+          />
+        </View>
+        {/* <DropDown
           defaultButtonText={'Add Room'}
           data={location}
           setLicencseLevel={setLicencseLevel}
-        />
+        /> */}
         <DropDown
           defaultButtonText={'Flooring Type'}
           data={FlooringType}
           setLicencseLevel={setLicencseLevel}
         />
-        <DropDown
+        {/* <DropDown
           defaultButtonText={'Select flooring Choice & Colour'}
           data={location}
           setLicencseLevel={setLicencseLevel}
+        /> */}
+        <View
+          style={{
+            flexDirection: 'row',
+            alignItems: 'center',
+            marginTop: 0,
+            marginBottom: 15,
+          }}>
+          <Text style={{fontSize: 14, fontWeight: 600}}>
+            flooring Choice & Colour
+          </Text>
+          {options.map(option => (
+            <View
+              key={option}
+              style={{
+                flexDirection: 'row',
+                alignItems: 'center',
+                left: 30,
+                width: '28%',
+              }}>
+              <RadioButton.Android
+                color={COLORS.secondry}
+                value={option}
+                status={selectedOption === option ? 'checked' : 'unchecked'}
+                onPress={() => setFlooringChoiceColorCheckBox(option)}
+              />
+              <Text style={{color: 'black', fontSize: 14, fontWeight: 400}}>
+                {option}
+              </Text>
+            </View>
+          ))}
+        </View>
+        <CommonTextInput
+          placeholder={'flooring Choice & Colour'}
+          value={flooringChoiceColor}
+          onChangeText={newText => setFlooringChoiceColor(newText)}
+          style={style1}
+        />
+
+        <CommonTextInput
+          placeholder={'Size'}
+          value={size}
+          onChangeText={newText => setSize(newText)}
+          style={style1}
+        />
+        <CommonTextInput
+          placeholder={'SQM Total'}
+          value={SQM}
+          onChangeText={newText => setSQM(newText)}
+          style={style1}
         />
         <View>
           <Text>Measurement of room</Text>
           <View style={styles.dottedBox}></View>
         </View>
-        {Laminate ? (
-          <>
+        {/* {!Laminate ? (
+          <> */}
+        <View
+          style={{
+            flexDirection: 'row',
+            alignItems: 'center',
+            marginTop: 10,
+          }}>
+          <Text style={{fontSize: 14, fontWeight: 600}}>Join in floor</Text>
+          {options.map(option => (
             <View
+              key={option}
               style={{
                 flexDirection: 'row',
                 alignItems: 'center',
-                marginTop: 10,
+                left: 30,
+                width: '28%',
               }}>
-              <Text style={{fontSize: 14, fontWeight: 600}}>Join in floor</Text>
-              {options.map(option => (
-                <View
-                  key={option}
-                  style={{
-                    flexDirection: 'row',
-                    alignItems: 'center',
-                    left: 30,
-                    width: '28%',
-                  }}>
-                  <RadioButton.Android
-                    color={COLORS.secondry}
-                    value={option}
-                    status={selectedOption === option ? 'checked' : 'unchecked'}
-                    onPress={() => handleOptionPress(option)}
-                  />
-                  <Text style={{color: 'black', fontSize: 14, fontWeight: 400}}>
-                    {option}
-                  </Text>
-                </View>
-              ))}
+              <RadioButton.Android
+                color={COLORS.secondry}
+                value={option}
+                status={selectedOption === option ? 'checked' : 'unchecked'}
+                onPress={() => handleOptionPress(option)}
+              />
+              <Text style={{color: 'black', fontSize: 14, fontWeight: 400}}>
+                {option}
+              </Text>
             </View>
-            <TextInput
-              style={{
-                height: 104,
-                borderWidth: 1,
-                padding: 20,
-                borderColor: COLORS.grey,
-                borderRadius: 16,
-                paddingTop: 15,
-              }}
-              multiline={true}
-              //   textAlignVertical="top"
-              placeholder="Write Notes"
-            />
-            <CommonTextInput
-              placeholder={'Gripper Lengths'}
-              value={gripperLengths}
-              onChangeText={newText => setGripperLengths(newText)}
-              style={style}
-            />
-          </>
+          ))}
+        </View>
+        <TextInput
+          style={{
+            height: 104,
+            borderWidth: 1,
+            padding: 20,
+            borderColor: COLORS.grey,
+            borderRadius: 16,
+            paddingTop: 15,
+          }}
+          multiline={true}
+          //   textAlignVertical="top"
+          placeholder="Write Notes"
+        />
+        <CommonTextInput
+          placeholder={'Gripper Lengths'}
+          value={gripperLengths}
+          onChangeText={newText => setGripperLengths(newText)}
+          style={style}
+        />
+        {/* <CommonTextInput
+          placeholder={'SQM Total'}
+          value={gripperLengths}
+          onChangeText={newText => setGripperLengths(newText)}
+          style={style}
+        /> */}
+        {/* </>
         ) : (
           <CommonTextInput
             placeholder={'SQM Total'}
@@ -136,35 +227,92 @@ const MeasuringQuestionnaire = ({route}) => {
             onChangeText={newText => setGripperLengths(newText)}
             style={style}
           />
-        )}
+        )} */}
         <View style={{marginBottom: 25}}>
           <CommonTextInput
-            placeholder={'Underlay'}
-            value={gripperLengths}
-            onChangeText={newText => setGripperLengths(newText)}
+            placeholder={'Underlay Type'}
+            value={underlayType}
+            onChangeText={newText => setUnderlayType(newText)}
             style={style}
           />
-          {Laminate ? null : (
-            <View style={{marginBottom: -25}}>
-              <CommonTextInput
-                placeholder={'Scotia'}
-                value={gripperLengths}
-                onChangeText={newText => setGripperLengths(newText)}
-                style={[style, {marginBottom: 30}]}
-              />
-              <DropDown
-                defaultButtonText={'Skirting Boards'}
-                data={location}
-                setLicencseLevel={setLicencseLevel}
-              />
-            </View>
-          )}
+          <CommonTextInput
+            placeholder={'Underlay Amount'}
+            value={underlayAmount}
+            onChangeText={newText => setUnderlayAmount(newText)}
+            style={style}
+          />
+          {/* {Laminate ? null : ( */}
+          <View style={{marginBottom: -25}}>
+            <CommonTextInput
+              placeholder={'Scotia'}
+              value={scotia}
+              onChangeText={newText => setScotia(newText)}
+              style={[style, {marginBottom: 30}]}
+            />
+            <DropDown
+              defaultButtonText={'Skirting Boards'}
+              data={location}
+              setLicencseLevel={setLicencseLevel}
+            />
+          </View>
+          {/* )} */}
         </View>
         <DropDown
           defaultButtonText={'Door Bars'}
-          data={location}
-          setLicencseLevel={setLicencseLevel}
+          data={doorBars}
+          setLicencseLevel={setDoorBarType}
         />
+        <TextInput
+          style={{
+            height: 104,
+            borderWidth: 1,
+            padding: 20,
+            borderColor: COLORS.grey,
+            borderRadius: 16,
+            paddingTop: 15,
+            marginBottom: 25,
+          }}
+          multiline={true}
+          //   textAlignVertical="top"
+          placeholder="Door Bars Notes"
+        />
+        <CommonTextInput
+          placeholder={'Door Bars Amount'}
+          value={doorBarAmount}
+          onChangeText={newText => setDoorBarAmount(newText)}
+          style={[style1]}
+        />
+        <View
+          style={{
+            flexDirection: 'row',
+            alignItems: 'center',
+            marginTop: 0,
+            marginBottom: 15,
+          }}>
+          <Text style={{fontSize: 14, fontWeight: 600}}>
+            Uplift waste Service
+          </Text>
+          {options.map(option => (
+            <View
+              key={option}
+              style={{
+                flexDirection: 'row',
+                alignItems: 'center',
+                left: 30,
+                width: '28%',
+              }}>
+              <RadioButton.Android
+                color={COLORS.secondry}
+                value={option}
+                status={selectedOption === option ? 'checked' : 'unchecked'}
+                onPress={() => setFlooringChoiceColorCheckBox(option)}
+              />
+              <Text style={{color: 'black', fontSize: 14, fontWeight: 400}}>
+                {option}
+              </Text>
+            </View>
+          ))}
+        </View>
         <CommonTextInput
           placeholder={'Uplift and waste service'}
           value={gripperLengths}
@@ -188,19 +336,67 @@ const MeasuringQuestionnaire = ({route}) => {
           //   textAlignVertical="top"
           placeholder="Furniture Notes"
         />
+        <View
+          style={{
+            flexDirection: 'row',
+            alignItems: 'center',
+            marginTop: 25,
+            marginBottom: -5,
+          }}>
+          <Text style={{fontSize: 14, fontWeight: 600}}>Suitable For Job</Text>
+          {options.map(option => (
+            <View
+              key={option}
+              style={{
+                flexDirection: 'row',
+                alignItems: 'center',
+                left: 30,
+                width: '28%',
+              }}>
+              <RadioButton.Android
+                color={COLORS.secondry}
+                value={option}
+                status={selectedOption === option ? 'checked' : 'unchecked'}
+                onPress={() => setFlooringChoiceColorCheckBox(option)}
+              />
+              <Text style={{color: 'black', fontSize: 14, fontWeight: 400}}>
+                {option}
+              </Text>
+            </View>
+          ))}
+        </View>
         <CommonTextInput
+          placeholder={'Suitable For Job Notes'}
+          value={doorBarAmount}
+          onChangeText={newText => setDoorBarAmount(newText)}
+          style={[style]}
+        />
+        {/* <CommonTextInput
           placeholder={'Floor Preparation'}
           value={gripperLengths}
           onChangeText={newText => setGripperLengths(newText)}
           style={[style]}
-        />
+        /> */}
+        <View style={{marginBottom: -25, marginTop: 25}}>
+          <DropDown
+            defaultButtonText={'Doors To Cut'}
+            data={doorsToCut}
+            setLicencseLevel={setLicencseLevel}
+          />
+        </View>
         <CommonTextInput
-          placeholder={'Doors to cut'}
+          placeholder={'How Many Doors to cut'}
           value={gripperLengths}
           onChangeText={newText => setGripperLengths(newText)}
           style={[style]}
         />
-        <TextInput
+        <CommonTextInput
+          placeholder={'Type Of Doors To cut'}
+          value={gripperLengths}
+          onChangeText={newText => setGripperLengths(newText)}
+          style={[style]}
+        />
+        {/* <TextInput
           style={{
             height: 104,
             borderWidth: 1,
@@ -213,13 +409,13 @@ const MeasuringQuestionnaire = ({route}) => {
           multiline={true}
           //   textAlignVertical="top"
           placeholder="Floor Plan Notes"
-        />
-        <CommonTextInput
+        /> */}
+        {/* <CommonTextInput
           placeholder={'Minimum Charge'}
           value={gripperLengths}
           onChangeText={newText => setGripperLengths(newText)}
           style={[style]}
-        />
+        /> */}
         <View style={{marginTop: 20}}>
           <DropDown
             defaultButtonText={'How many fitters needed'}

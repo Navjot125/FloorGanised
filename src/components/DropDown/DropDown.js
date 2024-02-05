@@ -13,7 +13,7 @@ const DropDown = ({data, setLicencseLevel, defaultButtonText}) => {
           // defaultValue={user?.licencseLevel}
           onSelect={(selectedItem, index) => {
             console.log(selectedItem, index)
-            // setLicencseLevel(selectedItem);
+            setLicencseLevel(selectedItem);
           }}
           buttonTextAfterSelection={(selectedItem, index) => {
             return selectedItem;
