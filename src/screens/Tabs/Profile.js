@@ -7,12 +7,8 @@ import {
   Image,
   SafeAreaView,
 } from 'react-native';
-import React, {useEffect} from 'react';
+import React from 'react';
 import {navigationRef} from '../../App';
-import {dateListing} from '../../utils/Dates/DateLimit';
-import CalendarStrip from '../../utils/Dates/CalendarStrip';
-import {height} from '../../assets/styles/styles';
-import {HistoryData, HomeData} from '../../config/DummyData';
 import {COLORS} from '../../utils/theme';
 import Header from '../../components/Header/Header';
 import {scale} from 'react-native-size-matters';
@@ -22,7 +18,6 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import {deleteAccount} from '../../redux/actions/profileAction';
 
 const Profile = () => {
-  // deleteAccount
   const dispatch = useDispatch();
   const userData = useSelector(state => state?.onBoardingreducer?.userData);
   const screen = userData?.role === 'Surveyor' ? 'Main' : 'Fitter';

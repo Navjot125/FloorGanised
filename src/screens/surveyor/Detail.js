@@ -16,7 +16,9 @@ import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons';
 import Feather from 'react-native-vector-icons/Feather';
 import CommonButton from '../../components/CommonButton/CommonButton';
 import {navigationRef} from '../../App';
-const Detail = () => {
+const Detail = ({route}) => {
+  const {responseData} = route.params;
+  console.log('responseData------------in Detail screen', responseData);
   const onStart = () => {
     navigationRef.navigate('MeasuringQuestionnaire');
   };
@@ -27,8 +29,10 @@ const Detail = () => {
       <View style={styles.container}>
         <View style={styles.mainBox}>
           <View style={styles.userName}>
-            <Text style={{fontWeight: 700, fontSize: 16}}>Desirae Bergson</Text>
-            <Text style={{fontWeight: 700, fontSize: 16}}>$150</Text>
+            <Text style={{fontWeight: 700, fontSize: 16}}>
+              {responseData?.customer_id?.name}
+            </Text>
+            {/* <Text style={{fontWeight: 700, fontSize: 16}}>$150</Text> */}
           </View>
           <View style={styles.details}>
             <Icon
@@ -37,7 +41,7 @@ const Detail = () => {
               color={COLORS.secondry}
             />
             <Text style={{fontSize: 12, fontWeight: 500, left: scale(10)}}>
-              Exela Movers Company
+              {responseData?.referal}
             </Text>
           </View>
           <View style={styles.details}>
@@ -47,19 +51,19 @@ const Detail = () => {
               color={COLORS.secondry}
             />
             <Text style={{fontSize: 12, fontWeight: 500, left: scale(10)}}>
-              Brewster Rd, Newark, NJ 07, United States
+              {responseData?.address}
             </Text>
           </View>
           <View style={styles.details}>
             <Feather name="phone" size={20} color={COLORS.secondry} />
             <Text style={{fontSize: 12, fontWeight: 500, left: scale(10)}}>
-              +1 74 392394984
+              {responseData?.customer_id?.phone_number}
             </Text>
           </View>
           <View style={styles.details}>
             <Feather name="mail" size={20} color={COLORS.secondry} />
             <Text style={{fontSize: 12, fontWeight: 500, left: scale(10)}}>
-              exelamoverscompany@gmail.com
+              {responseData?.customer_id?.email}
             </Text>
           </View>
           <View style={{marginTop: 20}}>
@@ -71,9 +75,7 @@ const Detail = () => {
                 marginTop: 10,
                 lineHeight: 18,
               }}>
-              Lorem ipsum dolor sit amet, consectetur aute adipiscing elit, sed
-              do eiusmod tempor aute a incididunt ut labore et dolore magna
-              aliqua. Ut enim ad minim veniam, quis nostrud auteo.
+              {responseData?.notes}
             </Text>
           </View>
         </View>

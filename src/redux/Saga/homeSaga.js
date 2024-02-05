@@ -1,18 +1,18 @@
 import {call, put, takeEvery} from 'redux-saga/effects';
-import {navigationRef} from '../../App';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import APIS from '../../services/apis';
 import {url} from '../../services/Config';
 import {GET_JOBS, JOB_DETAIL} from '../constants';
+import {navigationRef} from '../../App';
 
 function* getJob(action) {
   try {
     const {status, date} = action.data;
+    console.log(date, 'date');
     const token = yield call(AsyncStorage.getItem, 'token');
-    // const queryParams = `status=${encodeURIComponent(status)}`;
     const queryParams = `status=${encodeURIComponent(
       status,
-    )}&date=${encodeURIComponent(date)}`;
+    )}&job_date=${encodeURIComponent(date)}`;
     const requestOptions = {
       method: 'GET',
       headers: {
@@ -24,8 +24,6 @@ function* getJob(action) {
     const response = yield call(fetch, urlWithParams, requestOptions);
     if (response.ok) {
       const responseData = yield response.json();
-      // console.log(responseData, 'getJob response --');
-      // yield put({type: SET_USER_TOKEN, data: responseData?.token});
       action?.data?.cb(responseData?.data);
     } else {
       const errorData = yield response.json();
@@ -42,9 +40,9 @@ function* getJob(action) {
 }
 function* jobDetail(action) {
   try {
-    const job_id = action.data;
+    const {_id, stack, screen} = action.data;
     const token = yield call(AsyncStorage.getItem, 'token');
-    const queryParams = `job_id=${encodeURIComponent(job_id)}`;
+    const queryParams = `job_id=${encodeURIComponent(_id)}`;
     console.log(queryParams);
     const requestOptions = {
       method: 'GET',
@@ -58,6 +56,13 @@ function* jobDetail(action) {
     if (response.ok) {
       const responseData = yield response.json();
       console.log(responseData, 'jobDetail response --');
+      // navigationRef.navigate(stack, {screen: screen});
+      navigationRef.navigate(stack, {
+        screen: screen,
+        params: {
+          responseData: responseData.data,
+        },
+      });
     } else {
       const errorData = yield response.json();
       console.error(

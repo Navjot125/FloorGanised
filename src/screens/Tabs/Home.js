@@ -10,7 +10,6 @@ import React, {useEffect, useState} from 'react';
 import {navigationRef} from '../../App';
 import {dateListing} from '../../utils/Dates/DateLimit';
 import CalendarStrip from '../../utils/Dates/CalendarStrip';
-import {HomeData} from '../../config/DummyData';
 import {COLORS} from '../../utils/theme';
 import Header from '../../components/Header/Header';
 import {scale} from 'react-native-size-matters';
@@ -18,6 +17,7 @@ import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons';
 import {useDispatch, useSelector} from 'react-redux';
 import {getJobs, jobDetail} from '../../redux/actions/homeAction';
 import SkeletonPlaceholder from 'react-native-skeleton-placeholder';
+import moment from 'moment';
 
 const Home = props => {
   const selectedDate = useSelector(
@@ -30,23 +30,27 @@ const Home = props => {
     status: 'Pending',
     date: selectedDate ? selectedDate : new Date(),
     cb: data => {
-      // console.log(data, 'data in home----');
       setJobListing(data);
     },
   };
   useEffect(() => {
     dateListing();
     dispatch(getJobs(param));
-  }, []);
+  }, [selectedDate]);
   const userData = useSelector(state => state?.onBoardingreducer?.userData);
   const stack = userData?.role == 'Surveyor' ? 'Main' : 'Fitter';
   const screen = userData?.role == 'Surveyor' ? 'Detail' : 'FitterDetail';
   const renderItem = ({item, index}) => {
+    let param = {
+      _id: item?._id,
+      stack,
+      screen,
+    };
     return (
       <TouchableOpacity
-        onPress={() => {
-          dispatch(jobDetail('65b0d89ecb58f69a88d04a7f'));
-        }}
+        // onPress={() => {
+        //   dispatch(jobDetail(item?._id));
+        // }}
         style={styles.container}>
         <View
           style={{
@@ -61,15 +65,15 @@ const Home = props => {
               fontSize: 16,
               fontWeight: 700,
             }}>
-            {item?.title}
+            {item?.customer_id?.name}
           </Text>
-          {/* <Text
+          <Text
             style={{
-              fontSize: 16,
-              fontWeight: 700,
+              fontSize: 12,
+              fontWeight: 400,
             }}>
-            ${item?.price}
-          </Text> */}
+            {moment(item?.surveyor_job_date).format('h:mm A')}
+          </Text>
         </View>
         <View
           style={{
@@ -96,12 +100,11 @@ const Home = props => {
               fontWeight: 500,
               width: 180,
             }}>
-            {item?.location}
+            {item?.address}
           </Text>
           <TouchableOpacity
             onPress={() => {
-              // console.log(userData?.role);
-              navigationRef.navigate(stack, {screen: screen});
+              dispatch(jobDetail(param));
             }}
             style={{
               backgroundColor: COLORS.primary,
@@ -126,7 +129,7 @@ const Home = props => {
   return (
     <View style={{flex: 1, backgroundColor: 'black'}}>
       <SafeAreaView />
-      <Header title={'Home'} profileDetail={true}/>
+      <Header title={'Home'} profileDetail={true} />
       <View
         style={{
           backgroundColor: COLORS?.white,
@@ -146,12 +149,30 @@ const Home = props => {
             <View
               style={{height: 145, marginTop: 10, marginHorizontal: 10}}></View>
           </SkeletonPlaceholder>
-        ) : (
+        ) : jobListing?.length ? (
           <FlatList
-            data={HomeData}
+            data={jobListing}
             renderItem={renderItem}
             contentContainerStyle={{paddingBottom: 20}}
           />
+        ) : (
+          <View
+            style={{
+              flex: 1,
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}>
+            <Text
+              style={{
+                fontSize: 15,
+                fontWeight: 500,
+                textAlign: 'center',
+                paddingHorizontal: 50,
+                lineHeight: 25,
+              }}>
+              There are no job assignments for the selected date.
+            </Text>
+          </View>
         )}
       </View>
     </View>
