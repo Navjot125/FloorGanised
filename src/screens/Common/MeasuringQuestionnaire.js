@@ -1,4 +1,6 @@
 import {
+  Alert,
+  Image,
   SafeAreaView,
   ScrollView,
   StyleSheet,
@@ -27,6 +29,8 @@ import LaunchImageLibraryAsync from '../../components/ImagePicker/ImagePicker';
 const MeasuringQuestionnaire = ({route}) => {
   const [licencseLevel, setLicencseLevel] = useState();
   const [measuremntRoomImages, setMeasuremntRoomImages] = useState();
+  const [furnitureImages, setFurnitureImages] = useState();
+  const [floorImages, setFloorImages] = useState();
   const [doorBarType, setDoorBarType] = useState();
   const [selectedOption, setSelectedOption] = useState(null);
   const [flooringChoiceColorCheckBox, setFlooringChoiceColorCheckBox] =
@@ -75,14 +79,11 @@ const MeasuringQuestionnaire = ({route}) => {
     navigationRef.navigate('Home');
   };
   const Laminate = true;
-  console.log('measuremntRoomImages--------', measuremntRoomImages);
-  const handleLaunchImageLibraryPress = () => {
-    LaunchImageLibraryAsync(
-      measuremntRoomImages,
-      setMeasuremntRoomImages,
-      'Certifications',
-    );
-  };
+  useEffect(() => {
+    if (measuremntRoomImages?.length > 3) {
+      Alert.alert('You can pic only 3 images');
+    }
+  }, [measuremntRoomImages]);
 
   return (
     <View style={{flex: 1, backgroundColor: 'black'}}>
@@ -176,20 +177,43 @@ const MeasuringQuestionnaire = ({route}) => {
         <View>
           <Text>Measurement of room</Text>
           <View style={styles.dottedBox}>
-            <Octicons name="device-camera" size={25} color={COLORS.secondry} />
-            <TouchableOpacity
-              style={{}}
-              onPress={() => {
-                LaunchImageLibraryAsync(
-                  measuremntRoomImages,
-                  setMeasuremntRoomImages,
-                  'Certifications',
-                );
-              }}>
-              <Text style={{fontSize: 14, fontWeight: 500, marginTop: 10}}>
-                Take Pictures
-              </Text>
-            </TouchableOpacity>
+            {measuremntRoomImages ? (
+              <View
+                style={{
+                  flexDirection: 'row',
+                  justifyContent: 'space-around',
+                  width: '100%',
+                }}>
+                {measuremntRoomImages.map((item, index) => (
+                  <Image
+                    key={index}
+                    style={{height: 80, width: 80, borderRadius: 16}}
+                    source={{uri: item?.uri}}
+                  />
+                ))}
+              </View>
+            ) : (
+              <>
+                <Octicons
+                  name="device-camera"
+                  size={25}
+                  color={COLORS.secondry}
+                />
+                <TouchableOpacity
+                  style={{}}
+                  onPress={() => {
+                    LaunchImageLibraryAsync(
+                      measuremntRoomImages,
+                      setMeasuremntRoomImages,
+                      'Certifications',
+                    );
+                  }}>
+                  <Text style={{fontSize: 14, fontWeight: 500, marginTop: 10}}>
+                    Take Pictures
+                  </Text>
+                </TouchableOpacity>
+              </>
+            )}
           </View>
         </View>
         {/* {!Laminate ? (
@@ -349,7 +373,45 @@ const MeasuringQuestionnaire = ({route}) => {
         />
         <View style={{marginVertical: 20}}>
           <Text style={{fontSize: 14, fontWeight: 600}}>Furniture</Text>
-          <View style={styles.dottedBox}></View>
+          <View style={styles.dottedBox}>
+            {furnitureImages ? (
+              <View
+                style={{
+                  flexDirection: 'row',
+                  justifyContent: 'space-around',
+                  width: '100%',
+                }}>
+                {furnitureImages.map((item, index) => (
+                  <Image
+                    key={index}
+                    style={{height: 80, width: 80, borderRadius: 16}}
+                    source={{uri: item?.uri}}
+                  />
+                ))}
+              </View>
+            ) : (
+              <>
+                <Octicons
+                  name="device-camera"
+                  size={25}
+                  color={COLORS.secondry}
+                />
+                <TouchableOpacity
+                  style={{}}
+                  onPress={() => {
+                    LaunchImageLibraryAsync(
+                      furnitureImages,
+                      setFurnitureImages,
+                      'Certifications',
+                    );
+                  }}>
+                  <Text style={{fontSize: 14, fontWeight: 500, marginTop: 10}}>
+                    Take Pictures
+                  </Text>
+                </TouchableOpacity>
+              </>
+            )}
+          </View>
         </View>
         <TextInput
           style={{
@@ -405,6 +467,90 @@ const MeasuringQuestionnaire = ({route}) => {
           onChangeText={newText => setGripperLengths(newText)}
           style={[style]}
         /> */}
+        <View
+          style={{
+            flexDirection: 'row',
+            alignItems: 'center',
+            marginTop: 10,
+          }}>
+          <Text style={{fontSize: 14, fontWeight: 600}}>Floor Preparation</Text>
+          {options.map(option => (
+            <View
+              key={option}
+              style={{
+                flexDirection: 'row',
+                alignItems: 'center',
+                left: 30,
+                width: '28%',
+              }}>
+              <RadioButton.Android
+                color={COLORS.secondry}
+                value={option}
+                status={selectedOption === option ? 'checked' : 'unchecked'}
+                onPress={() => handleOptionPress(option)}
+              />
+              <Text style={{color: 'black', fontSize: 14, fontWeight: 400}}>
+                {option}
+              </Text>
+            </View>
+          ))}
+        </View>
+        <TextInput
+          style={{
+            height: 104,
+            borderWidth: 1,
+            padding: 20,
+            borderColor: COLORS.grey,
+            borderRadius: 16,
+            paddingTop: 15,
+            marginTop: 20,
+          }}
+          multiline={true}
+          //   textAlignVertical="top"
+          placeholder="Floor Preparation Notes"
+        />
+        <View style={{marginVertical: 20}}>
+          <Text style={{fontSize: 14, fontWeight: 600}}>Floor Preparation</Text>
+          <View style={styles.dottedBox}>
+            {floorImages ? (
+              <View
+                style={{
+                  flexDirection: 'row',
+                  justifyContent: 'space-around',
+                  width: '100%',
+                }}>
+                {floorImages.map((item, index) => (
+                  <Image
+                    key={index}
+                    style={{height: 80, width: 80, borderRadius: 16}}
+                    source={{uri: item?.uri}}
+                  />
+                ))}
+              </View>
+            ) : (
+              <>
+                <Octicons
+                  name="device-camera"
+                  size={25}
+                  color={COLORS.secondry}
+                />
+                <TouchableOpacity
+                  style={{}}
+                  onPress={() => {
+                    LaunchImageLibraryAsync(
+                      floorImages,
+                      setFloorImages,
+                      'Certifications',
+                    );
+                  }}>
+                  <Text style={{fontSize: 14, fontWeight: 500, marginTop: 10}}>
+                    Take Pictures
+                  </Text>
+                </TouchableOpacity>
+              </>
+            )}
+          </View>
+        </View>
         <View style={{marginBottom: -25, marginTop: 25}}>
           <DropDown
             defaultButtonText={'Doors To Cut'}

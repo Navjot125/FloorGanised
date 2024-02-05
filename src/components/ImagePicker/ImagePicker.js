@@ -1,3 +1,4 @@
+import {Alert} from 'react-native';
 import {launchImageLibrary} from 'react-native-image-picker';
 const MAX_IMAGE_SIZE = 3 * 1024 * 1024; // Maximum image size in bytes (3MB)
 const handleImageArrayWhileRemove = (
@@ -27,7 +28,7 @@ const LaunchImageLibraryAsync = async (
       maxWidth: 300,
       maxHeight: 300,
       quality: 0.8,
-      selectionLimit: docName === 'profile' ? 1 : 10,
+      selectionLimit: docName === 'profile' ? 1 : 3,
       storageOptions: {
         skipBackup: true,
         path: 'images',
@@ -41,7 +42,6 @@ const LaunchImageLibraryAsync = async (
     } else {
       let res = response.assets;
       let size = res[0].fileSize;
-
       if (size <= MAX_IMAGE_SIZE) {
         if (docName === 'Certifications') {
           handleImageArrayWhileRemove(
@@ -54,6 +54,7 @@ const LaunchImageLibraryAsync = async (
         }
       } else {
         console.log('Image size exceeds the maximum limit');
+        Alert.alert('Image size exceeds the maximum limit');
         // Handle the case where the image size exceeds the limit
       }
     }
