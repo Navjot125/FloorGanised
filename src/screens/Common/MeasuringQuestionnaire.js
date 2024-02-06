@@ -58,7 +58,7 @@ const MeasuringQuestionnaire = ({route}) => {
   const location = ['1', '2', '3', '4', '5'];
   const doorsToCutOption = ['Yes', 'No'];
   const suitableOptions = ['Yes', 'Unable to see due to current floor', 'No'];
-  const skirtingBoardsOptions = ['Yes', 'Not Sure Yet', 'No'];
+  const skirtingBoardsOptions = ['Yes', 'Not sure yet', 'No'];
   const doorBars = ['silver', 'gold', 'oak', 'other'];
   const FlooringType = [
     'Carpets',
@@ -312,24 +312,33 @@ const MeasuringQuestionnaire = ({route}) => {
                     style={{
                       flexDirection: 'row',
                       alignItems: 'center',
-                      marginTop: 5,
+                      marginTop: 10,
                     }}>
-                    <RadioButton.Android
-                      color={COLORS.secondry}
-                      value={option}
-                      status={
-                        isSkirtingBoard === option ? 'checked' : 'unchecked'
-                      }
-                      onPress={() => setIsSkirtingBoard(option)}
-                    />
+                    <TouchableOpacity
+                      onPress={() => setIsSkirtingBoard(option)}>
+                      <Image
+                        source={
+                          isSkirtingBoard === option
+                            ? require('../../assets/images/check.png')
+                            : require('../../assets/images/uncheck.png')
+                        }
+                        style={{height: 17, width: 17}}
+                        resizeMode="contain"
+                      />
+                    </TouchableOpacity>
                     <Text
-                      style={{color: 'black', fontSize: 14, fontWeight: 400}}>
+                      style={{
+                        color: 'black',
+                        fontSize: 14,
+                        fontWeight: 400,
+                        left: 7,
+                      }}>
                       {option}
                     </Text>
                   </View>
                 ))}
               </View>
-              {isSkirtingBoard == 'No' || isSkirtingBoard == 'Not Sure Yet' ? (
+              {isSkirtingBoard == 'No' || isSkirtingBoard == 'Not sure yet' ? (
                 <TextInput
                   style={{
                     height: 104,

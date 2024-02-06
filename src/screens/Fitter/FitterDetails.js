@@ -472,7 +472,7 @@ const FitterDetail = ({route}) => {
                 Suitable for Job
               </Text>
               <Text style={{fontSize: 12, fontWeight: 400, lineHeight: 20}}>
-               {measurinDetails?.is_suitable_for_job}
+                {measurinDetails?.is_suitable_for_job}
               </Text>
             </View>
           )}
@@ -482,7 +482,7 @@ const FitterDetail = ({route}) => {
                 Suitable for Job Notes
               </Text>
               <Text style={{fontSize: 12, fontWeight: 400, lineHeight: 20}}>
-               {measurinDetails?.suitable_for_job}
+                {measurinDetails?.suitable_for_job}
               </Text>
             </View>
           )}
