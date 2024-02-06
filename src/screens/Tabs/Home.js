@@ -26,7 +26,6 @@ const Home = props => {
   const loader = useSelector(
     state => state?.loaderReducer?.loader,
   );
-  console.log('selectesddDate---------------',loader);
   // const [loader, setLoader] = useState(!true);
   const [jobListing, setJobListing] = useState();
   const dispatch = useDispatch();

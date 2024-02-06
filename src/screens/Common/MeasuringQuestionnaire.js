@@ -12,8 +12,6 @@ import {
 import React, {useEffect, useState} from 'react';
 import {scale} from 'react-native-size-matters';
 import {COLORS} from '../../utils/theme';
-import SelectDropdown from 'react-native-select-dropdown';
-import AntDesign from 'react-native-vector-icons/AntDesign';
 import DropDown from '../../components/DropDown/DropDown';
 import {Checkbox, RadioButton} from 'react-native-paper';
 import CommonTextInput from '../../components/Input/InputBox';
@@ -22,7 +20,6 @@ import {navigationRef} from '../../App';
 import CommonModal from '../../components/Modal/Modal';
 import jobComplete from '../../assets/images/jobComplete.png';
 import Header from '../../components/Header/Header';
-import ImagePicker from '../../components/ImagePicker/ImagePicker';
 import Octicons from 'react-native-vector-icons/Octicons';
 import LaunchImageLibraryAsync from '../../components/ImagePicker/ImagePicker';
 
@@ -77,9 +74,9 @@ const MeasuringQuestionnaire = ({route}) => {
       ? setIssecondScreen(true)
       : setIssecondScreen(false);
   };
-  useEffect(()=>{
-    handleChangeSecondScreen()
-  },[flooringType])
+  useEffect(() => {
+    handleChangeSecondScreen();
+  }, [flooringType]);
   const options = ['Yes', 'No'];
   const style = {
     width: '100%',
@@ -130,23 +127,12 @@ const MeasuringQuestionnaire = ({route}) => {
             style={style}
           />
         </View>
-        {/* <DropDown
-          defaultButtonText={'Add Room'}
-          data={location}
-          setLicencseLevel={setLicencseLevel}
-        /> */}
         <DropDown
           defaultButtonText={'Flooring Type'}
           data={FlooringType}
           setLicencseLevel={setFlooringType}
           handleChangeSecondScreen={handleChangeSecondScreen}
         />
-        {/* <DropDown
-          defaultButtonText={'Select flooring Choice & Colour'}
-          data={location}
-          setLicencseLevel={setLicencseLevel}
-        /> */}
-
         {!isFlooringChoiceSelected && (
           <CommonTextInput
             placeholder={'flooring Choice & Colour'}
@@ -159,12 +145,9 @@ const MeasuringQuestionnaire = ({route}) => {
           style={{
             flexDirection: 'row',
             alignItems: 'center',
-            marginTop: -10,
-            marginBottom: 15,
+            marginTop: -20,
+            marginBottom: 25,
           }}>
-          <Text style={{fontSize: 14, fontWeight: 600}}>
-            Customer Not Picked Flooring Choice
-          </Text>
           <Checkbox.Android
             color={COLORS.secondry}
             status={isFlooringChoiceSelected ? 'checked' : 'unchecked'}
@@ -172,6 +155,9 @@ const MeasuringQuestionnaire = ({route}) => {
               setIsFlooringChoiceSelected(!isFlooringChoiceSelected);
             }}
           />
+          <Text style={{fontSize: 14, fontWeight: 600}}>
+            Customer not picked flooring choice
+          </Text>
         </View>
         <CommonTextInput
           placeholder={'Size'}
@@ -186,7 +172,7 @@ const MeasuringQuestionnaire = ({route}) => {
           style={style1}
         />
         <View>
-          <Text>Measurement of room</Text>
+          <Text style={{fontSize: 14, fontWeight: 600}} >Measurement of room</Text>
           <View style={styles.dottedBox}>
             {measuremntRoomImages ? (
               <View
@@ -227,70 +213,57 @@ const MeasuringQuestionnaire = ({route}) => {
             )}
           </View>
         </View>
-        {!isSecondScreen && 
+        {!isSecondScreen && (
           <>
-        <View
-          style={{
-            flexDirection: 'row',
-            alignItems: 'center',
-            marginTop: 10,
-          }}>
-          <Text style={{fontSize: 14, fontWeight: 600}}>Join in floor</Text>
-          {options.map(option => (
             <View
-              key={option}
               style={{
                 flexDirection: 'row',
                 alignItems: 'center',
-                left: 30,
-                width: '28%',
+                marginTop: 25,
+                marginBottom:5
               }}>
-              <RadioButton.Android
-                color={COLORS.secondry}
-                value={option}
-                status={selectedOption === option ? 'checked' : 'unchecked'}
-                onPress={() => handleOptionPress(option)}
-              />
-              <Text style={{color: 'black', fontSize: 14, fontWeight: 400}}>
-                {option}
-              </Text>
+              <Text style={{fontSize: 14, fontWeight: 600}}>Join in floor</Text>
+              {options.map(option => (
+                <View
+                  key={option}
+                  style={{
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                    left: 30,
+                    width: '28%',
+                  }}>
+                  <RadioButton.Android
+                    color={COLORS.secondry}
+                    value={option}
+                    status={selectedOption === option ? 'checked' : 'unchecked'}
+                    onPress={() => handleOptionPress(option)}
+                  />
+                  <Text style={{color: 'black', fontSize: 14, fontWeight: 400}}>
+                    {option}
+                  </Text>
+                </View>
+              ))}
             </View>
-          ))}
-        </View>
-        <TextInput
-          style={{
-            height: 104,
-            borderWidth: 1,
-            padding: 20,
-            borderColor: COLORS.grey,
-            borderRadius: 16,
-            paddingTop: 15,
-          }}
-          multiline={true}
-          placeholder="Write Notes"
-        />
-        <CommonTextInput
-          placeholder={'Gripper Lengths'}
-          value={gripperLengths}
-          onChangeText={newText => setGripperLengths(newText)}
-          style={style}
-        />
-        </>}
-        {/* <CommonTextInput
-          placeholder={'SQM Total'}
-          value={gripperLengths}
-          onChangeText={newText => setGripperLengths(newText)}
-          style={style}
-        /> */}
-        {/* </>
-        ) : (
-          <CommonTextInput
-            placeholder={'SQM Total'}
-            value={gripperLengths}
-            onChangeText={newText => setGripperLengths(newText)}
-            style={style}
-          />
-        )} */}
+            <TextInput
+              style={{
+                height: 104,
+                borderWidth: 1,
+                padding: 20,
+                borderColor: COLORS.grey,
+                borderRadius: 16,
+                paddingTop: 15,
+              }}
+              multiline={true}
+              placeholder="Write Notes"
+            />
+            <CommonTextInput
+              placeholder={'Gripper Lengths'}
+              value={gripperLengths}
+              onChangeText={newText => setGripperLengths(newText)}
+              style={style}
+            />
+          </>
+        )}
         <View style={{marginBottom: 25}}>
           <CommonTextInput
             placeholder={'Underlay Type'}
@@ -305,58 +278,59 @@ const MeasuringQuestionnaire = ({route}) => {
             style={style}
           />
           {!isSecondScreen ? null : (
-          <View style={{marginBottom: -25}}>
-            <CommonTextInput
-              placeholder={'Scotia'}
-              value={scotia}
-              onChangeText={newText => setScotia(newText)}
-              style={[style, {marginBottom: 30}]}
-            />
-            <View
-              style={{
-                marginBottom: 25,
-              }}>
-              <Text style={{fontSize: 14, fontWeight: 600}}>
-                Will Skirting Board Be Off Or On
-              </Text>
-              {skirtingBoardsOptions.map(option => (
-                <View
-                  key={option}
-                  style={{
-                    flexDirection: 'row',
-                    alignItems: 'center',
-                    marginTop: 5,
-                  }}>
-                  <RadioButton.Android
-                    color={COLORS.secondry}
-                    value={option}
-                    status={
-                      isSkirtingBoard === option ? 'checked' : 'unchecked'
-                    }
-                    onPress={() => setIsSkirtingBoard(option)}
-                  />
-                  <Text style={{color: 'black', fontSize: 14, fontWeight: 400}}>
-                    {option}
-                  </Text>
-                </View>
-              ))}
-            </View>
-            {isSkirtingBoard == 'No' || isSkirtingBoard == 'Not Sure Yet' ? (
-              <TextInput
-                style={{
-                  height: 104,
-                  borderWidth: 1,
-                  padding: 20,
-                  borderColor: COLORS.grey,
-                  borderRadius: 16,
-                  paddingTop: 15,
-                  marginBottom: 25,
-                }}
-                multiline={true}
-                placeholder="Skirting Board Notes"
+            <View style={{marginBottom: -25}}>
+              <CommonTextInput
+                placeholder={'Scotia'}
+                value={scotia}
+                onChangeText={newText => setScotia(newText)}
+                style={[style, {marginBottom: 30}]}
               />
-            ) : null}
-          </View>
+              <View
+                style={{
+                  marginBottom: 25,
+                }}>
+                <Text style={{fontSize: 14, fontWeight: 600}}>
+                  Will Skirting Board Be Off Or On
+                </Text>
+                {skirtingBoardsOptions.map(option => (
+                  <View
+                    key={option}
+                    style={{
+                      flexDirection: 'row',
+                      alignItems: 'center',
+                      marginTop: 5,
+                    }}>
+                    <RadioButton.Android
+                      color={COLORS.secondry}
+                      value={option}
+                      status={
+                        isSkirtingBoard === option ? 'checked' : 'unchecked'
+                      }
+                      onPress={() => setIsSkirtingBoard(option)}
+                    />
+                    <Text
+                      style={{color: 'black', fontSize: 14, fontWeight: 400}}>
+                      {option}
+                    </Text>
+                  </View>
+                ))}
+              </View>
+              {isSkirtingBoard == 'No' || isSkirtingBoard == 'Not Sure Yet' ? (
+                <TextInput
+                  style={{
+                    height: 104,
+                    borderWidth: 1,
+                    padding: 20,
+                    borderColor: COLORS.grey,
+                    borderRadius: 16,
+                    paddingTop: 15,
+                    marginBottom: 25,
+                  }}
+                  multiline={true}
+                  placeholder="Skirting Board Notes"
+                />
+              ) : null}
+            </View>
           )}
         </View>
         <DropDown
@@ -393,7 +367,7 @@ const MeasuringQuestionnaire = ({route}) => {
             marginBottom: 15,
           }}>
           <Text style={{fontSize: 14, fontWeight: 600}}>
-            Uplift waste Service
+            Uplift waste service
           </Text>
           {options.map(option => (
             <View
@@ -474,7 +448,6 @@ const MeasuringQuestionnaire = ({route}) => {
             paddingTop: 15,
           }}
           multiline={true}
-          //   textAlignVertical="top"
           placeholder="Furniture Notes"
         />
         <View
@@ -483,7 +456,7 @@ const MeasuringQuestionnaire = ({route}) => {
             marginBottom: -5,
           }}>
           <Text style={{fontSize: 14, fontWeight: 600}}>
-            Is The Surfloor Suitable For The Job?
+            Is the surfloor suitable for the job?
           </Text>
           {suitableOptions.map(option => (
             <View
@@ -514,111 +487,108 @@ const MeasuringQuestionnaire = ({route}) => {
             style={[style]}
           />
         ) : null}
-        {/* <CommonTextInput
-          placeholder={'Floor Preparation'}
-          value={gripperLengths}
-          onChangeText={newText => setGripperLengths(newText)}
-          style={[style]}
-        /> */}
-
-        {/* ////////////////////////////////////////////////////// */}
-{ isSecondScreen &&
-        <>
-        <View
-          style={{
-            flexDirection: 'row',
-            alignItems: 'center',
-            marginTop: 20,
-          }}>
-          <Text style={{fontSize: 14, fontWeight: 600}}>Floor Preparation</Text>
-          {options.map(option => (
+        {isSecondScreen && (
+          <>
             <View
-              key={option}
               style={{
                 flexDirection: 'row',
                 alignItems: 'center',
-                left: 30,
-                width: '28%',
-              }}>
-              <RadioButton.Android
-                color={COLORS.secondry}
-                value={option}
-                status={isFloorPreparation === option ? 'checked' : 'unchecked'}
-                onPress={() => setIsFloorPreparation(option)}
-              />
-              <Text style={{color: 'black', fontSize: 14, fontWeight: 400}}>
-                {option}
-              </Text>
-            </View>
-          ))}
-        </View>
-        {isFloorPreparation == 'Yes' && (
-          <>
-            <TextInput
-              style={{
-                height: 104,
-                borderWidth: 1,
-                padding: 20,
-                borderColor: COLORS.grey,
-                borderRadius: 16,
-                paddingTop: 15,
                 marginTop: 20,
-              }}
-              multiline={true}
-              placeholder="Floor Preparation Notes"
-            />
-            <View style={{marginVertical: 20}}>
+              }}>
               <Text style={{fontSize: 14, fontWeight: 600}}>
                 Floor Preparation
               </Text>
-              <View style={styles.dottedBox}>
-                {floorImages ? (
-                  <View
-                    style={{
-                      flexDirection: 'row',
-                      justifyContent: 'space-around',
-                      width: '100%',
-                    }}>
-                    {floorImages.map((item, index) => (
-                      <Image
-                        key={index}
-                        style={{height: 80, width: 80, borderRadius: 16}}
-                        source={{uri: item?.uri}}
-                      />
-                    ))}
-                  </View>
-                ) : (
-                  <>
-                    <Octicons
-                      name="device-camera"
-                      size={25}
-                      color={COLORS.secondry}
-                    />
-                    <TouchableOpacity
-                      style={{}}
-                      onPress={() => {
-                        LaunchImageLibraryAsync(
-                          floorImages,
-                          setFloorImages,
-                          'Certifications',
-                        );
-                      }}>
-                      <Text
-                        style={{fontSize: 14, fontWeight: 500, marginTop: 10}}>
-                        Take Pictures
-                      </Text>
-                    </TouchableOpacity>
-                  </>
-                )}
-              </View>
+              {options.map(option => (
+                <View
+                  key={option}
+                  style={{
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                    left: 30,
+                    width: '28%',
+                  }}>
+                  <RadioButton.Android
+                    color={COLORS.secondry}
+                    value={option}
+                    status={
+                      isFloorPreparation === option ? 'checked' : 'unchecked'
+                    }
+                    onPress={() => setIsFloorPreparation(option)}
+                  />
+                  <Text style={{color: 'black', fontSize: 14, fontWeight: 400}}>
+                    {option}
+                  </Text>
+                </View>
+              ))}
             </View>
+            {isFloorPreparation == 'Yes' && (
+              <>
+                <TextInput
+                  style={{
+                    height: 104,
+                    borderWidth: 1,
+                    padding: 20,
+                    borderColor: COLORS.grey,
+                    borderRadius: 16,
+                    paddingTop: 15,
+                    marginTop: 20,
+                  }}
+                  multiline={true}
+                  placeholder="Floor Preparation Notes"
+                />
+                <View style={{marginVertical: 20}}>
+                  <Text style={{fontSize: 14, fontWeight: 600}}>
+                    Floor Preparation
+                  </Text>
+                  <View style={styles.dottedBox}>
+                    {floorImages ? (
+                      <View
+                        style={{
+                          flexDirection: 'row',
+                          justifyContent: 'space-around',
+                          width: '100%',
+                        }}>
+                        {floorImages.map((item, index) => (
+                          <Image
+                            key={index}
+                            style={{height: 80, width: 80, borderRadius: 16}}
+                            source={{uri: item?.uri}}
+                          />
+                        ))}
+                      </View>
+                    ) : (
+                      <>
+                        <Octicons
+                          name="device-camera"
+                          size={25}
+                          color={COLORS.secondry}
+                        />
+                        <TouchableOpacity
+                          style={{}}
+                          onPress={() => {
+                            LaunchImageLibraryAsync(
+                              floorImages,
+                              setFloorImages,
+                              'Certifications',
+                            );
+                          }}>
+                          <Text
+                            style={{
+                              fontSize: 14,
+                              fontWeight: 500,
+                              marginTop: 10,
+                            }}>
+                            Take Pictures
+                          </Text>
+                        </TouchableOpacity>
+                      </>
+                    )}
+                  </View>
+                </View>
+              </>
+            )}
           </>
         )}
-        </>}
-{/* //////////////////////////////////////////// */}
-
-
-
         <View style={{marginBottom: -25, marginTop: 25}}>
           <DropDown
             defaultButtonText={'Doors To Cut'}
@@ -642,26 +612,6 @@ const MeasuringQuestionnaire = ({route}) => {
             />
           </>
         )}
-        {/* <TextInput
-          style={{
-            height: 104,
-            borderWidth: 1,
-            padding: 20,
-            borderColor: COLORS.grey,
-            borderRadius: 16,
-            paddingTop: 15,
-            marginTop: 20,
-          }}
-          multiline={true}
-          //   textAlignVertical="top"
-          placeholder="Floor Plan Notes"
-        /> */}
-        {/* <CommonTextInput
-          placeholder={'Minimum Charge'}
-          value={gripperLengths}
-          onChangeText={newText => setGripperLengths(newText)}
-          style={[style]}
-        /> */}
         <View style={{marginTop: 20}}>
           <DropDown
             defaultButtonText={'How many fitters needed'}
@@ -705,7 +655,6 @@ const MeasuringQuestionnaire = ({route}) => {
     </View>
   );
 };
-// isVisible,onPress,img,title,description,onModalPress,
 
 export default MeasuringQuestionnaire;
 
