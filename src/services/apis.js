@@ -6,10 +6,11 @@ export const APIS = {
   VERIFY_OTP: 'verify_otp',
   RESET_PASSWORD: 'reset_password',
   UPDATE_PASSWORD: 'updatePassword',
-  DELETE_ACCOUNT:'delete_account',
-  UPDATE_PROFILE:'update_profile',
-  GET_PROFILE:'userProfile',
-  GET_JOBS:'get_my_jobs',
-  JOB_DETAIL:'get_job_details',
+  DELETE_ACCOUNT: 'delete_account',
+  UPDATE_PROFILE: 'update_profile',
+  GET_PROFILE: 'userProfile',
+  GET_JOBS: 'get_my_jobs',
+  JOB_DETAIL: 'get_job_details',
+  GET_NOTIFICATIONS: 'get_notifications',
 };
 export default APIS;
