@@ -5,15 +5,16 @@ import { scale } from 'react-native-size-matters';
 import { COLORS } from '../../utils/theme';
 import SelectDropdown from 'react-native-select-dropdown';
 
-const DropDown = ({data, setLicencseLevel, defaultButtonText}) => {
+const DropDown = ({data, setLicencseLevel, defaultButtonText, handleChangeSecondScreen}) => {
   return (
     <View style={{marginBottom:25}} >
       <SelectDropdown
           data={data}
           // defaultValue={user?.licencseLevel}
           onSelect={(selectedItem, index) => {
-            console.log(selectedItem, index)
+            // console.log(selectedItem, index)
             setLicencseLevel(selectedItem);
+            handleChangeSecondScreen()
           }}
           buttonTextAfterSelection={(selectedItem, index) => {
             return selectedItem;

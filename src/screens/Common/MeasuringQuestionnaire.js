@@ -15,7 +15,7 @@ import {COLORS} from '../../utils/theme';
 import SelectDropdown from 'react-native-select-dropdown';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import DropDown from '../../components/DropDown/DropDown';
-import {RadioButton} from 'react-native-paper';
+import {Checkbox, RadioButton} from 'react-native-paper';
 import CommonTextInput from '../../components/Input/InputBox';
 import CommonButton from '../../components/CommonButton/CommonButton';
 import {navigationRef} from '../../App';
@@ -28,12 +28,19 @@ import LaunchImageLibraryAsync from '../../components/ImagePicker/ImagePicker';
 
 const MeasuringQuestionnaire = ({route}) => {
   const [licencseLevel, setLicencseLevel] = useState();
+  const [flooringType, setFlooringType] = useState();
   const [measuremntRoomImages, setMeasuremntRoomImages] = useState();
   const [furnitureImages, setFurnitureImages] = useState();
+  const [doorsToCut, setDoorsToCut] = useState();
   const [floorImages, setFloorImages] = useState();
   const [doorBarType, setDoorBarType] = useState();
   const [selectedOption, setSelectedOption] = useState(null);
+  const [isFloorPreparation, setIsFloorPreparation] = useState(null);
   const [flooringChoiceColorCheckBox, setFlooringChoiceColorCheckBox] =
+    useState(null);
+  const [isSuitableForJob, setIsSuitableForJob] = useState(null);
+  const [isSkirtingBoard, setIsSkirtingBoard] = useState();
+  const [isFlooringChoiceSelected, setIsFlooringChoiceSelected] =
     useState(null);
   const [typeOfRoom, setTypeOfRoom] = useState(null);
   const [surcharge, setSurcharge] = useState(null);
@@ -43,6 +50,7 @@ const MeasuringQuestionnaire = ({route}) => {
   const [gripperLengths, setGripperLengths] = useState(null);
   const [doorBarAmount, setDoorBarAmount] = useState(null);
   const [underlayType, setUnderlayType] = useState(null);
+  const [isSecondScreen, setIssecondScreen] = useState(false);
   const [underlayAmount, setUnderlayAmount] = useState(null);
   const [scotia, setScotia] = useState(null);
   const [modalVisible, setModalVisible] = useState(false);
@@ -50,8 +58,10 @@ const MeasuringQuestionnaire = ({route}) => {
     setSelectedOption(option);
   };
   const location = ['1', '2', '3', '4', '5'];
-  const doorsToCut = ['Yes', 'No'];
-  const doorBars = ['silver', 'gold', 'oak', 'other', '5'];
+  const doorsToCutOption = ['Yes', 'No'];
+  const suitableOptions = ['O Yes', 'Unable To See Due To Current Floor', 'No'];
+  const skirtingBoardsOptions = ['Yes', 'Not Sure Yet', 'No'];
+  const doorBars = ['silver', 'gold', 'oak', 'other'];
   const FlooringType = [
     'Carpets',
     'Vinyl',
@@ -60,6 +70,16 @@ const MeasuringQuestionnaire = ({route}) => {
     'LVT',
     'Engineered Wood',
   ];
+  const handleChangeSecondScreen = () => {
+    flooringType == 'Laminate' ||
+    flooringType == 'LVT' ||
+    flooringType == 'Engineered Wood'
+      ? setIssecondScreen(true)
+      : setIssecondScreen(false);
+  };
+  useEffect(()=>{
+    handleChangeSecondScreen()
+  },[flooringType])
   const options = ['Yes', 'No'];
   const style = {
     width: '100%',
@@ -118,50 +138,41 @@ const MeasuringQuestionnaire = ({route}) => {
         <DropDown
           defaultButtonText={'Flooring Type'}
           data={FlooringType}
-          setLicencseLevel={setLicencseLevel}
+          setLicencseLevel={setFlooringType}
+          handleChangeSecondScreen={handleChangeSecondScreen}
         />
         {/* <DropDown
           defaultButtonText={'Select flooring Choice & Colour'}
           data={location}
           setLicencseLevel={setLicencseLevel}
         /> */}
+
+        {!isFlooringChoiceSelected && (
+          <CommonTextInput
+            placeholder={'flooring Choice & Colour'}
+            value={flooringChoiceColor}
+            onChangeText={newText => setFlooringChoiceColor(newText)}
+            style={style1}
+          />
+        )}
         <View
           style={{
             flexDirection: 'row',
             alignItems: 'center',
-            marginTop: 0,
+            marginTop: -10,
             marginBottom: 15,
           }}>
           <Text style={{fontSize: 14, fontWeight: 600}}>
-            flooring Choice & Colour
+            Customer Not Picked Flooring Choice
           </Text>
-          {options.map(option => (
-            <View
-              key={option}
-              style={{
-                flexDirection: 'row',
-                alignItems: 'center',
-                left: 30,
-                width: '28%',
-              }}>
-              <RadioButton.Android
-                color={COLORS.secondry}
-                value={option}
-                status={selectedOption === option ? 'checked' : 'unchecked'}
-                onPress={() => setFlooringChoiceColorCheckBox(option)}
-              />
-              <Text style={{color: 'black', fontSize: 14, fontWeight: 400}}>
-                {option}
-              </Text>
-            </View>
-          ))}
+          <Checkbox.Android
+            color={COLORS.secondry}
+            status={isFlooringChoiceSelected ? 'checked' : 'unchecked'}
+            onPress={() => {
+              setIsFlooringChoiceSelected(!isFlooringChoiceSelected);
+            }}
+          />
         </View>
-        <CommonTextInput
-          placeholder={'flooring Choice & Colour'}
-          value={flooringChoiceColor}
-          onChangeText={newText => setFlooringChoiceColor(newText)}
-          style={style1}
-        />
         <CommonTextInput
           placeholder={'Size'}
           value={size}
@@ -216,8 +227,8 @@ const MeasuringQuestionnaire = ({route}) => {
             )}
           </View>
         </View>
-        {/* {!Laminate ? (
-          <> */}
+        {!isSecondScreen && 
+          <>
         <View
           style={{
             flexDirection: 'row',
@@ -256,7 +267,6 @@ const MeasuringQuestionnaire = ({route}) => {
             paddingTop: 15,
           }}
           multiline={true}
-          //   textAlignVertical="top"
           placeholder="Write Notes"
         />
         <CommonTextInput
@@ -265,6 +275,7 @@ const MeasuringQuestionnaire = ({route}) => {
           onChangeText={newText => setGripperLengths(newText)}
           style={style}
         />
+        </>}
         {/* <CommonTextInput
           placeholder={'SQM Total'}
           value={gripperLengths}
@@ -293,7 +304,7 @@ const MeasuringQuestionnaire = ({route}) => {
             onChangeText={newText => setUnderlayAmount(newText)}
             style={style}
           />
-          {/* {Laminate ? null : ( */}
+          {!isSecondScreen ? null : (
           <View style={{marginBottom: -25}}>
             <CommonTextInput
               placeholder={'Scotia'}
@@ -301,33 +312,73 @@ const MeasuringQuestionnaire = ({route}) => {
               onChangeText={newText => setScotia(newText)}
               style={[style, {marginBottom: 30}]}
             />
-            <DropDown
-              defaultButtonText={'Skirting Boards'}
-              data={location}
-              setLicencseLevel={setLicencseLevel}
-            />
+            <View
+              style={{
+                marginBottom: 25,
+              }}>
+              <Text style={{fontSize: 14, fontWeight: 600}}>
+                Will Skirting Board Be Off Or On
+              </Text>
+              {skirtingBoardsOptions.map(option => (
+                <View
+                  key={option}
+                  style={{
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                    marginTop: 5,
+                  }}>
+                  <RadioButton.Android
+                    color={COLORS.secondry}
+                    value={option}
+                    status={
+                      isSkirtingBoard === option ? 'checked' : 'unchecked'
+                    }
+                    onPress={() => setIsSkirtingBoard(option)}
+                  />
+                  <Text style={{color: 'black', fontSize: 14, fontWeight: 400}}>
+                    {option}
+                  </Text>
+                </View>
+              ))}
+            </View>
+            {isSkirtingBoard == 'No' || isSkirtingBoard == 'Not Sure Yet' ? (
+              <TextInput
+                style={{
+                  height: 104,
+                  borderWidth: 1,
+                  padding: 20,
+                  borderColor: COLORS.grey,
+                  borderRadius: 16,
+                  paddingTop: 15,
+                  marginBottom: 25,
+                }}
+                multiline={true}
+                placeholder="Skirting Board Notes"
+              />
+            ) : null}
           </View>
-          {/* )} */}
+          )}
         </View>
         <DropDown
           defaultButtonText={'Door Bars'}
           data={doorBars}
           setLicencseLevel={setDoorBarType}
         />
-        <TextInput
-          style={{
-            height: 104,
-            borderWidth: 1,
-            padding: 20,
-            borderColor: COLORS.grey,
-            borderRadius: 16,
-            paddingTop: 15,
-            marginBottom: 25,
-          }}
-          multiline={true}
-          //   textAlignVertical="top"
-          placeholder="Door Bars Notes"
-        />
+        {doorBarType == 'other' && (
+          <TextInput
+            style={{
+              height: 104,
+              borderWidth: 1,
+              padding: 20,
+              borderColor: COLORS.grey,
+              borderRadius: 16,
+              paddingTop: 15,
+              marginBottom: 25,
+            }}
+            multiline={true}
+            placeholder="Door Bars Notes"
+          />
+        )}
         <CommonTextInput
           placeholder={'Door Bars Amount'}
           value={doorBarAmount}
@@ -428,26 +479,25 @@ const MeasuringQuestionnaire = ({route}) => {
         />
         <View
           style={{
-            flexDirection: 'row',
-            alignItems: 'center',
             marginTop: 25,
             marginBottom: -5,
           }}>
-          <Text style={{fontSize: 14, fontWeight: 600}}>Suitable For Job</Text>
-          {options.map(option => (
+          <Text style={{fontSize: 14, fontWeight: 600}}>
+            Is The Surfloor Suitable For The Job?
+          </Text>
+          {suitableOptions.map(option => (
             <View
               key={option}
               style={{
                 flexDirection: 'row',
                 alignItems: 'center',
-                left: 30,
-                width: '28%',
+                marginTop: 5,
               }}>
               <RadioButton.Android
                 color={COLORS.secondry}
                 value={option}
-                status={selectedOption === option ? 'checked' : 'unchecked'}
-                onPress={() => setFlooringChoiceColorCheckBox(option)}
+                status={isSuitableForJob === option ? 'checked' : 'unchecked'}
+                onPress={() => setIsSuitableForJob(option)}
               />
               <Text style={{color: 'black', fontSize: 14, fontWeight: 400}}>
                 {option}
@@ -455,23 +505,30 @@ const MeasuringQuestionnaire = ({route}) => {
             </View>
           ))}
         </View>
-        <CommonTextInput
-          placeholder={'Suitable For Job Notes'}
-          value={doorBarAmount}
-          onChangeText={newText => setDoorBarAmount(newText)}
-          style={[style]}
-        />
+        {isSuitableForJob == 'No' ||
+        isSuitableForJob == 'Unable To See Due To Current Floor' ? (
+          <CommonTextInput
+            placeholder={'Suitable For Job Notes'}
+            value={doorBarAmount}
+            onChangeText={newText => setDoorBarAmount(newText)}
+            style={[style]}
+          />
+        ) : null}
         {/* <CommonTextInput
           placeholder={'Floor Preparation'}
           value={gripperLengths}
           onChangeText={newText => setGripperLengths(newText)}
           style={[style]}
         /> */}
+
+        {/* ////////////////////////////////////////////////////// */}
+{ isSecondScreen &&
+        <>
         <View
           style={{
             flexDirection: 'row',
             alignItems: 'center',
-            marginTop: 10,
+            marginTop: 20,
           }}>
           <Text style={{fontSize: 14, fontWeight: 600}}>Floor Preparation</Text>
           {options.map(option => (
@@ -486,8 +543,8 @@ const MeasuringQuestionnaire = ({route}) => {
               <RadioButton.Android
                 color={COLORS.secondry}
                 value={option}
-                status={selectedOption === option ? 'checked' : 'unchecked'}
-                onPress={() => handleOptionPress(option)}
+                status={isFloorPreparation === option ? 'checked' : 'unchecked'}
+                onPress={() => setIsFloorPreparation(option)}
               />
               <Text style={{color: 'black', fontSize: 14, fontWeight: 400}}>
                 {option}
@@ -495,81 +552,96 @@ const MeasuringQuestionnaire = ({route}) => {
             </View>
           ))}
         </View>
-        <TextInput
-          style={{
-            height: 104,
-            borderWidth: 1,
-            padding: 20,
-            borderColor: COLORS.grey,
-            borderRadius: 16,
-            paddingTop: 15,
-            marginTop: 20,
-          }}
-          multiline={true}
-          //   textAlignVertical="top"
-          placeholder="Floor Preparation Notes"
-        />
-        <View style={{marginVertical: 20}}>
-          <Text style={{fontSize: 14, fontWeight: 600}}>Floor Preparation</Text>
-          <View style={styles.dottedBox}>
-            {floorImages ? (
-              <View
-                style={{
-                  flexDirection: 'row',
-                  justifyContent: 'space-around',
-                  width: '100%',
-                }}>
-                {floorImages.map((item, index) => (
-                  <Image
-                    key={index}
-                    style={{height: 80, width: 80, borderRadius: 16}}
-                    source={{uri: item?.uri}}
-                  />
-                ))}
+        {isFloorPreparation == 'Yes' && (
+          <>
+            <TextInput
+              style={{
+                height: 104,
+                borderWidth: 1,
+                padding: 20,
+                borderColor: COLORS.grey,
+                borderRadius: 16,
+                paddingTop: 15,
+                marginTop: 20,
+              }}
+              multiline={true}
+              placeholder="Floor Preparation Notes"
+            />
+            <View style={{marginVertical: 20}}>
+              <Text style={{fontSize: 14, fontWeight: 600}}>
+                Floor Preparation
+              </Text>
+              <View style={styles.dottedBox}>
+                {floorImages ? (
+                  <View
+                    style={{
+                      flexDirection: 'row',
+                      justifyContent: 'space-around',
+                      width: '100%',
+                    }}>
+                    {floorImages.map((item, index) => (
+                      <Image
+                        key={index}
+                        style={{height: 80, width: 80, borderRadius: 16}}
+                        source={{uri: item?.uri}}
+                      />
+                    ))}
+                  </View>
+                ) : (
+                  <>
+                    <Octicons
+                      name="device-camera"
+                      size={25}
+                      color={COLORS.secondry}
+                    />
+                    <TouchableOpacity
+                      style={{}}
+                      onPress={() => {
+                        LaunchImageLibraryAsync(
+                          floorImages,
+                          setFloorImages,
+                          'Certifications',
+                        );
+                      }}>
+                      <Text
+                        style={{fontSize: 14, fontWeight: 500, marginTop: 10}}>
+                        Take Pictures
+                      </Text>
+                    </TouchableOpacity>
+                  </>
+                )}
               </View>
-            ) : (
-              <>
-                <Octicons
-                  name="device-camera"
-                  size={25}
-                  color={COLORS.secondry}
-                />
-                <TouchableOpacity
-                  style={{}}
-                  onPress={() => {
-                    LaunchImageLibraryAsync(
-                      floorImages,
-                      setFloorImages,
-                      'Certifications',
-                    );
-                  }}>
-                  <Text style={{fontSize: 14, fontWeight: 500, marginTop: 10}}>
-                    Take Pictures
-                  </Text>
-                </TouchableOpacity>
-              </>
-            )}
-          </View>
-        </View>
+            </View>
+          </>
+        )}
+        </>}
+{/* //////////////////////////////////////////// */}
+
+
+
         <View style={{marginBottom: -25, marginTop: 25}}>
           <DropDown
             defaultButtonText={'Doors To Cut'}
-            data={doorsToCut}
-            setLicencseLevel={setLicencseLevel}
+            data={doorsToCutOption}
+            setLicencseLevel={setDoorsToCut}
           />
         </View>
-        <CommonTextInput
-          placeholder={'How Many Doors to cut'}
-          value={gripperLengths}
-          onChangeText={newText => setGripperLengths(newText)}
-          style={[style]}
-        />
-        <CommonTextInput
-          placeholder={'Type Of Doors To cut'}
-          value={gripperLengths}
-          onChangeText={newText => setGripperLengths(newText)}
-          style={[style]}
-        />
+        {doorsToCut == 'Yes' && (
+          <>
+            <CommonTextInput
+              placeholder={'How Many Doors to cut'}
+              value={gripperLengths}
+              onChangeText={newText => setGripperLengths(newText)}
+              style={[style]}
+            />
+            <CommonTextInput
+              placeholder={'Type Of Doors To cut'}
+              value={gripperLengths}
+              onChangeText={newText => setGripperLengths(newText)}
+              style={[style]}
+            />
+          </>
+        )}
         {/* <TextInput
           style={{
             height: 104,
