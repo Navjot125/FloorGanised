@@ -23,9 +23,7 @@ const Home = props => {
   const selectedDate = useSelector(
     state => state?.DateReducer?.selectedDate?.day,
   );
-  const loader = useSelector(
-    state => state?.loaderReducer?.loader,
-  );
+  const loader = useSelector(state => state?.loaderReducer?.loader);
   // const [loader, setLoader] = useState(!true);
   const [jobListing, setJobListing] = useState();
   const dispatch = useDispatch();
@@ -50,8 +48,7 @@ const Home = props => {
       screen,
     };
     return (
-      <TouchableOpacity
-        style={styles.container}>
+      <TouchableOpacity style={styles.container}>
         <View
           style={{
             height: '50%',
@@ -67,13 +64,6 @@ const Home = props => {
             }}>
             {item?.customer_id?.name}
           </Text>
-          <Text
-            style={{
-              fontSize: 12,
-              fontWeight: 400,
-            }}>
-            {moment(item?.surveyor_job_date).format('h:mm A')}
-          </Text>
         </View>
         <View
           style={{
@@ -85,43 +75,67 @@ const Home = props => {
         <View
           style={{
             height: '50%',
-            flexDirection: 'row',
-            justifyContent: 'space-around',
-            alignItems: 'center',
+            padding: 10,
           }}>
-          <SimpleLineIcons
-            name="location-pin"
-            size={20}
-            color={COLORS.secondry}
-          />
-          <Text
+          <View
             style={{
-              fontSize: 12,
-              fontWeight: 500,
-              width: 180,
-            }}>
-            {item?.address}
-          </Text>
-          <TouchableOpacity
-            onPress={() => {
-              dispatch(jobDetail(param));
-            }}
-            style={{
-              backgroundColor: COLORS.primary,
-              height: 24,
-              width: 60,
-              justifyContent: 'space-around',
+              flexDirection: 'row',
+              justifyContent: 'space-between',
               alignItems: 'center',
-              borderRadius: 17,
             }}>
+            <SimpleLineIcons
+              name="location-pin"
+              size={20}
+              color={COLORS.secondry}
+            />
             <Text
               style={{
                 fontSize: 12,
                 fontWeight: 500,
+                width: 180,
               }}>
-              {index == 0 && userData?.role == 'Fitter' ? 'On Work' : 'Details'}
+              {item?.address}
             </Text>
-          </TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => {
+                dispatch(jobDetail(param));
+              }}
+              style={{
+                backgroundColor: COLORS.primary,
+                height: 24,
+                width: 60,
+                justifyContent: 'space-around',
+                alignItems: 'center',
+                borderRadius: 17,
+              }}>
+              <Text
+                style={{
+                  fontSize: 12,
+                  fontWeight: 500,
+                }}>
+                {/* {index == 0 && userData?.role == 'Fitter'
+                  ? 'On Work'
+                  : 'Details'} */}
+                Details
+              </Text>
+            </TouchableOpacity>
+          </View>
+          <View
+            style={{
+              flexDirection: 'row',
+              alignItems: 'center',
+              marginTop: 10,
+            }}>
+            <SimpleLineIcons name="clock" size={17} color={COLORS.secondry} />
+            <Text
+              style={{
+                fontSize: 12,
+                fontWeight: 400,
+                left: 20,
+              }}>
+              {moment(item?.surveyor_job_date).format('h:mm A')}
+            </Text>
+          </View>
         </View>
       </TouchableOpacity>
     );

@@ -58,12 +58,21 @@ function* jobDetail(action) {
     const response = yield call(fetch, urlWithParams, requestOptions);
     if (response.ok) {
       const responseData = yield response.json();
+      // console.log(responseData,'responseData-------------');
+      responseData?.measuring_details ?
       navigationRef.navigate(stack, {
         screen: screen,
         params: {
-          responseData: responseData.data,
+          responseData: responseData?.data, 
+          measurinDetails : responseData?.measuring_details
         },
-      });
+      }) :
+      navigationRef.navigate(stack, {
+        screen: screen,
+        params: {
+          responseData: responseData?.data, 
+        },
+      })
     } else {
       const errorData = yield response.json();
       console.error(

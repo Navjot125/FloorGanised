@@ -18,7 +18,6 @@ import CommonButton from '../../components/CommonButton/CommonButton';
 import {navigationRef} from '../../App';
 const Detail = ({route}) => {
   const {responseData} = route.params;
-  console.log('responseData------------in Detail screen', responseData);
   const onStart = () => {
     navigationRef.navigate('MeasuringQuestionnaire');
   };

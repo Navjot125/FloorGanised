@@ -17,7 +17,8 @@ import Header from '../../components/Header/Header';
 import {COLORS} from '../../utils/theme';
 import CommonButton from '../../components/CommonButton/CommonButton';
 import {navigationRef} from '../../App';
-const FitterDetail = () => {
+const FitterDetail = ({route}) => {
+  const {responseData, measurinDetails} = route.params;
   const [startFitting, setStartFitting] = useState(false);
   const onStart = () => {
     // navigationRef.navigate('Home');
@@ -39,7 +40,9 @@ const FitterDetail = () => {
       >
         <View style={styles.mainBox}>
           <View style={styles.userName}>
-            <Text style={{fontWeight: 700, fontSize: 16}}>Desirae Bergson</Text>
+            <Text style={{fontWeight: 700, fontSize: 16}}>
+              {responseData?.customer_id?.name}
+            </Text>
             <Text style={{fontWeight: 700, fontSize: 16}}>$150</Text>
           </View>
           <View style={styles.details}>
@@ -49,7 +52,7 @@ const FitterDetail = () => {
               color={COLORS.secondry}
             />
             <Text style={{fontSize: 12, fontWeight: 500, left: scale(10)}}>
-              Exela Movers Company
+              {responseData?.referal}
             </Text>
           </View>
           <View style={styles.details}>
@@ -59,19 +62,19 @@ const FitterDetail = () => {
               color={COLORS.secondry}
             />
             <Text style={{fontSize: 12, fontWeight: 500, left: scale(10)}}>
-              Brewster Rd, Newark, NJ 07, United States
+              {responseData?.address}
             </Text>
           </View>
           <View style={styles.details}>
             <Feather name="phone" size={20} color={COLORS.secondry} />
             <Text style={{fontSize: 12, fontWeight: 500, left: scale(10)}}>
-              +1 74 392394984
+              {responseData?.customer_id?.phone_number}
             </Text>
           </View>
           <View style={styles.details}>
             <Feather name="mail" size={20} color={COLORS.secondry} />
             <Text style={{fontSize: 12, fontWeight: 500, left: scale(10)}}>
-              exelamoverscompany@gmail.com
+              {responseData?.customer_id?.email}
             </Text>
           </View>
           <View style={{marginTop: 20}}>
@@ -83,9 +86,7 @@ const FitterDetail = () => {
                 marginTop: 10,
                 lineHeight: 18,
               }}>
-              Lorem ipsum dolor sit amet, consectetur aute adipiscing elit, sed
-              do eiusmod tempor aute a incididunt ut labore et dolore magna
-              aliqua. Ut enim ad minim veniam, quis nostrud auteo.
+              {responseData?.notes}
             </Text>
           </View>
         </View>
@@ -118,7 +119,7 @@ const FitterDetail = () => {
               justifyContent: 'space-between',
               paddingVertical: 15,
             }}>
-            <Text style={{fontSize: 12, fontWeight: 600}}>Rooms</Text>
+            <Text style={{fontSize: 12, fontWeight: 600}}>Type of room</Text>
             <Text
               style={{
                 fontSize: 12,
@@ -127,6 +128,23 @@ const FitterDetail = () => {
                 textAlign: 'right',
               }}>
               2 Rooms
+            </Text>
+          </View>
+          <View
+            style={{
+              flexDirection: 'row',
+              justifyContent: 'space-between',
+              paddingVertical: 15,
+            }}>
+            <Text style={{fontSize: 12, fontWeight: 600}}>Surcharge</Text>
+            <Text
+              style={{
+                fontSize: 12,
+                fontWeight: 400,
+                width: 70,
+                textAlign: 'right',
+              }}>
+              $150
             </Text>
           </View>
           <View
@@ -146,15 +164,34 @@ const FitterDetail = () => {
               Carpets
             </Text>
           </View>
+          {measurinDetails?.is_flooring_choice_selected && (
+            <View
+              style={{
+                flexDirection: 'row',
+                justifyContent: 'space-between',
+                paddingVertical: 15,
+              }}>
+              <Text style={{fontSize: 12, fontWeight: 600}}>
+                Flooring Choice & Colour
+              </Text>
+              <Text
+                style={{
+                  fontSize: 12,
+                  fontWeight: 400,
+                  width: 70,
+                  textAlign: 'right',
+                }}>
+                Wooden Light Brown
+              </Text>
+            </View>
+          )}
           <View
             style={{
               flexDirection: 'row',
               justifyContent: 'space-between',
               paddingVertical: 15,
             }}>
-            <Text style={{fontSize: 12, fontWeight: 600}}>
-              Flooring Choice & Colour
-            </Text>
+            <Text style={{fontSize: 12, fontWeight: 600}}>Size</Text>
             <Text
               style={{
                 fontSize: 12,
@@ -162,7 +199,24 @@ const FitterDetail = () => {
                 width: 70,
                 textAlign: 'right',
               }}>
-              Wooden Light Brown
+              Wooden
+            </Text>
+          </View>
+          <View
+            style={{
+              flexDirection: 'row',
+              justifyContent: 'space-between',
+              paddingVertical: 15,
+            }}>
+            <Text style={{fontSize: 12, fontWeight: 600}}>SQM Total</Text>
+            <Text
+              style={{
+                fontSize: 12,
+                fontWeight: 400,
+                width: 70,
+                textAlign: 'right',
+              }}>
+              Wooden
             </Text>
           </View>
           <View
@@ -195,34 +249,108 @@ const FitterDetail = () => {
               />
             </View>
           </View>
-          <View style={{marginVertical: 10}}>
-            <Text style={{fontSize: 12, fontWeight: 600, marginBottom: 10}}>
-              Join in floor
-            </Text>
-            <Text style={{fontSize: 12, fontWeight: 400, lineHeight: 20}}>
-              <Text style={{fontSize: 12, fontWeight: 600}}>Notes </Text>: Lorem
-              ipsum dolor sit amet, consectet aute adipiscing elit, sed do
-              eiusmod tamed the aute a incididunt.
-            </Text>
-          </View>
-          <View style={{marginVertical: 10}}>
-            <Text style={{fontSize: 12, fontWeight: 600, marginBottom: 10}}>
-              Gripper Lengths
-            </Text>
-            <Text style={{fontSize: 12, fontWeight: 400, lineHeight: 20}}>
-              Lorem ipsum dolor sit amet, consectetur aute adipiscing elit, sed
-              do eiusmod tamed the aute.
-            </Text>
-          </View>
-          <View style={{marginVertical: 10}}>
-            <Text style={{fontSize: 12, fontWeight: 600, marginBottom: 10}}>
-              Underlay
-            </Text>
-            <Text style={{fontSize: 12, fontWeight: 400, lineHeight: 20}}>
-              Lorem ipsum dolor sit amet, consectetur aute adipiscing elit, sed
-              do eiusmod tamed the aute.
-            </Text>
-          </View>
+          {/* join_in_floor */}
+          {measurinDetails?.join_in_floor && (
+            <View
+              style={{
+                flexDirection: 'row',
+                justifyContent: 'space-between',
+                paddingVertical: 15,
+              }}>
+              <Text style={{fontSize: 12, fontWeight: 600}}>Join In Floor</Text>
+              <Text
+                style={{
+                  fontSize: 12,
+                  fontWeight: 400,
+                  width: 70,
+                  textAlign: 'right',
+                }}>
+                {measurinDetails?.join_in_floor}
+              </Text>
+            </View>
+          )}
+          {measurinDetails?.join_in_floor && (
+            <View style={{marginVertical: 0}}>
+              <Text style={{fontSize: 12, fontWeight: 400, lineHeight: 20}}>
+                <Text style={{fontSize: 12, fontWeight: 600}}>Notes </Text>:
+                Lorem ipsum dolor sit amet, consectet aute adipiscing elit, sed
+                do eiusmod tamed the aute a incididunt.
+              </Text>
+            </View>
+          )}
+          {measurinDetails?.scotia && (
+            <View style={{marginVertical: 10}}>
+              <Text style={{fontSize: 12, fontWeight: 600, marginBottom: 10}}>
+                scotia
+              </Text>
+              <Text style={{fontSize: 12, fontWeight: 400, lineHeight: 20}}>
+                {measurinDetails?.scotia}
+              </Text>
+            </View>
+          )}
+          {measurinDetails?.skirting_board && (
+            <View style={{marginVertical: 10}}>
+              <Text style={{fontSize: 12, fontWeight: 600, marginBottom: 10}}>
+                Skirting Board
+              </Text>
+              <Text style={{fontSize: 12, fontWeight: 400, lineHeight: 20}}>
+                {measurinDetails?.skirting_board}
+              </Text>
+            </View>
+          )}
+          {measurinDetails?.skirting_board_notes && (
+            <View style={{marginVertical: 10}}>
+              <Text style={{fontSize: 12, fontWeight: 600, marginBottom: 10}}>
+                Skirting Board Notes
+              </Text>
+              <Text style={{fontSize: 12, fontWeight: 400, lineHeight: 20}}>
+                {measurinDetails?.skirting_board_notes}
+              </Text>
+            </View>
+          )}
+          {measurinDetails?.gripper_length && (
+            <View style={{marginVertical: 10}}>
+              <Text style={{fontSize: 12, fontWeight: 600, marginBottom: 10}}>
+                Gripper Lengths
+              </Text>
+              <Text style={{fontSize: 12, fontWeight: 400, lineHeight: 20}}>
+                Lorem ipsum dolor sit amet, consectetur aute adipiscing elit,
+                sed do eiusmod tamed the aute.
+              </Text>
+            </View>
+          )}
+          {measurinDetails?.underlay_type && (
+            <View style={{marginVertical: 10}}>
+              <Text style={{fontSize: 12, fontWeight: 600, marginBottom: 10}}>
+                Underlay Type
+              </Text>
+              <Text style={{fontSize: 12, fontWeight: 400, lineHeight: 20}}>
+                Lorem ipsum dolor sit amet, consectetur aute adipiscing elit,
+                sed do eiusmod tamed the aute.
+              </Text>
+            </View>
+          )}
+          {measurinDetails?.underlay_amount && (
+            <View
+              style={{
+                flexDirection: 'row',
+                justifyContent: 'space-between',
+                paddingVertical: 15,
+              }}>
+              <Text style={{fontSize: 12, fontWeight: 600}}>
+                Underlay Amount
+              </Text>
+              <Text
+                style={{
+                  fontSize: 12,
+                  fontWeight: 400,
+                  width: 70,
+                  textAlign: 'right',
+                }}>
+                {measurinDetails?.underlay_amount}
+              </Text>
+            </View>
+          )}
           <View
             style={{
               flexDirection: 'row',
@@ -240,15 +368,69 @@ const FitterDetail = () => {
               Silver
             </Text>
           </View>
-          <View style={{marginVertical: 10}}>
-            <Text style={{fontSize: 12, fontWeight: 600, marginBottom: 10}}>
-              Uplift and waste service
-            </Text>
-            <Text style={{fontSize: 12, fontWeight: 400, lineHeight: 20}}>
-              Lorem ipsum dolor sit amet, consectetur aute adipiscing elit, sed
-              do eiusmod tamed the aute.
-            </Text>
-          </View>
+          {measurinDetails?.doorbar_type_text && (
+            <View style={{marginVertical: 10}}>
+              <Text style={{fontSize: 12, fontWeight: 600, marginBottom: 10}}>
+                Door Bars Notes
+              </Text>
+              <Text style={{fontSize: 12, fontWeight: 400, lineHeight: 20}}>
+                Lorem ipsum dolor sit amet, consectetur aute adipiscing elit,
+                sed do eiusmod tamed the aute.
+              </Text>
+            </View>
+          )}
+          {measurinDetails?.doorbar_amount && (
+            <View
+              style={{
+                flexDirection: 'row',
+                justifyContent: 'space-between',
+                paddingVertical: 15,
+              }}>
+              <Text style={{fontSize: 12, fontWeight: 600}}>
+                Door Bar Amount
+              </Text>
+              <Text
+                style={{
+                  fontSize: 12,
+                  fontWeight: 400,
+                  width: 70,
+                  textAlign: 'right',
+                }}>
+                {measurinDetails?.doorbar_amount}
+              </Text>
+            </View>
+          )}
+          {measurinDetails?.uplift_waste_service && (
+            <View
+              style={{
+                flexDirection: 'row',
+                justifyContent: 'space-between',
+                paddingVertical: 15,
+              }}>
+              <Text style={{fontSize: 12, fontWeight: 600}}>
+                Uplift and waste service
+              </Text>
+              <Text
+                style={{
+                  fontSize: 12,
+                  fontWeight: 400,
+                  width: 70,
+                  textAlign: 'right',
+                }}>
+                {measurinDetails?.uplift_waste_service}
+              </Text>
+            </View>
+          )}
+          {measurinDetails?.uplift_waste_service_notes && (
+            <View style={{marginVertical: 10}}>
+              <Text style={{fontSize: 12, fontWeight: 600, marginBottom: 10}}>
+                Uplift and waste service Notes
+              </Text>
+              <Text style={{fontSize: 12, fontWeight: 400, lineHeight: 20}}>
+                {measurinDetails?.uplift_waste_service_notes}
+              </Text>
+            </View>
+          )}
           <View
             style={{
               paddingVertical: 15,
@@ -284,58 +466,100 @@ const FitterDetail = () => {
               eiusmod tamed the aute a incididunt.
             </Text>
           </View>
-          <View style={{marginVertical: 10}}>
-            <Text style={{fontSize: 12, fontWeight: 600, marginBottom: 10}}>
-              Floor Preparation
-            </Text>
-            <Text style={{fontSize: 12, fontWeight: 400, lineHeight: 20}}>
-              Lorem ipsum dolor sit amet, consectet aute adipiscing elit, sed do
-              eiusmod tamed the aute a incididunt.
-            </Text>
-          </View>
-          <View
-            style={{
-              flexDirection: 'row',
-              justifyContent: 'space-between',
-              paddingVertical: 15,
-            }}>
-            <Text style={{fontSize: 12, fontWeight: 600}}>Doors to cut</Text>
-            <Text
+          {measurinDetails?.is_suitable_for_job && (
+            <View style={{marginVertical: 10}}>
+              <Text style={{fontSize: 12, fontWeight: 600, marginBottom: 10}}>
+                Suitable for Job
+              </Text>
+              <Text style={{fontSize: 12, fontWeight: 400, lineHeight: 20}}>
+               {measurinDetails?.is_suitable_for_job}
+              </Text>
+            </View>
+          )}
+          {measurinDetails?.suitable_for_job && (
+            <View style={{marginVertical: 10}}>
+              <Text style={{fontSize: 12, fontWeight: 600, marginBottom: 10}}>
+                Suitable for Job Notes
+              </Text>
+              <Text style={{fontSize: 12, fontWeight: 400, lineHeight: 20}}>
+               {measurinDetails?.suitable_for_job}
+              </Text>
+            </View>
+          )}
+          {measurinDetails?.floor_preparation_notes && (
+            <View style={{marginVertical: 10}}>
+              <Text style={{fontSize: 12, fontWeight: 600, marginBottom: 10}}>
+                Floor Preparation
+              </Text>
+              <Text style={{fontSize: 12, fontWeight: 400, lineHeight: 20}}>
+                Lorem ipsum dolor sit amet, consectet aute adipiscing elit, sed
+                do eiusmod tamed the aute a incididunt.
+              </Text>
+            </View>
+          )}
+          {measurinDetails?.floor_preparation_images && (
+            <View
               style={{
-                fontSize: 12,
-                fontWeight: 400,
-                width: 70,
-                textAlign: 'right',
+                paddingVertical: 15,
               }}>
-              10
-            </Text>
-          </View>
-          <View style={{marginVertical: 10}}>
-            <Text style={{fontSize: 12, fontWeight: 600, marginBottom: 10}}>
-              Floor Plan
-            </Text>
-            <Text style={{fontSize: 12, fontWeight: 400, lineHeight: 20}}>
-              Lorem ipsum dolor sit amet, consectetur aute adipiscing elit, sed
-              do.
-            </Text>
-          </View>
-          <View
-            style={{
-              flexDirection: 'row',
-              justifyContent: 'space-between',
-              paddingVertical: 15,
-            }}>
-            <Text style={{fontSize: 12, fontWeight: 600}}>Minimum Charge</Text>
-            <Text
+              <Text style={{fontSize: 12, fontWeight: 600}}>
+                Floor Preparation Images
+              </Text>
+              <View
+                style={{
+                  flexDirection: 'row',
+                  justifyContent: 'space-between',
+                  marginTop: 20,
+                }}>
+                <Image
+                  style={{height: 56, width: 80, borderRadius: 10}}
+                  resizeMode="cover"
+                  source={require('../../assets/images/profile1.jpg')}
+                />
+                <Image
+                  style={{height: 56, width: 80, borderRadius: 10}}
+                  resizeMode="cover"
+                  source={require('../../assets/images/profile1.jpg')}
+                />
+                <Image
+                  style={{height: 56, width: 80, borderRadius: 10}}
+                  resizeMode="cover"
+                  source={require('../../assets/images/profile1.jpg')}
+                />
+              </View>
+            </View>
+          )}
+          {measurinDetails?.how_many_doors_to_cut && (
+            <View
               style={{
-                fontSize: 12,
-                fontWeight: 400,
-                width: 70,
-                textAlign: 'right',
+                flexDirection: 'row',
+                justifyContent: 'space-between',
+                paddingVertical: 15,
               }}>
-              $150
-            </Text>
-          </View>
+              <Text style={{fontSize: 12, fontWeight: 600}}>
+                How Many Doors To Cut
+              </Text>
+              <Text
+                style={{
+                  fontSize: 12,
+                  fontWeight: 400,
+                  width: 70,
+                  textAlign: 'right',
+                }}>
+                10
+              </Text>
+            </View>
+          )}
+          {measurinDetails?.type_of_doors_to_cut && (
+            <View style={{marginVertical: 10}}>
+              <Text style={{fontSize: 12, fontWeight: 600, marginBottom: 10}}>
+                Type Of Doors To Cut
+              </Text>
+              <Text style={{fontSize: 12, fontWeight: 400, lineHeight: 20}}>
+                {measurinDetails?.type_of_doors_to_cut}
+              </Text>
+            </View>
+          )}
           <View
             style={{
               flexDirection: 'row',

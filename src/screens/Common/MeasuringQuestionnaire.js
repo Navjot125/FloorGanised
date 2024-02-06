@@ -35,6 +35,7 @@ const MeasuringQuestionnaire = ({route}) => {
   const [isFloorPreparation, setIsFloorPreparation] = useState(null);
   const [flooringChoiceColorCheckBox, setFlooringChoiceColorCheckBox] =
     useState(null);
+  const [isUpliftWasteService, setIsUpliftWasteService] = useState();
   const [isSuitableForJob, setIsSuitableForJob] = useState(null);
   const [isSkirtingBoard, setIsSkirtingBoard] = useState();
   const [isFlooringChoiceSelected, setIsFlooringChoiceSelected] =
@@ -56,7 +57,7 @@ const MeasuringQuestionnaire = ({route}) => {
   };
   const location = ['1', '2', '3', '4', '5'];
   const doorsToCutOption = ['Yes', 'No'];
-  const suitableOptions = ['O Yes', 'Unable To See Due To Current Floor', 'No'];
+  const suitableOptions = ['Yes', 'Unable to see due to current floor', 'No'];
   const skirtingBoardsOptions = ['Yes', 'Not Sure Yet', 'No'];
   const doorBars = ['silver', 'gold', 'oak', 'other'];
   const FlooringType = [
@@ -172,7 +173,9 @@ const MeasuringQuestionnaire = ({route}) => {
           style={style1}
         />
         <View>
-          <Text style={{fontSize: 14, fontWeight: 600}} >Measurement of room</Text>
+          <Text style={{fontSize: 14, fontWeight: 600}}>
+            Measurement of room
+          </Text>
           <View style={styles.dottedBox}>
             {measuremntRoomImages ? (
               <View
@@ -220,7 +223,7 @@ const MeasuringQuestionnaire = ({route}) => {
                 flexDirection: 'row',
                 alignItems: 'center',
                 marginTop: 25,
-                marginBottom:5
+                marginBottom: 5,
               }}>
               <Text style={{fontSize: 14, fontWeight: 600}}>Join in floor</Text>
               {options.map(option => (
@@ -232,13 +235,24 @@ const MeasuringQuestionnaire = ({route}) => {
                     left: 30,
                     width: '28%',
                   }}>
-                  <RadioButton.Android
-                    color={COLORS.secondry}
-                    value={option}
-                    status={selectedOption === option ? 'checked' : 'unchecked'}
-                    onPress={() => handleOptionPress(option)}
-                  />
-                  <Text style={{color: 'black', fontSize: 14, fontWeight: 400}}>
+                  <TouchableOpacity onPress={() => handleOptionPress(option)}>
+                    <Image
+                      source={
+                        selectedOption === option
+                          ? require('../../assets/images/check.png')
+                          : require('../../assets/images/uncheck.png')
+                      }
+                      style={{height: 17, width: 17}}
+                      resizeMode="contain"
+                    />
+                  </TouchableOpacity>
+                  <Text
+                    style={{
+                      color: 'black',
+                      fontSize: 14,
+                      fontWeight: 400,
+                      left: 7,
+                    }}>
                     {option}
                   </Text>
                 </View>
@@ -363,8 +377,8 @@ const MeasuringQuestionnaire = ({route}) => {
           style={{
             flexDirection: 'row',
             alignItems: 'center',
-            marginTop: 0,
-            marginBottom: 15,
+            marginTop: 10,
+            marginBottom: 10,
           }}>
           <Text style={{fontSize: 14, fontWeight: 600}}>
             Uplift waste service
@@ -378,13 +392,24 @@ const MeasuringQuestionnaire = ({route}) => {
                 left: 30,
                 width: '28%',
               }}>
-              <RadioButton.Android
-                color={COLORS.secondry}
-                value={option}
-                status={selectedOption === option ? 'checked' : 'unchecked'}
-                onPress={() => setFlooringChoiceColorCheckBox(option)}
-              />
-              <Text style={{color: 'black', fontSize: 14, fontWeight: 400}}>
+              <TouchableOpacity onPress={() => setIsUpliftWasteService(option)}>
+                <Image
+                  source={
+                    isUpliftWasteService === option
+                      ? require('../../assets/images/check.png')
+                      : require('../../assets/images/uncheck.png')
+                  }
+                  style={{height: 17, width: 17}}
+                  resizeMode="contain"
+                />
+              </TouchableOpacity>
+              <Text
+                style={{
+                  color: 'black',
+                  fontSize: 14,
+                  fontWeight: 400,
+                  left: 7,
+                }}>
                 {option}
               </Text>
             </View>
@@ -464,22 +489,33 @@ const MeasuringQuestionnaire = ({route}) => {
               style={{
                 flexDirection: 'row',
                 alignItems: 'center',
-                marginTop: 5,
+                marginTop: 10,
               }}>
-              <RadioButton.Android
-                color={COLORS.secondry}
-                value={option}
-                status={isSuitableForJob === option ? 'checked' : 'unchecked'}
-                onPress={() => setIsSuitableForJob(option)}
-              />
-              <Text style={{color: 'black', fontSize: 14, fontWeight: 400}}>
+              <TouchableOpacity onPress={() => setIsSuitableForJob(option)}>
+                <Image
+                  source={
+                    isSuitableForJob === option
+                      ? require('../../assets/images/check.png')
+                      : require('../../assets/images/uncheck.png')
+                  }
+                  style={{height: 17, width: 17}}
+                  resizeMode="contain"
+                />
+              </TouchableOpacity>
+              <Text
+                style={{
+                  color: 'black',
+                  fontSize: 14,
+                  fontWeight: 400,
+                  left: 7,
+                }}>
                 {option}
               </Text>
             </View>
           ))}
         </View>
         {isSuitableForJob == 'No' ||
-        isSuitableForJob == 'Unable To See Due To Current Floor' ? (
+        isSuitableForJob == 'Unable to see due to current floor' ? (
           <CommonTextInput
             placeholder={'Suitable For Job Notes'}
             value={doorBarAmount}
