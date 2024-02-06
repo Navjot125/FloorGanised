@@ -51,7 +51,7 @@ const Home = props => {
       <TouchableOpacity style={styles.container}>
         <View
           style={{
-            height: '50%',
+            height: '45%',
             flexDirection: 'row',
             justifyContent: 'space-between',
             alignItems: 'center',
@@ -76,6 +76,7 @@ const Home = props => {
           style={{
             height: '50%',
             padding: 10,
+            justifyContent: 'center',
           }}>
           <View
             style={{
@@ -197,7 +198,7 @@ export default Home;
 
 const styles = StyleSheet.create({
   container: {
-    height: 141,
+    height: scale(145),
     backgroundColor: 'rgba(255, 255, 255, 1)',
     marginTop: 20,
     borderRadius: 16,
