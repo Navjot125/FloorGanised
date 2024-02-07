@@ -1,4 +1,4 @@
-import { all } from 'redux-saga/effects';
+import {all} from 'redux-saga/effects';
 import loginSaga from './Saga/loginSaga';
 import cmsSaga from './Saga/cmsSaga';
 import profileSaga from './Saga/profileSaga';

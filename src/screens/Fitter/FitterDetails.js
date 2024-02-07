@@ -466,6 +466,7 @@ const FitterDetail = ({route}) => {
               eiusmod tamed the aute a incididunt.
             </Text>
           </View>
+          {console.log('measurinDetails',measurinDetails)}
           {measurinDetails?.is_suitable_for_job && (
             <View style={{marginVertical: 10}}>
               <Text style={{fontSize: 12, fontWeight: 600, marginBottom: 10}}>

@@ -1,5 +1,5 @@
 import {FlatList, StyleSheet, Text, View, TouchableOpacity, SafeAreaView} from 'react-native';
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {navigationRef} from '../../App';
 import {dateListing} from '../../utils/Dates/DateLimit';
 import CalendarStrip from '../../utils/Dates/CalendarStrip';
@@ -8,7 +8,15 @@ import {NotificationData} from '../../config/DummyData';
 import {COLORS} from '../../utils/theme';
 import Header from '../../components/Header/Header';
 import { scale } from 'react-native-size-matters';
+import { useDispatch } from 'react-redux';
+import { getNotifications } from '../../redux/actions/Notifications';
 const Notifications = () => {
+  const dispatch = useDispatch()
+  const [offset, setOffset] = useState(0)
+useEffect(()=>{
+dispatch(getNotifications(offset))
+},[])
+
   const renderItem = ({item, index}) => {
     return (
       <View style={styles.container}>

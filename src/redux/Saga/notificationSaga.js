@@ -2,62 +2,40 @@ import {call, put, takeEvery} from 'redux-saga/effects';
 import {GET_NOTIFICATION} from '../constants';
 import {url} from '../../services/Config';
 import APIS from '../../services/apis';
-import {navigationRef} from '../../App';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { setLoader } from '../actions/Loader';
 
 function* getNotification(action) {
   try {
-    const {email, password, name, selectedOption, token} = action.data;
-    console.log(
-      'email, password, name, selectedOption',
-      email,
-      password,
-      name,
-      selectedOption,
-    );
+    yield put(setLoader(true));
+    const {offset} = action.data;
+    const token = yield call(AsyncStorage.getItem, 'token');
+    const queryParams = `offset=${encodeURIComponent(offset)}`;
     const requestOptions = {
-      method: 'POST',
+      method: 'GET',
       headers: {
         'Content-Type': 'application/json',
+        Authorization: `Bearer ${JSON.parse(token)}`,
       },
-      body: JSON.stringify({
-        email,
-        password,
-        role: selectedOption,
-        name,
-        fcm_token: token,
-      }),
     };
-    const response = yield call(fetch, `${url}${APIS.SIGNUP}`, requestOptions);
+    const urlWithParams = `${url}${APIS.GET_NOTIFICATIONS}?${queryParams}`;
+    const response = yield call(fetch, urlWithParams, requestOptions);
     if (response.ok) {
       const responseData = yield response.json();
-      yield put({type: SET_USER_DATA, data: responseData?.data});
-      yield put({type: SET_USER_TOKEN, data: responseData?.token});
-      yield call(
-        AsyncStorage.setItem,
-        'token',
-        JSON.stringify(responseData?.token),
-      );
-      yield call(
-        AsyncStorage.setItem,
-        'role',
-        JSON.stringify(responseData?.data?.role),
-      );
-      navigationRef.reset({
-        index: 0,
-        routes: [{name: 'tabs'}],
-      });
+      console.log(responseData,'responseData---------------0');
     } else {
       const errorData = yield response.json();
       console.error(
-        'Signup request failed:',
+        'getNotification request failed:',
         response.status,
         response.statusText,
         errorData,
       );
     }
   } catch (error) {
-    console.error('An error occurred during Signup:', error);
+    console.error('An error occurred during getNotification:', error);
+  } finally {
+    yield put(setLoader(false));
   }
 }
 
