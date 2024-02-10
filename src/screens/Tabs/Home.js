@@ -18,7 +18,6 @@ import {useDispatch, useSelector} from 'react-redux';
 import {getJobs, jobDetail} from '../../redux/actions/homeAction';
 import SkeletonPlaceholder from 'react-native-skeleton-placeholder';
 import moment from 'moment';
-
 const Home = props => {
   const selectedDate = useSelector(
     state => state?.DateReducer?.selectedDate?.day,
@@ -39,6 +38,7 @@ const Home = props => {
     dispatch(getJobs(param));
   }, [selectedDate]);
   const userData = useSelector(state => state?.onBoardingreducer?.userData);
+  // console.log(userData,'userData-------');
   const stack = userData?.role == 'Surveyor' ? 'Main' : 'Fitter';
   const screen = userData?.role == 'Surveyor' ? 'Detail' : 'FitterDetail';
   const renderItem = ({item, index}) => {

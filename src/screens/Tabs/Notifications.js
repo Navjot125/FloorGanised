@@ -1,21 +1,18 @@
-import {FlatList, StyleSheet, Text, View, TouchableOpacity, SafeAreaView} from 'react-native';
+import {FlatList, StyleSheet, Text, View, SafeAreaView} from 'react-native';
 import React, {useEffect, useState} from 'react';
-import {navigationRef} from '../../App';
-import {dateListing} from '../../utils/Dates/DateLimit';
-import CalendarStrip from '../../utils/Dates/CalendarStrip';
-import {height} from '../../assets/styles/styles';
 import {NotificationData} from '../../config/DummyData';
 import {COLORS} from '../../utils/theme';
 import Header from '../../components/Header/Header';
-import { scale } from 'react-native-size-matters';
-import { useDispatch } from 'react-redux';
-import { getNotifications } from '../../redux/actions/Notifications';
+import {scale} from 'react-native-size-matters';
+import {useDispatch} from 'react-redux';
+import {getNotifications} from '../../redux/actions/Notifications';
 const Notifications = () => {
-  const dispatch = useDispatch()
-  const [offset, setOffset] = useState(0)
-useEffect(()=>{
-dispatch(getNotifications(offset))
-},[])
+  const dispatch = useDispatch();
+  const [viewFullText, setViewFullText] = useState(null);
+  const [offset, setOffset] = useState(0);
+  useEffect(() => {
+    dispatch(getNotifications(offset));
+  }, []);
 
   const renderItem = ({item, index}) => {
     return (
@@ -26,7 +23,7 @@ dispatch(getNotifications(offset))
             flexDirection: 'row',
             justifyContent: 'space-between',
             alignItems: 'center',
-            paddingHorizontal:20
+            paddingHorizontal: 20,
           }}>
           <View
             style={{
@@ -65,17 +62,18 @@ dispatch(getNotifications(offset))
             alignItems: 'center',
             paddingHorizontal: 20,
           }}>
-          {item?.description.length > 60 ? (
+          {item?.description.length > 40 && item?._id != viewFullText ? (
             <Text
               style={{
                 fontSize: 12,
                 fontWeight: 400,
               }}>
-              {item?.description}...
+              {item?.description.slice(0, 40)}...
               <Text
-               onPress={() => {
-                console.log('pressed');
-              }}
+                onPress={() => {
+                  console.log('pressed');
+                  setViewFullText(item?._id);
+                }}
                 style={{
                   fontSize: 12,
                   fontWeight: 700,
@@ -90,7 +88,25 @@ dispatch(getNotifications(offset))
                 fontSize: 12,
                 fontWeight: 400,
               }}>
-              {item?.description}
+              {item?.description.length > 40 && item?._id == viewFullText ? (
+                <>
+                  {item?.description}{' '}
+                  <Text
+                    onPress={() => {
+                      console.log('pressed');
+                      setViewFullText(null);
+                    }}
+                    style={{
+                      color: COLORS.secondry,
+                      fontSize: 12,
+                      fontWeight: 700,
+                    }}>
+                    show Less
+                  </Text>
+                </>
+              ) : (
+                item?.description
+              )}
             </Text>
           )}
         </View>
@@ -108,8 +124,11 @@ dispatch(getNotifications(offset))
           borderTopRightRadius: scale(20),
           borderTopLeftRadius: scale(20),
         }}>
-       <FlatList data={NotificationData} renderItem={renderItem}
-        contentContainerStyle={{paddingBottom: 20}} />
+        <FlatList
+          data={NotificationData}
+          renderItem={renderItem}
+          contentContainerStyle={{paddingBottom: 20}}
+        />
       </View>
     </View>
   );

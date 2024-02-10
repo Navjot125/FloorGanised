@@ -15,7 +15,8 @@ import {Calendar, LocaleConfig} from 'react-native-calendars';
 import Modal from 'react-native-modal';
 import {setSelecteddate} from '../../redux/reducers/Dates';
 import {COLORS} from '../theme';
-import { setSelectedDateReducer } from '../../redux/actions/DateAction';
+import AntDesign from 'react-native-vector-icons/AntDesign';
+import {setSelectedDateReducer} from '../../redux/actions/DateAction';
 const moment = require('moment');
 
 const CalendarStrip = ({loader}) => {
@@ -57,15 +58,16 @@ const CalendarStrip = ({loader}) => {
       onPress={item?.id > 13 ? onPress2 : onPress}
       style={[
         styles.datemonth,
-        {backgroundColor, marginLeft: item?.id == 0 ? 10 : 0},
+        {
+          backgroundColor,
+          marginLeft: item?.id == 0 ? 10 : 0,
+          marginRight: item?.id == 14 ? 30 : 10,
+        },
       ]}>
       {item?.id > 13 ? (
         <>
-          <Image
-            style={{height: 19, width: 19, marginTop: 9}}
-            source={require('../../assets/images/back.png')}
-          />
-          <Text
+          <AntDesign name="calendar" size={30} color={COLORS.secondry} />
+          {/* <Text
             style={[
               styles.itemmonth,
               {
@@ -76,7 +78,7 @@ const CalendarStrip = ({loader}) => {
               },
             ]}>
             Schedule
-          </Text>
+          </Text> */}
         </>
       ) : (
         <>
@@ -161,13 +163,12 @@ const styles = StyleSheet.create({
   datemonth: {
     borderRadius: 10,
     padding: 5,
-    paddingTop: 5,
     minWidth: 65,
-    height: 73,
     marginRight: 10,
     alignItems: 'center',
     justifyContent: 'center',
     marginTop: 20,
+    paddingVertical: 10,
   },
   itemdate: {
     fontSize: scale(20),
@@ -176,6 +177,7 @@ const styles = StyleSheet.create({
     // fontFamily: FONTS.PoppinsSemiBold,
     textAlign: 'center',
     fontWeight: 600,
+    top: 5,
   },
   itemmonth: {
     fontSize: scale(11),

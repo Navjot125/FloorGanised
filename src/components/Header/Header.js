@@ -63,10 +63,12 @@ const Header = ({title, back, profileDetail}) => {
           <Text style={{fontSize: 14, fontWeight: 400, color: COLORS.white}}>
             Hey, {userName}
           </Text>
-          <Image
-            style={{height: 20, width: 20, marginLeft: 5}}
-            source={require('../../assets/images/profile.png')}
-          />
+          <TouchableOpacity onPress={() => navigationRef.navigate('Profile')}>
+            <Image
+              style={{height: 35, width: 35, marginLeft: 5}}
+              source={require('../../assets/images/profile.png')}
+            />
+          </TouchableOpacity>
         </View>
       )}
     </View>

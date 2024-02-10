@@ -3,7 +3,7 @@ import {GET_NOTIFICATION} from '../constants';
 import {url} from '../../services/Config';
 import APIS from '../../services/apis';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { setLoader } from '../actions/Loader';
+import {setLoader} from '../actions/Loader';
 
 function* getNotification(action) {
   try {
@@ -22,7 +22,7 @@ function* getNotification(action) {
     const response = yield call(fetch, urlWithParams, requestOptions);
     if (response.ok) {
       const responseData = yield response.json();
-      console.log(responseData,'responseData---------------0');
+      // console.log(responseData, 'responseData---------------0');
     } else {
       const errorData = yield response.json();
       console.error(

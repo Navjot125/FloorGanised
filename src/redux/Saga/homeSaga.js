@@ -4,11 +4,11 @@ import APIS from '../../services/apis';
 import {url} from '../../services/Config';
 import {GET_JOBS, JOB_DETAIL} from '../constants';
 import {navigationRef} from '../../App';
-import { setLoader } from '../actions/Loader';
+import {setLoader} from '../actions/Loader';
 
 function* getJob(action) {
   try {
-    yield put(setLoader(true))
+    yield put(setLoader(true));
     const {status, date} = action.data;
     const token = yield call(AsyncStorage.getItem, 'token');
     const queryParams = `status=${encodeURIComponent(
@@ -58,21 +58,21 @@ function* jobDetail(action) {
     const response = yield call(fetch, urlWithParams, requestOptions);
     if (response.ok) {
       const responseData = yield response.json();
-      console.log(responseData,'responseData-------------');
-      responseData?.measuring_details ?
-      navigationRef.navigate(stack, {
-        screen: screen,
-        params: {
-          responseData: responseData?.data, 
-          measurinDetails : responseData?.measuring_details
-        },
-      }) :
-      navigationRef.navigate(stack, {
-        screen: screen,
-        params: {
-          responseData: responseData?.data, 
-        },
-      })
+      console.log(responseData, 'responseData-------------');
+      responseData?.measuring_details
+        ? navigationRef.navigate(stack, {
+            screen: screen,
+            params: {
+              responseData: responseData?.data,
+              measurinDetails: responseData?.measuring_details,
+            },
+          })
+        : navigationRef.navigate(stack, {
+            screen: screen,
+            params: {
+              responseData: responseData?.data,
+            },
+          });
     } else {
       const errorData = yield response.json();
       console.error(

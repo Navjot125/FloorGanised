@@ -21,7 +21,7 @@ const Profile = () => {
   const dispatch = useDispatch();
   const userData = useSelector(state => state?.onBoardingreducer?.userData);
   const screen = userData?.role === 'Surveyor' ? 'Main' : 'Fitter';
-  console.log(userData,'userData');
+  // console.log(userData,'userData');
   const screens = [
     {
       name: 'Manage Profile',

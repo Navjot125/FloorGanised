@@ -12,8 +12,8 @@ import {updateProfileRequest} from '../../redux/actions/profileAction';
 const ManageProfile = () => {
   const dispatch = useDispatch();
   const userData = useSelector(state => state?.onBoardingreducer?.userData);
-  const [name, setName] = useState('Navjot Singh');
-  const [email, setEmail] = useState('Navjots.indiit@gmail.com');
+  const [name, setName] = useState(userData?.name);
+  const [email, setEmail] = useState(userData?.email);
   const style = {
     width: '100%',
     marginTop: 25,
