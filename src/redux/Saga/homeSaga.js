@@ -10,6 +10,7 @@ function* getJob(action) {
   try {
     yield put(setLoader(true));
     const {status, date} = action.data;
+    console.log('date-----date-----',date);
     const token = yield call(AsyncStorage.getItem, 'token');
     const queryParams = `status=${encodeURIComponent(
       status,

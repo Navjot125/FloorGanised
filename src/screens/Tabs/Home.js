@@ -19,16 +19,17 @@ import {getJobs, jobDetail} from '../../redux/actions/homeAction';
 import SkeletonPlaceholder from 'react-native-skeleton-placeholder';
 import moment from 'moment';
 const Home = props => {
-  const selectedDate = useSelector(
-    state => state?.DateReducer?.selectedDate?.day,
-  );
+  const selectedDate = useSelector(state => state?.DateReducer?.selectedDate);
   const loader = useSelector(state => state?.loaderReducer?.loader);
   // const [loader, setLoader] = useState(!true);
   const [jobListing, setJobListing] = useState();
   const dispatch = useDispatch();
+  // 2024-02-07
   const param = {
     status: 'Pending',
-    date: selectedDate ? selectedDate : new Date(),
+    date: selectedDate
+      ? moment(selectedDate?.day, 'DD MMMM YYYY').format('YYYY-MM-DD')
+      : new Date(),
     cb: data => {
       setJobListing(data);
     },

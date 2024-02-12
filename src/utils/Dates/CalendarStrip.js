@@ -28,7 +28,6 @@ const CalendarStrip = ({loader}) => {
   const [minDate, setMinDate] = useState(
     new Date().toISOString().split('T')[0],
   );
-
   const dispatch = useDispatch();
   const navigation = useNavigation();
   const date = useSelector(state => state.DateReducer.dates);
@@ -139,8 +138,9 @@ const CalendarStrip = ({loader}) => {
           <Calendar
             onDayPress={day => {
               setdateFromCalendar(day);
+              dispatch(setSelectedDateReducer(day));
             }}
-            minDate={minDate}
+            // minDate={minDate}
             theme={{
               backgroundColor: 'red',
               calendarBackground: 'white',

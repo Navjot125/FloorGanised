@@ -19,7 +19,10 @@ import {navigationRef} from '../../App';
 const Detail = ({route}) => {
   const {responseData} = route.params;
   const onStart = () => {
-    navigationRef.navigate('MeasuringQuestionnaire');
+    navigationRef.navigate(
+      'MeasuringQuestionnaire',
+      responseData 
+    );
   };
   return (
     <View style={{flex: 1, backgroundColor: 'black'}}>

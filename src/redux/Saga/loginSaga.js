@@ -12,6 +12,7 @@ import {url} from '../../services/Config';
 import APIS from '../../services/apis';
 import {navigationRef} from '../../App';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import {showMessage} from 'react-native-flash-message';
 
 function* signup(action) {
   try {
@@ -105,6 +106,21 @@ function* login(action) {
       });
     } else {
       const errorData = yield response.json();
+      showMessage({
+        // message: remoteMessage?.notification?.title?.toString(),
+        message: errorData?.message,
+        type: 'danger',
+        description: errorData?.message,
+        //  description(
+        //   remoteMessage?.notification?.body?.toString()
+        // ),
+        style: {
+          justifyContent: 'flex-end',
+          paddingTop: 30,
+          borderRadius: 20,
+        },
+        duration: 3500,
+      });
       console.error(
         'Login request failed:',
         response.status,
