@@ -114,11 +114,11 @@ const MeasuringQuestionnaire = ({route}) => {
     setModalVisible(!modalVisible);
     navigationRef.navigate('Home');
   };
-  useEffect(() => {
-    if (measuremntRoomImages?.length > 3) {
-      Alert.alert('You can pic only 3 images');
-    }
-  }, [measuremntRoomImages]);
+  // useEffect(() => {
+  //   if (measuremntRoomImages?.length > 3) {
+  //     Alert.alert('You can pic only 3 images');
+  //   }
+  // }, [measuremntRoomImages]);
   const data = {
     job_id: job_id,
     type_of_room: typeOfRoom,
@@ -231,87 +231,86 @@ const MeasuringQuestionnaire = ({route}) => {
             Measurement of room
           </Text>
           <View style={styles.dottedBox}>
-            {measuremntRoomImages && measuremntRoomImages?.length ? (
-              <View
-                style={{
-                  flexDirection: 'row',
-                  justifyContent: 'space-around',
-                  width: '100%',
+            <>
+              <Octicons
+                name="device-camera"
+                size={25}
+                color={COLORS.secondry}
+              />
+              <TouchableOpacity
+                style={{}}
+                onPress={() => {
+                  LaunchImageLibraryAsync(
+                    measuremntRoomImages,
+                    setMeasuremntRoomImages,
+                    'Certifications',
+                  );
                 }}>
-                {measuremntRoomImages.map((item, index) => (
-                  <>
-                    <TouchableOpacity
-                      key={index}
-                      onPress={() => {
-                        setModalImage(item.uri), setModal(true);
-                      }}>
-                      <TouchableOpacity
-                        onPress={() => {
-                          setMeasuremntRoomImages(
-                            measuremntRoomImages?.filter(
-                              sort => sort.uri !== item.uri,
-                            ),
-                          );
-                        }}
-                        style={{
-                          backgroundColor: COLORS.black,
-                          height: 25,
-                          width: 25,
-                          borderRadius: 20,
-                          alignSelf: 'flex-end',
-                          zIndex: 1,
-                          justifyContent: 'center',
-                          alignItems: 'center',
-                          left: 8,
-                        }}>
-                        <Text
-                          style={{
-                            fontSize: 20,
-                            fontWeight: 600,
-                            color: 'white',
-                          }}>
-                          X
-                        </Text>
-                      </TouchableOpacity>
-
-                      <Image
-                        key={index}
-                        style={{
-                          height: 80,
-                          width: 80,
-                          borderRadius: 16,
-                          bottom: 15,
-                        }}
-                        source={{uri: item?.uri}}
-                      />
-                    </TouchableOpacity>
-                  </>
-                ))}
-              </View>
-            ) : (
-              <>
-                <Octicons
-                  name="device-camera"
-                  size={25}
-                  color={COLORS.secondry}
-                />
-                <TouchableOpacity
-                  style={{}}
-                  onPress={() => {
-                    LaunchImageLibraryAsync(
-                      measuremntRoomImages,
-                      setMeasuremntRoomImages,
-                      'Certifications',
-                    );
-                  }}>
-                  <Text style={{fontSize: 14, fontWeight: 500, marginTop: 10}}>
-                    Take Pictures
-                  </Text>
-                </TouchableOpacity>
-              </>
-            )}
+                <Text style={{fontSize: 14, fontWeight: 500, marginTop: 10}}>
+                  Take Pictures
+                </Text>
+              </TouchableOpacity>
+            </>
           </View>
         </View>
+        {measuremntRoomImages && measuremntRoomImages?.length ? (
+          <View
+            style={{
+              flexDirection: 'row',
+              justifyContent: 'space-around',
+              flexWrap: 'wrap',
+            }}>
+            {measuremntRoomImages.map((item, index) => (
+              <>
+                <TouchableOpacity
+                  key={index}
+                  onPress={() => {
+                    setModalImage(item.uri), setModal(true);
+                  }}>
+                  <TouchableOpacity
+                    onPress={() => {
+                      setMeasuremntRoomImages(
+                        measuremntRoomImages?.filter(
+                          sort => sort.uri !== item.uri,
+                        ),
+                      );
+                    }}
+                    style={{
+                      backgroundColor: COLORS.black,
+                      height: 25,
+                      width: 25,
+                      borderRadius: 20,
+                      alignSelf: 'flex-end',
+                      zIndex: 1,
+                      justifyContent: 'center',
+                      alignItems: 'center',
+                      left: 8,
+                    }}>
+                    <Text
+                      style={{
+                        fontSize: 20,
+                        fontWeight: 600,
+                        color: 'white',
+                      }}>
+                      X
+                    </Text>
+                  </TouchableOpacity>
+
+                  <Image
+                    key={index}
+                    style={{
+                      height: 80,
+                      width: 80,
+                      borderRadius: 16,
+                      bottom: 15,
+                    }}
+                    source={{uri: item?.uri}}
+                  />
+                </TouchableOpacity>
+              </>
+            ))}
+          </View>
+        ) : null}
         {!isSecondScreen && (
           <>
             <View
@@ -584,86 +583,85 @@ const MeasuringQuestionnaire = ({route}) => {
           (isSecondScreen && isFurnitureToMove == 'No') ? (
             <View>
               <View style={styles.dottedBox}>
-                {furnitureImages && furnitureImages.length ? (
-                  <View
-                    style={{
-                      flexDirection: 'row',
-                      justifyContent: 'space-around',
-                      width: '100%',
+                <>
+                  <Octicons
+                    name="device-camera"
+                    size={25}
+                    color={COLORS.secondry}
+                  />
+                  <TouchableOpacity
+                    style={{}}
+                    onPress={() => {
+                      LaunchImageLibraryAsync(
+                        furnitureImages,
+                        setFurnitureImages,
+                        'Certifications',
+                      );
                     }}>
-                    {furnitureImages.map((item, index) => (
-                      <>
-                        <TouchableOpacity
-                          key={index}
-                          onPress={() => {
-                            setModalImage(item.uri), setModal(true);
-                          }}>
-                          <TouchableOpacity
-                            onPress={() => {
-                              setFurnitureImages(
-                                furnitureImages?.filter(
-                                  sort => sort.uri !== item.uri,
-                                ),
-                              );
-                            }}
-                            style={{
-                              backgroundColor: COLORS.black,
-                              height: 25,
-                              width: 25,
-                              borderRadius: 20,
-                              alignSelf: 'flex-end',
-                              zIndex: 1,
-                              justifyContent: 'center',
-                              alignItems: 'center',
-                              left: 8,
-                            }}>
-                            <Text
-                              style={{
-                                fontSize: 20,
-                                fontWeight: 600,
-                                color: 'white',
-                              }}>
-                              X
-                            </Text>
-                          </TouchableOpacity>
-                          <Image
-                            key={index}
-                            style={{
-                              height: 80,
-                              width: 80,
-                              borderRadius: 16,
-                              bottom: 15,
-                            }}
-                            source={{uri: item?.uri}}
-                          />
-                        </TouchableOpacity>
-                      </>
-                    ))}
-                  </View>
-                ) : (
-                  <>
-                    <Octicons
-                      name="device-camera"
-                      size={25}
-                      color={COLORS.secondry}
-                    />
-                    <TouchableOpacity
-                      style={{}}
-                      onPress={() => {
-                        LaunchImageLibraryAsync(
-                          furnitureImages,
-                          setFurnitureImages,
-                          'Certifications',
-                        );
-                      }}>
-                      <Text
-                        style={{fontSize: 14, fontWeight: 500, marginTop: 10}}>
-                        Take Pictures
-                      </Text>
-                    </TouchableOpacity>
-                  </>
-                )}
+                    <Text
+                      style={{fontSize: 14, fontWeight: 500, marginTop: 10}}>
+                      Take Pictures
+                    </Text>
+                  </TouchableOpacity>
+                </>
               </View>
+              {furnitureImages && furnitureImages.length ? (
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    justifyContent: 'space-around',
+                    flexWrap: 'wrap',
+                  }}>
+                  {furnitureImages.map((item, index) => (
+                    <>
+                      <TouchableOpacity
+                        key={index}
+                        onPress={() => {
+                          setModalImage(item.uri), setModal(true);
+                        }}>
+                        <TouchableOpacity
+                          onPress={() => {
+                            setFurnitureImages(
+                              furnitureImages?.filter(
+                                sort => sort.uri !== item.uri,
+                              ),
+                            );
+                          }}
+                          style={{
+                            backgroundColor: COLORS.black,
+                            height: 25,
+                            width: 25,
+                            borderRadius: 20,
+                            alignSelf: 'flex-end',
+                            zIndex: 1,
+                            justifyContent: 'center',
+                            alignItems: 'center',
+                            left: 8,
+                          }}>
+                          <Text
+                            style={{
+                              fontSize: 20,
+                              fontWeight: 600,
+                              color: 'white',
+                            }}>
+                            X
+                          </Text>
+                        </TouchableOpacity>
+                        <Image
+                          key={index}
+                          style={{
+                            height: 80,
+                            width: 80,
+                            borderRadius: 16,
+                            bottom: 15,
+                          }}
+                          source={{uri: item?.uri}}
+                        />
+                      </TouchableOpacity>
+                    </>
+                  ))}
+                </View>
+              ) : null}
               <TextInput
                 style={{
                   height: 104,
@@ -786,90 +784,89 @@ const MeasuringQuestionnaire = ({route}) => {
                     Floor Preparation
                   </Text>
                   <View style={styles.dottedBox}>
-                    {floorImages && floorImages.length ? (
-                      <View
-                        style={{
-                          flexDirection: 'row',
-                          justifyContent: 'space-around',
-                          width: '100%',
+                    <>
+                      <Octicons
+                        name="device-camera"
+                        size={25}
+                        color={COLORS.secondry}
+                      />
+                      <TouchableOpacity
+                        style={{}}
+                        onPress={() => {
+                          LaunchImageLibraryAsync(
+                            floorImages,
+                            setFloorImages,
+                            'Certifications',
+                          );
                         }}>
-                        {floorImages.map((item, index) => (
-                          <>
-                            <TouchableOpacity
-                              key={index}
-                              onPress={() => {
-                                setModalImage(item.uri), setModal(true);
-                              }}>
-                              <TouchableOpacity
-                                onPress={() => {
-                                  setFloorImages(
-                                    floorImages?.filter(
-                                      sort => sort.uri !== item.uri,
-                                    ),
-                                  );
-                                }}
-                                style={{
-                                  backgroundColor: COLORS.black,
-                                  height: 25,
-                                  width: 25,
-                                  borderRadius: 20,
-                                  alignSelf: 'flex-end',
-                                  zIndex: 1,
-                                  justifyContent: 'center',
-                                  alignItems: 'center',
-                                  left: 8,
-                                }}>
-                                <Text
-                                  style={{
-                                    fontSize: 20,
-                                    fontWeight: 600,
-                                    color: 'white',
-                                  }}>
-                                  X
-                                </Text>
-                              </TouchableOpacity>
-                              <Image
-                                key={index}
-                                style={{
-                                  height: 80,
-                                  width: 80,
-                                  borderRadius: 16,
-                                  bottom: 15,
-                                }}
-                                source={{uri: item?.uri}}
-                              />
-                            </TouchableOpacity>
-                          </>
-                        ))}
-                      </View>
-                    ) : (
-                      <>
-                        <Octicons
-                          name="device-camera"
-                          size={25}
-                          color={COLORS.secondry}
-                        />
-                        <TouchableOpacity
-                          style={{}}
-                          onPress={() => {
-                            LaunchImageLibraryAsync(
-                              floorImages,
-                              setFloorImages,
-                              'Certifications',
-                            );
+                        <Text
+                          style={{
+                            fontSize: 14,
+                            fontWeight: 500,
+                            marginTop: 10,
                           }}>
-                          <Text
-                            style={{
-                              fontSize: 14,
-                              fontWeight: 500,
-                              marginTop: 10,
-                            }}>
-                            Take Pictures
-                          </Text>
-                        </TouchableOpacity>
-                      </>
-                    )}
+                          Take Pictures
+                        </Text>
+                      </TouchableOpacity>
+                    </>
                   </View>
+                  {floorImages && floorImages.length ? (
+                    <View
+                      style={{
+                        flexDirection: 'row',
+                        justifyContent: 'space-around',
+                        flexWrap: 'wrap',
+                      }}>
+                      {floorImages.map((item, index) => (
+                        <>
+                          <TouchableOpacity
+                            key={index}
+                            onPress={() => {
+                              setModalImage(item.uri), setModal(true);
+                            }}>
+                            <TouchableOpacity
+                              onPress={() => {
+                                setFloorImages(
+                                  floorImages?.filter(
+                                    sort => sort.uri !== item.uri,
+                                  ),
+                                );
+                              }}
+                              style={{
+                                backgroundColor: COLORS.black,
+                                height: 25,
+                                width: 25,
+                                borderRadius: 20,
+                                alignSelf: 'flex-end',
+                                zIndex: 1,
+                                justifyContent: 'center',
+                                alignItems: 'center',
+                                left: 8,
+                              }}>
+                              <Text
+                                style={{
+                                  fontSize: 20,
+                                  fontWeight: 600,
+                                  color: 'white',
+                                }}>
+                                X
+                              </Text>
+                            </TouchableOpacity>
+                            <Image
+                              key={index}
+                              style={{
+                                height: 80,
+                                width: 80,
+                                borderRadius: 16,
+                                bottom: 15,
+                              }}
+                              source={{uri: item?.uri}}
+                            />
+                          </TouchableOpacity>
+                        </>
+                      ))}
+                    </View>
+                  ) : null}
                 </View>
               </>
             )}

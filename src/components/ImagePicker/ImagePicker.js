@@ -28,7 +28,8 @@ const LaunchImageLibraryAsync = async (
       maxWidth: 300,
       maxHeight: 300,
       quality: 0.8,
-      selectionLimit: docName === 'profile' ? 1 : 3,
+      selectionLimit: 0,
+      // selectionLimit: docName === 'profile' ? 1 : 3,
       storageOptions: {
         skipBackup: true,
         path: 'images',
