@@ -11,6 +11,7 @@ import {navigationRef} from '../../App';
 import {dateListing} from '../../utils/Dates/DateLimit';
 import CalendarStrip from '../../utils/Dates/CalendarStrip';
 import {COLORS} from '../../utils/theme';
+import {useFocusEffect} from '@react-navigation/native';
 import Header from '../../components/Header/Header';
 import {scale} from 'react-native-size-matters';
 import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons';
@@ -21,25 +22,26 @@ import moment from 'moment';
 const Home = props => {
   const selectedDate = useSelector(state => state?.DateReducer?.selectedDate);
   const loader = useSelector(state => state?.loaderReducer?.loader);
-  // const [loader, setLoader] = useState(!true);
   const [jobListing, setJobListing] = useState();
   const dispatch = useDispatch();
-  // 2024-02-07
-  const param = {
-    status: 'Pending',
-    date: selectedDate
-      ? moment(selectedDate?.day, 'DD MMMM YYYY').format('YYYY-MM-DD')
-      : new Date(),
-    cb: data => {
-      setJobListing(data);
-    },
-  };
-  useEffect(() => {
-    dateListing();
-    dispatch(getJobs(param));
-  }, [selectedDate]);
+  useFocusEffect(
+    React.useCallback(() => {
+      const param = {
+        status: 'Pending',
+        date: selectedDate
+          ? moment(selectedDate?.day, 'DD MMMM YYYY').format('YYYY-MM-DD')
+          : new Date(),
+        cb: data => {
+          setJobListing(data);
+        },
+      };
+      dateListing();
+      dispatch(getJobs(param));
+    }, [selectedDate]),
+  );
   const userData = useSelector(state => state?.onBoardingreducer?.userData);
   // console.log(userData,'userData-------');
+  // console.log(jobListing,'userData-------');
   const stack = userData?.role == 'Surveyor' ? 'Main' : 'Fitter';
   const screen = userData?.role == 'Surveyor' ? 'Detail' : 'FitterDetail';
   const renderItem = ({item, index}) => {
@@ -115,10 +117,9 @@ const Home = props => {
                   fontSize: 12,
                   fontWeight: 500,
                 }}>
-                {/* {index == 0 && userData?.role == 'Fitter'
-                  ? 'On Work'
-                  : 'Details'} */}
-                Details
+                {item?.fitter_status == 'Pending'
+                  ? 'Details'
+                  : item?.fitter_status}
               </Text>
             </TouchableOpacity>
           </View>

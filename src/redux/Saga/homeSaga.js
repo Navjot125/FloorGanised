@@ -10,7 +10,6 @@ function* getJob(action) {
   try {
     yield put(setLoader(true));
     const {status, date} = action.data;
-    console.log('date-----date-----', date);
     const token = yield call(AsyncStorage.getItem, 'token');
     const queryParams = `status=${encodeURIComponent(
       status,
@@ -45,6 +44,7 @@ function* getJob(action) {
 }
 function* jobDetail(action) {
   try {
+    yield put(setLoader(true));
     const {_id, stack, screen} = action.data;
     const token = yield call(AsyncStorage.getItem, 'token');
     const queryParams = `job_id=${encodeURIComponent(_id)}`;
@@ -86,13 +86,15 @@ function* jobDetail(action) {
     }
   } catch (error) {
     console.error('An error occurred during jobDetail:', error);
+  } finally {
+    yield put(setLoader(false));
   }
 }
 
 function* startFittingSaga(action) {
   try {
+    yield put(setLoader(true));
     const {fitter_status, job_id} = action.data;
-    console.log(fitter_status, job_id, '[[[[[[[[[[[[[[[[');
     const token = yield call(AsyncStorage.getItem, 'token');
     const requestOptions = {
       method: 'POST',
@@ -113,6 +115,7 @@ function* startFittingSaga(action) {
     if (response.ok) {
       const responseData = yield response.json();
       console.log(responseData, 'startFittingSaga response --');
+      navigationRef.navigate('Home');
     } else {
       const errorData = yield response.json();
       console.error(
@@ -124,6 +127,8 @@ function* startFittingSaga(action) {
     }
   } catch (error) {
     console.error('An error occurred during startFittingSaga:', error);
+  } finally {
+    yield put(setLoader(false));
   }
 }
 

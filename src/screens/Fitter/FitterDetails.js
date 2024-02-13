@@ -19,15 +19,16 @@ import CommonButton from '../../components/CommonButton/CommonButton';
 import {navigationRef} from '../../App';
 import {useDispatch} from 'react-redux';
 import {startFittingAction} from '../../redux/actions/homeAction';
+import {ImageUrl} from '../../services/Config';
 const FitterDetail = ({route}) => {
   const dispatch = useDispatch();
   const {responseData, measurinDetails} = route.params;
   const [startFitting, setStartFitting] = useState(false);
   const onStart = () => {
     const param = {
-      job_id:responseData?._id,
-      fitter_status:"On-work"
-    }
+      job_id: responseData?._id,
+      fitter_status: 'On-work',
+    };
     // console.log(param,'param----------');
     dispatch(startFittingAction(param));
     // startFitting ? navigationRef.navigate('Home') : setStartFitting(true);
@@ -254,7 +255,8 @@ const FitterDetail = ({route}) => {
                   }}
                   resizeMode="cover"
                   // "1707818159046.jpeg",
-                  source={require('../../assets/images/profile1.jpg')}
+                  source={{uri: `${ImageUrl}${item}`}}
+                  // source={require('../../assets/images/profile1.jpg')}
                 />
               ))}
             </View>
@@ -459,7 +461,7 @@ const FitterDetail = ({route}) => {
                     marginTop: 10,
                   }}
                   resizeMode="cover"
-                  source={require('../../assets/images/profile1.jpg')}
+                  source={{uri: `${ImageUrl}${item}`}}
                 />
               ))}
             </View>
@@ -517,17 +519,21 @@ const FitterDetail = ({route}) => {
                 }}>
                 {measurinDetails?.floor_preparation_images.map(
                   (item, index) => (
-                    <Image
-                      key={index}
-                      style={{
-                        height: 56,
-                        width: 80,
-                        borderRadius: 10,
-                        marginTop: 10,
-                      }}
-                      resizeMode="cover"
-                      source={require('../../assets/images/profile1.jpg')}
-                    />
+                    // ImageUrl
+                    console.log(item, 'item'),
+                    (
+                      <Image
+                        key={index}
+                        style={{
+                          height: 56,
+                          width: 80,
+                          borderRadius: 10,
+                          marginTop: 10,
+                        }}
+                        resizeMode="cover"
+                        source={{uri: `${ImageUrl}${item}`}}
+                      />
+                    )
                   ),
                 )}
               </View>
@@ -595,7 +601,11 @@ const FitterDetail = ({route}) => {
         <View style={{flex: 1, justifyContent: 'flex-end', marginVertical: 25}}>
           <CommonButton
             onPress={onStart}
-            title={startFitting ? 'Job Complete' : 'Start Measuring'}
+            title={
+              responseData?.responseData == 'On-work'
+                ? 'Job Complete'
+                : 'Start Fitting'
+            }
           />
         </View>
       </ScrollView>

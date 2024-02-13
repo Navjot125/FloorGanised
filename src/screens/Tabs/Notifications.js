@@ -3,16 +3,17 @@ import React, {useState} from 'react';
 import {COLORS} from '../../utils/theme';
 import Header from '../../components/Header/Header';
 import {scale} from 'react-native-size-matters';
-import {useDispatch} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import {getNotifications} from '../../redux/actions/Notifications';
 import {useFocusEffect} from '@react-navigation/native';
 import moment from 'moment';
+import SkeletonPlaceholder from 'react-native-skeleton-placeholder';
 const Notifications = () => {
   const dispatch = useDispatch();
   const [viewFullText, setViewFullText] = useState(null);
   const [offset, setOffset] = useState(0);
   const [notifications, setNotifications] = useState();
-
+  const loader = useSelector(state => state?.loaderReducer?.loader);
   useFocusEffect(
     React.useCallback(() => {
       const cb = data => {
@@ -146,11 +147,28 @@ const Notifications = () => {
           borderTopRightRadius: scale(20),
           borderTopLeftRadius: scale(20),
         }}>
-        <FlatList
-          data={notifications}
-          renderItem={renderItem}
-          contentContainerStyle={{paddingBottom: 20}}
-        />
+        {loader ? (
+          <SkeletonPlaceholder borderRadius={15}>
+            <View
+              style={{height: 105, marginTop: 10, marginHorizontal: 10}}></View>
+            <View
+              style={{height: 105, marginTop: 10, marginHorizontal: 10}}></View>
+            <View
+              style={{height: 105, marginTop: 10, marginHorizontal: 10}}></View>
+            <View
+              style={{height: 105, marginTop: 10, marginHorizontal: 10}}></View>
+            <View
+              style={{height: 105, marginTop: 10, marginHorizontal: 10}}></View>
+            <View
+              style={{height: 105, marginTop: 10, marginHorizontal: 10}}></View>
+          </SkeletonPlaceholder>
+        ) : (
+          <FlatList
+            data={notifications}
+            renderItem={renderItem}
+            contentContainerStyle={{paddingBottom: 20}}
+          />
+        )}
       </View>
     </View>
   );

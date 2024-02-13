@@ -7,31 +7,34 @@ import {
   SafeAreaView,
 } from 'react-native';
 import React, {useEffect, useState} from 'react';
-import {navigationRef} from '../../App';
-import {dateListing} from '../../utils/Dates/DateLimit';
-import CalendarStrip from '../../utils/Dates/CalendarStrip';
-import {height} from '../../assets/styles/styles';
-import {HistoryData, HomeData} from '../../config/DummyData';
 import {COLORS} from '../../utils/theme';
+import SkeletonPlaceholder from 'react-native-skeleton-placeholder';
 import Header from '../../components/Header/Header';
 import {scale} from 'react-native-size-matters';
 import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons';
-import {useDispatch} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import {getJobs} from '../../redux/actions/homeAction';
+import {useFocusEffect} from '@react-navigation/native';
 
 const History = () => {
   const [jobListing, setJobListing] = useState();
   const dispatch = useDispatch();
-  const param = {
-    status: 'Complete',
-    cb: data => {
-      setJobListing(data);
-    },
-  };
-  useEffect(() => {
-    dispatch(getJobs(param));
-  }, []);
+  const loader = useSelector(state => state?.loaderReducer?.loader);
 
+  // useEffect(() => {
+  //   dispatch(getJobs(param));
+  // }, []);
+  useFocusEffect(
+    React.useCallback(() => {
+      const param = {
+        status: 'Complete',
+        cb: data => {
+          setJobListing(data);
+        },
+      };
+      dispatch(getJobs(param));
+    }, []),
+  );
   const renderItem = ({item, index}) => {
     return (
       <View style={styles.container}>
@@ -110,7 +113,22 @@ const History = () => {
           borderTopRightRadius: scale(20),
           borderTopLeftRadius: scale(20),
         }}>
-        {jobListing?.length ? (
+        {loader ? (
+          <SkeletonPlaceholder borderRadius={15}>
+            <View
+              style={{height: 105, marginTop: 10, marginHorizontal: 10}}></View>
+            <View
+              style={{height: 105, marginTop: 10, marginHorizontal: 10}}></View>
+            <View
+              style={{height: 105, marginTop: 10, marginHorizontal: 10}}></View>
+            <View
+              style={{height: 105, marginTop: 10, marginHorizontal: 10}}></View>
+            <View
+              style={{height: 105, marginTop: 10, marginHorizontal: 10}}></View>
+            <View
+              style={{height: 105, marginTop: 10, marginHorizontal: 10}}></View>
+          </SkeletonPlaceholder>
+        ) : jobListing?.length ? (
           <FlatList
             data={jobListing}
             renderItem={renderItem}
