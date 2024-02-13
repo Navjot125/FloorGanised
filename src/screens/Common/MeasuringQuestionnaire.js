@@ -254,9 +254,9 @@ const MeasuringQuestionnaire = ({route}) => {
                           );
                         }}
                         style={{
-                          backgroundColor: COLORS.primary,
-                          height: 30,
-                          width: 30,
+                          backgroundColor: COLORS.black,
+                          height: 25,
+                          width: 25,
                           borderRadius: 20,
                           alignSelf: 'flex-end',
                           zIndex: 1,
@@ -607,9 +607,9 @@ const MeasuringQuestionnaire = ({route}) => {
                               );
                             }}
                             style={{
-                              backgroundColor: COLORS.primary,
-                              height: 30,
-                              width: 30,
+                              backgroundColor: COLORS.black,
+                              height: 25,
+                              width: 25,
                               borderRadius: 20,
                               alignSelf: 'flex-end',
                               zIndex: 1,
@@ -809,9 +809,9 @@ const MeasuringQuestionnaire = ({route}) => {
                                   );
                                 }}
                                 style={{
-                                  backgroundColor: COLORS.primary,
-                                  height: 30,
-                                  width: 30,
+                                  backgroundColor: COLORS.black,
+                                  height: 25,
+                                  width: 25,
                                   borderRadius: 20,
                                   alignSelf: 'flex-end',
                                   zIndex: 1,
