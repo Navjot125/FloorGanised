@@ -4,9 +4,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import APIS from '../../services/apis';
 import {url} from '../../services/Config';
 import {
-  CONTACT_US,
   DELETE_ACCOUNT,
-  GET_JOBS,
   GET_PROFILE,
   SET_USER_DATA,
   SET_USER_TOKEN,

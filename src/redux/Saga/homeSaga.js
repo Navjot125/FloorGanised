@@ -26,6 +26,7 @@ function* getJob(action) {
     const response = yield call(fetch, urlWithParams, requestOptions);
     if (response.ok) {
       const responseData = yield response.json();
+      console.log(responseData,'responseData?.data');
       action?.data?.cb(responseData?.data);
     } else {
       const errorData = yield response.json();

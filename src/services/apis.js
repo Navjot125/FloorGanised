@@ -12,6 +12,7 @@ export const APIS = {
   GET_JOBS: 'get_my_jobs',
   JOB_DETAIL: 'get_job_details',
   GET_NOTIFICATIONS: 'get_notifications',
-  SUBMIT_QUESTIONNAIRE:'submit_measuring_questionare'
+  SUBMIT_QUESTIONNAIRE:'submit_measuring_questionare',
+  uploadFile:'uploadFile'
 };
 export default APIS;

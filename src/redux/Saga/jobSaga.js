@@ -18,13 +18,14 @@ async function convertPayloadToFormData(payload) {
         if (key === 'measurement_of_room' && Array.isArray(payload[key])) {
           payload[key].forEach((imageData, index) => {
             if (imageData != '') {
-              const randomName = `image_${Math.random()
-                .toString(36)
-                .substr(2, 10)}.jpg`;
+              // const randomName = `image_${Math.random().toString(36).substr(2, 10)}.jpg`;
               formData.append(`measurement_of_room`, {
-                uri: imageData,
-                type: 'image/jpeg',
-                name: randomName,
+                // uri: imageData,
+                // type: 'image/jpeg',
+                // name: randomName,
+                uri: imageData.uri,
+                type: imageData.type,
+                name: imageData.fileName,
               });
             }
           });
@@ -32,13 +33,10 @@ async function convertPayloadToFormData(payload) {
         if (key === 'furniture_images' && Array.isArray(payload[key])) {
           payload[key].forEach((imageData, index) => {
             if (imageData != '') {
-              const randomName = `image_${Math.random()
-                .toString(36)
-                .substr(2, 10)}.jpg`;
               formData.append(`furniture_images`, {
-                uri: imageData,
-                type: 'image/jpeg',
-                name: randomName,
+                uri: imageData.uri,
+                type: imageData.type,
+                name: imageData.fileName,
               });
             }
           });
@@ -46,13 +44,10 @@ async function convertPayloadToFormData(payload) {
         if (key === 'floor_preparation_images' && Array.isArray(payload[key])) {
           payload[key].forEach((imageData, index) => {
             if (imageData != '') {
-              const randomName = `image_${Math.random()
-                .toString(36)
-                .substr(2, 10)}.jpg`;
               formData.append(`floor_preparation_images`, {
-                uri: imageData,
-                type: 'image/jpeg',
-                name: randomName,
+                uri: imageData.uri,
+                type: imageData.type,
+                name: imageData.fileName,
               });
             }
           });
@@ -68,16 +63,13 @@ async function convertPayloadToFormData(payload) {
       }
     }
   }
-  console.log(formData,'formData--------------------');
   return formData;
 }
 function* submitQuestionnaire(action) {
+  console.log('action', action);
   try {
     const extractedData = yield convertPayloadToFormData(action.data);
     yield put(setLoader(true));
-    // const data = action.data;
-    // const extractedData = action.data;
-    // console.log('data of submit -------------', data);
     const token = yield call(AsyncStorage.getItem, 'token');
     const requestOptions = {
       method: 'POST',
@@ -94,6 +86,7 @@ function* submitQuestionnaire(action) {
     );
     if (response.ok) {
       const responseData = yield response.json();
+      action.callBack();
       console.log(responseData, 'submitQuestionnaire response --');
       //   navigationRef.navigate('Home');
     } else {

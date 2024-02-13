@@ -12,6 +12,7 @@ import {
 import React, {useEffect, useState} from 'react';
 import {scale} from 'react-native-size-matters';
 import {COLORS} from '../../utils/theme';
+import Modal from 'react-native-modal';
 import DropDown from '../../components/DropDown/DropDown';
 import {Checkbox, RadioButton} from 'react-native-paper';
 import CommonTextInput from '../../components/Input/InputBox';
@@ -22,45 +23,16 @@ import jobComplete from '../../assets/images/jobComplete.png';
 import Header from '../../components/Header/Header';
 import Octicons from 'react-native-vector-icons/Octicons';
 import LaunchImageLibraryAsync from '../../components/ImagePicker/ImagePicker';
-import {useDispatch} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import {submitQuestionnaire} from '../../redux/actions/job';
 
 const MeasuringQuestionnaire = ({route}) => {
-  const job_id = route?.params?._id
-  // const [form, setForm] = useState([
-  //   typeOfRoom,
-  //   surcharge,
-  //   flooringType,
-  //   flooringChoiceColor,
-  //   isFlooringChoiceSelected,
-  //   size,
-  //   SQM,
-  //   isJoinFloor,
-  //   JoinInNotes,
-  //   gripperLengths,
-  //   underlayType,
-  //   underlayAmount,
-  //   doorBarType,
-  //   doorBarAmount,
-  //   doorBarNotes,
-  //   isUpliftWasteService,
-  //   upliftWasteServiceNotes,
-  //   furnitureNotes,
-  //   isSuitableForJob,
-  //   SuitableForJobNotes,
-  //   doorsToCut,
-  //   howManyDoorsToCut,
-  //   typeOfdoorsToCut,
-  //   fittersNeeded,
-  //   additionalNotes,
-  //   scotia,
-  //   isSkirtingBoard,
-  //   skirtingBoardNotes,
-  //   isFloorPreparation,
-  //   floorNotes,
-  //   isFurnitureToMove,
-  // ]);
+  const userData = useSelector(state => state?.onBoardingreducer?.userData);
+  // console.log('userData---',userData?.role == 'Surveyor');
+  const job_id = route?.params?._id;
   const dispatch = useDispatch();
+  const [modalImage, setModalImage] = useState();
+  const [modal, setModal] = useState(false);
   const [typeOfRoom, setTypeOfRoom] = useState(null);
   const [surcharge, setSurcharge] = useState(null);
   const [flooringType, setFlooringType] = useState();
@@ -102,6 +74,7 @@ const MeasuringQuestionnaire = ({route}) => {
   const suitableOptions = ['Yes', 'Unable to see due to current floor', 'No'];
   const skirtingBoardsOptions = ['Yes', 'Not sure yet', 'No'];
   const doorBars = ['silver', 'gold', 'oak', 'other'];
+  const howManyFitters = ['1', '2', '3', '4', '5'];
   const FlooringType = [
     'Carpets',
     'Vinyl',
@@ -130,27 +103,24 @@ const MeasuringQuestionnaire = ({route}) => {
     marginBottom: 25,
   };
   const onPress = () => {
-    // convertPayloadToFormData(data)
-    // console.log('data---',data);
-    // submitQuestionnaire
-    dispatch(submitQuestionnaire(data));
-    // console.log(convertPayloadToFormData(data)?._j?._parts);
-    // route?.params
-    //   ? navigationRef.navigate('Home')
-    //   : setModalVisible(!modalVisible);
+    const cb = () => {
+      userData?.role == 'Surveyor'
+        ? setModalVisible(!modalVisible)
+        : navigationRef.navigate('Home');
+    };
+    dispatch(submitQuestionnaire(data, cb));
   };
   const onPressModal = () => {
     setModalVisible(!modalVisible);
     navigationRef.navigate('Home');
   };
-  const Laminate = true;
   useEffect(() => {
     if (measuremntRoomImages?.length > 3) {
       Alert.alert('You can pic only 3 images');
     }
   }, [measuremntRoomImages]);
   const data = {
-    job_id:job_id,
+    job_id: job_id,
     type_of_room: typeOfRoom,
     surcharge: surcharge,
     flooring_type: flooringType,
@@ -187,118 +157,6 @@ const MeasuringQuestionnaire = ({route}) => {
     furniture_images: furnitureImages,
     floor_preparation_images: floorImages,
   };
-  // console.log('data--------------',data);
-  async function convertPayloadToFormData(payload) {
-    const formData = new FormData();
-    for (const key in payload) {
-      if (payload.hasOwnProperty(key)) {
-        if (
-          payload[key] !== '' &&
-          payload[key] !== null &&
-          payload[key] != undefined
-        ) {
-          if (key === 'measurement_of_room' && Array.isArray(payload[key])) {
-            payload[key].forEach((imageData, index) => {
-              if (imageData != '') {
-                const randomName = `image_${Math.random()
-                  .toString(36)
-                  .substr(2, 10)}.jpg`;
-                formData.append(`measurement_of_room`, {
-                  uri: imageData,
-                  type: 'image/jpeg',
-                  name: randomName,
-                });
-              }
-            });
-          }
-          if (key === 'furniture_images' && Array.isArray(payload[key])) {
-            payload[key].forEach((imageData, index) => {
-              if (imageData != '') {
-                const randomName = `image_${Math.random()
-                  .toString(36)
-                  .substr(2, 10)}.jpg`;
-                formData.append(`furniture_images`, {
-                  uri: imageData,
-                  type: 'image/jpeg',
-                  name: randomName,
-                });
-              }
-            });
-          }
-          if (
-            key === 'floor_preparation_images' &&
-            Array.isArray(payload[key])
-          ) {
-            payload[key].forEach((imageData, index) => {
-              if (imageData != '') {
-                const randomName = `image_${Math.random()
-                  .toString(36)
-                  .substr(2, 10)}.jpg`;
-                formData.append(`floor_preparation_images`, {
-                  uri: imageData,
-                  type: 'image/jpeg',
-                  name: randomName,
-                });
-              }
-            });
-          } else {
-            if (key !== 'photos') {
-              if (Array.isArray(payload[key])) {
-                payload[key].map(item => {
-                  formData.append(key, item);
-                });
-              } else formData.append(key, payload[key]);
-            }
-          }
-        }
-      }
-    }
-    console.log('formData-----------', formData);
-    // return formData;
-  }
-  const handleSubmit = () => {
-    const formData = new FormData();
-    // formData.append('type_of_room', typeOfRoom);
-    // formData.append('surcharge', surcharge);
-    // formData.append('flooring_type', flooringType);
-    // formData.append('flooring_choice_color', flooringChoiceColor);
-    // formData.append('is_flooring_choice_selected', isFlooringChoiceSelected);
-    // formData.append('size', size);
-    // formData.append('sqm', SQM);
-    // formData.append('join_in_floor', isJoinFloor);
-    // formData.append('join_in_floor_notes', JoinInNotes);
-    // formData.append('gripper_length', gripperLengths);
-    // formData.append('underlay_type', underlayType);
-    // formData.append('underlay_amount', underlayAmount);
-    // formData.append('doorbar_type', doorBarType);
-    // formData.append('doorbar_amount', doorBarAmount);
-    // formData.append('doorbar_type_text', doorBarNotes);
-    // formData.append('uplift_waste_service', isUpliftWasteService);
-    // formData.append('uplift_waste_service_notes', upliftWasteServiceNotes);
-    // formData.append('furniture_notes', furnitureNotes);
-    // formData.append('is_suitable_for_job', isSuitableForJob);
-    // formData.append('suitable_for_job', SuitableForJobNotes);
-    // formData.append('doors_to_cut', doorsToCut);
-    // formData.append('how_many_doors_to_cut', howManyDoorsToCut);
-    // formData.append('type_of_doors_to_cut', typeOfdoorsToCut);
-    // formData.append('fitters_needed', fittersNeeded);
-    // formData.append('additional_notes', additionalNotes);
-    // formData.append('scotia', scotia);
-    // formData.append('skirting_board', isSkirtingBoard);
-    // formData.append('skirting_board_notes', skirtingBoardNotes);
-    // formData.append('floor_preparation_checkbox', isFloorPreparation);
-    // formData.append('floor_preparation_notes', floorNotes);
-    // formData.append(
-    //   isSecondScreen ? 'empty_room' : 'is_furniture_to_move',
-    //   isFurnitureToMove,
-    // );
-    /////////////////////////////////////////////////
-    // measurement_of_room
-    // furniture_images
-    // floor_preparation_images
-    // floor_preparation_amount (No Need)
-  };
-
   return (
     <View style={{flex: 1, backgroundColor: 'black'}}>
       <SafeAreaView />
@@ -373,7 +231,7 @@ const MeasuringQuestionnaire = ({route}) => {
             Measurement of room
           </Text>
           <View style={styles.dottedBox}>
-            {measuremntRoomImages ? (
+            {measuremntRoomImages && measuremntRoomImages?.length ? (
               <View
                 style={{
                   flexDirection: 'row',
@@ -381,11 +239,53 @@ const MeasuringQuestionnaire = ({route}) => {
                   width: '100%',
                 }}>
                 {measuremntRoomImages.map((item, index) => (
-                  <Image
-                    key={index}
-                    style={{height: 80, width: 80, borderRadius: 16}}
-                    source={{uri: item?.uri}}
-                  />
+                  <>
+                    <TouchableOpacity
+                      key={index}
+                      onPress={() => {
+                        setModalImage(item.uri), setModal(true);
+                      }}>
+                      <TouchableOpacity
+                        onPress={() => {
+                          setMeasuremntRoomImages(
+                            measuremntRoomImages?.filter(
+                              sort => sort.uri !== item.uri,
+                            ),
+                          );
+                        }}
+                        style={{
+                          backgroundColor: COLORS.primary,
+                          height: 30,
+                          width: 30,
+                          borderRadius: 20,
+                          alignSelf: 'flex-end',
+                          zIndex: 1,
+                          justifyContent: 'center',
+                          alignItems: 'center',
+                          left: 8,
+                        }}>
+                        <Text
+                          style={{
+                            fontSize: 20,
+                            fontWeight: 600,
+                            color: 'white',
+                          }}>
+                          X
+                        </Text>
+                      </TouchableOpacity>
+
+                      <Image
+                        key={index}
+                        style={{
+                          height: 80,
+                          width: 80,
+                          borderRadius: 16,
+                          bottom: 15,
+                        }}
+                        source={{uri: item?.uri}}
+                      />
+                    </TouchableOpacity>
+                  </>
                 ))}
               </View>
             ) : (
@@ -684,7 +584,7 @@ const MeasuringQuestionnaire = ({route}) => {
           (isSecondScreen && isFurnitureToMove == 'No') ? (
             <View>
               <View style={styles.dottedBox}>
-                {furnitureImages ? (
+                {furnitureImages && furnitureImages.length ? (
                   <View
                     style={{
                       flexDirection: 'row',
@@ -692,11 +592,52 @@ const MeasuringQuestionnaire = ({route}) => {
                       width: '100%',
                     }}>
                     {furnitureImages.map((item, index) => (
-                      <Image
-                        key={index}
-                        style={{height: 80, width: 80, borderRadius: 16}}
-                        source={{uri: item?.uri}}
-                      />
+                      <>
+                        <TouchableOpacity
+                          key={index}
+                          onPress={() => {
+                            setModalImage(item.uri), setModal(true);
+                          }}>
+                          <TouchableOpacity
+                            onPress={() => {
+                              setFurnitureImages(
+                                furnitureImages?.filter(
+                                  sort => sort.uri !== item.uri,
+                                ),
+                              );
+                            }}
+                            style={{
+                              backgroundColor: COLORS.primary,
+                              height: 30,
+                              width: 30,
+                              borderRadius: 20,
+                              alignSelf: 'flex-end',
+                              zIndex: 1,
+                              justifyContent: 'center',
+                              alignItems: 'center',
+                              left: 8,
+                            }}>
+                            <Text
+                              style={{
+                                fontSize: 20,
+                                fontWeight: 600,
+                                color: 'white',
+                              }}>
+                              X
+                            </Text>
+                          </TouchableOpacity>
+                          <Image
+                            key={index}
+                            style={{
+                              height: 80,
+                              width: 80,
+                              borderRadius: 16,
+                              bottom: 15,
+                            }}
+                            source={{uri: item?.uri}}
+                          />
+                        </TouchableOpacity>
+                      </>
                     ))}
                   </View>
                 ) : (
@@ -845,7 +786,7 @@ const MeasuringQuestionnaire = ({route}) => {
                     Floor Preparation
                   </Text>
                   <View style={styles.dottedBox}>
-                    {floorImages ? (
+                    {floorImages && floorImages.length ? (
                       <View
                         style={{
                           flexDirection: 'row',
@@ -853,11 +794,52 @@ const MeasuringQuestionnaire = ({route}) => {
                           width: '100%',
                         }}>
                         {floorImages.map((item, index) => (
-                          <Image
-                            key={index}
-                            style={{height: 80, width: 80, borderRadius: 16}}
-                            source={{uri: item?.uri}}
-                          />
+                          <>
+                            <TouchableOpacity
+                              key={index}
+                              onPress={() => {
+                                setModalImage(item.uri), setModal(true);
+                              }}>
+                              <TouchableOpacity
+                                onPress={() => {
+                                  setFloorImages(
+                                    floorImages?.filter(
+                                      sort => sort.uri !== item.uri,
+                                    ),
+                                  );
+                                }}
+                                style={{
+                                  backgroundColor: COLORS.primary,
+                                  height: 30,
+                                  width: 30,
+                                  borderRadius: 20,
+                                  alignSelf: 'flex-end',
+                                  zIndex: 1,
+                                  justifyContent: 'center',
+                                  alignItems: 'center',
+                                  left: 8,
+                                }}>
+                                <Text
+                                  style={{
+                                    fontSize: 20,
+                                    fontWeight: 600,
+                                    color: 'white',
+                                  }}>
+                                  X
+                                </Text>
+                              </TouchableOpacity>
+                              <Image
+                                key={index}
+                                style={{
+                                  height: 80,
+                                  width: 80,
+                                  borderRadius: 16,
+                                  bottom: 15,
+                                }}
+                                source={{uri: item?.uri}}
+                              />
+                            </TouchableOpacity>
+                          </>
                         ))}
                       </View>
                     ) : (
@@ -919,7 +901,7 @@ const MeasuringQuestionnaire = ({route}) => {
         <View style={{marginTop: 20}}>
           <DropDown
             defaultButtonText={'How many fitters needed'}
-            data={fittersNeeded}
+            data={howManyFitters}
             setLicencseLevel={setFittersNeeded}
           />
         </View>
@@ -958,6 +940,57 @@ const MeasuringQuestionnaire = ({route}) => {
         }
         buttonTitle={'Okay'}
       />
+
+      <Modal
+        propagateSwipe={true}
+        isVisible={modal}
+        // isVisible={true}
+        onBackdropPress={() => {}}
+        animationInTiming={700}
+        style={[styles.mainmodal2]}>
+        <SafeAreaView
+        // style={{ flex: 1 }}
+        >
+          <View
+            style={{
+              zIndex: 2,
+              height: 310,
+              width: 310,
+              backgroundColor: 'white',
+              alignItems: 'center',
+              alignSelf: 'center',
+              justifyContent: 'center',
+              // padding:10,
+            }}>
+            <TouchableOpacity
+              onPress={() => setModal(false)}
+              style={{
+                position: 'absolute',
+                top: -13,
+                right: -7,
+                zIndex: 3,
+                backgroundColor: 'white',
+                borderRadius: 110,
+                height: 30,
+                width: 30,
+                justifyContent: 'center',
+                alignItems: 'center',
+              }}>
+              <Text
+                style={{
+                  fontSize: 26,
+                }}>
+                X
+              </Text>
+            </TouchableOpacity>
+            <Image
+              source={{uri: modalImage}}
+              resizeMode="cover"
+              style={styles.document2}
+            />
+          </View>
+        </SafeAreaView>
+      </Modal>
     </View>
   );
 };
@@ -1013,5 +1046,10 @@ const styles = StyleSheet.create({
     marginTop: 15,
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  document2: {
+    width: 300,
+    height: 300,
+    borderRadius: 6,
   },
 });
