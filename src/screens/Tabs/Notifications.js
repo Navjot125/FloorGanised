@@ -1,19 +1,40 @@
 import {FlatList, StyleSheet, Text, View, SafeAreaView} from 'react-native';
-import React, {useEffect, useState} from 'react';
-import {NotificationData} from '../../config/DummyData';
+import React, {useState} from 'react';
 import {COLORS} from '../../utils/theme';
 import Header from '../../components/Header/Header';
 import {scale} from 'react-native-size-matters';
 import {useDispatch} from 'react-redux';
 import {getNotifications} from '../../redux/actions/Notifications';
+import {useFocusEffect} from '@react-navigation/native';
+import moment from 'moment';
 const Notifications = () => {
   const dispatch = useDispatch();
   const [viewFullText, setViewFullText] = useState(null);
   const [offset, setOffset] = useState(0);
-  useEffect(() => {
-    dispatch(getNotifications(offset));
-  }, []);
+  const [notifications, setNotifications] = useState();
 
+  useFocusEffect(
+    React.useCallback(() => {
+      const cb = data => {
+        setNotifications(data);
+      };
+      dispatch(getNotifications(offset, cb));
+    }, []),
+  );
+  const getTimeAgo = createdAt => {
+    const momentCreatedAt = moment(createdAt);
+    const duration = moment.duration(moment().diff(momentCreatedAt));
+    const days = Math.floor(duration.asDays());
+    const hours = Math.floor(duration.asHours());
+    const minutes = Math.floor(duration.asMinutes());
+    if (days > 0) {
+      return `${days} ${days === 1 ? 'day' : 'days'} ago`;
+    } else if (hours > 0) {
+      return `${hours} ${hours === 1 ? 'hour' : 'hours'} ago`;
+    } else {
+      return `${minutes} ${minutes === 1 ? 'minute' : 'minutes'} ago`;
+    }
+  };
   const renderItem = ({item, index}) => {
     return (
       <View style={styles.container}>
@@ -52,7 +73,8 @@ const Notifications = () => {
               fontSize: 9,
               fontWeight: 400,
             }}>
-            {item?.time}
+            {/* {item?.time} */}
+            {getTimeAgo(item?.createdAt)}
           </Text>
         </View>
         <View
@@ -62,13 +84,13 @@ const Notifications = () => {
             alignItems: 'center',
             paddingHorizontal: 20,
           }}>
-          {item?.description.length > 40 && item?._id != viewFullText ? (
+          {item?.content?.length > 40 && item?._id != viewFullText ? (
             <Text
               style={{
                 fontSize: 12,
                 fontWeight: 400,
               }}>
-              {item?.description.slice(0, 40)}...
+              {item?.content.slice(0, 40)}...
               <Text
                 onPress={() => {
                   console.log('pressed');
@@ -88,9 +110,9 @@ const Notifications = () => {
                 fontSize: 12,
                 fontWeight: 400,
               }}>
-              {item?.description.length > 40 && item?._id == viewFullText ? (
+              {item?.content?.length > 40 && item?._id == viewFullText ? (
                 <>
-                  {item?.description}{' '}
+                  {item?.content}{' '}
                   <Text
                     onPress={() => {
                       console.log('pressed');
@@ -105,7 +127,7 @@ const Notifications = () => {
                   </Text>
                 </>
               ) : (
-                item?.description
+                item?.content
               )}
             </Text>
           )}
@@ -125,7 +147,7 @@ const Notifications = () => {
           borderTopLeftRadius: scale(20),
         }}>
         <FlatList
-          data={NotificationData}
+          data={notifications}
           renderItem={renderItem}
           contentContainerStyle={{paddingBottom: 20}}
         />

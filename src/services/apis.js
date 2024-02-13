@@ -13,6 +13,7 @@ export const APIS = {
   JOB_DETAIL: 'get_job_details',
   GET_NOTIFICATIONS: 'get_notifications',
   SUBMIT_QUESTIONNAIRE:'submit_measuring_questionare',
+  START_FITTING:"start_fitting",
   uploadFile:'uploadFile'
 };
 export default APIS;

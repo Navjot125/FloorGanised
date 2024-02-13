@@ -2,7 +2,7 @@ import {call, put, takeEvery} from 'redux-saga/effects';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import APIS from '../../services/apis';
 import {url} from '../../services/Config';
-import {GET_JOBS, JOB_DETAIL} from '../constants';
+import {GET_JOBS, JOB_DETAIL, START_FITTING} from '../constants';
 import {navigationRef} from '../../App';
 import {setLoader} from '../actions/Loader';
 
@@ -10,7 +10,7 @@ function* getJob(action) {
   try {
     yield put(setLoader(true));
     const {status, date} = action.data;
-    console.log('date-----date-----',date);
+    console.log('date-----date-----', date);
     const token = yield call(AsyncStorage.getItem, 'token');
     const queryParams = `status=${encodeURIComponent(
       status,
@@ -26,7 +26,7 @@ function* getJob(action) {
     const response = yield call(fetch, urlWithParams, requestOptions);
     if (response.ok) {
       const responseData = yield response.json();
-      console.log(responseData,'responseData?.data');
+      // console.log(responseData,'responseData?.data');
       action?.data?.cb(responseData?.data);
     } else {
       const errorData = yield response.json();
@@ -89,8 +89,47 @@ function* jobDetail(action) {
   }
 }
 
+function* startFittingSaga(action) {
+  try {
+    const {fitter_status, job_id} = action.data;
+    console.log(fitter_status, job_id, '[[[[[[[[[[[[[[[[');
+    const token = yield call(AsyncStorage.getItem, 'token');
+    const requestOptions = {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${JSON.parse(token)}`,
+      },
+      body: JSON.stringify({
+        fitter_status,
+        job_id,
+      }),
+    };
+    const response = yield call(
+      fetch,
+      `${url}${APIS.START_FITTING}`,
+      requestOptions,
+    );
+    if (response.ok) {
+      const responseData = yield response.json();
+      console.log(responseData, 'startFittingSaga response --');
+    } else {
+      const errorData = yield response.json();
+      console.error(
+        'startFittingSaga request failed:',
+        response.status,
+        response.statusText,
+        errorData,
+      );
+    }
+  } catch (error) {
+    console.error('An error occurred during startFittingSaga:', error);
+  }
+}
+
 function* homeSaga() {
   yield takeEvery(GET_JOBS, getJob);
   yield takeEvery(JOB_DETAIL, jobDetail);
+  yield takeEvery(START_FITTING, startFittingSaga);
 }
 export default homeSaga;

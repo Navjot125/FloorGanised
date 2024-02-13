@@ -13,9 +13,9 @@ const ChangePassword = () => {
   const dispatch = useDispatch();
   const userData = useSelector(state => state?.userData?.data);
   const screen = userData?.role === 'Surveyor' ? 'Main' : 'Fitter';
-  const [currentPassword, setCurrentPassword] = useState('Delhi@1A');
-  const [password, setPassword] = useState('Delhi@11');
-  const [confirmPassword, setConfirmPassword] = useState('Delhi@11');
+  const [currentPassword, setCurrentPassword] = useState();
+  const [password, setPassword] = useState();
+  const [confirmPassword, setConfirmPassword] = useState();
   const style = {
     width: '100%',
     marginTop: 25,

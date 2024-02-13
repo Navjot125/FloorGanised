@@ -22,7 +22,7 @@ function* getNotification(action) {
     const response = yield call(fetch, urlWithParams, requestOptions);
     if (response.ok) {
       const responseData = yield response.json();
-      // console.log(responseData, 'responseData---------------0');
+      action.callBack(responseData?.data);
     } else {
       const errorData = yield response.json();
       console.error(

@@ -17,12 +17,20 @@ import Header from '../../components/Header/Header';
 import {COLORS} from '../../utils/theme';
 import CommonButton from '../../components/CommonButton/CommonButton';
 import {navigationRef} from '../../App';
+import {useDispatch} from 'react-redux';
+import {startFittingAction} from '../../redux/actions/homeAction';
 const FitterDetail = ({route}) => {
+  const dispatch = useDispatch();
   const {responseData, measurinDetails} = route.params;
   const [startFitting, setStartFitting] = useState(false);
   const onStart = () => {
-    // navigationRef.navigate('Home');
-    startFitting ? navigationRef.navigate('Home') : setStartFitting(true);
+    const param = {
+      job_id:responseData?._id,
+      fitter_status:"On-work"
+    }
+    // console.log(param,'param----------');
+    dispatch(startFittingAction(param));
+    // startFitting ? navigationRef.navigate('Home') : setStartFitting(true);
   };
   const style = {
     height: 24,
@@ -43,7 +51,9 @@ const FitterDetail = ({route}) => {
             <Text style={{fontWeight: 700, fontSize: 16}}>
               {responseData?.customer_id?.name}
             </Text>
-            <Text style={{fontWeight: 700, fontSize: 16}}>$150</Text>
+            <Text style={{fontWeight: 700, fontSize: 16}}>
+              ${responseData?.fitter_amount}
+            </Text>
           </View>
           <View style={styles.details}>
             <Icon
@@ -127,7 +137,7 @@ const FitterDetail = ({route}) => {
                 width: 70,
                 textAlign: 'right',
               }}>
-              2 Rooms
+              {measurinDetails?.type_of_room}
             </Text>
           </View>
           <View
@@ -144,7 +154,7 @@ const FitterDetail = ({route}) => {
                 width: 70,
                 textAlign: 'right',
               }}>
-              $150
+              ${measurinDetails?.surcharge}
             </Text>
           </View>
           <View
@@ -161,7 +171,7 @@ const FitterDetail = ({route}) => {
                 width: 70,
                 textAlign: 'right',
               }}>
-              Carpets
+              {measurinDetails?.flooring_type}
             </Text>
           </View>
           {measurinDetails?.is_flooring_choice_selected && (
@@ -181,7 +191,7 @@ const FitterDetail = ({route}) => {
                   width: 70,
                   textAlign: 'right',
                 }}>
-                Wooden Light Brown
+                {measurinDetails?.flooring_choice_color}
               </Text>
             </View>
           )}
@@ -199,7 +209,7 @@ const FitterDetail = ({route}) => {
                 width: 70,
                 textAlign: 'right',
               }}>
-              Wooden
+              {measurinDetails?.size}
             </Text>
           </View>
           <View
@@ -216,7 +226,7 @@ const FitterDetail = ({route}) => {
                 width: 70,
                 textAlign: 'right',
               }}>
-              Wooden
+              {measurinDetails?.sqm}
             </Text>
           </View>
           <View
@@ -231,22 +241,22 @@ const FitterDetail = ({route}) => {
                 flexDirection: 'row',
                 justifyContent: 'space-between',
                 marginTop: 20,
+                flexWrap: 'wrap',
               }}>
-              <Image
-                style={{height: 56, width: 80, borderRadius: 10}}
-                resizeMode="cover"
-                source={require('../../assets/images/profile1.jpg')}
-              />
-              <Image
-                style={{height: 56, width: 80, borderRadius: 10}}
-                resizeMode="cover"
-                source={require('../../assets/images/profile1.jpg')}
-              />
-              <Image
-                style={{height: 56, width: 80, borderRadius: 10}}
-                resizeMode="cover"
-                source={require('../../assets/images/profile1.jpg')}
-              />
+              {measurinDetails?.measurement_of_room.map((item, index) => (
+                <Image
+                  key={index}
+                  style={{
+                    height: 56,
+                    width: 80,
+                    borderRadius: 10,
+                    marginTop: 10,
+                  }}
+                  resizeMode="cover"
+                  // "1707818159046.jpeg",
+                  source={require('../../assets/images/profile1.jpg')}
+                />
+              ))}
             </View>
           </View>
           {/* join_in_floor */}
@@ -272,9 +282,8 @@ const FitterDetail = ({route}) => {
           {measurinDetails?.join_in_floor && (
             <View style={{marginVertical: 0}}>
               <Text style={{fontSize: 12, fontWeight: 400, lineHeight: 20}}>
-                <Text style={{fontSize: 12, fontWeight: 600}}>Notes </Text>:
-                Lorem ipsum dolor sit amet, consectet aute adipiscing elit, sed
-                do eiusmod tamed the aute a incididunt.
+                <Text style={{fontSize: 12, fontWeight: 600}}>Notes : </Text>
+                {measurinDetails?.join_in_floor_notes}
               </Text>
             </View>
           )}
@@ -314,8 +323,7 @@ const FitterDetail = ({route}) => {
                 Gripper Lengths
               </Text>
               <Text style={{fontSize: 12, fontWeight: 400, lineHeight: 20}}>
-                Lorem ipsum dolor sit amet, consectetur aute adipiscing elit,
-                sed do eiusmod tamed the aute.
+                {measurinDetails?.gripper_length}
               </Text>
             </View>
           )}
@@ -325,8 +333,7 @@ const FitterDetail = ({route}) => {
                 Underlay Type
               </Text>
               <Text style={{fontSize: 12, fontWeight: 400, lineHeight: 20}}>
-                Lorem ipsum dolor sit amet, consectetur aute adipiscing elit,
-                sed do eiusmod tamed the aute.
+                {measurinDetails?.underlay_type}
               </Text>
             </View>
           )}
@@ -365,7 +372,7 @@ const FitterDetail = ({route}) => {
                 width: 70,
                 textAlign: 'right',
               }}>
-              Silver
+              {measurinDetails?.doorbar_type}
             </Text>
           </View>
           {measurinDetails?.doorbar_type_text && (
@@ -374,8 +381,7 @@ const FitterDetail = ({route}) => {
                 Door Bars Notes
               </Text>
               <Text style={{fontSize: 12, fontWeight: 400, lineHeight: 20}}>
-                Lorem ipsum dolor sit amet, consectetur aute adipiscing elit,
-                sed do eiusmod tamed the aute.
+                {measurinDetails?.doorbar_type_text}
               </Text>
             </View>
           )}
@@ -441,32 +447,29 @@ const FitterDetail = ({route}) => {
                 flexDirection: 'row',
                 justifyContent: 'space-between',
                 marginTop: 20,
+                flexWrap: 'wrap',
               }}>
-              <Image
-                style={{height: 56, width: 80, borderRadius: 10}}
-                resizeMode="cover"
-                source={require('../../assets/images/profile1.jpg')}
-              />
-              <Image
-                style={{height: 56, width: 80, borderRadius: 10}}
-                resizeMode="cover"
-                source={require('../../assets/images/profile1.jpg')}
-              />
-              <Image
-                style={{height: 56, width: 80, borderRadius: 10}}
-                resizeMode="cover"
-                source={require('../../assets/images/profile1.jpg')}
-              />
+              {measurinDetails?.furniture_images.map((item, index) => (
+                <Image
+                  key={index}
+                  style={{
+                    height: 56,
+                    width: 80,
+                    borderRadius: 10,
+                    marginTop: 10,
+                  }}
+                  resizeMode="cover"
+                  source={require('../../assets/images/profile1.jpg')}
+                />
+              ))}
             </View>
           </View>
           <View style={{marginVertical: 10}}>
             <Text style={{fontSize: 12, fontWeight: 400, lineHeight: 20}}>
-              <Text style={{fontSize: 12, fontWeight: 600}}>Notes </Text>: Lorem
-              ipsum dolor sit amet, consectet aute adipiscing elit, sed do
-              eiusmod tamed the aute a incididunt.
+              <Text style={{fontSize: 12, fontWeight: 600}}>Notes </Text>:{' '}
+              {measurinDetails?.furniture_notes}
             </Text>
           </View>
-          {console.log('measurinDetails',measurinDetails)}
           {measurinDetails?.is_suitable_for_job && (
             <View style={{marginVertical: 10}}>
               <Text style={{fontSize: 12, fontWeight: 600, marginBottom: 10}}>
@@ -493,8 +496,7 @@ const FitterDetail = ({route}) => {
                 Floor Preparation
               </Text>
               <Text style={{fontSize: 12, fontWeight: 400, lineHeight: 20}}>
-                Lorem ipsum dolor sit amet, consectet aute adipiscing elit, sed
-                do eiusmod tamed the aute a incididunt.
+                {measurinDetails?.floor_preparation_notes}
               </Text>
             </View>
           )}
@@ -511,22 +513,23 @@ const FitterDetail = ({route}) => {
                   flexDirection: 'row',
                   justifyContent: 'space-between',
                   marginTop: 20,
+                  flexWrap: 'wrap',
                 }}>
-                <Image
-                  style={{height: 56, width: 80, borderRadius: 10}}
-                  resizeMode="cover"
-                  source={require('../../assets/images/profile1.jpg')}
-                />
-                <Image
-                  style={{height: 56, width: 80, borderRadius: 10}}
-                  resizeMode="cover"
-                  source={require('../../assets/images/profile1.jpg')}
-                />
-                <Image
-                  style={{height: 56, width: 80, borderRadius: 10}}
-                  resizeMode="cover"
-                  source={require('../../assets/images/profile1.jpg')}
-                />
+                {measurinDetails?.floor_preparation_images.map(
+                  (item, index) => (
+                    <Image
+                      key={index}
+                      style={{
+                        height: 56,
+                        width: 80,
+                        borderRadius: 10,
+                        marginTop: 10,
+                      }}
+                      resizeMode="cover"
+                      source={require('../../assets/images/profile1.jpg')}
+                    />
+                  ),
+                )}
               </View>
             </View>
           )}
@@ -547,7 +550,7 @@ const FitterDetail = ({route}) => {
                   width: 70,
                   textAlign: 'right',
                 }}>
-                10
+                {measurinDetails?.how_many_doors_to_cut}
               </Text>
             </View>
           )}
@@ -577,7 +580,7 @@ const FitterDetail = ({route}) => {
                 width: 70,
                 textAlign: 'right',
               }}>
-              1 Fitter
+              {measurinDetails?.fitters_needed}
             </Text>
           </View>
           <View style={{marginVertical: 10}}>
@@ -585,8 +588,7 @@ const FitterDetail = ({route}) => {
               Additional Notes
             </Text>
             <Text style={{fontSize: 12, fontWeight: 400, lineHeight: 20}}>
-              Lorem ipsum dolor sit amet, consectetur aute adipiscing elit, sed
-              do eiusmod tamed the aute a incididunt.
+              {measurinDetails?.additional_notes}
             </Text>
           </View>
         </View>

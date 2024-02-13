@@ -52,12 +52,12 @@ const MeasuringQuestionnaire = ({route}) => {
   const [doorBarNotes, setDoorBarNotes] = useState(null);
   const [isUpliftWasteService, setIsUpliftWasteService] = useState();
   const [upliftWasteServiceNotes, setUpliftWasteServiceNotes] = useState();
-  const [isFurnitureToMove, setIsFurnitureToMove] = useState();
+  const [isFurnitureToMove, setIsFurnitureToMove] = useState(); // p
   const [furnitureImages, setFurnitureImages] = useState();
   const [furnitureNotes, setFurnitureNotes] = useState();
   const [isSuitableForJob, setIsSuitableForJob] = useState(null);
   const [SuitableForJobNotes, setSuitableForJobNotes] = useState(null);
-  const [doorsToCut, setDoorsToCut] = useState();
+  const [doorsToCut, setDoorsToCut] = useState(); // p
   const [howManyDoorsToCut, setHowManyDoorsToCut] = useState();
   const [typeOfdoorsToCut, setTypeOfDoorsToCut] = useState();
   const [fittersNeeded, setFittersNeeded] = useState();
@@ -65,7 +65,7 @@ const MeasuringQuestionnaire = ({route}) => {
   const [scotia, setScotia] = useState(null);
   const [isSkirtingBoard, setIsSkirtingBoard] = useState();
   const [skirtingBoardNotes, setSkirtingBoardNotes] = useState();
-  const [isFloorPreparation, setIsFloorPreparation] = useState(null);
+  const [isFloorPreparation, setIsFloorPreparation] = useState(null); // p
   const [floorNotes, setFloorNotes] = useState();
   const [floorImages, setFloorImages] = useState();
   const [isSecondScreen, setIssecondScreen] = useState(false);
