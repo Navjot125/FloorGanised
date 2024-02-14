@@ -24,11 +24,16 @@ import Header from '../../components/Header/Header';
 import Octicons from 'react-native-vector-icons/Octicons';
 import LaunchImageLibraryAsync from '../../components/ImagePicker/ImagePicker';
 import {useDispatch, useSelector} from 'react-redux';
-import {deleteImage, submitQuestionnaire} from '../../redux/actions/job';
+import {deleteImage, editMeasuring, submitQuestionnaire} from '../../redux/actions/job';
 import {ImageUrl} from '../../services/Config';
 import FastImage from 'react-native-fast-image';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const MeasuringQuestionnaire = ({route}) => {
+  const getData = async () => {
+    const token = await AsyncStorage.getItem('token');
+     console.log(token,'token------');
+  };
   // console.log('route-----------------------', route?.params);
   const measuringData = route?.params;
   const userData = useSelector(state => state?.onBoardingreducer?.userData);
@@ -167,7 +172,11 @@ const MeasuringQuestionnaire = ({route}) => {
         ? setModalVisible(!modalVisible)
         : navigationRef.navigate('Home');
     };
-    dispatch(submitQuestionnaire(data, cb));
+    userData?.role == 'Surveyor'
+      ? dispatch(submitQuestionnaire(data, cb))
+      // : dispatch(editMeasuring(data, cb));
+      :getData()
+      // : console.log('data----------------------',data);;
   };
   const DeleteImage = (image, key) => {
     const param = {
@@ -225,7 +234,7 @@ const MeasuringQuestionnaire = ({route}) => {
     floor_preparation_notes: floorNotes,
     is_furniture_to_move: isFurnitureToMove,
     empty_room: isFurnitureToMove,
-    measurement_of_room: measuremntRoomImages,
+    // measurement_of_room: measuremntRoomImages,
     furniture_images: furnitureImages,
     floor_preparation_images: floorImages,
   };

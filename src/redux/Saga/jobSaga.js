@@ -4,7 +4,7 @@ import {navigationRef} from '../../App';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import APIS from '../../services/apis';
 import {url} from '../../services/Config';
-import {DELETE_IMAGES, SUBMIT_QUESTIONNAIRE} from '../constants';
+import {DELETE_IMAGES, EDIT_MEASURING_QUESTIONNAIRE, SUBMIT_QUESTIONNAIRE} from '../constants';
 import {setLoader} from '../actions/Loader';
 async function convertPayloadToFormData(payload) {
   const formData = new FormData();
@@ -65,6 +65,7 @@ async function convertPayloadToFormData(payload) {
   }
   return formData;
 }
+
 function* submitQuestionnaire(action) {
   console.log('action', action);
   try {
@@ -100,6 +101,47 @@ function* submitQuestionnaire(action) {
     }
   } catch (error) {
     console.error('An error occurred during submitQuestionnaire:', error);
+  } finally {
+    yield put(setLoader(false));
+  }
+}
+
+function* editQuestionnaire(action) {
+  console.log('action', action);
+  try {
+    const extractedData = yield convertPayloadToFormData(action.data);
+    yield put(setLoader(true));
+    const token = yield call(AsyncStorage.getItem, 'token');
+    const requestOptions = {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'multipart/form-data',
+        Authorization: `Bearer ${JSON.parse(token)}`,
+      },
+      body: extractedData,
+    };
+    console.log(extractedData,'extractedData------------------------');
+    const response = yield call(
+      fetch,
+      `${url}${APIS.EDIT_MEASURING_QUESTIONNAIRE}`,
+      requestOptions,
+    );
+    if (response.ok) {
+      const responseData = yield response.json();
+      action.callBack();
+      console.log(responseData, 'editQuestionnaire response --');
+      //   navigationRef.navigate('Home');
+    } else {
+      const errorData = yield response.json();
+      console.error(
+        'editQuestionnaire request failed:',
+        response.status,
+        response.statusText,
+        errorData,
+      );
+    }
+  } catch (error) {
+    console.error('An error occurred during editQuestionnaire:', error);
   } finally {
     yield put(setLoader(false));
   }
@@ -146,6 +188,7 @@ function* deleteImage(action) {
 
 function* jobSaga() {
   yield takeEvery(SUBMIT_QUESTIONNAIRE, submitQuestionnaire);
+  yield takeEvery(EDIT_MEASURING_QUESTIONNAIRE, editQuestionnaire);
   yield takeEvery(DELETE_IMAGES, deleteImage);
 }
 export default jobSaga;

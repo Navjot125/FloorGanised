@@ -16,5 +16,6 @@ export const APIS = {
   START_FITTING: 'start_fitting',
   uploadFile: 'uploadFile',
   DELETE_IMAGE: 'delete_measuring_questionare_image',
+  EDIT_MEASURING_QUESTIONNAIRE:'edit_measuring_questionare'
 };
 export default APIS;
