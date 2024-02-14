@@ -29,6 +29,7 @@
     "react-native": "0.73.1",
     "react-native-app-intro-slider": "^4.0.4",
     "react-native-calendars": "^1.1303.0",
+    "react-native-fast-image": "^8.6.3",
     "react-native-flash-message": "^0.4.2",
     "react-native-gesture-handler": "^2.14.0",
     "react-native-image-picker": "^7.1.0",

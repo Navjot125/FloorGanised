@@ -12,8 +12,9 @@ export const APIS = {
   GET_JOBS: 'get_my_jobs',
   JOB_DETAIL: 'get_job_details',
   GET_NOTIFICATIONS: 'get_notifications',
-  SUBMIT_QUESTIONNAIRE:'submit_measuring_questionare',
-  START_FITTING:"start_fitting",
-  uploadFile:'uploadFile'
+  SUBMIT_QUESTIONNAIRE: 'submit_measuring_questionare',
+  START_FITTING: 'start_fitting',
+  uploadFile: 'uploadFile',
+  DELETE_IMAGE: 'delete_measuring_questionare_image',
 };
 export default APIS;

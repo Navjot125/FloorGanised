@@ -4,7 +4,7 @@ import {navigationRef} from '../../App';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import APIS from '../../services/apis';
 import {url} from '../../services/Config';
-import {SUBMIT_QUESTIONNAIRE} from '../constants';
+import {DELETE_IMAGES, SUBMIT_QUESTIONNAIRE} from '../constants';
 import {setLoader} from '../actions/Loader';
 async function convertPayloadToFormData(payload) {
   const formData = new FormData();
@@ -99,7 +99,46 @@ function* submitQuestionnaire(action) {
       );
     }
   } catch (error) {
-    console.error('An error occurred during contactUs:', error);
+    console.error('An error occurred during submitQuestionnaire:', error);
+  } finally {
+    yield put(setLoader(false));
+  }
+}
+
+function* deleteImage(action) {
+  console.log('action', action);
+  const param = ({image_name, job_id, key} = action.data);
+  try {
+    yield put(setLoader(true));
+    const token = yield call(AsyncStorage.getItem, 'token');
+    const requestOptions = {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${JSON.parse(token)}`,
+      },
+      body: JSON.stringify({image_name, job_id, key}),
+    };
+    const response = yield call(
+      fetch,
+      `${url}${APIS.DELETE_IMAGE}`,
+      requestOptions,
+    );
+    if (response.ok) {
+      const responseData = yield response.json();
+      console.log(responseData, 'deleteImage response --');
+      action?.data?.cb(image_name);
+    } else {
+      const errorData = yield response.json();
+      console.error(
+        'deleteImage request failed:',
+        response.status,
+        response.statusText,
+        errorData,
+      );
+    }
+  } catch (error) {
+    console.error('An error occurred during deleteImage:', error);
   } finally {
     yield put(setLoader(false));
   }
@@ -107,5 +146,6 @@ function* submitQuestionnaire(action) {
 
 function* jobSaga() {
   yield takeEvery(SUBMIT_QUESTIONNAIRE, submitQuestionnaire);
+  yield takeEvery(DELETE_IMAGES, deleteImage);
 }
 export default jobSaga;

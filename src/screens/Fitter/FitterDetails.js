@@ -110,7 +110,7 @@ const FitterDetail = ({route}) => {
               onPress={() => {
                 navigationRef.navigate(
                   'MeasuringQuestionnaire',
-                  (button = true),
+                  measurinDetails,
                 );
               }}
               style={{
@@ -124,57 +124,63 @@ const FitterDetail = ({route}) => {
               <Text style={{fontSize: 10, fontWeight: 600}}>File Access</Text>
             </TouchableOpacity>
           </View>
-          <View
-            style={{
-              flexDirection: 'row',
-              justifyContent: 'space-between',
-              paddingVertical: 15,
-            }}>
-            <Text style={{fontSize: 12, fontWeight: 600}}>Type of room</Text>
-            <Text
+          {measurinDetails?.type_of_room && (
+            <View
               style={{
-                fontSize: 12,
-                fontWeight: 400,
-                width: 70,
-                textAlign: 'right',
+                flexDirection: 'row',
+                justifyContent: 'space-between',
+                paddingVertical: 15,
               }}>
-              {measurinDetails?.type_of_room}
-            </Text>
-          </View>
-          <View
-            style={{
-              flexDirection: 'row',
-              justifyContent: 'space-between',
-              paddingVertical: 15,
-            }}>
-            <Text style={{fontSize: 12, fontWeight: 600}}>Surcharge</Text>
-            <Text
+              <Text style={{fontSize: 12, fontWeight: 600}}>Type of room</Text>
+              <Text
+                style={{
+                  fontSize: 12,
+                  fontWeight: 400,
+                  width: 70,
+                  textAlign: 'right',
+                }}>
+                {measurinDetails?.type_of_room}
+              </Text>
+            </View>
+          )}
+          {measurinDetails?.surcharge && (
+            <View
               style={{
-                fontSize: 12,
-                fontWeight: 400,
-                width: 70,
-                textAlign: 'right',
+                flexDirection: 'row',
+                justifyContent: 'space-between',
+                paddingVertical: 15,
               }}>
-              ${measurinDetails?.surcharge}
-            </Text>
-          </View>
-          <View
-            style={{
-              flexDirection: 'row',
-              justifyContent: 'space-between',
-              paddingVertical: 15,
-            }}>
-            <Text style={{fontSize: 12, fontWeight: 600}}>Flooring Type</Text>
-            <Text
+              <Text style={{fontSize: 12, fontWeight: 600}}>Surcharge</Text>
+              <Text
+                style={{
+                  fontSize: 12,
+                  fontWeight: 400,
+                  width: 70,
+                  textAlign: 'right',
+                }}>
+                ${measurinDetails?.surcharge}
+              </Text>
+            </View>
+          )}
+          {measurinDetails?.flooring_type && (
+            <View
               style={{
-                fontSize: 12,
-                fontWeight: 400,
-                width: 70,
-                textAlign: 'right',
+                flexDirection: 'row',
+                justifyContent: 'space-between',
+                paddingVertical: 15,
               }}>
-              {measurinDetails?.flooring_type}
-            </Text>
-          </View>
+              <Text style={{fontSize: 12, fontWeight: 600}}>Flooring Type</Text>
+              <Text
+                style={{
+                  fontSize: 12,
+                  fontWeight: 400,
+                  width: 70,
+                  textAlign: 'right',
+                }}>
+                {measurinDetails?.flooring_type}
+              </Text>
+            </View>
+          )}
           {measurinDetails?.is_flooring_choice_selected && (
             <View
               style={{
@@ -196,71 +202,77 @@ const FitterDetail = ({route}) => {
               </Text>
             </View>
           )}
-          <View
-            style={{
-              flexDirection: 'row',
-              justifyContent: 'space-between',
-              paddingVertical: 15,
-            }}>
-            <Text style={{fontSize: 12, fontWeight: 600}}>Size</Text>
-            <Text
-              style={{
-                fontSize: 12,
-                fontWeight: 400,
-                width: 70,
-                textAlign: 'right',
-              }}>
-              {measurinDetails?.size}
-            </Text>
-          </View>
-          <View
-            style={{
-              flexDirection: 'row',
-              justifyContent: 'space-between',
-              paddingVertical: 15,
-            }}>
-            <Text style={{fontSize: 12, fontWeight: 600}}>SQM Total</Text>
-            <Text
-              style={{
-                fontSize: 12,
-                fontWeight: 400,
-                width: 70,
-                textAlign: 'right',
-              }}>
-              {measurinDetails?.sqm}
-            </Text>
-          </View>
-          <View
-            style={{
-              paddingVertical: 15,
-            }}>
-            <Text style={{fontSize: 12, fontWeight: 600}}>
-              Measurement of room
-            </Text>
+          {measurinDetails?.size && (
             <View
               style={{
                 flexDirection: 'row',
                 justifyContent: 'space-between',
-                marginTop: 20,
-                flexWrap: 'wrap',
+                paddingVertical: 15,
               }}>
-              {measurinDetails?.measurement_of_room.map((item, index) => (
-                <Image
-                  key={index}
-                  style={{
-                    height: 56,
-                    width: 80,
-                    borderRadius: 10,
-                    marginTop: 10,
-                  }}
-                  resizeMode="cover"
-                  // "1707818159046.jpeg",
-                  source={{uri: `${ImageUrl}${item}`}}
-                  // source={require('../../assets/images/profile1.jpg')}
-                />
-              ))}
+              <Text style={{fontSize: 12, fontWeight: 600}}>Size</Text>
+              <Text
+                style={{
+                  fontSize: 12,
+                  fontWeight: 400,
+                  width: 70,
+                  textAlign: 'right',
+                }}>
+                {measurinDetails?.size}
+              </Text>
             </View>
-          </View>
+          )}
+          {measurinDetails?.sqm && (
+            <View
+              style={{
+                flexDirection: 'row',
+                justifyContent: 'space-between',
+                paddingVertical: 15,
+              }}>
+              <Text style={{fontSize: 12, fontWeight: 600}}>SQM Total</Text>
+              <Text
+                style={{
+                  fontSize: 12,
+                  fontWeight: 400,
+                  width: 70,
+                  textAlign: 'right',
+                }}>
+                {measurinDetails?.sqm}
+              </Text>
+            </View>
+          )}
+          {measurinDetails?.measurement_of_room && (
+            <View
+              style={{
+                paddingVertical: 15,
+              }}>
+              <Text style={{fontSize: 12, fontWeight: 600}}>
+                Measurement of room
+              </Text>
+              <View
+                style={{
+                  flexDirection: 'row',
+                  justifyContent: 'space-between',
+                  marginTop: 20,
+                  flexWrap: 'wrap',
+                }}>
+                {measurinDetails?.measurement_of_room.map((item, index) => (
+                  <Image
+                    key={index}
+                    style={{
+                      height: 56,
+                      width: 80,
+                      borderRadius: 10,
+                      marginTop: 10,
+                    }}
+                    resizeMode="cover"
+                    // "1707818159046.jpeg",
+                    source={{uri: `${ImageUrl}${item}`}}
+                    // source={require('../../assets/images/profile1.jpg')}
+                  />
+                ))}
+              </View>
+            </View>
+          )}
           {/* join_in_floor */}
           {measurinDetails?.join_in_floor && (
             <View
@@ -281,7 +293,7 @@ const FitterDetail = ({route}) => {
               </Text>
             </View>
           )}
-          {measurinDetails?.join_in_floor && (
+          {measurinDetails?.join_in_floor_notes && (
             <View style={{marginVertical: 0}}>
               <Text style={{fontSize: 12, fontWeight: 400, lineHeight: 20}}>
                 <Text style={{fontSize: 12, fontWeight: 600}}>Notes : </Text>
@@ -360,23 +372,25 @@ const FitterDetail = ({route}) => {
               </Text>
             </View>
           )}
-          <View
-            style={{
-              flexDirection: 'row',
-              justifyContent: 'space-between',
-              paddingVertical: 15,
-            }}>
-            <Text style={{fontSize: 12, fontWeight: 600}}>Door Bars</Text>
-            <Text
+          {measurinDetails?.doorbar_type && (
+            <View
               style={{
-                fontSize: 12,
-                fontWeight: 400,
-                width: 70,
-                textAlign: 'right',
+                flexDirection: 'row',
+                justifyContent: 'space-between',
+                paddingVertical: 15,
               }}>
-              {measurinDetails?.doorbar_type}
-            </Text>
-          </View>
+              <Text style={{fontSize: 12, fontWeight: 600}}>Door Bars</Text>
+              <Text
+                style={{
+                  fontSize: 12,
+                  fontWeight: 400,
+                  width: 70,
+                  textAlign: 'right',
+                }}>
+                {measurinDetails?.doorbar_type}
+              </Text>
+            </View>
+          )}
           {measurinDetails?.doorbar_type_text && (
             <View style={{marginVertical: 10}}>
               <Text style={{fontSize: 12, fontWeight: 600, marginBottom: 10}}>
@@ -439,39 +453,43 @@ const FitterDetail = ({route}) => {
               </Text>
             </View>
           )}
-          <View
-            style={{
-              paddingVertical: 15,
-            }}>
-            <Text style={{fontSize: 12, fontWeight: 600}}>Furniture</Text>
+          {measurinDetails?.furniture_images && (
             <View
               style={{
-                flexDirection: 'row',
-                justifyContent: 'space-between',
-                marginTop: 20,
-                flexWrap: 'wrap',
+                paddingVertical: 15,
               }}>
-              {measurinDetails?.furniture_images.map((item, index) => (
-                <Image
-                  key={index}
-                  style={{
-                    height: 56,
-                    width: 80,
-                    borderRadius: 10,
-                    marginTop: 10,
-                  }}
-                  resizeMode="cover"
-                  source={{uri: `${ImageUrl}${item}`}}
-                />
-              ))}
+              <Text style={{fontSize: 12, fontWeight: 600}}>Furniture</Text>
+              <View
+                style={{
+                  flexDirection: 'row',
+                  justifyContent: 'space-between',
+                  marginTop: 20,
+                  flexWrap: 'wrap',
+                }}>
+                {measurinDetails?.furniture_images.map((item, index) => (
+                  <Image
+                    key={index}
+                    style={{
+                      height: 56,
+                      width: 80,
+                      borderRadius: 10,
+                      marginTop: 10,
+                    }}
+                    resizeMode="cover"
+                    source={{uri: `${ImageUrl}${item}`}}
+                  />
+                ))}
+              </View>
             </View>
-          </View>
-          <View style={{marginVertical: 10}}>
-            <Text style={{fontSize: 12, fontWeight: 400, lineHeight: 20}}>
-              <Text style={{fontSize: 12, fontWeight: 600}}>Notes </Text>:{' '}
-              {measurinDetails?.furniture_notes}
-            </Text>
-          </View>
+          )}
+          {measurinDetails?.furniture_notes && (
+            <View style={{marginVertical: 10}}>
+              <Text style={{fontSize: 12, fontWeight: 400, lineHeight: 20}}>
+                <Text style={{fontSize: 12, fontWeight: 600}}>Notes </Text>:{' '}
+                {measurinDetails?.furniture_notes}
+              </Text>
+            </View>
+          )}
           {measurinDetails?.is_suitable_for_job && (
             <View style={{marginVertical: 10}}>
               <Text style={{fontSize: 12, fontWeight: 600, marginBottom: 10}}>
@@ -519,21 +537,17 @@ const FitterDetail = ({route}) => {
                 }}>
                 {measurinDetails?.floor_preparation_images.map(
                   (item, index) => (
-                    // ImageUrl
-                    console.log(item, 'item'),
-                    (
-                      <Image
-                        key={index}
-                        style={{
-                          height: 56,
-                          width: 80,
-                          borderRadius: 10,
-                          marginTop: 10,
-                        }}
-                        resizeMode="cover"
-                        source={{uri: `${ImageUrl}${item}`}}
-                      />
-                    )
+                    <Image
+                      key={index}
+                      style={{
+                        height: 56,
+                        width: 80,
+                        borderRadius: 10,
+                        marginTop: 10,
+                      }}
+                      resizeMode="cover"
+                      source={{uri: `${ImageUrl}${item}`}}
+                    />
                   ),
                 )}
               </View>
@@ -570,39 +584,43 @@ const FitterDetail = ({route}) => {
               </Text>
             </View>
           )}
-          <View
-            style={{
-              flexDirection: 'row',
-              justifyContent: 'space-between',
-              paddingVertical: 15,
-            }}>
-            <Text style={{fontSize: 12, fontWeight: 600}}>
-              How many fitters needed
-            </Text>
-            <Text
+          {measurinDetails?.fitters_needed && (
+            <View
               style={{
-                fontSize: 12,
-                fontWeight: 400,
-                width: 70,
-                textAlign: 'right',
+                flexDirection: 'row',
+                justifyContent: 'space-between',
+                paddingVertical: 15,
               }}>
-              {measurinDetails?.fitters_needed}
-            </Text>
-          </View>
-          <View style={{marginVertical: 10}}>
-            <Text style={{fontSize: 12, fontWeight: 600, marginBottom: 10}}>
-              Additional Notes
-            </Text>
-            <Text style={{fontSize: 12, fontWeight: 400, lineHeight: 20}}>
-              {measurinDetails?.additional_notes}
-            </Text>
-          </View>
+              <Text style={{fontSize: 12, fontWeight: 600}}>
+                How many fitters needed
+              </Text>
+              <Text
+                style={{
+                  fontSize: 12,
+                  fontWeight: 400,
+                  width: 70,
+                  textAlign: 'right',
+                }}>
+                {measurinDetails?.fitters_needed}
+              </Text>
+            </View>
+          )}
+          {measurinDetails?.additional_notes && (
+            <View style={{marginVertical: 10}}>
+              <Text style={{fontSize: 12, fontWeight: 600, marginBottom: 10}}>
+                Additional Notes
+              </Text>
+              <Text style={{fontSize: 12, fontWeight: 400, lineHeight: 20}}>
+                {measurinDetails?.additional_notes}
+              </Text>
+            </View>
+          )}
         </View>
         <View style={{flex: 1, justifyContent: 'flex-end', marginVertical: 25}}>
           <CommonButton
             onPress={onStart}
             title={
-              responseData?.responseData == 'On-work'
+              responseData?.fitter_status == 'On-work'
                 ? 'Job Complete'
                 : 'Start Fitting'
             }
