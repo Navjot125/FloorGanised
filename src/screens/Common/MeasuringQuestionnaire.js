@@ -26,6 +26,7 @@ import LaunchImageLibraryAsync from '../../components/ImagePicker/ImagePicker';
 import {useDispatch, useSelector} from 'react-redux';
 import {deleteImage, submitQuestionnaire} from '../../redux/actions/job';
 import {ImageUrl} from '../../services/Config';
+import FastImage from 'react-native-fast-image';
 
 const MeasuringQuestionnaire = ({route}) => {
   // console.log('route-----------------------', route?.params);
@@ -369,7 +370,7 @@ const MeasuringQuestionnaire = ({route}) => {
                     X
                   </Text>
                 </TouchableOpacity>
-                <Image
+                <FastImage
                   key={index}
                   style={{
                     height: 80,
@@ -698,11 +699,15 @@ const MeasuringQuestionnaire = ({route}) => {
                       }}>
                       <TouchableOpacity
                         onPress={() => {
-                          {item?.uri ? setFurnitureImages(
-                            furnitureImages?.filter(
-                              sort => sort.uri !== item.uri,
-                            ),
-                          ): DeleteImage(item, 'furniture_images')}
+                          {
+                            item?.uri
+                              ? setFurnitureImages(
+                                  furnitureImages?.filter(
+                                    sort => sort.uri !== item.uri,
+                                  ),
+                                )
+                              : DeleteImage(item, 'furniture_images');
+                          }
                         }}
                         style={{
                           backgroundColor: COLORS.black,
@@ -724,7 +729,7 @@ const MeasuringQuestionnaire = ({route}) => {
                           X
                         </Text>
                       </TouchableOpacity>
-                      <Image
+                      <FastImage
                         key={index}
                         style={{
                           height: 80,
@@ -909,11 +914,18 @@ const MeasuringQuestionnaire = ({route}) => {
                           }}>
                           <TouchableOpacity
                             onPress={() => {
-                              {item?.uri ? setFloorImages(
-                                floorImages?.filter(
-                                  sort => sort.uri !== item.uri,
-                                ),
-                              ): DeleteImage(item, 'floor_preparation_images')}
+                              {
+                                item?.uri
+                                  ? setFloorImages(
+                                      floorImages?.filter(
+                                        sort => sort.uri !== item.uri,
+                                      ),
+                                    )
+                                  : DeleteImage(
+                                      item,
+                                      'floor_preparation_images',
+                                    );
+                              }
                             }}
                             style={{
                               backgroundColor: COLORS.black,
@@ -935,7 +947,7 @@ const MeasuringQuestionnaire = ({route}) => {
                               X
                             </Text>
                           </TouchableOpacity>
-                          <Image
+                          <FastImage
                             key={index}
                             style={{
                               height: 80,
