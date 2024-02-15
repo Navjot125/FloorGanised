@@ -30,7 +30,9 @@ const FitterDetail = ({route}) => {
       fitter_status: 'On-work',
     };
     // console.log(param,'param----------');
-    dispatch(startFittingAction(param));
+    responseData?.fitter_status == 'On-work'
+      ? dispatch(startFittingAction(param))
+      : console.log('Job Complete');
     // startFitting ? navigationRef.navigate('Home') : setStartFitting(true);
   };
   const style = {

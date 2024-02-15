@@ -24,7 +24,11 @@ import Header from '../../components/Header/Header';
 import Octicons from 'react-native-vector-icons/Octicons';
 import LaunchImageLibraryAsync from '../../components/ImagePicker/ImagePicker';
 import {useDispatch, useSelector} from 'react-redux';
-import {deleteImage, editMeasuring, submitQuestionnaire} from '../../redux/actions/job';
+import {
+  deleteImage,
+  editMeasuring,
+  submitQuestionnaire,
+} from '../../redux/actions/job';
 import {ImageUrl} from '../../services/Config';
 import FastImage from 'react-native-fast-image';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -32,12 +36,13 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 const MeasuringQuestionnaire = ({route}) => {
   const getData = async () => {
     const token = await AsyncStorage.getItem('token');
-     console.log(token,'token------');
+    console.log(token, 'token------');
   };
   // console.log('route-----------------------', route?.params);
   const measuringData = route?.params;
+
   const userData = useSelector(state => state?.onBoardingreducer?.userData);
-  const job_id = route?.params?._id;
+  const job_id = route?.params?.job_id;
   const dispatch = useDispatch();
   const [modalImage, setModalImage] = useState();
   const [modal, setModal] = useState(false);
@@ -57,6 +62,7 @@ const MeasuringQuestionnaire = ({route}) => {
   const [measuremntRoomImages, setMeasuremntRoomImages] = useState(
     measuringData?.measurement_of_room,
   );
+  console.log('measuremntRoomImages------------------', measuremntRoomImages);
   const [measuremntRoomImagesAPI, setMeasuremntRoomImagesAPI] = useState(
     measuringData?.measurement_of_room,
   );
@@ -174,9 +180,9 @@ const MeasuringQuestionnaire = ({route}) => {
     };
     userData?.role == 'Surveyor'
       ? dispatch(submitQuestionnaire(data, cb))
-      // : dispatch(editMeasuring(data, cb));
-      :getData()
-      // : console.log('data----------------------',data);;
+      : dispatch(editMeasuring(data, cb));
+    // :getData()
+    // : console.log('data----------------------',data);;
   };
   const DeleteImage = (image, key) => {
     const param = {
@@ -234,7 +240,7 @@ const MeasuringQuestionnaire = ({route}) => {
     floor_preparation_notes: floorNotes,
     is_furniture_to_move: isFurnitureToMove,
     empty_room: isFurnitureToMove,
-    // measurement_of_room: measuremntRoomImages,
+    measurement_of_room: measuremntRoomImages,
     furniture_images: furnitureImages,
     floor_preparation_images: floorImages,
   };
