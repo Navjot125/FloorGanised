@@ -14,6 +14,7 @@ import PushNotification from 'react-native-push-notification';
 import {fcmService} from './Notifications/FCMService';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {localNotificationService} from './Notifications/LocalNotificationService';
+import {ToastProvider} from 'react-native-toast-notifications';
 import messaging from '@react-native-firebase/messaging';
 export const navigationRef = createNavigationContainerRef();
 const Stack = createNativeStackNavigator();
@@ -21,46 +22,7 @@ const Stack = createNativeStackNavigator();
 export default function App() {
   useEffect(() => {
     GetNotificationHits(), initNotification();
-    // requestNotificationPermission()
   }, []);
-  // useEffect(() => {
-  //   const requestNotificationPermission = async () => {
-  //     if (Platform.OS === 'android') {
-  //       try {
-  //         const granted = await PermissionsAndroid.request(
-  //           PermissionsAndroid.PERMISSIONS.RECEIVE_BOOT_COMPLETED,
-  //           {
-  //             title: 'Notification Permission',
-  //             message: 'Allow this app to receive notifications?',
-  //             buttonNeutral: 'Ask Me Later',
-  //             buttonNegative: 'Cancel',
-  //             buttonPositive: 'OK',
-  //           },
-  //         );
-
-  //         if (granted === PermissionsAndroid.RESULTS.GRANTED) {
-  //           console.log('Notification permission granted');
-  //         } else {
-  //           console.log('Notification permission denied');
-  //         }
-  //       } catch (err) {
-  //         console.warn(err);
-  //       }
-  //     }
-  //   };
-
-  //   requestNotificationPermission();
-
-  //   // Subscribe to FCM messages
-  //   const unsubscribe = messaging().onMessage(async remoteMessage => {
-  //     console.log('Received FCM Notification:', remoteMessage);
-  //   });
-
-  //   return () => {
-  //     // Clean up the subscription when the component unmounts
-  //     unsubscribe();
-  //   };
-  // }, []);
 
   const GetNotificationHits = () => {
     that = this;
@@ -127,7 +89,6 @@ export default function App() {
       } else {
         alert('failed to connect to firebase');
         AsyncStorage.setItem('fcmToken', '');
-
         // setConfiguration("fcmToken", "none");
       }
     }
@@ -137,6 +98,7 @@ export default function App() {
     'A non-serializable value was detected in an action',
     'SerializableStateInvariantMiddleware took 45ms, which is more than the warning threshold of 32ms.',
     'SerializableStateInvariantMiddleware took',
+    'Non-serializable values',
   ]);
   useEffect(() => {
     setTimeout(() => {
@@ -144,11 +106,13 @@ export default function App() {
     }, 2000);
   }, []);
   return (
-    <Provider store={store}>
-      <StatusBar backgroundColor={COLORS.black} barStyle="light-content" />
-      <NavigationContainer ref={navigationRef}>
-        <RootNavigation />
-      </NavigationContainer>
-    </Provider>
+    <ToastProvider>
+      <Provider store={store}>
+        <StatusBar backgroundColor={COLORS.black} barStyle="light-content" />
+        <NavigationContainer ref={navigationRef}>
+          <RootNavigation />
+        </NavigationContainer>
+      </Provider>
+    </ToastProvider>
   );
 }

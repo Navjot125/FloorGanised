@@ -54,9 +54,11 @@ const FitterDetail = ({route}) => {
             <Text style={{fontWeight: 700, fontSize: 16}}>
               {responseData?.customer_id?.name}
             </Text>
-            <Text style={{fontWeight: 700, fontSize: 16}}>
-              ${responseData?.fitter_amount}
-            </Text>
+            {responseData?.fitter_amount && (
+              <Text style={{fontWeight: 700, fontSize: 16}}>
+                ${responseData?.fitter_amount}
+              </Text>
+            )}
           </View>
           <View style={styles.details}>
             <Icon

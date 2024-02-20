@@ -8,11 +8,13 @@ import CommonButton from '../../components/CommonButton/CommonButton';
 import {navigationRef} from '../../App';
 import {useDispatch, useSelector} from 'react-redux';
 import {updateProfileRequest} from '../../redux/actions/profileAction';
+import { useToast } from 'react-native-toast-notifications';
 
 const ManageProfile = () => {
   const dispatch = useDispatch();
   const userData = useSelector(state => state?.onBoardingreducer?.userData);
   const [name, setName] = useState();
+  const toast = useToast()
   const [email, setEmail] = useState();
   const style = {
     width: '100%',
@@ -22,7 +24,19 @@ const ManageProfile = () => {
     marginBottom: 25,
   };
   const onPress = () => {
-    dispatch(updateProfileRequest((data = {name, email})));
+    const param = {
+      name, email,
+      toastFun: (msg, type) => {
+        toast.show(msg, {
+          type: type,
+          placement: 'bottom',
+          duration: 4000,
+          offset: 30,
+          animationType: 'slide-in ',
+        });
+      },
+    }
+    dispatch(updateProfileRequest((param)));
   };
   return (
     <View style={{flex: 1, backgroundColor: 'black'}}>

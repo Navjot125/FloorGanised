@@ -19,32 +19,84 @@ import CommonModal from '../../../components/Modal/Modal';
 import ResetSuccess from '../../../assets/images/ResetSuccess.png';
 import Back from '../../../components/BackButton/Back';
 import {scale} from 'react-native-size-matters';
-import { useDispatch } from 'react-redux';
-import { resetPassword } from '../../../redux/actions/onBoardingAction';
+import {useDispatch} from 'react-redux';
+import * as Yup from 'yup';
+import {resetPassword} from '../../../redux/actions/onBoardingAction';
+import {useToast} from 'react-native-toast-notifications';
 const ResetPassword = ({route}) => {
-const unique_id = route.params?.data
-  const dispatch = useDispatch()
-  const [cPassword, setCPassword] = useState('Delhi@1A');
+  const unique_id = route.params?.data;
+  const toast = useToast();
+  const dispatch = useDispatch();
+  const [cPassword, setCPassword] = useState();
   const [modalCondition, setModalCondition] = useState(false);
-  const [newPassword, setNewPassword] = useState('Delhi@1A');
-
+  const [newPassword, setNewPassword] = useState();
+  const [error, setErrors] = useState();
   const onBackPress = () => {
     navigationRef.goBack();
   };
+
+  const validationSchema = Yup.object().shape({
+    newPassword: Yup.string()
+      .required('New Password is required')
+      .min(8, 'Password must be at least 8 characters'),
+    cPassword: Yup.string()
+      .required('Confirm Password is required')
+      .oneOf([Yup.ref('newPassword'), null], 'Passwords must match'),
+  });
+
+  const handleResetPassword = async () => {
+    try {
+      await validationSchema.validate(
+        {newPassword, cPassword},
+        {abortEarly: false},
+      );
+      setModalCondition(!modalCondition),
+        (param = {
+          data: {cPassword, unique_id},
+          toastFun: (msg, type) => {
+            toast.show(msg, {
+              type: type,
+              placement: 'bottom',
+              duration: 4000,
+              offset: 30,
+              animationType: 'slide-in ',
+            });
+          },
+        });
+      dispatch(resetPassword(param));
+    } catch (error) {
+      console.log(error, '------errors');
+      const validationErrors = {};
+      if (error.inner) {
+        error.inner.forEach(err => {
+          console.log(err, 'checking it ', err.path);
+          validationErrors[err.path] = err.message;
+        });
+      }
+      setErrors(validationErrors);
+      toast.show(error.errors ? error.errors[0] : error, {
+        type: 'danger',
+        placement: 'bottom',
+        duration: 4000,
+        offset: 30,
+        animationType: 'slide-in ',
+      });
+    }
+  };
+
   const onPress = () => {
-    setModalCondition(!modalCondition),
-    dispatch(resetPassword(data={cPassword,unique_id}))
+    setModalCondition(!modalCondition);
   };
   const onModalPress = () => {
-    setModalCondition(!modalCondition)
+    setModalCondition(!modalCondition);
     // dispatch(resetPassword(data={cPassword,unique_id}))
-      setTimeout(() => {
-        // navigationRef.reset({
-        //   index: 0,
-        //   routes: [{name: 'tabs'}],
-        // });
-        navigationRef.navigate('Login');
-      }, 1000);
+    setTimeout(() => {
+      // navigationRef.reset({
+      //   index: 0,
+      //   routes: [{name: 'tabs'}],
+      // });
+      navigationRef.navigate('Login');
+    }, 1000);
   };
   const title = 'Password Reset Successfully!';
   const description =
@@ -55,8 +107,7 @@ const unique_id = route.params?.data
       <SafeAreaView />
       <ScrollView
         contentContainerStyle={{
-          paddingTop:
-          Platform?.OS === 'android' ? height / 5.6 : height / 4.5,
+          paddingTop: Platform?.OS === 'android' ? height / 5.6 : height / 4.5,
           flexGrow: 1,
         }}
         automaticallyAdjustKeyboardInsets>
@@ -87,7 +138,7 @@ const unique_id = route.params?.data
           <CommonButton
             style={styles.Button}
             title="Reset Password"
-            onPress={onPress}
+            onPress={handleResetPassword}
           />
         </View>
       </ScrollView>

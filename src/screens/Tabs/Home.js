@@ -19,10 +19,12 @@ import {useDispatch, useSelector} from 'react-redux';
 import {getJobs, jobDetail} from '../../redux/actions/homeAction';
 import SkeletonPlaceholder from 'react-native-skeleton-placeholder';
 import moment from 'moment';
+import {useToast} from 'react-native-toast-notifications';
 const Home = props => {
   const selectedDate = useSelector(state => state?.DateReducer?.selectedDate);
   const loader = useSelector(state => state?.loaderReducer?.loader);
   const [jobListing, setJobListing] = useState();
+  const toast = useToast();
   const dispatch = useDispatch();
   useFocusEffect(
     React.useCallback(() => {
@@ -34,6 +36,15 @@ const Home = props => {
         cb: data => {
           setJobListing(data);
         },
+        toastFun: (msg, type) => {
+          toast.show(msg, {
+            type: type,
+            placement: 'bottom',
+            duration: 4000,
+            offset: 30,
+            animationType: 'slide-in ',
+          });
+        },
       };
       dateListing();
       dispatch(getJobs(param));
@@ -41,7 +52,7 @@ const Home = props => {
   );
   const userData = useSelector(state => state?.onBoardingreducer?.userData);
   // console.log(userData,'userData-------');
-  // console.log(jobListing,'userData-------');
+  // console.log(jobListing, 'userData-------');
   const stack = userData?.role == 'Surveyor' ? 'Main' : 'Fitter';
   const screen = userData?.role == 'Surveyor' ? 'Detail' : 'FitterDetail';
   const renderItem = ({item, index}) => {
@@ -49,6 +60,15 @@ const Home = props => {
       _id: item?._id,
       stack,
       screen,
+      toastFun: (msg, type) => {
+        toast.show(msg, {
+          type: type,
+          placement: 'bottom',
+          duration: 4000,
+          offset: 30,
+          animationType: 'slide-in ',
+        });
+      },
     };
     return (
       <TouchableOpacity style={styles.container}>
@@ -156,7 +176,10 @@ const Home = props => {
         }}>
         <CalendarStrip />
         {loader ? (
-          <SkeletonPlaceholder borderRadius={15}>
+          <SkeletonPlaceholder
+            highlightColor="#D3D3D3"
+            backgroundColor="#FFFFFF"
+            borderRadius={15}>
             <View
               style={{height: 145, marginTop: 10, marginHorizontal: 10}}></View>
             <View

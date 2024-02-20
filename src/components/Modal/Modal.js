@@ -14,13 +14,16 @@ import {COLORS} from '../../utils/theme';
 import {width} from '../../assets/styles/styles';
 // import {styles} from '../../assets/styles/styles';
 export default function CommonModal({
+  twoButtons,
   isVisible,
   onPress,
   img,
   title,
   description,
   onModalPress,
-  buttonTitle
+  buttonTitle,
+  secondButtonTitle,
+  secondOnClick,
 }) {
   return (
     <Modal
@@ -40,7 +43,11 @@ export default function CommonModal({
             backgroundColor: COLORS.white,
           },
         ]}>
-        <Image source={img} style={{height: '40%'}} resizeMode="contain" />
+        <Image
+          source={img}
+          style={{height: '40%', width: '100%'}}
+          resizeMode="contain"
+        />
         <Text style={[styles.modalheading, {textAlign: 'center'}]}>
           {title}
         </Text>
@@ -49,6 +56,11 @@ export default function CommonModal({
         <TouchableOpacity style={styles.btnlogin2} onPress={onModalPress}>
           <Text style={styles.buttonText}>{buttonTitle}</Text>
         </TouchableOpacity>
+        {twoButtons && (
+          <TouchableOpacity style={styles.btnlogin2} onPress={secondOnClick}>
+            <Text style={styles.buttonText}>{secondButtonTitle}</Text>
+          </TouchableOpacity>
+        )}
       </View>
     </Modal>
   );

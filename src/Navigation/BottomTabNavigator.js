@@ -17,7 +17,8 @@ import {COLORS} from '../utils/theme';
 import {useDispatch, useSelector} from 'react-redux';
 import {setSelecteddate, setdate} from '../redux/reducers/Dates';
 import {dateListing} from '../utils/Dates/DateLimit';
-import { setDate, setSelectedDateReducer } from '../redux/actions/DateAction';
+import {setDate, setSelectedDateReducer} from '../redux/actions/DateAction';
+import {scale} from 'react-native-size-matters';
 const moment = require('moment');
 const Tab = createBottomTabNavigator();
 
@@ -28,233 +29,227 @@ const BottomTabNavigator = ({}) => {
   const dispatch = useDispatch();
   // const date = useSelector(state => state.date.date);
   const date = useSelector(state => state.DateReducer);
-  // const user = useSelector(state => state.user.data);
   const [minDate, setMinDate] = useState(
     new Date().toISOString().split('T')[0],
   );
-  const user = false;
-  // useEffect(() => {
-  //   if (user == null) {
-  //     authApiPost('getProfile')
-  //       .then(res => {
-  //         if (res?.status == 2) {
-  //           ExpiryToken(navigation)
-  //         }
-  //         if (res?.msg === "User not exist") {
-  //           navigation.navigate('Login')
-  //         }
-  //         dispatch(setUserData(res?.data));
-  //       })
-  //       .catch(err => {
-  //       });
-  //   } 
-  // }, [user]);
-
-  // useEffect(() => {
-  //   if (!date) {
-  //     dispatch(setdate(dateListing()));
-  //   }
-  // }, [date]);
   useEffect(() => {
-    // if (!date) {
-      dispatch(setDate(dateListing()));
-    // }
+    dispatch(setDate(dateListing()));
   }, []);
   useEffect(() => {
     dispatch(setSelectedDateReducer(dateListing()[0]));
   }, []);
   return (
     <>
-    <Tab.Navigator
-      initialRouteName="Home"
-      screenOptions={{
-        headerShown: false,
-        tabBarShowLabel: false,
-        headerStyle: {
-          borderBottomWidth: 0,
-          height: 112,
-        },
-        tabBarStyle: {
-          backgroundColor: COLORS.white,
-          borderTopColor: COLORS.white,
-          height: Platform.OS === 'ios' ? 90 : 70,
-          paddingTop: 0,
-          overflow: 'visible',
-          paddingTop: Platform.OS === 'ios' ? 5 : 0,
-          shadowOffset: {
-            width: 0,
-            height: 12,
-          },
-          shadowOpacity: 0.48,
-          shadowRadius: 16.0,
-          elevation: 24,
-        },
-      }}>
-      <Tab.Screen
-        name="Home"
-        options={({navigation}) => ({
+      <Tab.Navigator
+        initialRouteName="Home"
+        screenOptions={{
           headerShown: false,
-          title: 'Home',
-          tabBarIcon: ({focused}) => (
-            <View style={styles.iconFlex}>
-              {focused ? (
-                <View style={[styles.tabBar, {minWidth: 81}]}>
+          tabBarShowLabel: false,
+          headerStyle: {
+            borderBottomWidth: 0,
+            height: 112,
+          },
+          tabBarStyle: {
+            backgroundColor: COLORS.white,
+            borderTopColor: COLORS.white,
+            height: Platform.OS === 'ios' ? 90 : 70,
+            paddingTop: 0,
+            overflow: 'visible',
+            paddingTop: Platform.OS === 'ios' ? 5 : 0,
+            shadowOffset: {
+              width: 0,
+              height: 12,
+            },
+            shadowOpacity: 0.48,
+            shadowRadius: 16.0,
+            elevation: 24,
+          },
+        }}>
+        <Tab.Screen
+          name="Home"
+          options={({navigation}) => ({
+            headerShown: false,
+            title: 'Home',
+            tabBarIcon: ({focused}) => (
+              <View style={styles.iconFlex}>
+                {focused ? (
+                  <View
+                    style={[
+                      styles.tabBar,
+                      // {minWidth: 81}
+                      {minWidth: scale(80)},
+                    ]}>
+                    <Image
+                      resizeMode="contain"
+                      style={{height: 20, width: 20}}
+                      source={require('../assets/images/Home.png')}
+                    />
+                    {/* <Text style={{}}>Home</Text> */}
+                  </View>
+                ) : (
                   <Image
-                    resizeMode="contain"
                     style={{height: 20, width: 20}}
+                    resizeMode="contain"
                     source={require('../assets/images/Home.png')}
                   />
-                  <Text style={{}}>Home</Text>
-                </View>
-              ) : (
-                <Image
-                  style={{height: 20, width: 20}}
-                  resizeMode="contain"
-                  source={require('../assets/images/Home.png')}
-                />
-              )}
-            </View>
-          ),
-        })}
-        component={Home}
-      />
-      <Tab.Screen
-        name="Notification"
-        options={({navigation}) => ({
-          title: 'Notifications',
-          headerTitleAlign: 'left',
-          // headerShown:false,
-          headerBackground: () => (
-            <View
-              style={{
-                backgroundColor: COLORS.black,
-                height: 140,
-              }}></View>
-          ),
-          headerShadowVisible: false,
-          headerTitleStyle: {
-            // fontFamily: FONTS.PoppinsSemiBold,
-            fontSize: 20,
-            color: COLORS.white,
-            paddingLeft: 5,
-            fontWeight: 600,
-          },
-          //headerTransparent: true,
-          tabBarIcon: ({focused}) => (
-            <View style={styles.iconFlex}>
-              {focused ? (
-                <View style={[styles.tabBar, {minWidth: 130}]}>
+                )}
+              </View>
+            ),
+          })}
+          component={Home}
+        />
+        <Tab.Screen
+          name="Notification"
+          options={({navigation}) => ({
+            title: 'Notifications',
+            headerTitleAlign: 'left',
+            // headerShown:false,
+            headerBackground: () => (
+              <View
+                style={{
+                  backgroundColor: COLORS.black,
+                  height: 140,
+                }}></View>
+            ),
+            headerShadowVisible: false,
+            headerTitleStyle: {
+              // fontFamily: FONTS.PoppinsSemiBold,
+              fontSize: 20,
+              color: COLORS.white,
+              paddingLeft: 5,
+              fontWeight: 600,
+            },
+            //headerTransparent: true,
+            tabBarIcon: ({focused}) => (
+              <View style={styles.iconFlex}>
+                {focused ? (
+                  <View
+                    style={[
+                      styles.tabBar,
+                      //  {minWidth: 130}
+                      {minWidth: scale(80)},
+                    ]}>
+                    <Image
+                      resizeMode="contain"
+                      style={{height: 20, width: 20}}
+                      source={require('../assets/images/NotificationTab.png')}
+                    />
+                    {/* <Text style={{}}>Notifications</Text> */}
+                  </View>
+                ) : (
                   <Image
                     resizeMode="contain"
                     style={{height: 20, width: 20}}
                     source={require('../assets/images/NotificationTab.png')}
                   />
-                  <Text style={{}}>Notifications</Text>
-                </View>
-              ) : (
-                <Image
-                  resizeMode="contain"
-                  style={{height: 20, width: 20}}
-                  source={require('../assets/images/NotificationTab.png')}
-                />
-              )}
-            </View>
-          ),
-        })}
-        component={Notifications}
-      />
-      <Tab.Screen
-        name="History"
-        options={({navigation}) => ({
-          title: 'History',
-          headerTitleAlign: 'left',
-          // headerShown:false,
-          headerBackground: () => (
-            <View
-              style={{
-                backgroundColor: COLORS.black,
-                height: 140,
-              }}></View>
-          ),
-          headerShadowVisible: false,
-          headerTitleStyle: {
-            // fontFamily: FONTS.PoppinsSemiBold,
-            fontSize: 20,
-            color: COLORS.white,
-            paddingLeft: 5,
-            fontWeight: 600,
-          },
-          //headerTransparent: true,
-          tabBarIcon: ({focused}) => (
-            <View style={styles.iconFlex}>
-              {focused ? (
-                <View style={[styles.tabBar, {minWidth: 88}]}>
+                )}
+              </View>
+            ),
+          })}
+          component={Notifications}
+        />
+        <Tab.Screen
+          name="History"
+          options={({navigation}) => ({
+            title: 'History',
+            headerTitleAlign: 'left',
+            // headerShown:false,
+            headerBackground: () => (
+              <View
+                style={{
+                  backgroundColor: COLORS.black,
+                  height: 140,
+                }}></View>
+            ),
+            headerShadowVisible: false,
+            headerTitleStyle: {
+              // fontFamily: FONTS.PoppinsSemiBold,
+              fontSize: 20,
+              color: COLORS.white,
+              paddingLeft: 5,
+              fontWeight: 600,
+            },
+            //headerTransparent: true,
+            tabBarIcon: ({focused}) => (
+              <View style={styles.iconFlex}>
+                {focused ? (
+                  <View
+                    style={[
+                      styles.tabBar,
+                      //  {minWidth: 88}
+                      {minWidth: scale(80)},
+                    ]}>
+                    <Image
+                      resizeMode="contain"
+                      style={{height: 20, width: 20}}
+                      source={require('../assets/images/HistoryTab.png')}
+                    />
+                    {/* <Text style={{}}>History</Text> */}
+                  </View>
+                ) : (
                   <Image
                     resizeMode="contain"
                     style={{height: 20, width: 20}}
                     source={require('../assets/images/HistoryTab.png')}
                   />
-                  <Text style={{}}>History</Text>
-                </View>
-              ) : (
-                <Image
-                  resizeMode="contain"
-                  style={{height: 20, width: 20}}
-                  source={require('../assets/images/HistoryTab.png')}
-                />
-              )}
-            </View>
-          ),
-        })}
-        component={History}
-      />
-      <Tab.Screen
-        name="Profile"
-        options={({navigation}) => ({
-          title: 'Profile',
-          headerTitleAlign: 'left',
-          // headerShown:false,
-          headerBackground: () => (
-            <View
-              style={{
-                backgroundColor: COLORS.black,
-                height: 140,
-              }}></View>
-          ),
-          headerShadowVisible: false,
-          headerTitleStyle: {
-            // fontFamily: FONTS.PoppinsSemiBold,
-            fontSize: 20,
-            color: COLORS.white,
-            paddingLeft: 5,
-            fontWeight: 600,
-          },
+                )}
+              </View>
+            ),
+          })}
+          component={History}
+        />
+        <Tab.Screen
+          name="Profile"
+          options={({navigation}) => ({
+            title: 'Profile',
+            headerTitleAlign: 'left',
+            // headerShown:false,
+            headerBackground: () => (
+              <View
+                style={{
+                  backgroundColor: COLORS.black,
+                  height: 140,
+                }}></View>
+            ),
+            headerShadowVisible: false,
+            headerTitleStyle: {
+              // fontFamily: FONTS.PoppinsSemiBold,
+              fontSize: 20,
+              color: COLORS.white,
+              paddingLeft: 5,
+              fontWeight: 600,
+            },
 
-          //headerTransparent: true,
-          tabBarIcon: ({focused}) => (
-            <View style={styles.iconFlex}>
-              {focused ? (
-                <View style={[styles.tabBar, {minWidth: 82}]}>
+            //headerTransparent: true,
+            tabBarIcon: ({focused}) => (
+              <View style={styles.iconFlex}>
+                {focused ? (
+                  <View
+                    style={[
+                      styles.tabBar,
+                      // {minWidth: 82}
+                      {minWidth: scale(80)},
+                    ]}>
+                    <Image
+                      resizeMode="contain"
+                      style={{height: 20, width: 20}}
+                      source={require('../assets/images/ProfileTab.png')}
+                    />
+                    {/* <Text style={{}}>Profile</Text> */}
+                  </View>
+                ) : (
                   <Image
                     resizeMode="contain"
                     style={{height: 20, width: 20}}
                     source={require('../assets/images/ProfileTab.png')}
                   />
-                  <Text style={{}}>Profile</Text>
-                </View>
-              ) : (
-                <Image
-                  resizeMode="contain"
-                  style={{height: 20, width: 20}}
-                  source={require('../assets/images/ProfileTab.png')}
-                />
-              )}
-            </View>
-          ),
-        })}
-        component={Profile}
-      />
-    </Tab.Navigator>
+                )}
+              </View>
+            ),
+          })}
+          component={Profile}
+        />
+      </Tab.Navigator>
     </>
   );
 };

@@ -23,18 +23,11 @@ function* getJob(action) {
     };
     const urlWithParams = `${url}${APIS.GET_JOBS}?${queryParams}`;
     const response = yield call(fetch, urlWithParams, requestOptions);
-    if (response.ok) {
-      const responseData = yield response.json();
-      // console.log(responseData,'responseData?.data');
+    const responseData = yield response.json();
+    if (responseData?.status) {
       action?.data?.cb(responseData?.data);
     } else {
-      const errorData = yield response.json();
-      console.error(
-        'getJob request failed:',
-        response.status,
-        response.statusText,
-        errorData,
-      );
+      action?.data?.toastFun(responseData?.message, 'danger');
     }
   } catch (error) {
     console.error('An error occurred during getJob:', error);
@@ -45,10 +38,10 @@ function* getJob(action) {
 function* jobDetail(action) {
   try {
     yield put(setLoader(true));
-    const {_id, stack, screen} = action.data;
+    const {_id, stack, screen, toastFun} = action.data;
     const token = yield call(AsyncStorage.getItem, 'token');
     const queryParams = `job_id=${encodeURIComponent(_id)}`;
-    console.log(queryParams);
+    console.log(queryParams,'0000000');
     const requestOptions = {
       method: 'GET',
       headers: {
@@ -58,9 +51,8 @@ function* jobDetail(action) {
     };
     const urlWithParams = `${url}${APIS.JOB_DETAIL}?${queryParams}`;
     const response = yield call(fetch, urlWithParams, requestOptions);
-    if (response.ok) {
-      const responseData = yield response.json();
-      // console.log(responseData, 'responseData-------------');
+    const responseData = yield response.json();
+    if (responseData?.status) {
       responseData?.measuring_details
         ? navigationRef.navigate(stack, {
             screen: screen,
@@ -76,13 +68,7 @@ function* jobDetail(action) {
             },
           });
     } else {
-      const errorData = yield response.json();
-      console.error(
-        'jobDetail request failed:',
-        response.status,
-        response.statusText,
-        errorData,
-      );
+      toastFun(responseData?.message, 'danger');
     }
   } catch (error) {
     console.error('An error occurred during jobDetail:', error);

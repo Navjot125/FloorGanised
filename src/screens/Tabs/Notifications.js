@@ -8,18 +8,32 @@ import {getNotifications} from '../../redux/actions/Notifications';
 import {useFocusEffect} from '@react-navigation/native';
 import moment from 'moment';
 import SkeletonPlaceholder from 'react-native-skeleton-placeholder';
+import { useToast } from 'react-native-toast-notifications';
 const Notifications = () => {
   const dispatch = useDispatch();
+  const toast = useToast()
   const [viewFullText, setViewFullText] = useState(null);
   const [offset, setOffset] = useState(0);
   const [notifications, setNotifications] = useState();
   const loader = useSelector(state => state?.loaderReducer?.loader);
   useFocusEffect(
     React.useCallback(() => {
-      const cb = data => {
-        setNotifications(data);
+      const param = {
+        offset,
+        toastFun: (msg, type) => {
+          toast.show(msg, {
+            type: type,
+            placement: 'bottom',
+            duration: 4000,
+            offset: 30,
+            animationType: 'slide-in ',
+          });
+        },
+        cb: data => {
+          setNotifications(data);
+        },
       };
-      dispatch(getNotifications(offset, cb));
+      dispatch(getNotifications(param));
     }, []),
   );
   const getTimeAgo = createdAt => {

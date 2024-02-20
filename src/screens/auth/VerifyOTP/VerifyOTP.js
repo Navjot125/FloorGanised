@@ -20,12 +20,13 @@ import Back from '../../../components/BackButton/Back';
 import {scale} from 'react-native-size-matters';
 import {useDispatch} from 'react-redux';
 import {setUserData} from '../../../redux/reducers/User';
-import { verifyOtp } from '../../../redux/actions/onBoardingAction';
+import {verifyOtp} from '../../../redux/actions/onBoardingAction';
+import { useToast } from 'react-native-toast-notifications';
 
 const VerifyOTP = ({route}) => {
-  const GoTo = route?.params?.reset
-  const email = route?.params?.data
-
+  const GoTo = route?.params?.reset;
+  const email = route?.params?.data;
+const toast = useToast()
   const [code, setCode] = useState('');
   const dispatch = useDispatch();
   const handleOtpChange = value => {
@@ -50,23 +51,33 @@ const VerifyOTP = ({route}) => {
     },
   ];
   const onPress = () => {
+    param = {
+      email,
+      code,
+      toastFun: (msg, type) => {
+        toast.show(msg, {
+          type: type,
+          placement: 'bottom',
+          duration: 4000,
+          offset: 30,
+          animationType: 'slide-in ',
+        });
+      },
+    };
     GoTo
-      ? 
-      dispatch(verifyOtp(data={email,code}))
-      // navigationRef.navigate(GoTo)
-      : 
-      (navigationRef.reset({
+      ? dispatch(verifyOtp(param))
+      : (navigationRef.reset({
           index: 0,
           routes: [{name: 'tabs'}],
         }),
         dispatch(setUserData(userData[1])));
   };
-  const onBackPress = () => {
-    navigationRef.goBack();
-  };
-
   return (
-    <View style={{flexGrow: 1,paddingTop: Platform.OS === 'android' ? 0 : scale(120)}}>
+    <View
+      style={{
+        flexGrow: 1,
+        paddingTop: Platform.OS === 'android' ? 0 : scale(120),
+      }}>
       <CommonBackground title={'Verify OTP'} />
       <KeyboardAvoidingView style={{flexGrow: 1}}>
         <SafeAreaView />
@@ -94,7 +105,7 @@ const VerifyOTP = ({route}) => {
                 containerStyle={styles.otpContainer}
                 textInputStyle={[styles.otpInput, {color: COLORS.grey}]}
                 handleTextChange={handleOtpChange}
-                inputCount={4} 
+                inputCount={4}
                 // keyboardType="numeric"
                 keyboardType="numbers-and-punctuation"
                 tintColor={COLORS.primary}
@@ -144,7 +155,7 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.1,
     shadowRadius: 16.27,
     elevation: 14,
-  
+
     // marginBottom: 30,
   },
   radioBox: {

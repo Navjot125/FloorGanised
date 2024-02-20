@@ -1,9 +1,8 @@
 import {GET_NOTIFICATION} from '../constants';
 
-export function getNotifications(item, cb) {
+export function getNotifications(item) {
   return {
     type: GET_NOTIFICATION,
     data: item,
-    callBack:cb
   };
 }

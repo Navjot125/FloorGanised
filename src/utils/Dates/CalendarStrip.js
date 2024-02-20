@@ -142,7 +142,7 @@ const CalendarStrip = ({loader}) => {
             }}
             // minDate={minDate}
             theme={{
-              backgroundColor: 'red',
+              // backgroundColor: 'red',
               calendarBackground: 'white',
               textSectionTitleColor: '#b6c1cd',
               selectedDayBackgroundColor: 'yellow',

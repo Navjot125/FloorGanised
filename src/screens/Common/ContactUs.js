@@ -8,14 +8,28 @@ import {navigationRef} from '../../App';
 import {useDispatch, useSelector} from 'react-redux';
 import {cmsRequest} from '../../redux/actions/cmsAction';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import {useToast} from 'react-native-toast-notifications';
 
 const ContactUs = () => {
   const [message, setMessage] = useState();
   const [token, setToken] = useState();
+  const toast = useToast();
   const dispatch = useDispatch();
   const onPress = async () => {
     // const token = await AsyncStorage.getItem('token');
-    dispatch(cmsRequest(message));
+    param = {
+      message,
+      toastFun: (msg, type) => {
+        toast.show(msg, {
+          type: type,
+          placement: 'bottom',
+          duration: 4000,
+          offset: 30,
+          animationType: 'slide-in ',
+        });
+      },
+    };
+    dispatch(cmsRequest(param));
   };
   const style = {
     bottom: 20,

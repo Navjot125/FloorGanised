@@ -1,8 +1,4 @@
-import {
-  LOG_OUT_REQUEST,
-  SET_USER_DATA,
-  SET_USER_TOKEN,
-} from '../constants';
+import {LOG_OUT_REQUEST, SET_USER_DATA, SET_USER_TOKEN} from '../constants';
 
 const initialState = {
   userData: '',
@@ -20,3 +16,4 @@ export const onBoardingreducer = (state = initialState, action) => {
       return state;
   }
 };
+

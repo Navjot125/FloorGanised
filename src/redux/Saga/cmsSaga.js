@@ -2,14 +2,13 @@ import {call, put, takeEvery} from 'redux-saga/effects';
 import {navigationRef} from '../../App';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import APIS from '../../services/apis';
-import { url } from '../../services/Config';
-import { CONTACT_US } from '../constants';
-import { setLoader } from '../actions/Loader';
-
+import {url} from '../../services/Config';
+import {CONTACT_US} from '../constants';
+import {setLoader} from '../actions/Loader';
 function* contactUs(action) {
   try {
-    yield put(setLoader(true))
-    const message = action.data;
+    yield put(setLoader(true));
+    const message = action.data?.message;
     const token = yield call(AsyncStorage.getItem, 'token');
     const requestOptions = {
       method: 'POST',
@@ -26,18 +25,13 @@ function* contactUs(action) {
       `${url}${APIS.CONTACT_US}`,
       requestOptions,
     );
-    if (response.ok) {
-      const responseData = yield response.json();
+    const responseData = yield response.json();
+    if (responseData.status) {
       console.log(responseData, 'cms response --');
-      navigationRef.navigate('Home')
+      navigationRef.navigate('Home');
     } else {
-      const errorData = yield response.json();
-      console.error(
-        'contactUs request failed:',
-        response.status,
-        response.statusText,
-        errorData,
-      );
+      console.log(responseData, 'cms response --');
+      action?.data?.toastFun(responseData?.message, 'danger');
     }
   } catch (error) {
     console.error('An error occurred during contactUs:', error);

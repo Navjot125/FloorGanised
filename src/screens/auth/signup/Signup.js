@@ -22,16 +22,18 @@ import {setUserData} from '../../../redux/reducers/User';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import * as Yup from 'yup';
 import {PostApi} from '../../../services/ApisMethods';
-import { singUpRequest } from '../../../redux/actions/onBoardingAction';
-
+import {singUpRequest} from '../../../redux/actions/onBoardingAction';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import {useToast} from 'react-native-toast-notifications';
 const Signup = () => {
+  const toast = useToast();
   const [token, setToken] = useState();
   useEffect(() => {
     getData();
   }, []);
   const getData = async () => {
     const token = await AsyncStorage.getItem('fcmToken');
-     setToken(token)
+    setToken(token);
   };
   const [text, setText] = useState('');
   const [name, setName] = useState('');
@@ -42,9 +44,9 @@ const Signup = () => {
   const [error, setErrors] = useState();
   const [signUpData, setSignUpData] = useState({});
 
-  useEffect(()=>{
-    setSignUpData({name, cPassword, email, password,selectedOption,token})
-  },[name, cPassword, email, password,selectedOption])
+  useEffect(() => {
+    setSignUpData({name, cPassword, email, password, selectedOption, token});
+  }, [name, cPassword, email, password, selectedOption]);
   const options = ['Fitter', 'Surveyor'];
   const handleOptionPress = option => {
     setSelectedOption(option);
@@ -54,8 +56,8 @@ const Signup = () => {
     navigationRef.reset({
       index: 0,
       routes: [{name: 'tabs'}],
-    })
-      // dispatch(setUserData(userData[1]));
+    });
+    // dispatch(setUserData(userData[1]));
   };
 
   const validationSchema = Yup.object().shape({
@@ -74,55 +76,25 @@ const Signup = () => {
       .oneOf(['Fitter', 'Surveyor'], 'Role must be either Fitter or Surveyor'),
   });
 
-  const handleSignup = async ()=>{
+  const handleSignup = async () => {
     try {
-    await validationSchema.validate(
-      {name, email, password, cPassword, selectedOption},
-      {abortEarly: false},
-    );
-    dispatch(singUpRequest(signUpData))
-    }
-    catch (error) {
-      console.log(error, '------errors');
-      const validationErrors = {};
-      if (error.inner) {
-        error.inner.forEach(err => {
-          console.log(err, 'checking it ', err.path);
-          validationErrors[err.path] = err.message;
-        });
-      }
-      setErrors(validationErrors);
-      console.error(error.errors ? error.errors[0] : error);
-    }
-  }
-
-  const handleSignUp = async () => {
-
-    try {
-      // Validate form inputs
       await validationSchema.validate(
         {name, email, password, cPassword, selectedOption},
         {abortEarly: false},
       );
-
-      // Form inputs are valid, proceed with signup
-      const params = {
-        name,
-        email,
-        password,
-        role: selectedOption,
+      param = {
+        signUpData,
+        toastFun: (msg, type) => {
+          toast.show(msg, {
+            type: type,
+            placement: 'bottom',
+            duration: 4000,
+            offset: 30,
+            animationType: 'slide-in ',
+          });
+        },
       };
-      const response = await PostApi('signup', params);
-      if (response?.data) {
-        console.log(response.data, 'res?.data');
-        navigationRef.reset({
-          index: 0,
-          routes: [{name: 'tabs'}],
-        }),
-          dispatch(setUserData(response.data));
-      } else {
-        console.log(response, 'res');
-      }
+      dispatch(singUpRequest(param));
     } catch (error) {
       console.log(error, '------errors');
       const validationErrors = {};
@@ -133,7 +105,13 @@ const Signup = () => {
         });
       }
       setErrors(validationErrors);
-      console.error(error.errors ? error.errors[0] : error);
+      toast.show(error.errors ? error.errors[0] : error, {
+        type: 'danger',
+        placement: 'bottom',
+        duration: 4000,
+        offset: 30,
+        animationType: 'slide-in ',
+      });
     }
   };
 
@@ -144,63 +122,72 @@ const Signup = () => {
     <View
       style={{flex: 1, paddingTop: Platform.OS === 'android' ? 0 : scale(120)}}>
       <CommonBackground title={'Sign Up'} />
-      <ScrollView
-        showsVerticalScrollIndicator={false}
-        automaticallyAdjustKeyboardInsets
-        contentContainerStyle={{
-          // flex:1,
-          flexGrow: 1,
-          paddingTop: Platform?.OS === 'android' ? height / 2.8 : height / 4.1,
+      <KeyboardAvoidingView
+        behavior="height"
+        style={{
+          flex: 1,
         }}>
-        <View style={styles.innerBox}>
-          <View style={styles.radioBox}>
-            {options.map(option => (
-              <View
-                key={option}
-                style={{flexDirection: 'row', alignItems: 'center'}}>
-                <RadioButton.Android
-                  color={COLORS.secondry}
-                  value={option}
-                  status={selectedOption === option ? 'checked' : 'unchecked'}
-                  onPress={() => handleOptionPress(option)}
-                />
-                <Text style={{color: 'black'}}>{option}</Text>
-              </View>
-            ))}
+        <ScrollView
+          showsVerticalScrollIndicator={false}
+          // automaticallyAdjustKeyboardInsets
+          // keyboardShouldPersistTaps='always'
+          contentContainerStyle={{
+            // flex:1,
+            flexGrow: 1,
+            paddingTop:
+              Platform?.OS === 'android' ? height / 2.8 : height / 4.1,
+            // marginTop: Platform?.OS === 'android' ? height / 2.8 : height / 4.1,
+          }}>
+          <View style={styles.innerBox}>
+            <View style={styles.radioBox}>
+              {options.map(option => (
+                <View
+                  key={option}
+                  style={{flexDirection: 'row', alignItems: 'center'}}>
+                  <RadioButton.Android
+                    color={COLORS.secondry}
+                    value={option}
+                    status={selectedOption === option ? 'checked' : 'unchecked'}
+                    onPress={() => handleOptionPress(option)}
+                  />
+                  <Text style={{color: 'black'}}>{option}</Text>
+                </View>
+              ))}
+            </View>
+            <View style={{height: '66%', justifyContent: 'space-between'}}>
+              <CommonTextInput
+                placeholder="Full Name"
+                value={name}
+                onChangeText={newText => setName(newText)}
+              />
+              {error && error?.firstName && (
+                <Text style={styles.erroz}>{error && error?.firstName}</Text>
+              )}
+              <CommonTextInput
+                placeholder="Email Address"
+                value={email}
+                onChangeText={newText => setEmail(newText)}
+              />
+              <CommonTextInput
+                placeholder="Password"
+                value={password}
+                onChangeText={newText => setPassword(newText)}
+              />
+              <CommonTextInput
+                placeholder="Confirm Password"
+                value={cPassword}
+                onChangeText={newText => setCPassword(newText)}
+              />
+            </View>
+            <CommonButton
+              style={styles.Button}
+              title="Sign Up"
+              // onPress={handleSignUp}
+              onPress={handleSignup}
+            />
           </View>
-          <View style={{height: '66%', justifyContent: 'space-between'}}>
-            <CommonTextInput
-              placeholder="Full Name"
-              value={name}
-              onChangeText={newText => setName(newText)}
-            />
-            {error && error?.firstName && (
-              <Text style={styles.erroz}>{error && error?.firstName}</Text>
-            )}
-            <CommonTextInput
-              placeholder="Email Address"
-              value={email}
-              onChangeText={newText => setEmail(newText)}
-            />
-            <CommonTextInput
-              placeholder="Password"
-              value={password}
-              onChangeText={newText => setPassword(newText)}
-            />
-            <CommonTextInput
-              placeholder="Confirm Password"
-              value={cPassword}
-              onChangeText={newText => setCPassword(newText)}
-            />
-          </View>
-          <CommonButton
-            style={styles.Button}
-            title="Sign Up"
-            // onPress={handleSignUp}
-            onPress={handleSignup}
-          />
-        </View>
-      </ScrollView>
+        </ScrollView>
+      </KeyboardAvoidingView>
       <Text
         style={{
           alignSelf: 'center',

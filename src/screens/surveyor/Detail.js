@@ -17,12 +17,10 @@ import Feather from 'react-native-vector-icons/Feather';
 import CommonButton from '../../components/CommonButton/CommonButton';
 import {navigationRef} from '../../App';
 const Detail = ({route}) => {
+  console.log('route.params;',route.params);
   const {responseData} = route.params;
   const onStart = () => {
-    navigationRef.navigate(
-      'MeasuringQuestionnaire',
-      responseData 
-    );
+    navigationRef.navigate('MeasuringQuestionnaire', responseData);
   };
   return (
     <View style={{flex: 1, backgroundColor: 'black'}}>

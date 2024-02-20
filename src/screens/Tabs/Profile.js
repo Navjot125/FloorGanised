@@ -7,7 +7,7 @@ import {
   Image,
   SafeAreaView,
 } from 'react-native';
-import React from 'react';
+import React, {useState} from 'react';
 import {navigationRef} from '../../App';
 import {COLORS} from '../../utils/theme';
 import Header from '../../components/Header/Header';
@@ -16,11 +16,15 @@ import {useDispatch, useSelector} from 'react-redux';
 import {removeUserData} from '../../redux/reducers/User';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {deleteAccount} from '../../redux/actions/profileAction';
-
+import ResetSuccess from '../../assets/images/deleteAccount.png';
+import CommonModal from '../../components/Modal/Modal';
+import {useToast} from 'react-native-toast-notifications';
 const Profile = () => {
   const dispatch = useDispatch();
+  const toast = useToast();
   const userData = useSelector(state => state?.onBoardingreducer?.userData);
   const screen = userData?.role === 'Surveyor' ? 'Main' : 'Fitter';
+  const [showModal, setShowModal] = useState(false);
   // console.log(userData,'userData--');
   const screens = [
     {
@@ -55,6 +59,19 @@ const Profile = () => {
     },
   ];
 
+  const param = {
+    toastFun: (msg, type) => {
+      setShowModal(false),
+        toast.show(msg, {
+          type: type,
+          placement: 'bottom',
+          duration: 4000,
+          offset: 30,
+          animationType: 'slide-in ',
+        });
+    },
+  };
+
   const renderItem = ({item, index}) => {
     return (
       <TouchableOpacity
@@ -69,9 +86,8 @@ const Profile = () => {
                 await AsyncStorage.removeItem('token');
               }, 300))
             : item?.name == 'Delete Account'
-            ? dispatch(deleteAccount())
-            : // item?.name == "Log Out" ? navigationRef.navigate('Login'):
-              navigationRef.navigate(screen, {screen: item?.screen});
+            ? setShowModal(true)
+            : navigationRef.navigate(screen, {screen: item?.screen});
         }}>
         <Text style={{fontWeight: 500, fontSize: 14}}> {item?.name} </Text>
         <Image
@@ -113,6 +129,22 @@ const Profile = () => {
           contentContainerStyle={{paddingBottom: 20}}
         />
       </View>
+      {showModal && (
+        <CommonModal
+          isVisible={showModal}
+          twoButtons={true}
+          onModalPress={() => dispatch(deleteAccount(param))}
+          onPress={() => setShowModal(false)}
+          img={ResetSuccess}
+          title={'Are You Sure ?'}
+          description={
+            'After deleting the account you can not access your profile'
+          }
+          buttonTitle={'Delete Account'}
+          secondButtonTitle={'Cancel'}
+          secondOnClick={() => setShowModal(false)}
+        />
+      )}
     </View>
   );
 };

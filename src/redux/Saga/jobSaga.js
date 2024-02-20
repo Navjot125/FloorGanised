@@ -4,7 +4,11 @@ import {navigationRef} from '../../App';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import APIS from '../../services/apis';
 import {url} from '../../services/Config';
-import {DELETE_IMAGES, EDIT_MEASURING_QUESTIONNAIRE, SUBMIT_QUESTIONNAIRE} from '../constants';
+import {
+  DELETE_IMAGES,
+  EDIT_MEASURING_QUESTIONNAIRE,
+  SUBMIT_QUESTIONNAIRE,
+} from '../constants';
 import {setLoader} from '../actions/Loader';
 async function convertPayloadToFormData(payload) {
   const formData = new FormData();
@@ -67,8 +71,8 @@ async function convertPayloadToFormData(payload) {
 }
 
 function* submitQuestionnaire(action) {
-  console.log('action', action);
   try {
+    const {cb, toastFun} = action?.callBack;
     const extractedData = yield convertPayloadToFormData(action.data);
     yield put(setLoader(true));
     const token = yield call(AsyncStorage.getItem, 'token');
@@ -85,19 +89,12 @@ function* submitQuestionnaire(action) {
       `${url}${APIS.SUBMIT_QUESTIONNAIRE}`,
       requestOptions,
     );
-    if (response.ok) {
-      const responseData = yield response.json();
-      action.callBack();
+    const responseData = yield response.json();
+    if (responseData?.status) {
+      cb();
       console.log(responseData, 'submitQuestionnaire response --');
-      //   navigationRef.navigate('Home');
     } else {
-      const errorData = yield response.json();
-      console.error(
-        'submitQuestionnaire request failed:',
-        response.status,
-        response.statusText,
-        errorData,
-      );
+      toastFun(responseData?.message, 'danger');
     }
   } catch (error) {
     console.error('An error occurred during submitQuestionnaire:', error);
@@ -120,7 +117,7 @@ function* editQuestionnaire(action) {
       },
       body: extractedData,
     };
-    console.log(extractedData,'extractedData------------------------');
+    console.log(extractedData, 'extractedData------------------------');
     const response = yield call(
       fetch,
       `${url}${APIS.EDIT_MEASURING_QUESTIONNAIRE}`,

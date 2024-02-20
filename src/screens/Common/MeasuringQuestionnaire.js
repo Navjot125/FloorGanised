@@ -31,18 +31,15 @@ import {
 } from '../../redux/actions/job';
 import {ImageUrl} from '../../services/Config';
 import FastImage from 'react-native-fast-image';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import {useToast} from 'react-native-toast-notifications';
 
 const MeasuringQuestionnaire = ({route}) => {
-  const getData = async () => {
-    const token = await AsyncStorage.getItem('token');
-    console.log(token, 'token------');
-  };
-  // console.log('route-----------------------', route?.params);
+  const toast = useToast();
   const measuringData = route?.params;
-
+  // console.log('route-----------------------measuringData',  route?.params);
   const userData = useSelector(state => state?.onBoardingreducer?.userData);
-  const job_id = route?.params?.job_id;
+  const job_id =
+    userData.role == 'Surveyor' ? measuringData?._id : route?.params?.job_id;
   const dispatch = useDispatch();
   const [modalImage, setModalImage] = useState();
   const [modal, setModal] = useState(false);
@@ -62,7 +59,6 @@ const MeasuringQuestionnaire = ({route}) => {
   const [measuremntRoomImages, setMeasuremntRoomImages] = useState(
     measuringData?.measurement_of_room,
   );
-  console.log('measuremntRoomImages------------------', measuremntRoomImages);
   const [measuremntRoomImagesAPI, setMeasuremntRoomImagesAPI] = useState(
     measuringData?.measurement_of_room,
   );
@@ -173,16 +169,32 @@ const MeasuringQuestionnaire = ({route}) => {
     marginBottom: 25,
   };
   const onPress = () => {
+    const param = {
+      toastFun: (msg, type) => {
+        toast?.show(msg, {
+          type: type,
+          placement: 'bottom',
+          duration: 4000,
+          offset: 30,
+          animationType: 'slide-in ',
+        });
+      },
+      cb: () => {
+        userData?.role == 'Surveyor'
+          ? setModalVisible(!modalVisible)
+          : navigationRef.navigate('Home');
+      },
+    };
     const cb = () => {
       userData?.role == 'Surveyor'
         ? setModalVisible(!modalVisible)
         : navigationRef.navigate('Home');
     };
     userData?.role == 'Surveyor'
-      ? dispatch(submitQuestionnaire(data, cb))
+      ? dispatch(submitQuestionnaire(data, param))
       : dispatch(editMeasuring(data, cb));
     // :getData()
-    // : console.log('data----------------------',data);;
+    // : console.log('data----------------------',data);
   };
   const DeleteImage = (image, key) => {
     const param = {

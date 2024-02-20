@@ -12,7 +12,7 @@ import {
   UPDATE_PROFILE,
 } from '../constants';
 
-function* getProfile() {
+function* getProfile(action) {
   try {
     const token = yield call(AsyncStorage.getItem, 'token');
     const requestOptions = {
@@ -27,20 +27,15 @@ function* getProfile() {
       `${url}${APIS.GET_PROFILE}`,
       requestOptions,
     );
-    if (response.ok) {
-      const responseData = yield response.json();
+    const responseData = yield response.json();
+    if (responseData?.status) {
       // console.log(responseData, 'getProfile response --');
       yield put({type: SET_USER_DATA, data: responseData?.data});
       yield put({type: SET_USER_TOKEN, data: responseData?.token});
       //   yield put({type: GET_JOBS, data: 'Pending'});
     } else {
-      const errorData = yield response.json();
-      console.error(
-        'getProfile request failed:',
-        response.status,
-        response.statusText,
-        errorData,
-      );
+      console.log(responseData, 'responseData----', action?.data?.toastFun);
+      action?.data?.toastFun(responseData?.message, 'danger');
     }
   } catch (error) {
     console.error('An error occurred during getProfile:', error);
@@ -49,7 +44,7 @@ function* getProfile() {
 
 function* updatePassword(action) {
   try {
-    const {old_password, new_password} = action.data;
+    const {old_password, new_password} = action.data?.data;
     const token = yield call(AsyncStorage.getItem, 'token');
     const requestOptions = {
       method: 'POST',
@@ -67,24 +62,17 @@ function* updatePassword(action) {
       `${url}${APIS.UPDATE_PASSWORD}`,
       requestOptions,
     );
-    if (response.ok) {
-      const responseData = yield response.json();
+    const responseData = yield response.json();
+    if (responseData?.status) {
       console.log(responseData, 'updatePassword response --');
       navigationRef.navigate('Home');
     } else {
-      const errorData = yield response.json();
-      console.error(
-        'updatePassword request failed:',
-        response.status,
-        response.statusText,
-        errorData,
-      );
+      action.data?.toastFun(responseData?.message, 'danger');
     }
   } catch (error) {
     console.error('An error occurred during updatePassword:', error);
   }
 }
-
 function* deleteAccount(action) {
   try {
     const token = yield call(AsyncStorage.getItem, 'token');
@@ -94,30 +82,21 @@ function* deleteAccount(action) {
         'Content-Type': 'application/json',
         Authorization: `Bearer ${JSON.parse(token)}`,
       },
-      //   body: JSON.stringify({
-      //   }),
     };
     const response = yield call(
       fetch,
       `${url}${APIS.DELETE_ACCOUNT}`,
       requestOptions,
     );
-    if (response.ok) {
-      const responseData = yield response.json();
+    const responseData = yield response.json();
+    if (responseData?.status) {
       console.log(responseData, 'deleteAccount response --');
-
       navigationRef.reset({
         index: 0,
         routes: [{name: 'Root'}],
       });
     } else {
-      const errorData = yield response.json();
-      console.error(
-        'deleteAccount request failed:',
-        response.status,
-        response.statusText,
-        errorData,
-      );
+      action?.data?.toastFun(responseData?.message, 'danger');
     }
   } catch (error) {
     console.error('An error occurred during deleteAccount:', error);
@@ -133,24 +112,21 @@ function* updateProfile(action) {
         'Content-Type': 'application/json',
         Authorization: `Bearer ${JSON.parse(token)}`,
       },
+      body: JSON.stringify({
+        name,
+      }),
     };
     const response = yield call(
       fetch,
       `${url}${APIS.UPDATE_PROFILE}`,
       requestOptions,
     );
-    if (response.ok) {
-      const responseData = yield response.json();
+    const responseData = yield response.json();
+    if (responseData?.status) {
       console.log(responseData, 'updateProfile response --');
       navigationRef.navigate('Home');
     } else {
-      const errorData = yield response.json();
-      console.error(
-        'updateProfile request failed:',
-        response.status,
-        response.statusText,
-        errorData,
-      );
+      action?.data?.toastFun(responseData?.message, 'danger');
     }
   } catch (error) {
     console.error('An error occurred during updateProfile:', error);

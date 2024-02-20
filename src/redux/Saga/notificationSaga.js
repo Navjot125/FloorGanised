@@ -8,7 +8,7 @@ import {setLoader} from '../actions/Loader';
 function* getNotification(action) {
   try {
     yield put(setLoader(true));
-    const {offset} = action.data;
+    const {offset} = action.data?.offset;
     const token = yield call(AsyncStorage.getItem, 'token');
     const queryParams = `offset=${encodeURIComponent(offset)}`;
     const requestOptions = {
@@ -20,17 +20,11 @@ function* getNotification(action) {
     };
     const urlWithParams = `${url}${APIS.GET_NOTIFICATIONS}?${queryParams}`;
     const response = yield call(fetch, urlWithParams, requestOptions);
-    if (response.ok) {
-      const responseData = yield response.json();
-      action.callBack(responseData?.data);
+    const responseData = yield response.json();
+    if (responseData?.status) {
+      action?.data?.cb(responseData?.data);
     } else {
-      const errorData = yield response.json();
-      console.error(
-        'getNotification request failed:',
-        response.status,
-        response.statusText,
-        errorData,
-      );
+      action?.data?.toastFun(responseData?.message, 'danger');
     }
   } catch (error) {
     console.error('An error occurred during getNotification:', error);

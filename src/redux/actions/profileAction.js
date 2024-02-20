@@ -1,8 +1,9 @@
 import { DELETE_ACCOUNT, GET_PROFILE, UPDATE_PASSWORD, UPDATE_PROFILE } from "../constants";
 
-export function getProfile(){
+export function getProfile(item){
     return{
         type:GET_PROFILE,
+        data:item
     }
 }   
 export function updatePasswordRequest(item){

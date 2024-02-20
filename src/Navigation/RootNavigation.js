@@ -9,11 +9,13 @@ import {FitterStackNavigator} from './FitterNavigator';
 import {useDispatch, useSelector} from 'react-redux';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {getProfile} from '../redux/actions/profileAction';
+import {useToast} from 'react-native-toast-notifications';
 
 const Stack = createNativeStackNavigator();
 export const navigationRef = createNavigationContainerRef();
 
 const RootNavigation = () => {
+  const toast = useToast();
   const userRole = useSelector(
     state => state?.onBoardingreducer?.userData?.role,
   );
@@ -23,6 +25,17 @@ const RootNavigation = () => {
     route: '',
     role: '',
   });
+  const param = {
+    toastFun: (msg, type) => {
+      toast?.show(msg, {
+        type: type,
+        placement: 'bottom',
+        duration: 4000,
+        offset: 30,
+        animationType: 'slide-in ',
+      });
+    },
+  };
   state
     ? useEffect(() => {
         dispatch(getProfile());

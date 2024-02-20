@@ -17,41 +17,49 @@ import {RadioButton} from 'react-native-paper';
 import {COLORS} from '../../../utils/theme';
 import Back from '../../../components/BackButton/Back';
 import {scale} from 'react-native-size-matters';
-import { useDispatch } from 'react-redux';
-import { sendOtp } from '../../../redux/actions/onBoardingAction';
+import {useDispatch} from 'react-redux';
+import {sendOtp} from '../../../redux/actions/onBoardingAction';
+import {useToast} from 'react-native-toast-notifications';
 
 const ForgotPassword = () => {
-  const dispatch = useDispatch()
-  const [email, setEmail] = useState('navjots.indiit@gmail.com');
+  const dispatch = useDispatch();
+  const toast = useToast();
+  const [email, setEmail] = useState();
   const [selectedOption, setSelectedOption] = useState(null);
   const options = ['Fitter', 'Surveyor'];
   const handleOptionPress = option => {
     setSelectedOption(option);
   };
   const onPress = () => {
-    // navigationRef.reset({
-    //   index: 0,
-    //   routes: [{name: 'tabs'}],
-    // });
-    dispatch(sendOtp(email))
-  };
-  const onBackPress = () => {
-    navigationRef.goBack();
+    param = {
+      email,
+      toastFun: (msg, type) => {
+        toast.show(msg, {
+          type: type,
+          placement: 'bottom',
+          duration: 4000,
+          offset: 30,
+          animationType: 'slide-in ',
+        });
+      },
+    };
+    dispatch(sendOtp(param));
   };
 
   return (
-    <View style={{flex: 1, paddingTop: Platform.OS === 'android' ? 0 : scale(120)}}>
+    <View
+      style={{flex: 1, paddingTop: Platform.OS === 'android' ? 0 : scale(120)}}>
       <CommonBackground title={'Forgot Password'} />
       <SafeAreaView />
       <ScrollView
         contentContainerStyle={{
-          paddingTop: Platform?.OS === 'android' ? height / 7.8 : height / 105.5,
+          paddingTop:
+            Platform?.OS === 'android' ? height / 7.8 : height / 105.5,
           marginTop: scale(144),
           flexGrow: 1,
         }}
         showsVerticalScrollIndicator={false}
-        automaticallyAdjustKeyboardInsets
-      >
+        automaticallyAdjustKeyboardInsets>
         <View style={styles.innerBox}>
           <Text
             style={{

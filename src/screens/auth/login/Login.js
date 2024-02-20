@@ -22,15 +22,17 @@ import {PostApi} from '../../../services/ApisMethods';
 import {setUserData} from '../../../redux/reducers/User';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {loginRequest} from '../../../redux/actions/onBoardingAction';
+import {useToast} from 'react-native-toast-notifications';
 
 const Login = () => {
+  const toast = useToast();
   const [token, setToken] = useState();
   useEffect(() => {
     getData();
   }, []);
   const getData = async () => {
     const token = await AsyncStorage.getItem('fcmToken');
-     setToken(token)
+    setToken(token);
   };
 
   const dispatch = useDispatch();
@@ -70,9 +72,20 @@ const Login = () => {
   });
 
   const handleLoginSaga = () => {
-    dispatch(loginRequest(userDataState));
+    param = {
+      userDataState,
+      toastFun: (msg, type) => {
+        toast.show(msg, {
+          type: type,
+          placement: 'bottom',
+          duration: 4000,
+          offset: 30,
+          animationType: 'slide-in ',
+        });
+      },
+    };
+    dispatch(loginRequest(param));
   };
-console.log('userDataState-------------------',userDataState);
   return (
     <View
       style={{

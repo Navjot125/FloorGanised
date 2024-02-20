@@ -8,22 +8,19 @@ import {
   SIGNUP_REQUEST,
   VERIFY_OTP,
 } from '../constants';
+import {useDispatch} from 'react-redux';
 import {url} from '../../services/Config';
 import APIS from '../../services/apis';
 import {navigationRef} from '../../App';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {showMessage} from 'react-native-flash-message';
-
+import {useToast} from 'react-native-toast-notifications';
+import {showToastAction} from '../actions/onBoardingAction';
 function* signup(action) {
+  console.log('action', action?.data);
   try {
-    const {email, password, name, selectedOption, token} = action.data;
-    console.log(
-      'email, password, name, selectedOption',
-      email,
-      password,
-      name,
-      selectedOption,
-    );
+    const {email, password, name, selectedOption, token} =
+      action.data?.signUpData;
     const requestOptions = {
       method: 'POST',
       headers: {
@@ -58,12 +55,7 @@ function* signup(action) {
       });
     } else {
       const errorData = yield response.json();
-      console.error(
-        'Signup request failed:',
-        response.status,
-        response.statusText,
-        errorData,
-      );
+      action?.data?.toastFun(errorData?.message, 'danger');
     }
   } catch (error) {
     console.error('An error occurred during Signup:', error);
@@ -72,7 +64,7 @@ function* signup(action) {
 
 function* login(action) {
   try {
-    const {email, password, selectedOption, token} = action.data;
+    const {email, password, selectedOption, token} = action.data?.userDataState;
     const requestOptions = {
       method: 'POST',
       headers: {
@@ -106,36 +98,17 @@ function* login(action) {
       });
     } else {
       const errorData = yield response.json();
-      showMessage({
-        // message: remoteMessage?.notification?.title?.toString(),
-        message: errorData?.message,
-        type: 'danger',
-        description: errorData?.message,
-        //  description(
-        //   remoteMessage?.notification?.body?.toString()
-        // ),
-        style: {
-          justifyContent: 'flex-end',
-          paddingTop: 30,
-          borderRadius: 20,
-        },
-        duration: 3500,
-      });
-      console.error(
-        'Login request failed:',
-        response.status,
-        response.statusText,
-        errorData,
-      );
+      action?.data?.toastFun(errorData?.message, 'danger');
     }
   } catch (error) {
-    console.error('An error occurred during login:', error);
+    // action?.data?.toastFun(error)
+    console.log('An error occurred during login:', error);
   }
 }
 
 function* sendOtp(action) {
   try {
-    const email = action.data;
+    const email = action.data?.email;
     const requestOptions = {
       method: 'POST',
       headers: {
@@ -156,16 +129,11 @@ function* sendOtp(action) {
       console.log(responseData, 'resdponse of sendOtp');
       navigationRef.navigate('VerifyOTP', {
         reset: 'ResetPassword',
-        data: action.data,
+        data: action.data?.email,
       });
     } else {
       const errorData = yield response.json();
-      console.error(
-        'sendOtp request failed:',
-        response.status,
-        response.statusText,
-        errorData,
-      );
+      action?.data?.toastFun(errorData?.message, 'danger');
     }
   } catch (error) {
     console.error('An error occurred during sendOtp:', error);
@@ -174,7 +142,8 @@ function* sendOtp(action) {
 
 function* verifyOtp(action) {
   try {
-    const {email, code} = action.data;
+    const code = action.data?.code;
+    const email = action.data?.email;
     const requestOptions = {
       method: 'POST',
       headers: {
@@ -199,12 +168,7 @@ function* verifyOtp(action) {
       });
     } else {
       const errorData = yield response.json();
-      console.error(
-        'verifyOtp request failed:',
-        response.status,
-        response.statusText,
-        errorData,
-      );
+      action?.data?.toastFun(errorData?.message, 'danger');
     }
   } catch (error) {
     console.error('An error occurred during verifyOtp:', error);
@@ -213,7 +177,7 @@ function* verifyOtp(action) {
 
 function* resetPassword(action) {
   try {
-    const {cPassword, unique_id} = action.data;
+    const {cPassword, unique_id} = action.data?.data;
     const requestOptions = {
       method: 'POST',
       headers: {
@@ -235,12 +199,7 @@ function* resetPassword(action) {
       console.log(responseData, 'resdponse of resetPassword');
     } else {
       const errorData = yield response.json();
-      console.error(
-        'resetPassword request failed:',
-        response.status,
-        response.statusText,
-        errorData,
-      );
+      action?.data?.toastFun(errorData?.message, 'danger');
     }
   } catch (error) {
     console.error('An error occurred during resetPassword:', error);
