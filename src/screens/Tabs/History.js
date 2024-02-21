@@ -8,17 +8,19 @@ import {
 } from 'react-native';
 import React, {useEffect, useState} from 'react';
 import {COLORS} from '../../utils/theme';
-import SkeletonPlaceholder from 'react-native-skeleton-placeholder';
 import Header from '../../components/Header/Header';
 import {scale} from 'react-native-size-matters';
 import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons';
 import {useDispatch, useSelector} from 'react-redux';
 import {getJobs} from '../../redux/actions/homeAction';
 import {useFocusEffect} from '@react-navigation/native';
+import {useToast} from 'react-native-toast-notifications';
+import ShimmerEffect from '../../components/ShimmerEffect/Shimmer';
 
 const History = () => {
   const [jobListing, setJobListing] = useState();
   const dispatch = useDispatch();
+  const toast = useToast();
   const loader = useSelector(state => state?.loaderReducer?.loader);
 
   // useEffect(() => {
@@ -30,6 +32,15 @@ const History = () => {
         status: 'Complete',
         cb: data => {
           setJobListing(data);
+        },
+        toastFun: (msg, type) => {
+          toast.show(msg, {
+            type: type,
+            placement: 'bottom',
+            duration: 4000,
+            offset: 30,
+            animationType: 'slide-in ',
+          });
         },
       };
       dispatch(getJobs(param));
@@ -114,20 +125,8 @@ const History = () => {
           borderTopLeftRadius: scale(20),
         }}>
         {loader ? (
-          <SkeletonPlaceholder borderRadius={15}>
-            <View
-              style={{height: 105, marginTop: 10, marginHorizontal: 10}}></View>
-            <View
-              style={{height: 105, marginTop: 10, marginHorizontal: 10}}></View>
-            <View
-              style={{height: 105, marginTop: 10, marginHorizontal: 10}}></View>
-            <View
-              style={{height: 105, marginTop: 10, marginHorizontal: 10}}></View>
-            <View
-              style={{height: 105, marginTop: 10, marginHorizontal: 10}}></View>
-            <View
-              style={{height: 105, marginTop: 10, marginHorizontal: 10}}></View>
-          </SkeletonPlaceholder>
+         
+         <ShimmerEffect />
         ) : jobListing?.length ? (
           <FlatList
             data={jobListing}

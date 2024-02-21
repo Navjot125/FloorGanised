@@ -17,9 +17,9 @@ import {scale} from 'react-native-size-matters';
 import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons';
 import {useDispatch, useSelector} from 'react-redux';
 import {getJobs, jobDetail} from '../../redux/actions/homeAction';
-import SkeletonPlaceholder from 'react-native-skeleton-placeholder';
 import moment from 'moment';
 import {useToast} from 'react-native-toast-notifications';
+import ShimmerEffect from '../../components/ShimmerEffect/Shimmer';
 const Home = props => {
   const selectedDate = useSelector(state => state?.DateReducer?.selectedDate);
   const loader = useSelector(state => state?.loaderReducer?.loader);
@@ -70,6 +70,7 @@ const Home = props => {
         });
       },
     };
+    console.log('item', item);
     return (
       <TouchableOpacity style={styles.container}>
         <View
@@ -137,7 +138,11 @@ const Home = props => {
                   fontSize: 12,
                   fontWeight: 500,
                 }}>
-                {item?.fitter_status == 'Pending'
+                {userData?.role == 'Surveyor'
+                  ? item?.surveyor_status == 'Pending'
+                    ? 'Details'
+                    : item?.surveyor_status
+                  : item?.fitter_status == 'Pending'
                   ? 'Details'
                   : item?.fitter_status}
               </Text>
@@ -176,19 +181,7 @@ const Home = props => {
         }}>
         <CalendarStrip />
         {loader ? (
-          <SkeletonPlaceholder
-            highlightColor="#D3D3D3"
-            backgroundColor="#FFFFFF"
-            borderRadius={15}>
-            <View
-              style={{height: 145, marginTop: 10, marginHorizontal: 10}}></View>
-            <View
-              style={{height: 145, marginTop: 10, marginHorizontal: 10}}></View>
-            <View
-              style={{height: 145, marginTop: 10, marginHorizontal: 10}}></View>
-            <View
-              style={{height: 145, marginTop: 10, marginHorizontal: 10}}></View>
-          </SkeletonPlaceholder>
+          <ShimmerEffect />
         ) : jobListing?.length ? (
           <FlatList
             data={jobListing}

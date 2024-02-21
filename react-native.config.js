@@ -10,10 +10,21 @@
 
 // module.exports = mergeConfig(getDefaultConfig(__dirname), config);
 
+// module.exports = {
+//     project: {
+//       ios: {},
+//       android: {},
+//     },
+//     // assets: ['./src/assets/fonts'],
+//   };
+
 module.exports = {
-    project: {
-      ios: {},
-      android: {},
+  project: {
+    android: {
+      unstable_reactLegacyComponentNames: ['RNShimmeringView'],
     },
-    // assets: ['./src/assets/fonts'],
-  };
+    ios: {
+      unstable_reactLegacyComponentNames: ['RNShimmeringView'],
+    },
+  },
+};

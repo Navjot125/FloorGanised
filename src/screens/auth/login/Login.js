@@ -1,4 +1,5 @@
 import {
+  Keyboard,
   KeyboardAvoidingView,
   Platform,
   SafeAreaView,
@@ -14,7 +15,7 @@ import CommonTextInput from '../../../components/Input/InputBox';
 import CommonButton from '../../../components/CommonButton/CommonButton';
 import CommonBackground from '../../../components/CommonBG/CommonBackground';
 import {height} from '../../../assets/styles/styles';
-import {RadioButton} from 'react-native-paper';
+import {RadioButton, TextInput} from 'react-native-paper';
 import {COLORS} from '../../../utils/theme';
 import * as Yup from 'yup';
 import {useDispatch, useSelector} from 'react-redux';
@@ -27,6 +28,7 @@ import {useToast} from 'react-native-toast-notifications';
 const Login = () => {
   const toast = useToast();
   const [token, setToken] = useState();
+  const [hidePass, setHidePass] = useState(true);
   useEffect(() => {
     getData();
   }, []);
@@ -47,17 +49,6 @@ const Login = () => {
   useEffect(() => {
     setUserDataState({email, password, token});
   }, [email, password]);
-  const options = ['Fitter', 'Surveyor'];
-  const handleOptionPress = option => {
-    setSelectedOption(option);
-  };
-  const onPress = () => {
-    // navigationRef.reset({
-    //   index: 0,
-    //   routes: [{name: 'tabs'}],
-    // });
-    navigationRef.navigate('VerifyOTP');
-  };
 
   const validationSchema = Yup.object().shape({
     email: Yup.string()
@@ -66,25 +57,42 @@ const Login = () => {
     password: Yup.string()
       .required('Password is required')
       .min(8, 'Password must be at least 8 characters'),
-    // selectedOption: Yup.string()
-    //   .required('Role is required')
-    //   .oneOf(['Fitter', 'Surveyor'], 'Role must be either Fitter or Surveyor'),
   });
 
-  const handleLoginSaga = () => {
-    param = {
-      userDataState,
-      toastFun: (msg, type) => {
-        toast.show(msg, {
-          type: type,
-          placement: 'bottom',
-          duration: 4000,
-          offset: 30,
-          animationType: 'slide-in ',
+  const handleLoginSaga = async () => {
+    try {
+      await validationSchema.validate({email, password}, {abortEarly: false});
+      param = {
+        userDataState,
+        toastFun: (msg, type) => {
+          toast.show(msg, {
+            type: type,
+            placement: 'bottom',
+            duration: 4000,
+            offset: 30,
+            animationType: 'slide-in ',
+          });
+        },
+      };
+      dispatch(loginRequest(param));
+    } catch (error) {
+      console.log(error, '------errors');
+      const validationErrors = {};
+      if (error.inner) {
+        error.inner.forEach(err => {
+          console.log(err, 'checking it ', err.path);
+          validationErrors[err.path] = err.message;
         });
-      },
-    };
-    dispatch(loginRequest(param));
+      }
+      setErrors(validationErrors);
+      toast.show(error.errors ? error.errors[0] : error, {
+        type: 'danger',
+        placement: 'bottom',
+        duration: 4000,
+        offset: 30,
+        animationType: 'slide-in ',
+      });
+    }
   };
   return (
     <View
@@ -106,11 +114,24 @@ const Login = () => {
             <CommonTextInput
               placeholder="Email Adress"
               value={email}
+              keyboardType="email-address"
               onChangeText={newText => setEmail(newText)}
             />
             <CommonTextInput
               placeholder="Password"
               value={password}
+              right={
+                <TextInput.Icon
+                  onPress={() => {
+                    Keyboard.dismiss(), setHidePass(!hidePass);
+                  }}
+                  style={styles.rightpad}
+                  icon={hidePass ? 'eye-off' : 'eye'}
+                  size={20}
+                  iconColor={COLORS.grey}
+                />
+              }
+              secureTextEntry={hidePass ? true : false}
               onChangeText={newText => setPassword(newText)}
             />
           </View>
@@ -122,7 +143,6 @@ const Login = () => {
           <CommonButton
             style={styles.Button}
             title="Login"
-            // onPress={handleLogin}
             onPress={handleLoginSaga}
           />
         </View>

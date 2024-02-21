@@ -7,11 +7,11 @@ import {useDispatch, useSelector} from 'react-redux';
 import {getNotifications} from '../../redux/actions/Notifications';
 import {useFocusEffect} from '@react-navigation/native';
 import moment from 'moment';
-import SkeletonPlaceholder from 'react-native-skeleton-placeholder';
-import { useToast } from 'react-native-toast-notifications';
+import {useToast} from 'react-native-toast-notifications';
+import ShimmerEffect from '../../components/ShimmerEffect/Shimmer';
 const Notifications = () => {
   const dispatch = useDispatch();
-  const toast = useToast()
+  const toast = useToast();
   const [viewFullText, setViewFullText] = useState(null);
   const [offset, setOffset] = useState(0);
   const [notifications, setNotifications] = useState();
@@ -162,20 +162,7 @@ const Notifications = () => {
           borderTopLeftRadius: scale(20),
         }}>
         {loader ? (
-          <SkeletonPlaceholder borderRadius={15}>
-            <View
-              style={{height: 105, marginTop: 10, marginHorizontal: 10}}></View>
-            <View
-              style={{height: 105, marginTop: 10, marginHorizontal: 10}}></View>
-            <View
-              style={{height: 105, marginTop: 10, marginHorizontal: 10}}></View>
-            <View
-              style={{height: 105, marginTop: 10, marginHorizontal: 10}}></View>
-            <View
-              style={{height: 105, marginTop: 10, marginHorizontal: 10}}></View>
-            <View
-              style={{height: 105, marginTop: 10, marginHorizontal: 10}}></View>
-          </SkeletonPlaceholder>
+          <ShimmerEffect />
         ) : (
           <FlatList
             data={notifications}

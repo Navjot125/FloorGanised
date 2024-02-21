@@ -9,6 +9,9 @@ export default function CommonTextInput({
   value,
   onChangeText,
   style,
+  keyboardType,
+  right,
+  secureTextEntry,
   ...props
 }) {
   return (
@@ -20,7 +23,10 @@ export default function CommonTextInput({
         underlineColor="transparent"
         selectionColor={COLORS.primary}
         placeholder={placeholder}
+        keyboardType={keyboardType}
         value={value}
+        right={right}
+        secureTextEntry={secureTextEntry}
         onChangeText={onChangeText}
         placeholderTextColor={'rgba(0,0,0,0.5)'}
         ref={ref =>
