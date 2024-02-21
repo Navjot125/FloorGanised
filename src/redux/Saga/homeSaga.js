@@ -41,7 +41,7 @@ function* jobDetail(action) {
     const {_id, stack, screen, toastFun} = action.data;
     const token = yield call(AsyncStorage.getItem, 'token');
     const queryParams = `job_id=${encodeURIComponent(_id)}`;
-    console.log(queryParams,'0000000');
+    console.log(queryParams, '0000000');
     const requestOptions = {
       method: 'GET',
       headers: {

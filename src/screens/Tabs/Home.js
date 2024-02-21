@@ -70,7 +70,6 @@ const Home = props => {
         });
       },
     };
-    console.log('item', item);
     return (
       <TouchableOpacity style={styles.container}>
         <View

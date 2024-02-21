@@ -49,6 +49,7 @@ const History = () => {
   const renderItem = ({item, index}) => {
     return (
       <View style={styles.container}>
+        {console.log('item', item)}
         <View
           style={{
             height: '45%',
@@ -106,7 +107,9 @@ const History = () => {
                 fontWeight: 600,
                 color: COLORS.white,
               }}>
-              {item?.surveyor_status}
+              {item?.surveyor_status
+                ? item?.surveyor_status
+                : item?.fitter_status}
             </Text>
           </TouchableOpacity>
         </View>
@@ -125,8 +128,7 @@ const History = () => {
           borderTopLeftRadius: scale(20),
         }}>
         {loader ? (
-         
-         <ShimmerEffect />
+          <ShimmerEffect />
         ) : jobListing?.length ? (
           <FlatList
             data={jobListing}

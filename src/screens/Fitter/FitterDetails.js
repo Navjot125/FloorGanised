@@ -17,23 +17,33 @@ import Header from '../../components/Header/Header';
 import {COLORS} from '../../utils/theme';
 import CommonButton from '../../components/CommonButton/CommonButton';
 import {navigationRef} from '../../App';
-import {useDispatch} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import {startFittingAction} from '../../redux/actions/homeAction';
 import {ImageUrl} from '../../services/Config';
 const FitterDetail = ({route}) => {
   const dispatch = useDispatch();
   const {responseData, measurinDetails} = route.params;
-  const [startFitting, setStartFitting] = useState(false);
+  const userData = useSelector(state => state?.onBoardingreducer?.userData);
+  const stack = userData?.role == 'Surveyor' ? 'Main' : 'Fitter';
+  const screen = userData?.role == 'Surveyor' ? 'Detail' : 'FitterDetail';
   const onStart = () => {
     const param = {
       job_id: responseData?._id,
       fitter_status: 'On-work',
     };
     // console.log(param,'param----------');
-    responseData?.fitter_status == 'On-work'
+    // responseData?.fitter_status == 'On-work'
+    responseData?.fitter_status == 'Pending'
       ? dispatch(startFittingAction(param))
-      : console.log('Job Complete');
-    // startFitting ? navigationRef.navigate('Home') : setStartFitting(true);
+      : // navigationRef.navigate('JobCompleteForm'),
+        navigationRef.navigate('Fitter', {
+          screen: 'JobCompleteForm',
+          params: {
+            responseData: responseData,
+            measurinDetails: measurinDetails,
+          },
+        });
+    console.log(responseData?.fitter_status, '--responseData?.fitter_status');
   };
   const style = {
     height: 24,
@@ -269,15 +279,12 @@ const FitterDetail = ({route}) => {
                       marginTop: 10,
                     }}
                     resizeMode="cover"
-                    // "1707818159046.jpeg",
                     source={{uri: `${ImageUrl}${item}`}}
-                    // source={require('../../assets/images/profile1.jpg')}
                   />
                 ))}
               </View>
             </View>
           )}
-          {/* join_in_floor */}
           {measurinDetails?.join_in_floor && (
             <View
               style={{
@@ -457,7 +464,7 @@ const FitterDetail = ({route}) => {
               </Text>
             </View>
           )}
-          {measurinDetails?.furniture_images && (
+          {measurinDetails?.furniture_images?.length ? (
             <View
               style={{
                 paddingVertical: 15,
@@ -485,7 +492,7 @@ const FitterDetail = ({route}) => {
                 ))}
               </View>
             </View>
-          )}
+          ) : null}
           {measurinDetails?.furniture_notes && (
             <View style={{marginVertical: 10}}>
               <Text style={{fontSize: 12, fontWeight: 400, lineHeight: 20}}>
@@ -524,7 +531,7 @@ const FitterDetail = ({route}) => {
               </Text>
             </View>
           )}
-          {measurinDetails?.floor_preparation_images && (
+          {measurinDetails?.floor_preparation_images?.length ? (
             <View
               style={{
                 paddingVertical: 15,
@@ -556,7 +563,7 @@ const FitterDetail = ({route}) => {
                 )}
               </View>
             </View>
-          )}
+          ) : null}
           {measurinDetails?.how_many_doors_to_cut && (
             <View
               style={{
