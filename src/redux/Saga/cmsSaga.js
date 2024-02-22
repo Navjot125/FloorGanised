@@ -6,6 +6,7 @@ import {url} from '../../services/Config';
 import {CONTACT_US} from '../constants';
 import {setLoader} from '../actions/Loader';
 function* contactUs(action) {
+  console.log('contactus API --------------------------');
   try {
     yield put(setLoader(true));
     const message = action.data?.message;

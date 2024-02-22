@@ -6,7 +6,7 @@ import {
   TouchableOpacity,
   SafeAreaView,
 } from 'react-native';
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {height, width} from '../../assets/styles/styles';
 import Header from '../../components/Header/Header';
 import {COLORS} from '../../utils/theme';
@@ -16,72 +16,110 @@ import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons';
 import Feather from 'react-native-vector-icons/Feather';
 import CommonButton from '../../components/CommonButton/CommonButton';
 import {navigationRef} from '../../App';
+import {useFocusEffect} from '@react-navigation/native';
+import {useDispatch, useSelector} from 'react-redux';
+import {jobDetail} from '../../redux/actions/homeAction';
+import ShimmerEffect from '../../components/ShimmerEffect/Shimmer';
+
 const Detail = ({route}) => {
+  const dispatch = useDispatch();
+  const loader = useSelector(state => state?.loaderReducer?.loader);
+  const job_id = route?.params?._id;
+  const [responseData, setResponseData] = useState();
   console.log('route.params;', route.params);
-  const {responseData} = route.params;
   const onStart = () => {
     navigationRef.navigate('MeasuringQuestionnaire', responseData);
   };
+  let param = {
+    job_id,
+    cb: res => {
+      res?.measuring_details
+        ? setMeasurinDetails(res?.measuring_details)
+        : null;
+      res?.data ? setResponseData(res?.data) : null;
+    },
+    toastFun: (msg, type) => {
+      toast.show(msg, {
+        type: type,
+        placement: 'bottom',
+        duration: 4000,
+        offset: 30,
+        animationType: 'slide-in ',
+      });
+    },
+  };
+  useFocusEffect(
+    React.useCallback(() => {
+      dispatch(jobDetail(param));
+    }, []),
+  );
+
   return (
     <View style={{flex: 1, backgroundColor: 'black'}}>
       <SafeAreaView />
       <Header title={'Details'} back={true} />
       <View style={styles.container}>
-        <View style={styles.mainBox}>
-          <View style={styles.userName}>
-            <Text style={{fontWeight: 700, fontSize: 16}}>
-              {responseData?.customer_id?.name}
-            </Text>
-            {/* <Text style={{fontWeight: 700, fontSize: 16}}>$150</Text> */}
-          </View>
-          <View style={styles.details}>
-            <Icon
-              name="office-building-outline"
-              size={20}
-              color={COLORS.secondry}
-            />
-            <Text style={{fontSize: 12, fontWeight: 500, left: scale(10)}}>
-              {responseData?.referal}
-            </Text>
-          </View>
-          <View style={styles.details}>
-            <SimpleLineIcons
-              name="location-pin"
-              size={20}
-              color={COLORS.secondry}
-            />
-            <Text style={{fontSize: 12, fontWeight: 500, left: scale(10)}}>
-              {responseData?.address}
-            </Text>
-          </View>
-          <View style={styles.details}>
-            <Feather name="phone" size={20} color={COLORS.secondry} />
-            <Text style={{fontSize: 12, fontWeight: 500, left: scale(10)}}>
-              {responseData?.customer_id?.phone_number}
-            </Text>
-          </View>
-          <View style={styles.details}>
-            <Feather name="mail" size={20} color={COLORS.secondry} />
-            <Text style={{fontSize: 12, fontWeight: 500, left: scale(10)}}>
-              {responseData?.customer_id?.email}
-            </Text>
-          </View>
-          <View style={{marginTop: 20}}>
-            <Text style={{fontSize: 14, fontWeight: 600}}>Notes</Text>
-            <Text
-              style={{
-                fontSize: 12,
-                fontWeight: 400,
-                marginTop: 10,
-                lineHeight: 18,
-              }}>
-              {responseData?.notes}
-            </Text>
-          </View>
-        </View>
-        <View style={{flex: 1, justifyContent: 'flex-end', bottom: 25}}>
-          <CommonButton onPress={onStart} title={'Start Measuring'} />
-        </View>
+        {loader ? (
+          <ShimmerEffect type="box" />
+        ) : (
+          <>
+            <View style={styles.mainBox}>
+              <View style={styles.userName}>
+                <Text style={{fontWeight: 700, fontSize: 16}}>
+                  {responseData?.customer_id?.name}
+                </Text>
+                {/* <Text style={{fontWeight: 700, fontSize: 16}}>$150</Text> */}
+              </View>
+              <View style={styles.details}>
+                <Icon
+                  name="office-building-outline"
+                  size={20}
+                  color={COLORS.secondry}
+                />
+                <Text style={{fontSize: 12, fontWeight: 500, left: scale(10)}}>
+                  {responseData?.referal}
+                </Text>
+              </View>
+              <View style={styles.details}>
+                <SimpleLineIcons
+                  name="location-pin"
+                  size={20}
+                  color={COLORS.secondry}
+                />
+                <Text style={{fontSize: 12, fontWeight: 500, left: scale(10)}}>
+                  {responseData?.address}
+                </Text>
+              </View>
+              <View style={styles.details}>
+                <Feather name="phone" size={20} color={COLORS.secondry} />
+                <Text style={{fontSize: 12, fontWeight: 500, left: scale(10)}}>
+                  {responseData?.customer_id?.phone_number}
+                </Text>
+              </View>
+              <View style={styles.details}>
+                <Feather name="mail" size={20} color={COLORS.secondry} />
+                <Text style={{fontSize: 12, fontWeight: 500, left: scale(10)}}>
+                  {responseData?.customer_id?.email}
+                </Text>
+              </View>
+              <View style={{marginTop: 20}}>
+                <Text style={{fontSize: 14, fontWeight: 600}}>Notes</Text>
+                <Text
+                  style={{
+                    fontSize: 12,
+                    fontWeight: 400,
+                    marginTop: 10,
+                    lineHeight: 18,
+                  }}>
+                  {responseData?.notes}
+                </Text>
+              </View>
+            </View>
+            <View style={{flex: 1, justifyContent: 'flex-end', bottom: 25}}>
+              <CommonButton onPress={onStart} title={'Start Measuring'} />
+            </View>
+          </>
+        )}
       </View>
     </View>
   );
@@ -98,7 +136,7 @@ const styles = StyleSheet.create({
     padding: 20,
   },
   mainBox: {
-    height: scale(359),
+    // height: scale(359),
     backgroundColor: COLORS.white,
     shadowColor: '#000',
     shadowOffset: {
@@ -112,6 +150,7 @@ const styles = StyleSheet.create({
     // alignItems: 'center',
     padding: 10,
     paddingHorizontal: 30,
+    paddingBottom: 20,
   },
   userName: {
     height: scale(50),

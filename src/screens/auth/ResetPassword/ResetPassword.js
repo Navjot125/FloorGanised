@@ -31,6 +31,7 @@ const ResetPassword = ({route}) => {
   const [modalCondition, setModalCondition] = useState(false);
   const [newPassword, setNewPassword] = useState();
   const [error, setErrors] = useState();
+  const [disableButton, setDisableButton] = useState(false);
   const onBackPress = () => {
     navigationRef.goBack();
   };
@@ -46,6 +47,10 @@ const ResetPassword = ({route}) => {
 
   const handleResetPassword = async () => {
     try {
+      setDisableButton(true);
+      setTimeout(() => {
+        setDisableButton(false);
+      }, 4000);
       await validationSchema.validate(
         {newPassword, cPassword},
         {abortEarly: false},
@@ -138,6 +143,7 @@ const ResetPassword = ({route}) => {
           <CommonButton
             style={styles.Button}
             title="Reset Password"
+            disableButton={disableButton}
             onPress={handleResetPassword}
           />
         </View>

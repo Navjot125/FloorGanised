@@ -19,9 +19,10 @@ import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons';
 import Feather from 'react-native-vector-icons/Feather';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {ImageUrl} from '../../services/Config';
+import CheckBox from '../../components/CheckBox/CheckBox';
 const JobCompleteForm = ({route}) => {
   const [selectedItems, setSelectedItems] = useState(jobForm);
-  const [checked, setChecked] = useState(false);
+  const [checked, setChecked] = useState();
   const {responseData, measurinDetails} = route.params;
   // const toggleTaskCompletion = name => {
   //   setSelectedItems(prevTasks =>
@@ -206,6 +207,10 @@ const JobCompleteForm = ({route}) => {
   //   );
   // };
 
+  const addValues = value => {
+    checked ? setChecked([...checked, value]) : setChecked([value]);
+  };
+  console.log('checked--------------', checked);
   return (
     // <View style={{flex: 1, backgroundColor: 'black'}}>
     //   <SafeAreaView />
@@ -232,41 +237,64 @@ const JobCompleteForm = ({route}) => {
       >
         <View style={[styles.mainBox, {marginTop: 20}]}>
           {measurinDetails?.type_of_room && (
-            <View
-              style={{
-                flexDirection: 'row',
-                justifyContent: 'space-between',
-                paddingVertical: 15,
-              }}>
-              <Text style={{fontSize: 12, fontWeight: 600}}>Type of room</Text>
-              <Text
+            <View style={styles.commonContainer}>
+              <CheckBox
+                value={checked?.includes('type_of_room')}
+                // return array.includes('floor');
+                onPress={() => addValues('type_of_room')}
+                // setChecked={setChecked}
+                checked={checked}
+              />
+              <View
                 style={{
-                  fontSize: 12,
-                  fontWeight: 400,
-                  width: 70,
-                  textAlign: 'right',
+                  flexDirection: 'row',
+                  justifyContent: 'space-between',
+                  paddingVertical: 15,
+                  paddingLeft: 10,
+                  flex: 1,
                 }}>
-                {measurinDetails?.type_of_room}
-              </Text>
+                <Text style={{fontSize: 12, fontWeight: 600}}>
+                  Type of room
+                </Text>
+                <Text
+                  style={{
+                    fontSize: 12,
+                    fontWeight: 400,
+                    // width: 70,
+                    textAlign: 'right',
+                  }}>
+                  {measurinDetails?.type_of_room}
+                </Text>
+              </View>
             </View>
           )}
           {measurinDetails?.surcharge && (
-            <View
-              style={{
-                flexDirection: 'row',
-                justifyContent: 'space-between',
-                paddingVertical: 15,
-              }}>
-              <Text style={{fontSize: 12, fontWeight: 600}}>Surcharge</Text>
-              <Text
+            <View style={styles.commonContainer}>
+              <CheckBox
+              value={checked?.includes('surcharge')}
+                onPress={() => addValues('surcharge')}
+                // setChecked={setChecked}
+                checked={checked}
+              />
+              <View
                 style={{
-                  fontSize: 12,
-                  fontWeight: 400,
-                  width: 70,
-                  textAlign: 'right',
+                  flexDirection: 'row',
+                  justifyContent: 'space-between',
+                  paddingVertical: 15,
+                  paddingLeft: 10,
+                  flex: 1,
                 }}>
-                ${measurinDetails?.surcharge}
-              </Text>
+                <Text style={{fontSize: 12, fontWeight: 600}}>Surcharge</Text>
+                <Text
+                  style={{
+                    fontSize: 12,
+                    fontWeight: 400,
+                    width: 70,
+                    textAlign: 'right',
+                  }}>
+                  ${measurinDetails?.surcharge}
+                </Text>
+              </View>
             </View>
           )}
           {measurinDetails?.flooring_type && (
@@ -722,12 +750,12 @@ const JobCompleteForm = ({route}) => {
         </View>
         <View style={{flex: 1, justifyContent: 'flex-end', marginVertical: 25}}>
           <CommonButton
+            // onPress={console.log(
+            //   'responseData?.fitter_status ',
+            //   responseData?.fitter_status,
+            // )}
             // onPress={onStart}
-            title={
-              responseData?.fitter_status == 'On-work'
-                ? 'Job Complete'
-                : 'Start Fitting'
-            }
+            title={'Submit'}
           />
         </View>
       </ScrollView>
@@ -780,6 +808,10 @@ const styles = StyleSheet.create({
   details: {
     flexDirection: 'row',
     height: scale(30),
+    alignItems: 'center',
+  },
+  commonContainer: {
+    flexDirection: 'row',
     alignItems: 'center',
   },
 });

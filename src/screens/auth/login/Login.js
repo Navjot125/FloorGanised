@@ -24,6 +24,7 @@ import {setUserData} from '../../../redux/reducers/User';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {loginRequest} from '../../../redux/actions/onBoardingAction';
 import {useToast} from 'react-native-toast-notifications';
+import CustomLoader from '../../../components/CustomLoader/CustomLoader';
 
 const Login = () => {
   const toast = useToast();
@@ -40,6 +41,7 @@ const Login = () => {
   const dispatch = useDispatch();
   const [email, setEmail] = useState('Navjots.indiit@gmail.com');
   const [password, setPassword] = useState('Delhi@1A');
+  const [disableButton, setDisableButton] = useState(false);
   // const [selectedOption, setSelectedOption] = useState(null);
   const [error, setErrors] = useState();
   const [userDataState, setUserDataState] = useState({
@@ -61,6 +63,10 @@ const Login = () => {
 
   const handleLoginSaga = async () => {
     try {
+      setDisableButton(true);
+      setTimeout(() => {
+        setDisableButton(false);
+      }, 4000);
       await validationSchema.validate({email, password}, {abortEarly: false});
       param = {
         userDataState,
@@ -115,7 +121,9 @@ const Login = () => {
               placeholder="Email Adress"
               value={email}
               keyboardType="email-address"
-              onChangeText={newText => setEmail(newText)}
+              onChangeText={newText => {
+                setEmail(newText);
+              }}
             />
             <CommonTextInput
               placeholder="Password"
@@ -143,6 +151,7 @@ const Login = () => {
           <CommonButton
             style={styles.Button}
             title="Login"
+            disableButton={disableButton}
             onPress={handleLoginSaga}
           />
         </View>

@@ -43,7 +43,7 @@ const Signup = () => {
   const [selectedOption, setSelectedOption] = useState(null);
   const [error, setErrors] = useState();
   const [signUpData, setSignUpData] = useState({});
-
+  const [disableButton, setDisableButton] = useState(false);
   useEffect(() => {
     setSignUpData({name, cPassword, email, password, selectedOption, token});
   }, [name, cPassword, email, password, selectedOption]);
@@ -78,6 +78,10 @@ const Signup = () => {
 
   const handleSignup = async () => {
     try {
+      setDisableButton(true);
+      setTimeout(() => {
+        setDisableButton(false);
+      }, 4000);
       await validationSchema.validate(
         {name, email, password, cPassword, selectedOption},
         {abortEarly: false},
@@ -183,6 +187,7 @@ const Signup = () => {
               style={styles.Button}
               title="Sign Up"
               // onPress={handleSignUp}
+              disableButton={disableButton}
               onPress={handleSignup}
             />
           </View>

@@ -25,6 +25,7 @@ const Home = props => {
   const loader = useSelector(state => state?.loaderReducer?.loader);
   const [jobListing, setJobListing] = useState();
   const toast = useToast();
+  const [disableButton, setDisableButton] = useState(false);
   const dispatch = useDispatch();
   useFocusEffect(
     React.useCallback(() => {
@@ -58,8 +59,8 @@ const Home = props => {
   const renderItem = ({item, index}) => {
     let param = {
       _id: item?._id,
-      stack,
-      screen,
+      // stack,
+      // screen,
       toastFun: (msg, type) => {
         toast.show(msg, {
           type: type,
@@ -71,7 +72,7 @@ const Home = props => {
       },
     };
     return (
-      <TouchableOpacity style={styles.container}>
+      <TouchableOpacity style={styles.container} disabled>
         <View
           style={{
             height: '45%',
@@ -122,12 +123,21 @@ const Home = props => {
             </Text>
             <TouchableOpacity
               onPress={() => {
-                dispatch(jobDetail(param));
+                  setDisableButton(true);
+                  setTimeout(() => {
+                    setDisableButton(false);
+                  }, 4000);
+                // dispatch(jobDetail(param));
+                navigationRef.navigate(stack, {
+                        screen: screen,
+                        params: {  _id: item?._id, },
+                      })
               }}
+              disabled={disableButton}
               style={{
                 backgroundColor: COLORS.primary,
-                height: 24,
-                width: 60,
+                height: scale(24),
+                width: scale(60),
                 justifyContent: 'space-around',
                 alignItems: 'center',
                 borderRadius: 17,

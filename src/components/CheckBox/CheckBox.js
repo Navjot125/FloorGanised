@@ -1,15 +1,25 @@
-import {StyleSheet, Text, View} from 'react-native';
+import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import React, {useState} from 'react';
 
-const CheckBox = (onPress, status) => {
+const CheckBox = ({value, onPress, setChecked, checked}) => {
+  console.log('checked checked', value);
   return (
     <TouchableOpacity
-      style={{height: 20, width: 20}}
-      onPress={() => toggleStatus(Object.keys(selectedItems)[index])}>
+      style={{
+        height: 20,
+        width: 20,
+        // justifyContent: 'flex-start',
+        // alignItems:'flex-start',
+      }}
+      // onPress={() => toggleStatus(Object.keys(selectedItems)[index])}>
+      // onPress={() => {
+      //   setChecked(!checked);
+      // }}
+      onPress={() => onPress()}>
       <Image
         style={{height: 20, width: 20}}
         source={
-          checked
+          value
             ? require('../../assets/images/checked.png')
             : require('../../assets/images/unchecked.png')
         }

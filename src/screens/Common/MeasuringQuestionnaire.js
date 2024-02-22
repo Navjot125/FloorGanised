@@ -36,6 +36,7 @@ import {useToast} from 'react-native-toast-notifications';
 const MeasuringQuestionnaire = ({route}) => {
   const toast = useToast();
   const measuringData = route?.params;
+  const [disableButton, setDisableButton] = useState(false);
   // console.log('route-----------------------measuringData',  route?.params);
   const userData = useSelector(state => state?.onBoardingreducer?.userData);
   const job_id =
@@ -139,7 +140,7 @@ const MeasuringQuestionnaire = ({route}) => {
   const doorsToCutOption = ['Yes', 'No'];
   const suitableOptions = ['Yes', 'Unable to see due to current floor', 'No'];
   const skirtingBoardsOptions = ['Yes', 'Not sure yet', 'No'];
-  const doorBars = ['silver', 'gold', 'oak', 'other'];
+  const doorBars = ['Silver', 'Gold', 'Oak', 'Other'];
   const howManyFitters = ['1', '2', '3', '4', '5'];
   const FlooringType = [
     'Carpets',
@@ -169,6 +170,10 @@ const MeasuringQuestionnaire = ({route}) => {
     marginBottom: 25,
   };
   const onPress = () => {
+    setDisableButton(true);
+    setTimeout(() => {
+      setDisableButton(false);
+    }, 4000);
     const param = {
       toastFun: (msg, type) => {
         toast?.show(msg, {
@@ -289,7 +294,7 @@ const MeasuringQuestionnaire = ({route}) => {
         />
         {!isFlooringChoiceSelected && (
           <CommonTextInput
-            placeholder={'flooring Choice & Colour'}
+            placeholder={'Flooring Choice & Colour'}
             value={flooringChoiceColor}
             onChangeText={newText => setFlooringChoiceColor(newText)}
             style={style1}
@@ -379,14 +384,14 @@ const MeasuringQuestionnaire = ({route}) => {
                   }}
                   style={{
                     backgroundColor: COLORS.black,
-                    height: 25,
-                    width: 25,
+                    height: scale(25),
+                    width: scale(25),
                     borderRadius: 20,
-                    alignSelf: 'flex-end',
-                    zIndex: 1,
+                    zIndex: 2,
                     justifyContent: 'center',
                     alignItems: 'center',
-                    left: 8,
+                    left: scale(65),
+                    position: 'relative',
                   }}>
                   <Text
                     style={{
@@ -400,10 +405,10 @@ const MeasuringQuestionnaire = ({route}) => {
                 <FastImage
                   key={index}
                   style={{
-                    height: 80,
-                    width: 80,
-                    borderRadius: 16,
-                    bottom: 15,
+                    height: scale(80),
+                    width: scale(80),
+                    borderRadius: scale(16),
+                    bottom: scale(15),
                   }}
                   source={
                     measuremntRoomImages
@@ -738,14 +743,14 @@ const MeasuringQuestionnaire = ({route}) => {
                         }}
                         style={{
                           backgroundColor: COLORS.black,
-                          height: 25,
-                          width: 25,
+                          height: scale(25),
+                          width: scale(25),
                           borderRadius: 20,
-                          alignSelf: 'flex-end',
-                          zIndex: 1,
+                          zIndex: 2,
                           justifyContent: 'center',
                           alignItems: 'center',
-                          left: 8,
+                          left: scale(65),
+                          position: 'relative',
                         }}>
                         <Text
                           style={{
@@ -759,10 +764,10 @@ const MeasuringQuestionnaire = ({route}) => {
                       <FastImage
                         key={index}
                         style={{
-                          height: 80,
-                          width: 80,
-                          borderRadius: 16,
-                          bottom: 15,
+                          height: scale(80),
+                          width: scale(80),
+                          borderRadius: scale(16),
+                          bottom: scale(15),
                         }}
                         source={
                           furnitureImages
@@ -956,14 +961,14 @@ const MeasuringQuestionnaire = ({route}) => {
                             }}
                             style={{
                               backgroundColor: COLORS.black,
-                              height: 25,
-                              width: 25,
+                              height: scale(25),
+                              width: scale(25),
                               borderRadius: 20,
-                              alignSelf: 'flex-end',
-                              zIndex: 1,
+                              zIndex: 2,
                               justifyContent: 'center',
                               alignItems: 'center',
-                              left: 8,
+                              left: scale(65),
+                              position: 'relative',
                             }}>
                             <Text
                               style={{
@@ -977,10 +982,10 @@ const MeasuringQuestionnaire = ({route}) => {
                           <FastImage
                             key={index}
                             style={{
-                              height: 80,
-                              width: 80,
-                              borderRadius: 16,
-                              bottom: 15,
+                              height: scale(80),
+                              width: scale(80),
+                              borderRadius: scale(16),
+                              bottom: scale(15),
                             }}
                             source={
                               floorImages
@@ -1050,7 +1055,9 @@ const MeasuringQuestionnaire = ({route}) => {
         />
         <View style={{marginVertical: 20}}>
           <CommonButton
-            title={route?.params ? 'Save' : 'Submit'}
+            disableButton={disableButton}
+            // title={route?.params ? 'Save' : 'Submit'}
+            title={userData?.role == 'Surveyor' ? 'Submit' : 'Save'}
             onPress={onPress}
           />
         </View>
@@ -1094,13 +1101,13 @@ const MeasuringQuestionnaire = ({route}) => {
               onPress={() => setModal(false)}
               style={{
                 position: 'absolute',
-                top: -13,
-                right: -7,
+                top: scale(-13),
+                right: scale(-7),
                 zIndex: 3,
                 backgroundColor: 'white',
-                borderRadius: 110,
-                height: 30,
-                width: 30,
+                borderRadius: scale(110),
+                height: scale(30),
+                width: scale(30),
                 justifyContent: 'center',
                 alignItems: 'center',
               }}>

@@ -6,6 +6,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import {setLoader} from '../actions/Loader';
 
 function* getNotification(action) {
+  console.log('getNotification API --------------------------');
   try {
     yield put(setLoader(true));
     const {offset} = action.data?.offset;

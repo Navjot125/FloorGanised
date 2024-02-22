@@ -16,9 +16,11 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import {showMessage} from 'react-native-flash-message';
 import {useToast} from 'react-native-toast-notifications';
 import {showToastAction} from '../actions/onBoardingAction';
+import { setLoader } from '../actions/Loader';
 function* signup(action) {
-  console.log('action', action?.data);
+  console.log('signup API --------------------------');
   try {
+    yield put(setLoader(true));
     const {email, password, name, selectedOption, token} =
       action.data?.signUpData;
     const requestOptions = {
@@ -59,11 +61,15 @@ function* signup(action) {
     }
   } catch (error) {
     console.error('An error occurred during Signup:', error);
+  } finally {
+    yield put(setLoader(false));
   }
 }
 
 function* login(action) {
+  console.log('login API --------------------------');
   try {
+    yield put(setLoader(true));
     const {email, password, selectedOption, token} = action.data?.userDataState;
     const requestOptions = {
       method: 'POST',
@@ -103,11 +109,15 @@ function* login(action) {
   } catch (error) {
     // action?.data?.toastFun(error)
     console.log('An error occurred during login:', error);
+  } finally {
+    yield put(setLoader(false));
   }
 }
 
 function* sendOtp(action) {
+  console.log('sendOtp API --------------------------');
   try {
+    yield put(setLoader(true));
     const email = action.data?.email;
     const requestOptions = {
       method: 'POST',
@@ -137,11 +147,15 @@ function* sendOtp(action) {
     }
   } catch (error) {
     console.error('An error occurred during sendOtp:', error);
+  } finally {
+    yield put(setLoader(false));
   }
 }
 
 function* verifyOtp(action) {
+  console.log('verifyOtp API --------------------------');
   try {
+    yield put(setLoader(true));
     const code = action.data?.code;
     const email = action.data?.email;
     const requestOptions = {
@@ -172,11 +186,15 @@ function* verifyOtp(action) {
     }
   } catch (error) {
     console.error('An error occurred during verifyOtp:', error);
+  } finally {
+    yield put(setLoader(false));
   }
 }
 
 function* resetPassword(action) {
+  console.log('resetPassword API --------------------------');
   try {
+    yield put(setLoader(true));
     const {cPassword, unique_id} = action.data?.data;
     const requestOptions = {
       method: 'POST',
@@ -203,6 +221,8 @@ function* resetPassword(action) {
     }
   } catch (error) {
     console.error('An error occurred during resetPassword:', error);
+  } finally {
+    yield put(setLoader(false));
   }
 }
 

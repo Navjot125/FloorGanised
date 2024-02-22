@@ -21,7 +21,7 @@
 module.exports = {
   project: {
     android: {
-      unstable_reactLegacyComponentNames: ['RNShimmeringView'],
+      unstable_reactLegacyComponentNames: ['RNShimmeringView', 'FastImageView'],
     },
     ios: {
       unstable_reactLegacyComponentNames: ['RNShimmeringView'],

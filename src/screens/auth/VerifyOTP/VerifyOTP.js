@@ -28,6 +28,7 @@ const VerifyOTP = ({route}) => {
   const email = route?.params?.data;
 const toast = useToast()
   const [code, setCode] = useState('');
+  const [disableButton, setDisableButton] = useState(false);
   const dispatch = useDispatch();
   const handleOtpChange = value => {
     setCode(value);
@@ -51,6 +52,10 @@ const toast = useToast()
     },
   ];
   const onPress = () => {
+    setDisableButton(true);
+      setTimeout(() => {
+        setDisableButton(false);
+      }, 4000);
     param = {
       email,
       code,
@@ -113,6 +118,7 @@ const toast = useToast()
               />
             </View>
             <CommonButton
+            disableButton={disableButton}
               style={styles.Button}
               title="Verify"
               onPress={onPress}

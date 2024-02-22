@@ -11,9 +11,12 @@ import {
   UPDATE_PASSWORD,
   UPDATE_PROFILE,
 } from '../constants';
+import { setLoader } from '../actions/Loader';
 
 function* getProfile(action) {
+  console.log('getProfile API --------------------------');
   try {
+    yield put(setLoader(true));
     const token = yield call(AsyncStorage.getItem, 'token');
     const requestOptions = {
       method: 'GET',
@@ -39,11 +42,15 @@ function* getProfile(action) {
     }
   } catch (error) {
     console.error('An error occurred during getProfile:', error);
+  } finally {
+    yield put(setLoader(false));
   }
 }
 
 function* updatePassword(action) {
+  console.log('updatePassword API --------------------------');
   try {
+    yield put(setLoader(true));
     const {old_password, new_password} = action.data?.data;
     const token = yield call(AsyncStorage.getItem, 'token');
     const requestOptions = {
@@ -71,10 +78,14 @@ function* updatePassword(action) {
     }
   } catch (error) {
     console.error('An error occurred during updatePassword:', error);
+  } finally {
+    yield put(setLoader(false));
   }
 }
 function* deleteAccount(action) {
+  console.log('deleteAccount API --------------------------');
   try {
+    yield put(setLoader(true));
     const token = yield call(AsyncStorage.getItem, 'token');
     const requestOptions = {
       method: 'POST',
@@ -100,10 +111,14 @@ function* deleteAccount(action) {
     }
   } catch (error) {
     console.error('An error occurred during deleteAccount:', error);
+  } finally {
+    yield put(setLoader(false));
   }
 }
 function* updateProfile(action) {
+  console.log('updateProfile API --------------------------');
   try {
+    yield put(setLoader(true));
     const {email, name} = action.data;
     const token = yield call(AsyncStorage.getItem, 'token');
     const requestOptions = {
@@ -130,6 +145,8 @@ function* updateProfile(action) {
     }
   } catch (error) {
     console.error('An error occurred during updateProfile:', error);
+  } finally {
+    yield put(setLoader(false));
   }
 }
 

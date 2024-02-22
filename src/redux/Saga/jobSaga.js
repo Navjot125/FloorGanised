@@ -11,6 +11,7 @@ import {
 } from '../constants';
 import {setLoader} from '../actions/Loader';
 async function convertPayloadToFormData(payload) {
+  console.log('convertPayloadToFormData API --------------------------');
   const formData = new FormData();
   for (const key in payload) {
     if (payload.hasOwnProperty(key)) {
@@ -71,10 +72,11 @@ async function convertPayloadToFormData(payload) {
 }
 
 function* submitQuestionnaire(action) {
+  console.log('submitQuestionnaire API --------------------------');
   try {
+    yield put(setLoader(true));
     const {cb, toastFun} = action?.callBack;
     const extractedData = yield convertPayloadToFormData(action.data);
-    yield put(setLoader(true));
     const token = yield call(AsyncStorage.getItem, 'token');
     const requestOptions = {
       method: 'POST',
@@ -104,10 +106,10 @@ function* submitQuestionnaire(action) {
 }
 
 function* editQuestionnaire(action) {
-  console.log('action', action);
+  console.log('editQuestionnaire API --------------------------');
   try {
-    const extractedData = yield convertPayloadToFormData(action.data);
     yield put(setLoader(true));
+    const extractedData = yield convertPayloadToFormData(action.data);
     const token = yield call(AsyncStorage.getItem, 'token');
     const requestOptions = {
       method: 'POST',
@@ -145,6 +147,7 @@ function* editQuestionnaire(action) {
 }
 
 function* deleteImage(action) {
+  console.log('deleteImage API --------------------------');
   console.log('action', action);
   const param = ({image_name, job_id, key} = action.data);
   try {

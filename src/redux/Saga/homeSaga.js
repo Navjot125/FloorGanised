@@ -7,6 +7,7 @@ import {navigationRef} from '../../App';
 import {setLoader} from '../actions/Loader';
 
 function* getJob(action) {
+  console.log('getJob API --------------------------');
   try {
     yield put(setLoader(true));
     const {status, date} = action.data;
@@ -36,12 +37,12 @@ function* getJob(action) {
   }
 }
 function* jobDetail(action) {
+  console.log('jobDetail API --------------------------', action);
   try {
     yield put(setLoader(true));
-    const {_id, stack, screen, toastFun} = action.data;
+    const {job_id, toastFun, cb} = action.data;
     const token = yield call(AsyncStorage.getItem, 'token');
-    const queryParams = `job_id=${encodeURIComponent(_id)}`;
-    console.log(queryParams, '0000000');
+    const queryParams = `job_id=${encodeURIComponent(job_id)}`;
     const requestOptions = {
       method: 'GET',
       headers: {
@@ -53,20 +54,22 @@ function* jobDetail(action) {
     const response = yield call(fetch, urlWithParams, requestOptions);
     const responseData = yield response.json();
     if (responseData?.status) {
-      responseData?.measuring_details
-        ? navigationRef.navigate(stack, {
-            screen: screen,
-            params: {
-              responseData: responseData?.data,
-              measurinDetails: responseData?.measuring_details,
-            },
-          })
-        : navigationRef.navigate(stack, {
-            screen: screen,
-            params: {
-              responseData: responseData?.data,
-            },
-          });
+      // console.log('responseData of JobDetail', responseData);
+      cb(responseData);
+      // responseData?.measuring_details
+      //   ? navigationRef.navigate(stack, {
+      //       screen: screen,
+      //       params: {
+      //         responseData: responseData?.data,
+      //         measurinDetails: responseData?.measuring_details,
+      //       },
+      //     })
+      //   : navigationRef.navigate(stack, {
+      //       screen: screen,
+      //       params: {
+      //         responseData: responseData?.data,
+      //       },
+      //     });
     } else {
       toastFun(responseData?.message, 'danger');
     }
@@ -76,8 +79,8 @@ function* jobDetail(action) {
     yield put(setLoader(false));
   }
 }
-
 function* startFittingSaga(action) {
+  console.log('startFittingSaga API --------------------------');
   try {
     yield put(setLoader(true));
     const {fitter_status, job_id} = action.data;

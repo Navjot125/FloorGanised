@@ -2,12 +2,22 @@ import React from 'react';
 import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
 import {COLORS} from '../../utils/theme';
 import {scale, verticalScale, moderateScale} from 'react-native-size-matters';
+import CustomLoader from '../CustomLoader/CustomLoader';
+import {useSelector} from 'react-redux';
 
-export default function CommonButton({style, title, onPress}) {
+export default function CommonButton({style, title, onPress, disableButton}) {
+  const loader = useSelector(state => state?.loaderReducer?.loader);
   return (
     <View style={[style, {justifyContent: 'center', alignItems: 'center'}]}>
-      <TouchableOpacity style={styles.btnlogin} onPress={onPress}>
-        <Text style={styles.buttonText}>{title}</Text>
+      <TouchableOpacity
+        disabled={loader || disableButton}
+        style={styles.btnlogin}
+        onPress={onPress}>
+        {loader ? (
+          <CustomLoader />
+        ) : (
+          <Text style={styles.buttonText}>{title}</Text>
+        )}
       </TouchableOpacity>
     </View>
   );

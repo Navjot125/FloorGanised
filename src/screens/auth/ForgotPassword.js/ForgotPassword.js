@@ -20,30 +20,64 @@ import {scale} from 'react-native-size-matters';
 import {useDispatch} from 'react-redux';
 import {sendOtp} from '../../../redux/actions/onBoardingAction';
 import {useToast} from 'react-native-toast-notifications';
+import * as Yup from 'yup';
 
 const ForgotPassword = () => {
   const dispatch = useDispatch();
   const toast = useToast();
+  const [disableButton, setDisableButton] = useState(false);
   const [email, setEmail] = useState();
   const [selectedOption, setSelectedOption] = useState(null);
   const options = ['Fitter', 'Surveyor'];
+  const [error, setErrors] = useState();
+
   const handleOptionPress = option => {
     setSelectedOption(option);
   };
-  const onPress = () => {
-    param = {
-      email,
-      toastFun: (msg, type) => {
-        toast.show(msg, {
-          type: type,
-          placement: 'bottom',
-          duration: 4000,
-          offset: 30,
-          animationType: 'slide-in ',
+
+  const validationSchema = Yup.object().shape({
+    email: Yup.string()
+      .email('Invalid email format')
+      .required('Email is required'),
+  });
+  const onPress = async () => {
+    try {
+      setDisableButton(true);
+      setTimeout(() => {
+        setDisableButton(false);
+      }, 4000);
+      await validationSchema.validate({email}, {abortEarly: false});
+      param = {
+        email,
+        toastFun: (msg, type) => {
+          toast.show(msg, {
+            type: type,
+            placement: 'bottom',
+            duration: 4000,
+            offset: 30,
+            animationType: 'slide-in ',
+          });
+        },
+      };
+      dispatch(sendOtp(param));
+    } catch (error) {
+      console.log(error, '------errors');
+      const validationErrors = {};
+      if (error.inner) {
+        error.inner.forEach(err => {
+          console.log(err, 'checking it ', err.path);
+          validationErrors[err.path] = err.message;
         });
-      },
-    };
-    dispatch(sendOtp(param));
+      }
+      setErrors(validationErrors);
+      toast.show(error.errors ? error.errors[0] : error, {
+        type: 'danger',
+        placement: 'bottom',
+        duration: 4000,
+        offset: 30,
+        animationType: 'slide-in ',
+      });
+    }
   };
 
   return (
@@ -81,6 +115,7 @@ const ForgotPassword = () => {
           </View>
           <CommonButton
             style={styles.Button}
+            disableButton={disableButton}
             title="Proceed"
             onPress={onPress}
           />
