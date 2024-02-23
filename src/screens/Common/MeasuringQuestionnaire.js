@@ -570,7 +570,8 @@ const MeasuringQuestionnaire = ({route}) => {
           data={doorBars}
           setLicencseLevel={setDoorBarType}
         />
-        {doorBarType == 'other' && (
+        {console.log('doorBarType',doorBarType)}
+        {doorBarType == 'Other' && (
           <TextInput
             style={{
               height: 104,
