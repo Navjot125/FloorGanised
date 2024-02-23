@@ -2,7 +2,6 @@ import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import React, {useState} from 'react';
 
 const CheckBox = ({value, onPress, setChecked, checked}) => {
-  console.log('checked checked', value);
   return (
     <TouchableOpacity
       style={{

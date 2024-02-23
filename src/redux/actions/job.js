@@ -1,6 +1,7 @@
 import {
   DELETE_IMAGES,
   EDIT_MEASURING_QUESTIONNAIRE,
+  SUBMIT_JOB,
   SUBMIT_QUESTIONNAIRE,
 } from '../constants';
 
@@ -23,5 +24,12 @@ export function editMeasuring(item, cb) {
     type: EDIT_MEASURING_QUESTIONNAIRE,
     data: item,
     callBack: cb,
+  };
+}
+export function submitJob(item) {
+  return {
+    type: SUBMIT_JOB,
+    data: item,
+    // callBack: cb,
   };
 }

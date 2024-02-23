@@ -18,6 +18,7 @@ function* getProfile(action) {
   try {
     yield put(setLoader(true));
     const token = yield call(AsyncStorage.getItem, 'token');
+    console.log('token-------------',token);
     const requestOptions = {
       method: 'GET',
       headers: {

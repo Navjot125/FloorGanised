@@ -5,6 +5,7 @@ import {url} from '../../services/Config';
 import {GET_JOBS, JOB_DETAIL, START_FITTING} from '../constants';
 import {navigationRef} from '../../App';
 import {setLoader} from '../actions/Loader';
+import moment from 'moment';
 
 function* getJob(action) {
   console.log('getJob API --------------------------');
@@ -14,7 +15,8 @@ function* getJob(action) {
     const token = yield call(AsyncStorage.getItem, 'token');
     const queryParams = `status=${encodeURIComponent(
       status,
-    )}&job_date=${encodeURIComponent(date)}`;
+    )}&job_date=${encodeURIComponent(moment(date).format('YYYY-MM-DD'))}`;
+    // )}&job_date=${encodeURIComponent(date)}`;
     const requestOptions = {
       method: 'GET',
       headers: {

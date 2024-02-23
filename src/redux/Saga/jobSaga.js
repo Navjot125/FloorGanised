@@ -7,6 +7,7 @@ import {url} from '../../services/Config';
 import {
   DELETE_IMAGES,
   EDIT_MEASURING_QUESTIONNAIRE,
+  SUBMIT_JOB,
   SUBMIT_QUESTIONNAIRE,
 } from '../constants';
 import {setLoader} from '../actions/Loader';
@@ -186,9 +187,48 @@ function* deleteImage(action) {
   }
 }
 
+function* submitJob(action) {
+  console.log('submitJob API --------------------------');
+  console.log('action', action?.data);
+  try {
+    yield put(setLoader(true));
+    const token = yield call(AsyncStorage.getItem, 'token');
+    const requestOptions = {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${JSON.parse(token)}`,
+      },
+      body: JSON.stringify(action.data),
+    };
+    const response = yield call(
+      fetch,
+      `${url}${APIS.SUBMIT_JOB}`,
+      requestOptions,
+    );
+    if (response.ok) {
+      const responseData = yield response.json();
+      console.log(responseData, 'submitJob response --');
+    } else {
+      const errorData = yield response.json();
+      console.error(
+        'submitJob request failed:',
+        response.status,
+        response.statusText,
+        errorData,
+      );
+    }
+  } catch (error) {
+    console.error('An error occurred during submitJob:', error);
+  } finally {
+    yield put(setLoader(false));
+  }
+}
+
 function* jobSaga() {
   yield takeEvery(SUBMIT_QUESTIONNAIRE, submitQuestionnaire);
   yield takeEvery(EDIT_MEASURING_QUESTIONNAIRE, editQuestionnaire);
   yield takeEvery(DELETE_IMAGES, deleteImage);
+  yield takeEvery(SUBMIT_JOB, submitJob);
 }
 export default jobSaga;

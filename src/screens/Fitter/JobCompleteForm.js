@@ -20,10 +20,22 @@ import Feather from 'react-native-vector-icons/Feather';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {ImageUrl} from '../../services/Config';
 import CheckBox from '../../components/CheckBox/CheckBox';
+import {useDispatch} from 'react-redux';
+import {submitJob} from '../../redux/actions/job';
 const JobCompleteForm = ({route}) => {
+  const dispatch = useDispatch();
   const [selectedItems, setSelectedItems] = useState(jobForm);
   const [checked, setChecked] = useState();
   const {responseData, measurinDetails} = route.params;
+  const job_id = measurinDetails?.job_id;
+  const mq_id = measurinDetails?._id;
+  const generateInitialCheckedState = items => {
+    const initialState = {job_id, mq_id};
+    items.forEach(item => {
+      initialState[item] = true;
+    });
+    dispatch(submitJob(initialState));
+  };
   // const toggleTaskCompletion = name => {
   //   setSelectedItems(prevTasks =>
   //     prevTasks?.map(task =>
@@ -206,11 +218,16 @@ const JobCompleteForm = ({route}) => {
   //     </View>
   //   );
   // };
-
+  // floorImages?.filter(
+  //   sort => sort.uri !== item.uri,
+  // ),
   const addValues = value => {
-    checked ? setChecked([...checked, value]) : setChecked([value]);
+    checked
+      ? checked?.includes(value)
+        ? setChecked(checked.filter(item => item !== value))
+        : setChecked([...checked, value])
+      : setChecked([value]);
   };
-  console.log('checked--------------', checked);
   return (
     // <View style={{flex: 1, backgroundColor: 'black'}}>
     //   <SafeAreaView />
@@ -271,7 +288,7 @@ const JobCompleteForm = ({route}) => {
           {measurinDetails?.surcharge && (
             <View style={styles.commonContainer}>
               <CheckBox
-              value={checked?.includes('surcharge')}
+                value={checked?.includes('surcharge')}
                 onPress={() => addValues('surcharge')}
                 // setChecked={setChecked}
                 checked={checked}
@@ -298,81 +315,107 @@ const JobCompleteForm = ({route}) => {
             </View>
           )}
           {measurinDetails?.flooring_type && (
-            <View
-              style={{
-                flexDirection: 'row',
-                justifyContent: 'space-between',
-                paddingVertical: 15,
-              }}>
-              <Text style={{fontSize: 12, fontWeight: 600}}>Flooring Type</Text>
-              <Text
+            <View style={styles.commonContainer}>
+              <CheckBox
+                value={checked?.includes('flooring_type')}
+                onPress={() => addValues('flooring_type')}
+                // setChecked={setChecked}
+                checked={checked}
+              />
+              <View
                 style={{
-                  fontSize: 12,
-                  fontWeight: 400,
-                  width: 70,
-                  textAlign: 'right',
+                  flexDirection: 'row',
+                  justifyContent: 'space-between',
+                  paddingVertical: 15,
+                  paddingLeft: 10,
+                  flex: 1,
                 }}>
-                {measurinDetails?.flooring_type}
-              </Text>
+                <Text style={{fontSize: 12, fontWeight: 600}}>
+                  Flooring Type
+                </Text>
+                <Text
+                  style={{
+                    fontSize: 12,
+                    fontWeight: 400,
+                    width: 70,
+                    textAlign: 'right',
+                  }}>
+                  {measurinDetails?.flooring_type}
+                </Text>
+              </View>
             </View>
           )}
           {measurinDetails?.is_flooring_choice_selected && (
-            <View
-              style={{
-                flexDirection: 'row',
-                justifyContent: 'space-between',
-                paddingVertical: 15,
-              }}>
-              <Text style={{fontSize: 12, fontWeight: 600}}>
-                Flooring Choice & Colour
-              </Text>
-              <Text
+            <View style={styles.commonContainer}>
+              <CheckBox
+                value={checked?.includes('is_flooring_choice_selected')}
+                onPress={() => addValues('is_flooring_choice_selected')}
+                // setChecked={setChecked}
+                checked={checked}
+              />
+              <View
                 style={{
-                  fontSize: 12,
-                  fontWeight: 400,
-                  width: 70,
-                  textAlign: 'right',
+                  flexDirection: 'row',
+                  justifyContent: 'space-between',
+                  paddingVertical: 15,
+                  paddingLeft: 10,
+                  flex: 1,
                 }}>
-                {measurinDetails?.flooring_choice_color}
-              </Text>
+                <Text style={{fontSize: 12, fontWeight: 600}}>
+                  Flooring Choice & Colour
+                </Text>
+                <Text
+                  style={{
+                    fontSize: 12,
+                    fontWeight: 400,
+                    width: 70,
+                    textAlign: 'right',
+                  }}>
+                  {measurinDetails?.flooring_choice_color}
+                </Text>
+              </View>
             </View>
           )}
           {measurinDetails?.size && (
-            <View
-              style={{
-                flexDirection: 'row',
-                justifyContent: 'space-between',
-                paddingVertical: 15,
-              }}>
-              <Text style={{fontSize: 12, fontWeight: 600}}>Size</Text>
-              <Text
-                style={{
-                  fontSize: 12,
-                  fontWeight: 400,
-                  width: 70,
-                  textAlign: 'right',
-                }}>
-                {measurinDetails?.size}
-              </Text>
+            <View style={styles.commonContainer}>
+              <CheckBox
+                value={checked?.includes('size')}
+                onPress={() => addValues('size')}
+                checked={checked}
+              />
+              <View style={styles.innerContaner}>
+                <Text style={{fontSize: 12, fontWeight: 600}}>Size</Text>
+                <Text
+                  style={{
+                    fontSize: 12,
+                    fontWeight: 400,
+                    width: 70,
+                    textAlign: 'right',
+                  }}>
+                  {measurinDetails?.size}
+                </Text>
+              </View>
             </View>
           )}
           {measurinDetails?.sqm && (
-            <View
-              style={{
-                flexDirection: 'row',
-                justifyContent: 'space-between',
-                paddingVertical: 15,
-              }}>
-              <Text style={{fontSize: 12, fontWeight: 600}}>SQM Total</Text>
-              <Text
-                style={{
-                  fontSize: 12,
-                  fontWeight: 400,
-                  width: 70,
-                  textAlign: 'right',
-                }}>
-                {measurinDetails?.sqm}
-              </Text>
+            <View style={styles.commonContainer}>
+              <CheckBox
+                value={checked?.includes('sqm')}
+                onPress={() => addValues('sqm')}
+                checked={checked}
+              />
+              <View style={styles.innerContaner}>
+                <Text style={{fontSize: 12, fontWeight: 600}}>SQM Total</Text>
+                <Text
+                  style={{
+                    fontSize: 12,
+                    fontWeight: 400,
+                    width: 70,
+                    textAlign: 'right',
+                  }}>
+                  {measurinDetails?.sqm}
+                </Text>
+              </View>
             </View>
           )}
           {measurinDetails?.measurement_of_room && (
@@ -380,24 +423,32 @@ const JobCompleteForm = ({route}) => {
               style={{
                 paddingVertical: 15,
               }}>
-              <Text style={{fontSize: 12, fontWeight: 600}}>
-                Measurement of room
-              </Text>
+              <View style={{flexDirection: 'row'}}>
+                <CheckBox
+                  value={checked?.includes('measurement_of_room')}
+                  onPress={() => addValues('measurement_of_room')}
+                  checked={checked}
+                />
+                <Text style={{fontSize: 12, fontWeight: 600, marginLeft: 10}}>
+                  Measurement of room
+                </Text>
+              </View>
               <View
                 style={{
                   flexDirection: 'row',
                   justifyContent: 'space-between',
                   marginTop: 20,
                   flexWrap: 'wrap',
+                  marginLeft: 30,
                 }}>
                 {measurinDetails?.measurement_of_room.map((item, index) => (
                   <Image
                     key={index}
                     style={{
-                      height: 56,
-                      width: 80,
-                      borderRadius: 10,
-                      marginTop: 10,
+                      height: scale(56),
+                      width: scale(80),
+                      borderRadius: scale(10),
+                      marginTop: scale(10),
                     }}
                     resizeMode="cover"
                     source={{uri: `${ImageUrl}${item}`}}
@@ -407,205 +458,288 @@ const JobCompleteForm = ({route}) => {
             </View>
           )}
           {measurinDetails?.join_in_floor && (
-            <View
-              style={{
-                flexDirection: 'row',
-                justifyContent: 'space-between',
-                paddingVertical: 15,
-              }}>
-              <Text style={{fontSize: 12, fontWeight: 600}}>Join In Floor</Text>
-              <Text
-                style={{
-                  fontSize: 12,
-                  fontWeight: 400,
-                  width: 70,
-                  textAlign: 'right',
-                }}>
-                {measurinDetails?.join_in_floor}
-              </Text>
+            <View style={styles.commonContainer}>
+              <CheckBox
+                value={checked?.includes('join_in_floor')}
+                onPress={() => addValues('join_in_floor')}
+                checked={checked}
+              />
+              <View style={styles.innerContaner}>
+                <Text style={{fontSize: 12, fontWeight: 600}}>
+                  Join In Floor
+                </Text>
+                <Text
+                  style={{
+                    fontSize: 12,
+                    fontWeight: 400,
+                    width: 70,
+                    textAlign: 'right',
+                  }}>
+                  {measurinDetails?.join_in_floor}
+                </Text>
+              </View>
             </View>
           )}
           {measurinDetails?.join_in_floor_notes && (
-            <View style={{marginVertical: 0}}>
-              <Text style={{fontSize: 12, fontWeight: 400, lineHeight: 20}}>
+            <View style={{marginVertical: 0, marginLeft: 30}}>
+              <Text style={{fontSize: 12, fontWeight: 400}}>
                 <Text style={{fontSize: 12, fontWeight: 600}}>Notes : </Text>
                 {measurinDetails?.join_in_floor_notes}
               </Text>
             </View>
           )}
           {measurinDetails?.scotia && (
-            <View style={{marginVertical: 10}}>
-              <Text style={{fontSize: 12, fontWeight: 600, marginBottom: 10}}>
-                scotia
-              </Text>
-              <Text style={{fontSize: 12, fontWeight: 400, lineHeight: 20}}>
-                {measurinDetails?.scotia}
-              </Text>
+            <View style={styles.commonContainer}>
+              <CheckBox
+                value={checked?.includes('scotia')}
+                onPress={() => addValues('scotia')}
+                checked={checked}
+              />
+              <View style={styles.innerContaner}>
+                <Text
+                  style={{
+                    fontSize: 12,
+                    fontWeight: 600,
+                  }}>
+                  scotia
+                </Text>
+                <Text style={{fontSize: 12, fontWeight: 400}}>
+                  {measurinDetails?.scotia}
+                </Text>
+              </View>
             </View>
           )}
           {measurinDetails?.skirting_board && (
-            <View style={{marginVertical: 10}}>
-              <Text style={{fontSize: 12, fontWeight: 600, marginBottom: 10}}>
-                Skirting Board
-              </Text>
-              <Text style={{fontSize: 12, fontWeight: 400, lineHeight: 20}}>
-                {measurinDetails?.skirting_board}
-              </Text>
+            <View style={styles.commonContainer}>
+              <CheckBox
+                value={checked?.includes('skirting_board')}
+                onPress={() => addValues('skirting_board')}
+                checked={checked}
+              />
+              <View style={styles.innerContaner}>
+                <Text
+                  style={{
+                    fontSize: 12,
+                    fontWeight: 600,
+                  }}>
+                  Skirting Board
+                </Text>
+                <Text style={{fontSize: 12, fontWeight: 400}}>
+                  {measurinDetails?.skirting_board}
+                </Text>
+              </View>
             </View>
           )}
           {measurinDetails?.skirting_board_notes && (
-            <View style={{marginVertical: 10}}>
-              <Text style={{fontSize: 12, fontWeight: 600, marginBottom: 10}}>
-                Skirting Board Notes
-              </Text>
-              <Text style={{fontSize: 12, fontWeight: 400, lineHeight: 20}}>
-                {measurinDetails?.skirting_board_notes}
-              </Text>
+            <View style={styles.commonContainer}>
+              <CheckBox
+                value={checked?.includes('skirting_board_notes')}
+                onPress={() => addValues('skirting_board_notes')}
+                checked={checked}
+              />
+              <View style={styles.innerContaner}>
+                <Text
+                  style={{
+                    fontSize: 12,
+                    fontWeight: 600,
+                  }}>
+                  Skirting Board Notes
+                </Text>
+                <Text style={{fontSize: 12, fontWeight: 400}}>
+                  {measurinDetails?.skirting_board_notes}
+                </Text>
+              </View>
             </View>
           )}
           {measurinDetails?.gripper_length && (
-            <View style={{marginVertical: 10}}>
-              <Text style={{fontSize: 12, fontWeight: 600, marginBottom: 10}}>
-                Gripper Lengths
-              </Text>
-              <Text style={{fontSize: 12, fontWeight: 400, lineHeight: 20}}>
-                {measurinDetails?.gripper_length}
-              </Text>
+            <View style={[styles.commonContainer]}>
+              <CheckBox
+                value={checked?.includes('gripper_length')}
+                onPress={() => addValues('gripper_length')}
+                checked={checked}
+              />
+              <View style={styles.innerContaner}>
+                <Text style={{fontSize: 12, fontWeight: 600}}>
+                  Gripper Lengths
+                </Text>
+                <Text style={{fontSize: 12, fontWeight: 400}}>
+                  {measurinDetails?.gripper_length}
+                </Text>
+              </View>
             </View>
           )}
           {measurinDetails?.underlay_type && (
-            <View style={{marginVertical: 10}}>
-              <Text style={{fontSize: 12, fontWeight: 600, marginBottom: 10}}>
-                Underlay Type
-              </Text>
-              <Text style={{fontSize: 12, fontWeight: 400, lineHeight: 20}}>
-                {measurinDetails?.underlay_type}
-              </Text>
+            <View style={[styles.commonContainer]}>
+              <CheckBox
+                value={checked?.includes('underlay_type')}
+                onPress={() => addValues('underlay_type')}
+                checked={checked}
+              />
+              <View style={styles.innerContaner}>
+                <Text style={{fontSize: 12, fontWeight: 600}}>
+                  Underlay Type
+                </Text>
+                <Text style={{fontSize: 12, fontWeight: 400}}>
+                  {measurinDetails?.underlay_type}
+                </Text>
+              </View>
             </View>
           )}
           {measurinDetails?.underlay_amount && (
-            <View
-              style={{
-                flexDirection: 'row',
-                justifyContent: 'space-between',
-                paddingVertical: 15,
-              }}>
-              <Text style={{fontSize: 12, fontWeight: 600}}>
-                Underlay Amount
-              </Text>
-              <Text
-                style={{
-                  fontSize: 12,
-                  fontWeight: 400,
-                  width: 70,
-                  textAlign: 'right',
-                }}>
-                {measurinDetails?.underlay_amount}
-              </Text>
+            <View style={[styles.commonContainer]}>
+              <CheckBox
+                value={checked?.includes('underlay_amount')}
+                onPress={() => addValues('underlay_amount')}
+                checked={checked}
+              />
+              <View style={styles.innerContaner}>
+                <Text style={{fontSize: 12, fontWeight: 600}}>
+                  Underlay Amount
+                </Text>
+                <Text
+                  style={{
+                    fontSize: 12,
+                    fontWeight: 400,
+                    width: 70,
+                    textAlign: 'right',
+                  }}>
+                  {measurinDetails?.underlay_amount}
+                </Text>
+              </View>
             </View>
           )}
           {measurinDetails?.doorbar_type && (
-            <View
-              style={{
-                flexDirection: 'row',
-                justifyContent: 'space-between',
-                paddingVertical: 15,
-              }}>
-              <Text style={{fontSize: 12, fontWeight: 600}}>Door Bars</Text>
-              <Text
-                style={{
-                  fontSize: 12,
-                  fontWeight: 400,
-                  width: 70,
-                  textAlign: 'right',
-                }}>
-                {measurinDetails?.doorbar_type}
-              </Text>
+            <View style={[styles.commonContainer]}>
+              <CheckBox
+                value={checked?.includes('doorbar_type')}
+                onPress={() => addValues('doorbar_type')}
+                checked={checked}
+              />
+              <View style={styles.innerContaner}>
+                <Text style={{fontSize: 12, fontWeight: 600}}>Door Bars</Text>
+                <Text
+                  style={{
+                    fontSize: 12,
+                    fontWeight: 400,
+                    width: 70,
+                    textAlign: 'right',
+                  }}>
+                  {measurinDetails?.doorbar_type}
+                </Text>
+              </View>
             </View>
           )}
           {measurinDetails?.doorbar_type_text && (
-            <View style={{marginVertical: 10}}>
-              <Text style={{fontSize: 12, fontWeight: 600, marginBottom: 10}}>
-                Door Bars Notes
-              </Text>
-              <Text style={{fontSize: 12, fontWeight: 400, lineHeight: 20}}>
-                {measurinDetails?.doorbar_type_text}
-              </Text>
+            <View style={[styles.commonContainer]}>
+              <CheckBox
+                value={checked?.includes('doorbar_type_text')}
+                onPress={() => addValues('doorbar_type_text')}
+                checked={checked}
+              />
+              <View style={styles.innerContaner}>
+                <Text style={{fontSize: 12, fontWeight: 600}}>
+                  Door Bars Notes
+                </Text>
+                <Text style={{fontSize: 12, fontWeight: 400}}>
+                  {measurinDetails?.doorbar_type_text}
+                </Text>
+              </View>
             </View>
           )}
           {measurinDetails?.doorbar_amount && (
-            <View
-              style={{
-                flexDirection: 'row',
-                justifyContent: 'space-between',
-                paddingVertical: 15,
-              }}>
-              <Text style={{fontSize: 12, fontWeight: 600}}>
-                Door Bar Amount
-              </Text>
-              <Text
-                style={{
-                  fontSize: 12,
-                  fontWeight: 400,
-                  width: 70,
-                  textAlign: 'right',
-                }}>
-                {measurinDetails?.doorbar_amount}
-              </Text>
+            <View style={[styles.commonContainer]}>
+              <CheckBox
+                value={checked?.includes('doorbar_amount')}
+                onPress={() => addValues('doorbar_amount')}
+                checked={checked}
+              />
+              <View style={styles.innerContaner}>
+                <Text style={{fontSize: 12, fontWeight: 600}}>
+                  Door Bar Amount
+                </Text>
+                <Text
+                  style={{
+                    fontSize: 12,
+                    fontWeight: 400,
+                    width: 70,
+                    textAlign: 'right',
+                  }}>
+                  {measurinDetails?.doorbar_amount}
+                </Text>
+              </View>
             </View>
           )}
           {measurinDetails?.uplift_waste_service && (
-            <View
-              style={{
-                flexDirection: 'row',
-                justifyContent: 'space-between',
-                paddingVertical: 15,
-              }}>
-              <Text style={{fontSize: 12, fontWeight: 600}}>
-                Uplift and waste service
-              </Text>
-              <Text
-                style={{
-                  fontSize: 12,
-                  fontWeight: 400,
-                  width: 70,
-                  textAlign: 'right',
-                }}>
-                {measurinDetails?.uplift_waste_service}
-              </Text>
+            <View style={[styles.commonContainer]}>
+              <CheckBox
+                value={checked?.includes('uplift_waste_service')}
+                onPress={() => addValues('uplift_waste_service')}
+                checked={checked}
+              />
+              <View style={styles.innerContaner}>
+                <Text style={{fontSize: 12, fontWeight: 600}}>
+                  Uplift and waste service
+                </Text>
+                <Text
+                  style={{
+                    fontSize: 12,
+                    fontWeight: 400,
+                    width: 70,
+                    textAlign: 'right',
+                  }}>
+                  {measurinDetails?.uplift_waste_service}
+                </Text>
+              </View>
             </View>
           )}
           {measurinDetails?.uplift_waste_service_notes && (
-            <View style={{marginVertical: 10}}>
-              <Text style={{fontSize: 12, fontWeight: 600, marginBottom: 10}}>
-                Uplift and waste service Notes
-              </Text>
-              <Text style={{fontSize: 12, fontWeight: 400, lineHeight: 20}}>
-                {measurinDetails?.uplift_waste_service_notes}
-              </Text>
+            <View style={[styles.commonContainer]}>
+              <CheckBox
+                value={checked?.includes('uplift_waste_service_notes')}
+                onPress={() => addValues('uplift_waste_service_notes')}
+                checked={checked}
+              />
+              <View style={styles.innerContaner}>
+                <Text style={{fontSize: 12, fontWeight: 600}}>
+                  Uplift and waste service Notes
+                </Text>
+                <Text style={{fontSize: 12, fontWeight: 400}}>
+                  {measurinDetails?.uplift_waste_service_notes}
+                </Text>
+              </View>
             </View>
           )}
           {measurinDetails?.furniture_images?.length ? (
             <View
               style={{
-                paddingVertical: 15,
+                paddingVertical: scale(15),
               }}>
-              <Text style={{fontSize: 12, fontWeight: 600}}>Furniture</Text>
+              <View style={{flexDirection: 'row'}}>
+                <CheckBox
+                  value={checked?.includes('furniture_images')}
+                  onPress={() => addValues('furniture_images')}
+                  checked={checked}
+                />
+                <Text style={{fontSize: 12, fontWeight: 600, marginLeft: 10}}>
+                  Furniture
+                </Text>
+              </View>
               <View
                 style={{
                   flexDirection: 'row',
                   justifyContent: 'space-between',
-                  marginTop: 20,
+                  marginTop: scale(20),
                   flexWrap: 'wrap',
+                  marginLeft: scale(30),
                 }}>
                 {measurinDetails?.furniture_images.map((item, index) => (
                   <Image
                     key={index}
                     style={{
-                      height: 56,
-                      width: 80,
-                      borderRadius: 10,
-                      marginTop: 10,
+                      height: scale(56),
+                      width: scale(80),
+                      borderRadius: scale(10),
+                      marginTop: scale(10),
                     }}
                     resizeMode="cover"
                     source={{uri: `${ImageUrl}${item}`}}
@@ -615,7 +749,7 @@ const JobCompleteForm = ({route}) => {
             </View>
           ) : null}
           {measurinDetails?.furniture_notes && (
-            <View style={{marginVertical: 10}}>
+            <View style={{marginVertical: 10, marginLeft: 30}}>
               <Text style={{fontSize: 12, fontWeight: 400, lineHeight: 20}}>
                 <Text style={{fontSize: 12, fontWeight: 600}}>Notes </Text>:{' '}
                 {measurinDetails?.furniture_notes}
@@ -623,33 +757,54 @@ const JobCompleteForm = ({route}) => {
             </View>
           )}
           {measurinDetails?.is_suitable_for_job && (
-            <View style={{marginVertical: 10}}>
-              <Text style={{fontSize: 12, fontWeight: 600, marginBottom: 10}}>
-                Suitable for Job
-              </Text>
-              <Text style={{fontSize: 12, fontWeight: 400, lineHeight: 20}}>
-                {measurinDetails?.is_suitable_for_job}
-              </Text>
+            <View style={[styles.commonContainer]}>
+              <CheckBox
+                value={checked?.includes('is_suitable_for_job')}
+                onPress={() => addValues('is_suitable_for_job')}
+                checked={checked}
+              />
+              <View style={styles.innerContaner}>
+                <Text style={{fontSize: 12, fontWeight: 600}}>
+                  Suitable for Job
+                </Text>
+                <Text style={{fontSize: 12, fontWeight: 400}}>
+                  {measurinDetails?.is_suitable_for_job}
+                </Text>
+              </View>
             </View>
           )}
           {measurinDetails?.suitable_for_job && (
-            <View style={{marginVertical: 10}}>
-              <Text style={{fontSize: 12, fontWeight: 600, marginBottom: 10}}>
-                Suitable for Job Notes
-              </Text>
-              <Text style={{fontSize: 12, fontWeight: 400, lineHeight: 20}}>
-                {measurinDetails?.suitable_for_job}
-              </Text>
+            <View style={[styles.commonContainer]}>
+              <CheckBox
+                value={checked?.includes('suitable_for_job')}
+                onPress={() => addValues('suitable_for_job')}
+                checked={checked}
+              />
+              <View style={styles.innerContaner}>
+                <Text style={{fontSize: 12, fontWeight: 600}}>
+                  Suitable for Job Notes
+                </Text>
+                <Text style={{fontSize: 12, fontWeight: 400}}>
+                  {measurinDetails?.suitable_for_job}
+                </Text>
+              </View>
             </View>
           )}
           {measurinDetails?.floor_preparation_notes && (
-            <View style={{marginVertical: 10}}>
-              <Text style={{fontSize: 12, fontWeight: 600, marginBottom: 10}}>
-                Floor Preparation
-              </Text>
-              <Text style={{fontSize: 12, fontWeight: 400, lineHeight: 20}}>
-                {measurinDetails?.floor_preparation_notes}
-              </Text>
+            <View style={[styles.commonContainer]}>
+              <CheckBox
+                value={checked?.includes('floor_preparation_notes')}
+                onPress={() => addValues('floor_preparation_notes')}
+                checked={checked}
+              />
+              <View style={styles.innerContaner}>
+                <Text style={{fontSize: 12, fontWeight: 600}}>
+                  Floor Preparation
+                </Text>
+                <Text style={{fontSize: 12, fontWeight: 400}}>
+                  {measurinDetails?.floor_preparation_notes}
+                </Text>
+              </View>
             </View>
           )}
           {measurinDetails?.floor_preparation_images?.length ? (
@@ -686,65 +841,83 @@ const JobCompleteForm = ({route}) => {
             </View>
           ) : null}
           {measurinDetails?.how_many_doors_to_cut && (
-            <View
-              style={{
-                flexDirection: 'row',
-                justifyContent: 'space-between',
-                paddingVertical: 15,
-              }}>
-              <Text style={{fontSize: 12, fontWeight: 600}}>
-                How Many Doors To Cut
-              </Text>
-              <Text
-                style={{
-                  fontSize: 12,
-                  fontWeight: 400,
-                  width: 70,
-                  textAlign: 'right',
-                }}>
-                {measurinDetails?.how_many_doors_to_cut}
-              </Text>
+            <View style={[styles.commonContainer]}>
+              <CheckBox
+                value={checked?.includes('how_many_doors_to_cut')}
+                onPress={() => addValues('how_many_doors_to_cut')}
+                checked={checked}
+              />
+              <View style={styles.innerContaner}>
+                <Text style={{fontSize: 12, fontWeight: 600}}>
+                  How Many Doors To Cut
+                </Text>
+                <Text
+                  style={{
+                    fontSize: 12,
+                    fontWeight: 400,
+                    width: 70,
+                    textAlign: 'right',
+                  }}>
+                  {measurinDetails?.how_many_doors_to_cut}
+                </Text>
+              </View>
             </View>
           )}
           {measurinDetails?.type_of_doors_to_cut && (
-            <View style={{marginVertical: 10}}>
-              <Text style={{fontSize: 12, fontWeight: 600, marginBottom: 10}}>
-                Type Of Doors To Cut
-              </Text>
-              <Text style={{fontSize: 12, fontWeight: 400, lineHeight: 20}}>
-                {measurinDetails?.type_of_doors_to_cut}
-              </Text>
+            <View style={[styles.commonContainer]}>
+              <CheckBox
+                value={checked?.includes('type_of_doors_to_cut')}
+                onPress={() => addValues('type_of_doors_to_cut')}
+                checked={checked}
+              />
+              <View style={styles.innerContaner}>
+                <Text style={{fontSize: 12, fontWeight: 600}}>
+                  Type Of Doors To Cut
+                </Text>
+                <Text style={{fontSize: 12, fontWeight: 400}}>
+                  {measurinDetails?.type_of_doors_to_cut}
+                </Text>
+              </View>
             </View>
           )}
           {measurinDetails?.fitters_needed && (
-            <View
-              style={{
-                flexDirection: 'row',
-                justifyContent: 'space-between',
-                paddingVertical: 15,
-              }}>
-              <Text style={{fontSize: 12, fontWeight: 600}}>
-                How many fitters needed
-              </Text>
-              <Text
-                style={{
-                  fontSize: 12,
-                  fontWeight: 400,
-                  width: 70,
-                  textAlign: 'right',
-                }}>
-                {measurinDetails?.fitters_needed}
-              </Text>
+            <View style={[styles.commonContainer]}>
+              <CheckBox
+                value={checked?.includes('fitters_needed')}
+                onPress={() => addValues('fitters_needed')}
+                checked={checked}
+              />
+              <View style={styles.innerContaner}>
+                <Text style={{fontSize: 12, fontWeight: 600}}>
+                  How many fitters needed
+                </Text>
+                <Text
+                  style={{
+                    fontSize: 12,
+                    fontWeight: 400,
+                    width: 70,
+                    textAlign: 'right',
+                  }}>
+                  {measurinDetails?.fitters_needed}
+                </Text>
+              </View>
             </View>
           )}
           {measurinDetails?.additional_notes && (
-            <View style={{marginVertical: 10}}>
-              <Text style={{fontSize: 12, fontWeight: 600, marginBottom: 10}}>
-                Additional Notes
-              </Text>
-              <Text style={{fontSize: 12, fontWeight: 400, lineHeight: 20}}>
-                {measurinDetails?.additional_notes}
-              </Text>
+            <View style={[styles.commonContainer]}>
+              <CheckBox
+                value={checked?.includes('additional_notes')}
+                onPress={() => addValues('additional_notes')}
+                checked={checked}
+              />
+              <View style={styles.innerContaner}>
+                <Text style={{fontSize: 12, fontWeight: 600, top: scale(5)}}>
+                  Additional Notes
+                </Text>
+                <Text style={{fontSize: 12, fontWeight: 400}}>
+                  {measurinDetails?.additional_notes}
+                </Text>
+              </View>
             </View>
           )}
         </View>
@@ -754,6 +927,9 @@ const JobCompleteForm = ({route}) => {
             //   'responseData?.fitter_status ',
             //   responseData?.fitter_status,
             // )}
+            onPress={() => {
+              generateInitialCheckedState(checked);
+            }}
             // onPress={onStart}
             title={'Submit'}
           />
@@ -813,5 +989,12 @@ const styles = StyleSheet.create({
   commonContainer: {
     flexDirection: 'row',
     alignItems: 'center',
+  },
+  innerContaner: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    paddingVertical: 15,
+    paddingLeft: 10,
+    flex: 1,
   },
 });
