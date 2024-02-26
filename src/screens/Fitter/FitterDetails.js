@@ -24,15 +24,17 @@ import {useFocusEffect} from '@react-navigation/native';
 import {useToast} from 'react-native-toast-notifications';
 import Shimmer from 'react-native-shimmer';
 import ShimmerEffect from '../../components/ShimmerEffect/Shimmer';
+import moment from 'moment';
 
 const FitterDetail = ({route}) => {
   const dispatch = useDispatch();
   const toast = useToast();
   const [responseData, setResponseData] = useState();
   const [measurinDetails, setMeasurinDetails] = useState();
+  const [disableButton, setDisableButton] = useState(false);
   const job_id = route?.params?._id;
   const loader = useSelector(state => state?.loaderReducer?.loader);
-  const userData = useSelector(state => state?.onBoardingreducer?.userData);
+  // console.log('measurinDetails',(measurinDetails));
   let param = {
     job_id,
     cb: res => {
@@ -57,16 +59,26 @@ const FitterDetail = ({route}) => {
     }, []),
   );
   const onStart = () => {
+    setDisableButton(true);
+    setTimeout(() => {
+      setDisableButton(false);
+    }, 4000);
     const param = {
       job_id: responseData?._id,
       fitter_status: 'On-work',
     };
-    // console.log(param,'param----------');
-    // responseData?.fitter_status == 'On-work'
     responseData?.fitter_status == 'Pending'
-      ? dispatch(startFittingAction(param))
-      : // navigationRef.navigate('JobCompleteForm'),
-        navigationRef.navigate('Fitter', {
+      ? moment(new Date()).format('DD MM YYYY') ===
+        moment(responseData?.fitter_job_date).format('DD MM YYYY')
+        ? dispatch(startFittingAction(param))
+        : toast.show('You can not start the Job, before assigned time', {
+            type: 'danger',
+            placement: 'bottom',
+            duration: 4000,
+            offset: 30,
+            animationType: 'slide-in ',
+          })
+      : navigationRef.navigate('Fitter', {
           screen: 'JobCompleteForm',
           params: {
             responseData: responseData,
@@ -688,6 +700,7 @@ const FitterDetail = ({route}) => {
               style={{flex: 1, justifyContent: 'flex-end', marginVertical: 25}}>
               <CommonButton
                 onPress={onStart}
+                disableButton={disableButton}
                 title={
                   responseData?.fitter_status == 'On-work'
                     ? 'Job Complete'

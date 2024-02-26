@@ -60,9 +60,7 @@ const MeasuringQuestionnaire = ({route}) => {
   const [measuremntRoomImages, setMeasuremntRoomImages] = useState(
     measuringData?.measurement_of_room,
   );
-  const [measuremntRoomImagesAPI, setMeasuremntRoomImagesAPI] = useState(
-    measuringData?.measurement_of_room,
-  );
+  const [measuremntRoomImagesAPI, setMeasuremntRoomImagesAPI] = useState();
   const [isJoinFloor, setIsJoinFloor] = useState(
     measuringData?.join_in_floor == 'true' ? 'Yes' : 'No',
   );
@@ -158,7 +156,7 @@ const MeasuringQuestionnaire = ({route}) => {
       ? setIssecondScreen(true)
       : setIssecondScreen(false);
   };
-  console.log('formFilled0----', formFilled);
+  // console.log('formFilled0----', formFilled);
   useEffect(() => {
     handleChangeSecondScreen();
   }, [flooringType]);
@@ -209,7 +207,10 @@ const MeasuringQuestionnaire = ({route}) => {
       cb: image => {
         setMeasuremntRoomImages(
           measuremntRoomImages?.filter(sort => sort !== image),
-        );
+        ),
+          setMeasuremntRoomImagesAPI(
+            measuremntRoomImagesAPI?.filter(sort => sort !== image),
+          );
       },
     };
     dispatch(deleteImage(param));
@@ -217,51 +218,6 @@ const MeasuringQuestionnaire = ({route}) => {
   const onPressModal = () => {
     setModalVisible(!modalVisible);
     navigationRef.navigate('Home');
-  };
-  useEffect(() => {
-    const isFormFilled = Object.values(data).every(
-      value => value !== undefined && value !== null,
-    );
-    setFormFilled(isFormFilled);
-  }, [data]);
-  const firstData = {
-    job_id: job_id,
-    type_of_room: typeOfRoom,
-    surcharge: surcharge,
-    flooring_type: flooringType,
-    flooring_choice_color: flooringChoiceColor,
-    size: size,
-    sqm: SQM,
-    measurement_of_room: measuremntRoomImages,
-    join_in_floor: isJoinFloor,
-    join_in_floor_notes: JoinInNotes,
-    gripper_length: gripperLengths,
-    underlay_type: underlayType,
-    underlay_amount: underlayAmount,
-    doorbar_type: doorBarType,
-    doorbar_amount: doorBarAmount,
-    uplift_waste_service: isUpliftWasteService,
-    uplift_waste_service_notes: upliftWasteServiceNotes,
-    is_furniture_to_move: isFurnitureToMove,
-    is_suitable_for_job: isSuitableForJob,
-    doors_to_cut: doorsToCut,
-    fitters_needed: fittersNeeded,
-    additional_notes: additionalNotes,
-    // furniture_notes: furnitureNotes,
-    // doorbar_type_text: doorBarNotes,
-    // is_flooring_choice_selected: isFlooringChoiceSelected,
-    // furniture to move
-    // suitable_for_job: SuitableForJobNotes,
-    // how_many_doors_to_cut: howManyDoorsToCut,
-    // type_of_doors_to_cut: typeOfdoorsToCut,
-    // scotia: scotia,
-    // skirting_board: isSkirtingBoard,
-    // skirting_board_notes: skirtingBoardNotes,
-    // floor_preparation_checkbox: isFloorPreparation,
-    // floor_preparation_notes: floorNotes,
-    // empty_room: isFurnitureToMove,
-    // furniture_images: furnitureImages,
-    // floor_preparation_images: floorImages,
   };
   // useEffect(() => {
   //   if (measuremntRoomImages?.length > 3) {
@@ -302,7 +258,8 @@ const MeasuringQuestionnaire = ({route}) => {
     floor_preparation_notes: floorNotes,
     is_furniture_to_move: isFurnitureToMove,
     empty_room: isFurnitureToMove,
-    measurement_of_room: measuremntRoomImages,
+    // measurement_of_room: measuremntRoomImages,
+    measurement_of_room: measuremntRoomImagesAPI,
     furniture_images: furnitureImages,
     floor_preparation_images: floorImages,
   };
@@ -354,7 +311,9 @@ const MeasuringQuestionnaire = ({route}) => {
           }}>
           <Checkbox.Android
             color={COLORS.secondry}
-            status={isFlooringChoiceSelected ? 'checked' : 'unchecked'}
+            status={
+              isFlooringChoiceSelected == !false ? 'checked' : 'unchecked'
+            }
             onPress={() => {
               setIsFlooringChoiceSelected(!isFlooringChoiceSelected);
             }}
@@ -392,6 +351,7 @@ const MeasuringQuestionnaire = ({route}) => {
                   LaunchImageLibraryAsync(
                     measuremntRoomImages,
                     setMeasuremntRoomImages,
+                    setMeasuremntRoomImagesAPI,
                     'Certifications',
                   );
                 }}>
@@ -420,11 +380,16 @@ const MeasuringQuestionnaire = ({route}) => {
                 <TouchableOpacity
                   onPress={() => {
                     item?.uri
-                      ? setMeasuremntRoomImages(
+                      ? (setMeasuremntRoomImages(
                           measuremntRoomImages?.filter(
                             sort => sort.uri !== item.uri,
                           ),
-                        )
+                        ),
+                        setMeasuremntRoomImagesAPI(
+                          measuremntRoomImagesAPI?.filter(
+                            sort => sort.uri !== item.uri,
+                          ),
+                        ))
                       : DeleteImage(item, 'measurement_of_room');
                   }}
                   style={{
@@ -1111,7 +1076,8 @@ const MeasuringQuestionnaire = ({route}) => {
         isVisible={modalVisible}
         onModalPress={onPressModal}
         onPress={() => {
-          setModalVisible(!modalVisible);
+          console.log('not to close');
+          // setModalVisible(!modalVisible);
         }}
         img={jobComplete}
         title={'Job Completed Successfully !'}

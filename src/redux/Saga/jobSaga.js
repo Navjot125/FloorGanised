@@ -120,12 +120,17 @@ function* editQuestionnaire(action) {
       },
       body: extractedData,
     };
-    console.log(extractedData, 'extractedData------------------------');
+    console.log(
+      extractedData,
+      'extractedData------------------------',
+      requestOptions,
+    );
     const response = yield call(
       fetch,
       `${url}${APIS.EDIT_MEASURING_QUESTIONNAIRE}`,
       requestOptions,
     );
+    console.log('response------------------', response);
     if (response.ok) {
       const responseData = yield response.json();
       action.callBack();

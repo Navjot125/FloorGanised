@@ -2,8 +2,6 @@ import {
   Keyboard,
   SafeAreaView,
   StyleSheet,
-  Text,
-  TextInput,
   TouchableWithoutFeedback,
   View,
 } from 'react-native';
@@ -12,11 +10,10 @@ import {scale} from 'react-native-size-matters';
 import {COLORS} from '../../utils/theme';
 import Header from '../../components/Header/Header';
 import CommonButton from '../../components/CommonButton/CommonButton';
-import {navigationRef} from '../../App';
-import {useDispatch, useSelector} from 'react-redux';
+import {useDispatch} from 'react-redux';
 import {cmsRequest} from '../../redux/actions/cmsAction';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import {useToast} from 'react-native-toast-notifications';
+import {TextInput} from 'react-native-paper';
 
 const ContactUs = () => {
   const [message, setMessage] = useState();
@@ -48,19 +45,41 @@ const ContactUs = () => {
       <Header title={'Contact Us'} back={true} />
       <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
         <View style={styles.container}>
-          <TextInput
-            style={{
-              height: 137,
-              borderWidth: 1,
-              padding: 20,
-              borderColor: COLORS.grey,
-              borderRadius: 16,
-              paddingTop: 15,
-            }}
-            onChangeText={setMessage}
-            multiline={true}
-            placeholder="Write Your Message"
-          />
+          <View style={[styles.inputContainer, style]}>
+            <TextInput
+              style={styles.input}
+              textAlignVertical="top"
+              underlineColor="transparent"
+              selectionColor={COLORS.primary}
+              placeholder="Write Your Message"
+              value={message}
+              onChangeText={setMessage}
+              multiline
+              textAlign="center"
+              verticalAlign="top"
+              placeholderTextColor={'rgba(0,0,0,0.5)'}
+              ref={ref =>
+                ref &&
+                ref.setNativeProps({
+                  style: {
+                    // fontFamily: FONTS.PoppinsRegular,
+                    color: COLORS.black,
+                  },
+                })
+              }
+              theme={{
+                colors: {
+                  primary: 'transparent',
+                  text: COLORS.black,
+                },
+                fonts: {
+                  regular: {
+                    // fontFamily: FONTS.PoppinsRegular,
+                  },
+                },
+              }}
+            />
+          </View>
           <CommonButton title={'Submit'} onPress={onPress} style={style} />
         </View>
       </TouchableWithoutFeedback>
@@ -78,5 +97,19 @@ const styles = StyleSheet.create({
     borderTopLeftRadius: scale(20),
     padding: 20,
     justifyContent: 'space-between',
+  },
+  input: {
+    backgroundColor: COLORS.white,
+    fontSize: scale(14),
+    // fontFamily: FONTS.PoppinsRegular,
+    color: '#35454F',
+  },
+  inputContainer: {
+    height: scale(137),
+    overflow: 'hidden',
+    borderRadius: 16,
+    borderWidth: 1,
+    borderColor: COLORS.brgrey,
+    marginTop: scale(20),
   },
 });

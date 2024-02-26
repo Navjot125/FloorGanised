@@ -30,11 +30,10 @@ const Detail = ({route}) => {
   const loader = useSelector(state => state?.loaderReducer?.loader);
   const job_id = route?.params?._id;
   const [responseData, setResponseData] = useState();
-  console.log('route.params;', route.params);
   const onStart = () => {
     setDisableButton(true);
     setTimeout(() => {
-      setDisableButton(false);
+      setDisableButton(false); 
     }, 4000);
     moment(new Date()).format('DD MM YYYY') ===
     moment(responseData?.surveyor_job_date).format('DD MM YYYY')

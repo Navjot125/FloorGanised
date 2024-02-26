@@ -23,7 +23,7 @@ const Profile = () => {
   const dispatch = useDispatch();
   const toast = useToast();
   const userData = useSelector(state => state?.onBoardingreducer?.userData);
-  console.log('userData-',userData);
+  console.log('userData-', userData);
   const screen = userData?.role === 'Surveyor' ? 'Main' : 'Fitter';
   const [showModal, setShowModal] = useState(false);
   // console.log(userData,'userData--');

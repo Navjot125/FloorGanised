@@ -4,6 +4,7 @@ const MAX_IMAGE_SIZE = 3 * 1024 * 1024; // Maximum image size in bytes (3MB)
 const handleImageArrayWhileRemove = (
   measuremntRoomImages,
   setMeasuremntRoomImages,
+  setMeasuremntRoomImagesAPI,
   result,
 ) => {
   if (measuremntRoomImages) {
@@ -12,13 +13,16 @@ const handleImageArrayWhileRemove = (
       arr.push(val);
     });
     setMeasuremntRoomImages(arr);
+    setMeasuremntRoomImagesAPI(arr);
   } else {
     setMeasuremntRoomImages(result);
+    setMeasuremntRoomImagesAPI(result);
   }
 };
 const LaunchImageLibraryAsync = async (
   measuremntRoomImages,
   setMeasuremntRoomImages,
+  setMeasuremntRoomImagesAPI,
   docName,
 ) => {
   console.log('docName', docName);
@@ -48,9 +52,11 @@ const LaunchImageLibraryAsync = async (
           handleImageArrayWhileRemove(
             measuremntRoomImages,
             setMeasuremntRoomImages,
+            setMeasuremntRoomImagesAPI,
             res,
           );
         } else if (docName === 'profile') {
+          setMeasuremntRoomImagesAPI(res[0]);
           setMeasuremntRoomImages(res[0]);
         }
       } else {

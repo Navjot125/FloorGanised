@@ -93,6 +93,7 @@ const History = () => {
             {item?.address}
           </Text>
           <TouchableOpacity
+            disabled
             style={{
               backgroundColor: COLORS.black,
               height: 24,
@@ -136,7 +137,7 @@ const History = () => {
             contentContainerStyle={{paddingBottom: 20}}
           />
         ) : (
-          <View 
+          <View
             style={{
               flex: 1,
               justifyContent: 'center',
