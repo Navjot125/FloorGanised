@@ -16,7 +16,6 @@ function* getJob(action) {
     const queryParams = `status=${encodeURIComponent(
       status,
     )}&job_date=${encodeURIComponent(moment(date).format('YYYY-MM-DD'))}`;
-    // )}&job_date=${encodeURIComponent(date)}`;
     const requestOptions = {
       method: 'GET',
       headers: {
@@ -56,22 +55,7 @@ function* jobDetail(action) {
     const response = yield call(fetch, urlWithParams, requestOptions);
     const responseData = yield response.json();
     if (responseData?.status) {
-      // console.log('responseData of JobDetail', responseData);
       cb(responseData);
-      // responseData?.measuring_details
-      //   ? navigationRef.navigate(stack, {
-      //       screen: screen,
-      //       params: {
-      //         responseData: responseData?.data,
-      //         measurinDetails: responseData?.measuring_details,
-      //       },
-      //     })
-      //   : navigationRef.navigate(stack, {
-      //       screen: screen,
-      //       params: {
-      //         responseData: responseData?.data,
-      //       },
-      //     });
     } else {
       toastFun(responseData?.message, 'danger');
     }

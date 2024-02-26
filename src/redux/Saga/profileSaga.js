@@ -11,14 +11,14 @@ import {
   UPDATE_PASSWORD,
   UPDATE_PROFILE,
 } from '../constants';
-import { setLoader } from '../actions/Loader';
+import {setLoader} from '../actions/Loader';
 
 function* getProfile(action) {
   console.log('getProfile API --------------------------');
   try {
     yield put(setLoader(true));
     const token = yield call(AsyncStorage.getItem, 'token');
-    console.log('token-------------',token);
+    console.log('token-------------', token);
     const requestOptions = {
       method: 'GET',
       headers: {
@@ -130,6 +130,7 @@ function* updateProfile(action) {
       },
       body: JSON.stringify({
         name,
+        email,
       }),
     };
     const response = yield call(
@@ -140,6 +141,7 @@ function* updateProfile(action) {
     const responseData = yield response.json();
     if (responseData?.status) {
       console.log(responseData, 'updateProfile response --');
+      yield put({type: SET_USER_DATA, data: responseData?.data});
       navigationRef.navigate('Home');
     } else {
       action?.data?.toastFun(responseData?.message, 'danger');

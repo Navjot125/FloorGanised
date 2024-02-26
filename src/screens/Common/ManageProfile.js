@@ -67,6 +67,7 @@ const ManageProfile = () => {
           <CommonTextInput
             placeholder={'Email ( Username )'}
             value={email}
+            keyboardType="email-address"
             onChangeText={newText => setEmail(newText)}
             style={style}
           />

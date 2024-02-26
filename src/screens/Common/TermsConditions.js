@@ -104,9 +104,9 @@ export default TermsConditions;
 const styles = StyleSheet.create({
   container: {
     backgroundColor: COLORS?.white,
-    flex: 1,
     borderTopRightRadius: scale(20),
     borderTopLeftRadius: scale(20),
     padding: 20,
+    flexGrow: 1,
   },
 });

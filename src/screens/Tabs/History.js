@@ -136,7 +136,7 @@ const History = () => {
             contentContainerStyle={{paddingBottom: 20}}
           />
         ) : (
-          <View
+          <View 
             style={{
               flex: 1,
               justifyContent: 'center',

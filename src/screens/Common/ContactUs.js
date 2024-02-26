@@ -1,4 +1,12 @@
-import {SafeAreaView, StyleSheet, Text, TextInput, View} from 'react-native';
+import {
+  Keyboard,
+  SafeAreaView,
+  StyleSheet,
+  Text,
+  TextInput,
+  TouchableWithoutFeedback,
+  View,
+} from 'react-native';
 import React, {useState} from 'react';
 import {scale} from 'react-native-size-matters';
 import {COLORS} from '../../utils/theme';
@@ -38,26 +46,27 @@ const ContactUs = () => {
     <View style={{flex: 1, backgroundColor: 'black'}}>
       <SafeAreaView />
       <Header title={'Contact Us'} back={true} />
-      <View style={styles.container}>
-        <TextInput
-          style={{
-            height: 137,
-            borderWidth: 1,
-            padding: 20,
-            borderColor: COLORS.grey,
-            borderRadius: 16,
-            paddingTop: 15,
-          }}
-          onChangeText={setMessage}
-          multiline={true}
-          placeholder="Write Your Message"
-        />
-        <CommonButton title={'Submit'} onPress={onPress} style={style} />
-      </View>
+      <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
+        <View style={styles.container}>
+          <TextInput
+            style={{
+              height: 137,
+              borderWidth: 1,
+              padding: 20,
+              borderColor: COLORS.grey,
+              borderRadius: 16,
+              paddingTop: 15,
+            }}
+            onChangeText={setMessage}
+            multiline={true}
+            placeholder="Write Your Message"
+          />
+          <CommonButton title={'Submit'} onPress={onPress} style={style} />
+        </View>
+      </TouchableWithoutFeedback>
     </View>
   );
 };
-// style, title, onPress
 
 export default ContactUs;
 

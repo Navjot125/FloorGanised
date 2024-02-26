@@ -11,7 +11,7 @@ import {useNavigation} from '@react-navigation/native';
 import {scale, verticalScale, moderateScale} from 'react-native-size-matters';
 import {useDispatch, useSelector} from 'react-redux';
 import {Image, Dimensions} from 'react-native';
-import {Calendar, LocaleConfig} from 'react-native-calendars';
+import {Calendar} from 'react-native-calendars';
 import Modal from 'react-native-modal';
 import {setSelecteddate} from '../../redux/reducers/Dates';
 import {COLORS} from '../theme';
@@ -22,7 +22,6 @@ const moment = require('moment');
 const CalendarStrip = ({loader}) => {
   const width = Dimensions.get('window').width;
   const height = Dimensions.get('window').height;
-  const [selectedDate, setSelectedDate] = useState();
   const [open, setOpen] = useState(false);
   const [isModalVisible, setModalVisible] = useState(false);
   const [minDate, setMinDate] = useState(
@@ -91,9 +90,11 @@ const CalendarStrip = ({loader}) => {
   );
   const renderItem1 = ({item, index}) => {
     const backgroundColor =
-      item.id === SelectedDate?.id ? COLORS.black : 'rgba(233, 233, 233, 0.4)';
+      item.day === SelectedDate?.day
+        ? COLORS.black
+        : 'rgba(233, 233, 233, 0.4)';
     const color =
-      item.id === SelectedDate?.id ? COLORS.white : 'rgba(0, 0, 0, 0.3)';
+      item.day === SelectedDate?.day ? COLORS.white : 'rgba(0, 0, 0, 0.3)';
     return (
       <Item
         item={item}
@@ -107,6 +108,18 @@ const CalendarStrip = ({loader}) => {
         textColor={color}
       />
     );
+  };
+  const changeDateUsingCal = originalData => {
+    const dateObject = moment(originalData.dateString, 'YYYY-MM-DD');
+    const result = {
+      date: dateObject.date(),
+      day: dateObject.format('D MMMM YYYY'),
+      id: 0,
+      month: dateObject.format('MMMM').toUpperCase(),
+      monthInNumbers: dateObject.month(),
+    };
+    setModalVisible(false);
+    dispatch(setSelectedDateReducer(result));
   };
   return (
     <>
@@ -137,12 +150,11 @@ const CalendarStrip = ({loader}) => {
           }}>
           <Calendar
             onDayPress={day => {
-              setdateFromCalendar(day);
-              dispatch(setSelectedDateReducer(day));
+              // setdateFromCalendar(day);
+              changeDateUsingCal(day);
             }}
-            // minDate={minDate}
+            minDate={new Date().toISOString().split('T')[0]}
             theme={{
-              // backgroundColor: 'red',
               calendarBackground: 'white',
               textSectionTitleColor: '#b6c1cd',
               selectedDayBackgroundColor: 'yellow',

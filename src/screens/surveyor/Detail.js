@@ -20,15 +20,32 @@ import {useFocusEffect} from '@react-navigation/native';
 import {useDispatch, useSelector} from 'react-redux';
 import {jobDetail} from '../../redux/actions/homeAction';
 import ShimmerEffect from '../../components/ShimmerEffect/Shimmer';
+import moment from 'moment';
+import {useToast} from 'react-native-toast-notifications';
 
 const Detail = ({route}) => {
+  const toast = useToast();
   const dispatch = useDispatch();
+  const [disableButton, setDisableButton] = useState(false);
   const loader = useSelector(state => state?.loaderReducer?.loader);
   const job_id = route?.params?._id;
   const [responseData, setResponseData] = useState();
   console.log('route.params;', route.params);
   const onStart = () => {
-    navigationRef.navigate('MeasuringQuestionnaire', responseData);
+    setDisableButton(true);
+    setTimeout(() => {
+      setDisableButton(false);
+    }, 4000);
+    moment(new Date()).format('DD MM YYYY') ===
+    moment(responseData?.surveyor_job_date).format('DD MM YYYY')
+      ? navigationRef.navigate('MeasuringQuestionnaire', responseData)
+      : toast.show('You can not start the Job, before assigned time', {
+          type: 'danger',
+          placement: 'bottom',
+          duration: 4000,
+          offset: 30,
+          animationType: 'slide-in ',
+        });
   };
   let param = {
     job_id,
@@ -53,7 +70,6 @@ const Detail = ({route}) => {
       dispatch(jobDetail(param));
     }, []),
   );
-
   return (
     <View style={{flex: 1, backgroundColor: 'black'}}>
       <SafeAreaView />
@@ -116,7 +132,11 @@ const Detail = ({route}) => {
               </View>
             </View>
             <View style={{flex: 1, justifyContent: 'flex-end', bottom: 25}}>
-              <CommonButton onPress={onStart} title={'Start Measuring'} />
+              <CommonButton
+                disableButton={disableButton}
+                onPress={onStart}
+                title={'Start Measuring'}
+              />
             </View>
           </>
         )}

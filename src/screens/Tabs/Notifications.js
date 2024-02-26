@@ -163,12 +163,30 @@ const Notifications = () => {
         }}>
         {loader ? (
           <ShimmerEffect />
-        ) : (
+        ) : notifications?.length ? (
           <FlatList
             data={notifications}
             renderItem={renderItem}
             contentContainerStyle={{paddingBottom: 20}}
           />
+        ) : (
+          <View
+            style={{
+              flex: 1,
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}>
+            <Text
+              style={{
+                fontSize: 15,
+                fontWeight: 500,
+                textAlign: 'center',
+                paddingHorizontal: 50,
+                lineHeight: 25,
+              }}>
+              There is no notifications for you.
+            </Text>
+          </View>
         )}
       </View>
     </View>

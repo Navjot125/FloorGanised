@@ -135,6 +135,7 @@ const MeasuringQuestionnaire = ({route}) => {
   const [floorImages, setFloorImages] = useState(
     measuringData?.floor_preparation_images,
   );
+  const [formFilled, setFormFilled] = useState(false);
   const [isSecondScreen, setIssecondScreen] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
   const doorsToCutOption = ['Yes', 'No'];
@@ -157,6 +158,7 @@ const MeasuringQuestionnaire = ({route}) => {
       ? setIssecondScreen(true)
       : setIssecondScreen(false);
   };
+  console.log('formFilled0----', formFilled);
   useEffect(() => {
     handleChangeSecondScreen();
   }, [flooringType]);
@@ -198,8 +200,6 @@ const MeasuringQuestionnaire = ({route}) => {
     userData?.role == 'Surveyor'
       ? dispatch(submitQuestionnaire(data, param))
       : dispatch(editMeasuring(data, cb));
-    // :getData()
-    // : console.log('data----------------------',data);
   };
   const DeleteImage = (image, key) => {
     const param = {
@@ -217,6 +217,51 @@ const MeasuringQuestionnaire = ({route}) => {
   const onPressModal = () => {
     setModalVisible(!modalVisible);
     navigationRef.navigate('Home');
+  };
+  useEffect(() => {
+    const isFormFilled = Object.values(data).every(
+      value => value !== undefined && value !== null,
+    );
+    setFormFilled(isFormFilled);
+  }, [data]);
+  const firstData = {
+    job_id: job_id,
+    type_of_room: typeOfRoom,
+    surcharge: surcharge,
+    flooring_type: flooringType,
+    flooring_choice_color: flooringChoiceColor,
+    size: size,
+    sqm: SQM,
+    measurement_of_room: measuremntRoomImages,
+    join_in_floor: isJoinFloor,
+    join_in_floor_notes: JoinInNotes,
+    gripper_length: gripperLengths,
+    underlay_type: underlayType,
+    underlay_amount: underlayAmount,
+    doorbar_type: doorBarType,
+    doorbar_amount: doorBarAmount,
+    uplift_waste_service: isUpliftWasteService,
+    uplift_waste_service_notes: upliftWasteServiceNotes,
+    is_furniture_to_move: isFurnitureToMove,
+    is_suitable_for_job: isSuitableForJob,
+    doors_to_cut: doorsToCut,
+    fitters_needed: fittersNeeded,
+    additional_notes: additionalNotes,
+    // furniture_notes: furnitureNotes,
+    // doorbar_type_text: doorBarNotes,
+    // is_flooring_choice_selected: isFlooringChoiceSelected,
+    // furniture to move
+    // suitable_for_job: SuitableForJobNotes,
+    // how_many_doors_to_cut: howManyDoorsToCut,
+    // type_of_doors_to_cut: typeOfdoorsToCut,
+    // scotia: scotia,
+    // skirting_board: isSkirtingBoard,
+    // skirting_board_notes: skirtingBoardNotes,
+    // floor_preparation_checkbox: isFloorPreparation,
+    // floor_preparation_notes: floorNotes,
+    // empty_room: isFurnitureToMove,
+    // furniture_images: furnitureImages,
+    // floor_preparation_images: floorImages,
   };
   // useEffect(() => {
   //   if (measuremntRoomImages?.length > 3) {
@@ -570,7 +615,6 @@ const MeasuringQuestionnaire = ({route}) => {
           data={doorBars}
           setLicencseLevel={setDoorBarType}
         />
-        {console.log('doorBarType',doorBarType)}
         {doorBarType == 'Other' && (
           <TextInput
             style={{

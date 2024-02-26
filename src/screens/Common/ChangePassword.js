@@ -10,6 +10,7 @@ import {navigationRef} from '../../App';
 import {updatePasswordRequest} from '../../redux/actions/profileAction';
 import {useToast} from 'react-native-toast-notifications';
 import * as Yup from 'yup';
+import { TextInput } from 'react-native-paper';
 
 const ChangePassword = () => {
   const dispatch = useDispatch();
@@ -20,7 +21,9 @@ const ChangePassword = () => {
   const [password, setPassword] = useState();
   const [confirmPassword, setConfirmPassword] = useState();
   const [error, setErrors] = useState();
-
+  const [hidePass, setHidePass] = useState(true);
+  const [hideCPass, setHideCPass] = useState(true);
+  const [hideNewPass, setHideNewPass] = useState(true);
   const validationSchema = Yup.object().shape({
     currentPassword: Yup.string()
       .required('Current Password is required')
@@ -88,19 +91,49 @@ const ChangePassword = () => {
             placeholder={'Current Password'}
             value={currentPassword}
             onChangeText={newText => setCurrentPassword(newText)}
+            secureTextEntry={hidePass ? true : false}
             style={style}
+            right={
+              <TextInput.Icon
+                onPress={() => setHidePass(!hidePass)}
+                style={styles.rightpad}
+                icon={hidePass ? 'eye-off' : 'eye'}
+                size={20}
+                iconColor={COLORS.grey}
+              />
+            }
           />
           <CommonTextInput
             placeholder={'Password'}
             value={password}
             onChangeText={newText => setPassword(newText)}
+            secureTextEntry={hideNewPass ? true : false}
             style={style}
+            right={
+              <TextInput.Icon
+                onPress={() => setHideNewPass(!hideNewPass)}
+                style={styles.rightpad}
+                icon={hideNewPass ? 'eye-off' : 'eye'}
+                size={20}
+                iconColor={COLORS.grey}
+              />
+            }
           />
           <CommonTextInput
             placeholder={'Confirm Password'}
             value={confirmPassword}
+            secureTextEntry={hideCPass ? true : false}
             onChangeText={newText => setConfirmPassword(newText)}
             style={style}
+            right={
+              <TextInput.Icon
+                onPress={() => setHideCPass(!hideCPass)}
+                style={styles.rightpad}
+                icon={hideCPass ? 'eye-off' : 'eye'}
+                size={20}
+                iconColor={COLORS.grey}
+              />
+            }
           />
         </View>
         <CommonButton

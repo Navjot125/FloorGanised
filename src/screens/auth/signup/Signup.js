@@ -13,7 +13,7 @@ import CommonTextInput from '../../../components/Input/InputBox';
 import CommonButton from '../../../components/CommonButton/CommonButton';
 import CommonBackground from '../../../components/CommonBG/CommonBackground';
 import {height} from '../../../assets/styles/styles';
-import {RadioButton} from 'react-native-paper';
+import {RadioButton, TextInput} from 'react-native-paper';
 import {COLORS} from '../../../utils/theme';
 import Back from '../../../components/BackButton/Back';
 import {scale} from 'react-native-size-matters';
@@ -44,6 +44,9 @@ const Signup = () => {
   const [error, setErrors] = useState();
   const [signUpData, setSignUpData] = useState({});
   const [disableButton, setDisableButton] = useState(false);
+  const [hidePass, setHidePass] = useState(true);
+  const [hideCPass, setHideCPass] = useState(true);
+
   useEffect(() => {
     setSignUpData({name, cPassword, email, password, selectedOption, token});
   }, [name, cPassword, email, password, selectedOption]);
@@ -139,7 +142,9 @@ const Signup = () => {
             // flex:1,
             flexGrow: 1,
             paddingTop:
-              Platform?.OS === 'android' ? height / 2.8 : height / 4.1,
+              Platform?.OS === 'android'
+                ? scale(height / 3.2)
+                : scale(height / 4.9),
             // marginTop: Platform?.OS === 'android' ? height / 2.8 : height / 4.1,
           }}>
           <View style={styles.innerBox}>
@@ -170,23 +175,43 @@ const Signup = () => {
               <CommonTextInput
                 placeholder="Email Address"
                 value={email}
+                keyboardType="email-address"
                 onChangeText={newText => setEmail(newText)}
               />
               <CommonTextInput
                 placeholder="Password"
                 value={password}
+                secureTextEntry={hidePass ? true : false}
                 onChangeText={newText => setPassword(newText)}
+                right={
+                  <TextInput.Icon
+                    onPress={() => setHidePass(!hidePass)}
+                    style={styles.rightpad}
+                    icon={hidePass ? 'eye-off' : 'eye'}
+                    size={20}
+                    iconColor={COLORS.grey}
+                  />
+                }
               />
               <CommonTextInput
                 placeholder="Confirm Password"
                 value={cPassword}
+                secureTextEntry={hideCPass ? true : false}
+                right={
+                  <TextInput.Icon
+                    onPress={() => setHideCPass(!hideCPass)}
+                    style={styles.rightpad}
+                    icon={hideCPass ? 'eye-off' : 'eye'}
+                    size={20}
+                    iconColor={COLORS.grey}
+                  />
+                }
                 onChangeText={newText => setCPassword(newText)}
               />
             </View>
             <CommonButton
               style={styles.Button}
               title="Sign Up"
-              // onPress={handleSignUp}
               disableButton={disableButton}
               onPress={handleSignup}
             />
@@ -242,5 +267,8 @@ const styles = StyleSheet.create({
   },
   Button: {
     marginTop: '5%',
+  },
+  rightpad: {
+    marginRight: 10,
   },
 });

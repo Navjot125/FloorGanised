@@ -16,4 +16,3 @@ export const onBoardingreducer = (state = initialState, action) => {
       return state;
   }
 };
-

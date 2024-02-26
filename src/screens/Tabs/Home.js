@@ -123,15 +123,15 @@ const Home = props => {
             </Text>
             <TouchableOpacity
               onPress={() => {
-                  setDisableButton(true);
-                  setTimeout(() => {
-                    setDisableButton(false);
-                  }, 4000);
+                setDisableButton(true);
+                setTimeout(() => {
+                  setDisableButton(false);
+                }, 4000);
                 // dispatch(jobDetail(param));
                 navigationRef.navigate(stack, {
-                        screen: screen,
-                        params: {  _id: item?._id, },
-                      })
+                  screen: screen,
+                  params: {_id: item?._id},
+                });
               }}
               disabled={disableButton}
               style={{
