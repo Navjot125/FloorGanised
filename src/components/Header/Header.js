@@ -14,11 +14,13 @@ import {scale} from 'react-native-size-matters';
 import {COLORS} from '../../utils/theme';
 import {navigationRef} from '../../App';
 import {useSelector} from 'react-redux';
+import {ImageUrl} from '../../services/Config';
 
 const Header = ({title, back, profileDetail}) => {
   const userName = useSelector(
     state => state?.onBoardingreducer?.userData?.name,
   );
+  const userData = useSelector(state => state?.onBoardingreducer?.userData);
   // console.log(userName,'profileDetail');
   const onPress = () => {
     navigationRef.goBack();
@@ -65,8 +67,13 @@ const Header = ({title, back, profileDetail}) => {
           </Text>
           <TouchableOpacity onPress={() => navigationRef.navigate('Profile')}>
             <Image
-              style={{height: 35, width: 35, marginLeft: 5}}
-              source={require('../../assets/images/profile.png')}
+              style={{height: 35, width: 35, marginLeft: 5, borderRadius: 50}}
+              // source={require('../../assets/images/profile.png')}
+              source={
+                !userData?.profile_image
+                  ? require('../../assets/images/avatar.png')
+                  : {uri: ImageUrl + userData?.profile_image}
+              }
             />
           </TouchableOpacity>
         </View>

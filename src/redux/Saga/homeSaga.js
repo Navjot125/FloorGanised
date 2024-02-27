@@ -71,7 +71,7 @@ function* startFittingSaga(action) {
   console.log('startFittingSaga API --------------------------');
   try {
     yield put(setLoader(true));
-    const {fitter_status, job_id} = action.data;
+    const {fitter_status, job_id, toastFun} = action.data;
     const token = yield call(AsyncStorage.getItem, 'token');
     const requestOptions = {
       method: 'POST',
@@ -89,18 +89,12 @@ function* startFittingSaga(action) {
       `${url}${APIS.START_FITTING}`,
       requestOptions,
     );
-    if (response.ok) {
-      const responseData = yield response.json();
+    const responseData = yield response.json();
+    if (responseData?.status) {
       console.log(responseData, 'startFittingSaga response --');
       navigationRef.navigate('Home');
     } else {
-      const errorData = yield response.json();
-      console.error(
-        'startFittingSaga request failed:',
-        response.status,
-        response.statusText,
-        errorData,
-      );
+      toastFun(responseData?.message, 'danger');
     }
   } catch (error) {
     console.error('An error occurred during startFittingSaga:', error);

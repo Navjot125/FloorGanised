@@ -37,6 +37,18 @@ const JobCompleteForm = ({route}) => {
     items?.forEach(item => {
       initialState[item] = true;
     });
+    const param = {
+      initialState, 
+      toastFun: (msg, type) => {
+        toast?.show(msg, {
+          type: type,
+          placement: 'bottom',
+          duration: 4000,
+          offset: 30,
+          animationType: 'slide-in ',
+        });
+      },
+    }
     moment(new Date()).format('DD MM YYYY') ===
     moment(responseData?.fitter_job_date).format('DD MM YYYY')
       ? dispatch(submitJob(initialState))

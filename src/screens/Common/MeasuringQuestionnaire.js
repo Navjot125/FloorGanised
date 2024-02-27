@@ -192,14 +192,14 @@ const MeasuringQuestionnaire = ({route}) => {
           : navigationRef.navigate('Home');
       },
     };
-    const cb = () => {
-      userData?.role == 'Surveyor'
-        ? setModalVisible(!modalVisible)
-        : navigationRef.navigate('Home');
-    };
+    // const cb = () => {
+    //   userData?.role == 'Surveyor'
+    //     ? setModalVisible(!modalVisible)
+    //     : navigationRef.navigate('Home');
+    // };
     userData?.role == 'Surveyor'
       ? dispatch(submitQuestionnaire(data, param))
-      : dispatch(editMeasuring(data, cb));
+      : dispatch(editMeasuring(data, param));
   };
   const DeleteImage = (image, key) => {
     // measurement_of_room
@@ -209,6 +209,15 @@ const MeasuringQuestionnaire = ({route}) => {
       job_id: measuringData?.job_id,
       key: key,
       image_name: image,
+      toastFun: (msg, type) => {
+        toast?.show(msg, {
+          type: type,
+          placement: 'bottom',
+          duration: 4000,
+          offset: 30,
+          animationType: 'slide-in ',
+        });
+      },
       cb: image => {
         key === 'measurement_of_room'
           ? (setMeasuremntRoomImages(

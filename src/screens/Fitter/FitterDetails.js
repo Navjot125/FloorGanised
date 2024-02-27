@@ -66,6 +66,15 @@ const FitterDetail = ({route}) => {
     const param = {
       job_id: responseData?._id,
       fitter_status: 'On-work',
+      toastFun: (msg, type) => {
+        toast?.show(msg, {
+          type: type,
+          placement: 'bottom',
+          duration: 4000,
+          offset: 30,
+          animationType: 'slide-in ',
+        });
+      },
     };
     responseData?.fitter_status == 'Pending'
       ? moment(new Date()).format('DD MM YYYY') ===

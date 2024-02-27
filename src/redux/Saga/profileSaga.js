@@ -47,7 +47,6 @@ function* getProfile(action) {
     yield put(setLoader(false));
   }
 }
-
 function* updatePassword(action) {
   console.log('updatePassword API --------------------------');
   try {
@@ -120,18 +119,33 @@ function* updateProfile(action) {
   console.log('updateProfile API --------------------------');
   try {
     yield put(setLoader(true));
-    const {email, name} = action.data;
+    const {email, name, profile} = action.data;
+    const convertToFormData = () => {
+      const formData = new FormData();
+      email && formData.append('email', email);
+      name && formData.append('name', name);
+      formData.append('file', {
+        uri: profile?.uri,
+        type: profile?.type,
+        name: profile?.fileName,
+      });
+      return formData;
+    };
+    // console.log(convertToFormData(), '------------------');
+    const extractedData = yield convertToFormData();
     const token = yield call(AsyncStorage.getItem, 'token');
     const requestOptions = {
       method: 'POST',
       headers: {
-        'Content-Type': 'application/json',
+        'Content-Type': 'multipart/form-data',
+        // 'Content-Type': 'application/json',
         Authorization: `Bearer ${JSON.parse(token)}`,
       },
-      body: JSON.stringify({
-        name,
-        email,
-      }),
+      body: extractedData,
+      // body: JSON.stringify({
+      //   name,
+      //   email,
+      // }),
     };
     const response = yield call(
       fetch,

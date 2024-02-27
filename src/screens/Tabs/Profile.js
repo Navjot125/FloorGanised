@@ -19,6 +19,7 @@ import {deleteAccount} from '../../redux/actions/profileAction';
 import ResetSuccess from '../../assets/images/deleteAccount.png';
 import CommonModal from '../../components/Modal/Modal';
 import {useToast} from 'react-native-toast-notifications';
+import {ImageUrl} from '../../services/Config';
 const Profile = () => {
   const dispatch = useDispatch();
   const toast = useToast();
@@ -114,12 +115,36 @@ const Profile = () => {
           style={{
             alignItems: 'center',
             paddingVertical: 30,
+            // height: 100,
+            // width: 100,
+            // borderRadius: 100,
+            // justifyContent: 'center',
+            // alignItems: 'center',
+            // overflow: 'hidden',
+            // borderWidth: 1,
           }}>
-          <Image
-            style={{height: 66, width: 66}}
-            resizeMode="contain"
-            source={require('../../assets/images/profile.png')}
-          />
+          <View
+            style={{
+              // alignItems: 'center',
+              // paddingVertical: 30,
+              height: 100,
+              width: 100,
+              borderRadius: 100,
+              justifyContent: 'center',
+              alignItems: 'center',
+              overflow: 'hidden',
+              borderWidth: 1,
+            }}>
+            <Image
+              style={{height: '100%', width: '100%', borderRadius: 50}}
+              resizeMode="cover"
+              source={
+                !userData?.profile_image
+                  ? require('../../assets/images/avatar.png')
+                  : {uri: ImageUrl + userData?.profile_image}
+              }
+            />
+          </View>
           <Text style={{fontWeight: 600, fontSize: 16, marginTop: 10}}>
             {userData?.name}
           </Text>
@@ -128,6 +153,7 @@ const Profile = () => {
           data={screens}
           renderItem={renderItem}
           contentContainerStyle={{paddingBottom: 20}}
+          showsVerticalScrollIndicator={false}
         />
       </View>
       {showModal && (

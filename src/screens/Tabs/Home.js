@@ -21,6 +21,7 @@ import moment from 'moment';
 import {useToast} from 'react-native-toast-notifications';
 import ShimmerEffect from '../../components/ShimmerEffect/Shimmer';
 const Home = props => {
+  const userData = useSelector(state => state?.onBoardingreducer?.userData);
   const selectedDate = useSelector(state => state?.DateReducer?.selectedDate);
   const loader = useSelector(state => state?.loaderReducer?.loader);
   const [count, setCount] = useState(0);
@@ -88,7 +89,6 @@ const Home = props => {
       ? console.log('not Working Loadmore for home')
       : (setOffset(offset + 1), dispatch(getJobs(param)));
   };
-  const userData = useSelector(state => state?.onBoardingreducer?.userData);
   const stack = userData?.role == 'Surveyor' ? 'Main' : 'Fitter';
   const screen = userData?.role == 'Surveyor' ? 'Detail' : 'FitterDetail';
   const renderItem = ({item, index}) => {

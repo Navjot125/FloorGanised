@@ -110,6 +110,7 @@ function* editQuestionnaire(action) {
   console.log('editQuestionnaire API --------------------------');
   try {
     yield put(setLoader(true));
+    const {cb, toastFun} = action?.callBack;
     const extractedData = yield convertPayloadToFormData(action.data);
     const token = yield call(AsyncStorage.getItem, 'token');
     const requestOptions = {
@@ -120,30 +121,18 @@ function* editQuestionnaire(action) {
       },
       body: extractedData,
     };
-    console.log(
-      extractedData,
-      'extractedData------------------------',
-      requestOptions,
-    );
     const response = yield call(
       fetch,
       `${url}${APIS.EDIT_MEASURING_QUESTIONNAIRE}`,
       requestOptions,
     );
     console.log('response------------------', response);
-    if (response.ok) {
-      const responseData = yield response.json();
-      action.callBack();
+    const responseData = yield response.json();
+    if (responseData?.status) {
+      cb();
       console.log(responseData, 'editQuestionnaire response --');
-      //   navigationRef.navigate('Home');
     } else {
-      const errorData = yield response.json();
-      console.error(
-        'editQuestionnaire request failed:',
-        response.status,
-        response.statusText,
-        errorData,
-      );
+      toastFun(responseData?.message, 'danger');
     }
   } catch (error) {
     console.error('An error occurred during editQuestionnaire:', error);
@@ -155,7 +144,7 @@ function* editQuestionnaire(action) {
 function* deleteImage(action) {
   console.log('deleteImage API --------------------------');
   console.log('action', action);
-  const param = ({image_name, job_id, key} = action.data);
+  const {image_name, job_id, key, toastFun} = action.data;
   try {
     yield put(setLoader(true));
     const token = yield call(AsyncStorage.getItem, 'token');
@@ -172,18 +161,12 @@ function* deleteImage(action) {
       `${url}${APIS.DELETE_IMAGE}`,
       requestOptions,
     );
-    if (response.ok) {
-      const responseData = yield response.json();
+    const responseData = yield response.json();
+    if (responseData?.status) {
       console.log(responseData, 'deleteImage response --');
       action?.data?.cb(image_name);
     } else {
-      const errorData = yield response.json();
-      console.error(
-        'deleteImage request failed:',
-        response.status,
-        response.statusText,
-        errorData,
-      );
+      toastFun(responseData?.message, 'danger');
     }
   } catch (error) {
     console.error('An error occurred during deleteImage:', error);
@@ -195,6 +178,8 @@ function* deleteImage(action) {
 function* submitJob(action) {
   console.log('submitJob API --------------------------');
   console.log('action', action?.data);
+  const {initialState, toastFun} = action.data;
+  // toastFun
   try {
     yield put(setLoader(true));
     const token = yield call(AsyncStorage.getItem, 'token');
@@ -204,26 +189,20 @@ function* submitJob(action) {
         'Content-Type': 'application/json',
         Authorization: `Bearer ${JSON.parse(token)}`,
       },
-      body: JSON.stringify(action.data),
+      body: JSON.stringify(initialState),
     };
     const response = yield call(
       fetch,
       `${url}${APIS.SUBMIT_JOB}`,
       requestOptions,
     );
-    if (response.ok) {
-      const responseData = yield response.json();
+    const responseData = yield response.json();
+    if (responseData?.status) {
       console.log(responseData, 'submitJob response --');
       navigationRef.navigate('Home');
     } else {
-      const errorData = yield response.json();
+      toastFun(responseData?.message, 'danger');
       navigationRef.navigate('Home');
-      console.error(
-        'submitJob request failed:',
-        response.status,
-        response.statusText,
-        errorData,
-      );
     }
   } catch (error) {
     console.error('An error occurred during submitJob:', error);
