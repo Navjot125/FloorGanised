@@ -22,7 +22,10 @@ import {ImageUrl} from '../../services/Config';
 import CheckBox from '../../components/CheckBox/CheckBox';
 import {useDispatch} from 'react-redux';
 import {submitJob} from '../../redux/actions/job';
+import moment from 'moment';
+import {useToast} from 'react-native-toast-notifications';
 const JobCompleteForm = ({route}) => {
+  const toast = useToast();
   const dispatch = useDispatch();
   const [selectedItems, setSelectedItems] = useState(jobForm);
   const [checked, setChecked] = useState();
@@ -31,10 +34,19 @@ const JobCompleteForm = ({route}) => {
   const mq_id = measurinDetails?._id;
   const generateInitialCheckedState = items => {
     const initialState = {job_id, mq_id};
-    items.forEach(item => {
+    items?.forEach(item => {
       initialState[item] = true;
     });
-    dispatch(submitJob(initialState));
+    moment(new Date()).format('DD MM YYYY') ===
+    moment(responseData?.fitter_job_date).format('DD MM YYYY')
+      ? dispatch(submitJob(initialState))
+      : toast.show('You can not Submit the Job, Before assigned time', {
+          type: 'danger',
+          placement: 'bottom',
+          duration: 4000,
+          offset: 30,
+          animationType: 'slide-in ',
+        });
   };
   // const toggleTaskCompletion = name => {
   //   setSelectedItems(prevTasks =>

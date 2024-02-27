@@ -13,13 +13,16 @@ const Notifications = () => {
   const dispatch = useDispatch();
   const toast = useToast();
   const [viewFullText, setViewFullText] = useState(null);
-  const [offset, setOffset] = useState(0);
   const [notifications, setNotifications] = useState();
+  const [count, setCount] = useState(0);
+  const [offset, setOffset] = useState(0);
   const loader = useSelector(state => state?.loaderReducer?.loader);
   useFocusEffect(
     React.useCallback(() => {
+      setOffset(0);
       const param = {
-        offset,
+        offset: offset,
+        loader: true,
         toastFun: (msg, type) => {
           toast.show(msg, {
             type: type,
@@ -30,12 +33,36 @@ const Notifications = () => {
           });
         },
         cb: data => {
-          setNotifications(data);
+          setNotifications(data?.data);
+          setCount(data?.total);
         },
       };
       dispatch(getNotifications(param));
     }, []),
   );
+
+  const Loadmore = () => {
+    const param = {
+      offset: offset + 1,
+      toastFun: (msg, type) => {
+        toast.show(msg, {
+          type: type,
+          placement: 'bottom',
+          duration: 4000,
+          offset: 30,
+          animationType: 'slide-in ',
+        });
+      },
+      cb: data => {
+        const newData = data?.data;
+        setNotifications(prevListing => [...prevListing, ...newData]);
+        setCount(data?.total);
+      },
+    };
+    offset + 1 > count / 10
+      ? console.log('not Working Loadmore for Notifications')
+      : (setOffset(offset + 1), dispatch(getNotifications(param)));
+  };
   const getTimeAgo = createdAt => {
     const momentCreatedAt = moment(createdAt);
     const duration = moment.duration(moment().diff(momentCreatedAt));
@@ -168,6 +195,9 @@ const Notifications = () => {
             data={notifications}
             renderItem={renderItem}
             contentContainerStyle={{paddingBottom: 20}}
+            onEndReached={Loadmore}
+            onEndReachedThreshold={0.2}
+            showsVerticalScrollIndicator={false}
           />
         ) : (
           <View

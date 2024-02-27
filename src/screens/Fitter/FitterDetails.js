@@ -441,7 +441,7 @@ const FitterDetail = ({route}) => {
                       width: 70,
                       textAlign: 'right',
                     }}>
-                    {measurinDetails?.underlay_amount}
+                    ${measurinDetails?.underlay_amount}
                   </Text>
                 </View>
               )}
@@ -492,7 +492,7 @@ const FitterDetail = ({route}) => {
                       width: 70,
                       textAlign: 'right',
                     }}>
-                    {measurinDetails?.doorbar_amount}
+                    ${measurinDetails?.doorbar_amount}
                   </Text>
                 </View>
               )}

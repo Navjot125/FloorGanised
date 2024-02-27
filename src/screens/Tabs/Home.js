@@ -23,19 +23,26 @@ import ShimmerEffect from '../../components/ShimmerEffect/Shimmer';
 const Home = props => {
   const selectedDate = useSelector(state => state?.DateReducer?.selectedDate);
   const loader = useSelector(state => state?.loaderReducer?.loader);
+  const [count, setCount] = useState(0);
+  const [offset, setOffset] = useState(0);
+  // const count = 12;
   const [jobListing, setJobListing] = useState();
   const toast = useToast();
   const [disableButton, setDisableButton] = useState(false);
   const dispatch = useDispatch();
   useFocusEffect(
     React.useCallback(() => {
+      setJobListing();
       const param = {
         status: 'Pending',
+        offset: offset,
+        loader: true,
         date: selectedDate
           ? moment(selectedDate?.day, 'DD MMMM YYYY').format('YYYY-MM-DD')
           : new Date(),
         cb: data => {
-          setJobListing(data);
+          setJobListing(data?.data);
+          setCount(data?.totalJobs);
         },
         toastFun: (msg, type) => {
           toast.show(msg, {
@@ -48,12 +55,40 @@ const Home = props => {
         },
       };
       dateListing();
+      setOffset(0);
       dispatch(getJobs(param));
     }, [selectedDate]),
   );
+  useEffect(() => {
+    setOffset(0);
+  }, [selectedDate]);
+  const Loadmore = () => {
+    const param = {
+      status: 'Pending',
+      offset: offset + 1,
+      date: selectedDate
+        ? moment(selectedDate?.day, 'DD MMMM YYYY').format('YYYY-MM-DD')
+        : new Date(),
+      cb: data => {
+        const newData = data?.data;
+        setJobListing(prevJobListing => [...prevJobListing, ...newData]);
+        setCount(data?.totalJobs);
+      },
+      toastFun: (msg, type) => {
+        toast.show(msg, {
+          type: type,
+          placement: 'bottom',
+          duration: 4000,
+          offset: 30,
+          animationType: 'slide-in ',
+        });
+      },
+    };
+    offset + 1 > count / 10
+      ? console.log('not Working Loadmore for home')
+      : (setOffset(offset + 1), dispatch(getJobs(param)));
+  };
   const userData = useSelector(state => state?.onBoardingreducer?.userData);
-  // console.log(userData,'userData-------');
-  // console.log(jobListing, 'userData-------');
   const stack = userData?.role == 'Surveyor' ? 'Main' : 'Fitter';
   const screen = userData?.role == 'Surveyor' ? 'Detail' : 'FitterDetail';
   const renderItem = ({item, index}) => {
@@ -196,6 +231,9 @@ const Home = props => {
             data={jobListing}
             renderItem={renderItem}
             contentContainerStyle={{paddingBottom: 20}}
+            onEndReached={Loadmore}
+            onEndReachedThreshold={0.2}
+            showsVerticalScrollIndicator={false}
           />
         ) : (
           <View

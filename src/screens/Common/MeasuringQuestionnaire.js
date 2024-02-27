@@ -37,7 +37,6 @@ const MeasuringQuestionnaire = ({route}) => {
   const toast = useToast();
   const measuringData = route?.params;
   const [disableButton, setDisableButton] = useState(false);
-  // console.log('route-----------------------measuringData',  route?.params);
   const userData = useSelector(state => state?.onBoardingreducer?.userData);
   const job_id =
     userData.role == 'Surveyor' ? measuringData?._id : route?.params?.job_id;
@@ -90,11 +89,12 @@ const MeasuringQuestionnaire = ({route}) => {
     measuringData?.uplift_waste_service_notes,
   );
   const [isFurnitureToMove, setIsFurnitureToMove] = useState(
-    measuringData?.uplift_waste_service_notes,
+    measuringData?.is_furniture_to_move,
   ); // p
   const [furnitureImages, setFurnitureImages] = useState(
     measuringData?.furniture_images,
   );
+  const [furnitureImagesAPI, setFurnitureImagesAPI] = useState();
   const [furnitureNotes, setFurnitureNotes] = useState(
     measuringData?.furniture_notes,
   );
@@ -133,6 +133,7 @@ const MeasuringQuestionnaire = ({route}) => {
   const [floorImages, setFloorImages] = useState(
     measuringData?.floor_preparation_images,
   );
+  const [floorImagesAPI, setFloorImagesAPI] = useState();
   const [formFilled, setFormFilled] = useState(false);
   const [isSecondScreen, setIssecondScreen] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
@@ -157,6 +158,7 @@ const MeasuringQuestionnaire = ({route}) => {
       : setIssecondScreen(false);
   };
   // console.log('formFilled0----', formFilled);
+  console.log('formFilled0----', measuringData?.measurement_of_room);
   useEffect(() => {
     handleChangeSecondScreen();
   }, [flooringType]);
@@ -200,17 +202,32 @@ const MeasuringQuestionnaire = ({route}) => {
       : dispatch(editMeasuring(data, cb));
   };
   const DeleteImage = (image, key) => {
+    // measurement_of_room
+    // furniture_images
+    // floor_preparation_images
     const param = {
       job_id: measuringData?.job_id,
       key: key,
       image_name: image,
       cb: image => {
-        setMeasuremntRoomImages(
-          measuremntRoomImages?.filter(sort => sort !== image),
-        ),
-          setMeasuremntRoomImagesAPI(
-            measuremntRoomImagesAPI?.filter(sort => sort !== image),
-          );
+        key === 'measurement_of_room'
+          ? (setMeasuremntRoomImages(
+              measuremntRoomImages?.filter(sort => sort !== image),
+            ),
+            setMeasuremntRoomImagesAPI(
+              measuremntRoomImagesAPI?.filter(sort => sort !== image),
+            ))
+          : key === 'furniture_images'
+          ? (setFurnitureImages(
+              furnitureImages?.filter(sort => sort !== image),
+            ),
+            setFurnitureImagesAPI(
+              furnitureImagesAPI?.filter(sort => sort !== image),
+            ))
+          : key === 'floor_preparation_images'
+          ? (setFloorImages(floorImages?.filter(sort => sort !== image)),
+            setFloorImagesAPI(floorImagesAPI?.filter(sort => sort !== image)))
+          : null;
       },
     };
     dispatch(deleteImage(param));
@@ -263,6 +280,7 @@ const MeasuringQuestionnaire = ({route}) => {
     furniture_images: furnitureImages,
     floor_preparation_images: floorImages,
   };
+  console.log('measuremntRoomImagesAPI', measuremntRoomImagesAPI);
   return (
     <View style={{flex: 1, backgroundColor: 'black'}}>
       <SafeAreaView />
@@ -697,6 +715,11 @@ const MeasuringQuestionnaire = ({route}) => {
               </View>
             ))}
           </View>
+          {console.log(
+            isFurnitureToMove,
+            'furnitureImages-------',
+            furnitureImages,
+          )}
           {/* <Text style={{fontSize: 14, fontWeight: 600}}>Furniture</Text> */}
           {(!isSecondScreen && isFurnitureToMove == 'Yes') ||
           (isSecondScreen && isFurnitureToMove == 'No') ? (
@@ -714,6 +737,7 @@ const MeasuringQuestionnaire = ({route}) => {
                       LaunchImageLibraryAsync(
                         furnitureImages,
                         setFurnitureImages,
+                        setFurnitureImagesAPI,
                         'Certifications',
                       );
                     }}>
@@ -743,11 +767,16 @@ const MeasuringQuestionnaire = ({route}) => {
                         onPress={() => {
                           {
                             item?.uri
-                              ? setFurnitureImages(
+                              ? (setFurnitureImages(
                                   furnitureImages?.filter(
                                     sort => sort.uri !== item.uri,
                                   ),
-                                )
+                                ),
+                                setFurnitureImagesAPI(
+                                  furnitureImages?.filter(
+                                    sort => sort.uri !== item.uri,
+                                  ),
+                                ))
                               : DeleteImage(item, 'furniture_images');
                           }
                         }}
@@ -923,6 +952,7 @@ const MeasuringQuestionnaire = ({route}) => {
                           LaunchImageLibraryAsync(
                             floorImages,
                             setFloorImages,
+                            setFloorImagesAPI,
                             'Certifications',
                           );
                         }}>
@@ -958,11 +988,16 @@ const MeasuringQuestionnaire = ({route}) => {
                             onPress={() => {
                               {
                                 item?.uri
-                                  ? setFloorImages(
+                                  ? (setFloorImages(
                                       floorImages?.filter(
                                         sort => sort.uri !== item.uri,
                                       ),
-                                    )
+                                    ),
+                                    setFloorImagesAPI(
+                                      floorImages?.filter(
+                                        sort => sort.uri !== item.uri,
+                                      ),
+                                    ))
                                   : DeleteImage(
                                       item,
                                       'floor_preparation_images',

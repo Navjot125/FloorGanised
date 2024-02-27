@@ -39,7 +39,7 @@ const Login = () => {
   };
 
   const dispatch = useDispatch();
-  const [email, setEmail] = useState('Navjots.indiit@gmail.com');
+  const [email, setEmail] = useState('Navjot@gmail.com');
   const [password, setPassword] = useState('Delhi@1A');
   const [disableButton, setDisableButton] = useState(false);
   // const [selectedOption, setSelectedOption] = useState(null);

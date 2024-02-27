@@ -19,19 +19,22 @@ import ShimmerEffect from '../../components/ShimmerEffect/Shimmer';
 
 const History = () => {
   const [jobListing, setJobListing] = useState();
+  const [count, setCount] = useState(0);
+  const [offset, setOffset] = useState(0);
   const dispatch = useDispatch();
   const toast = useToast();
   const loader = useSelector(state => state?.loaderReducer?.loader);
 
-  // useEffect(() => {
-  //   dispatch(getJobs(param));
-  // }, []);
   useFocusEffect(
     React.useCallback(() => {
+      setOffset(0);
       const param = {
         status: 'Complete',
+        offset: offset,
+        loader: true,
         cb: data => {
-          setJobListing(data);
+          setJobListing(data?.data);
+          setCount(data?.totalJobs);
         },
         toastFun: (msg, type) => {
           toast.show(msg, {
@@ -46,10 +49,33 @@ const History = () => {
       dispatch(getJobs(param));
     }, []),
   );
+
+  const Loadmore = () => {
+    const param = {
+      status: 'Complete',
+      offset: offset + 1,
+      cb: data => {
+        const newData = data?.data;
+        setJobListing(prevJobListing => [...prevJobListing, ...newData]);
+        setCount(data?.totalJobs);
+      },
+      toastFun: (msg, type) => {
+        toast.show(msg, {
+          type: type,
+          placement: 'bottom',
+          duration: 4000,
+          offset: 30,
+          animationType: 'slide-in ',
+        });
+      },
+    };
+    offset + 1 > count / 10
+      ? console.log('not Working Loadmore for home')
+      : (setOffset(offset + 1), dispatch(getJobs(param)));
+  };
   const renderItem = ({item, index}) => {
     return (
       <View style={styles.container}>
-        {console.log('item', item)}
         <View
           style={{
             height: '45%',
@@ -135,6 +161,9 @@ const History = () => {
             data={jobListing}
             renderItem={renderItem}
             contentContainerStyle={{paddingBottom: 20}}
+            onEndReached={Loadmore}
+            onEndReachedThreshold={0.2}
+            showsVerticalScrollIndicator={false}
           />
         ) : (
           <View

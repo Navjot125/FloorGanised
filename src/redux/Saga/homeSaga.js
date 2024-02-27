@@ -10,12 +10,14 @@ import moment from 'moment';
 function* getJob(action) {
   console.log('getJob API --------------------------');
   try {
-    yield put(setLoader(true));
-    const {status, date} = action.data;
+    const {status, date, offset, loader} = action.data;
+    loader ? yield put(setLoader(true)) : null;
     const token = yield call(AsyncStorage.getItem, 'token');
     const queryParams = `status=${encodeURIComponent(
       status,
-    )}&job_date=${encodeURIComponent(moment(date).format('YYYY-MM-DD'))}`;
+    )}&job_date=${encodeURIComponent(
+      moment(date).format('YYYY-MM-DD'),
+    )}&offset=${encodeURIComponent(offset)}`;
     const requestOptions = {
       method: 'GET',
       headers: {
@@ -27,7 +29,7 @@ function* getJob(action) {
     const response = yield call(fetch, urlWithParams, requestOptions);
     const responseData = yield response.json();
     if (responseData?.status) {
-      action?.data?.cb(responseData?.data);
+      action?.data?.cb(responseData);
     } else {
       action?.data?.toastFun(responseData?.message, 'danger');
     }

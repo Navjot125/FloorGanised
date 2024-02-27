@@ -33,7 +33,7 @@ const Detail = ({route}) => {
   const onStart = () => {
     setDisableButton(true);
     setTimeout(() => {
-      setDisableButton(false); 
+      setDisableButton(false);
     }, 4000);
     moment(new Date()).format('DD MM YYYY') ===
     moment(responseData?.surveyor_job_date).format('DD MM YYYY')

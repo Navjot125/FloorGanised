@@ -214,8 +214,10 @@ function* submitJob(action) {
     if (response.ok) {
       const responseData = yield response.json();
       console.log(responseData, 'submitJob response --');
+      navigationRef.navigate('Home');
     } else {
       const errorData = yield response.json();
+      navigationRef.navigate('Home');
       console.error(
         'submitJob request failed:',
         response.status,

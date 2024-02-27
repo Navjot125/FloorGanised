@@ -8,8 +8,8 @@ import {setLoader} from '../actions/Loader';
 function* getNotification(action) {
   console.log('getNotification API --------------------------');
   try {
-    yield put(setLoader(true));
-    const {offset} = action.data?.offset;
+    const {offset, loader} = action.data;
+    loader ? yield put(setLoader(true)) : null;
     const token = yield call(AsyncStorage.getItem, 'token');
     const queryParams = `offset=${encodeURIComponent(offset)}`;
     const requestOptions = {
@@ -23,7 +23,7 @@ function* getNotification(action) {
     const response = yield call(fetch, urlWithParams, requestOptions);
     const responseData = yield response.json();
     if (responseData?.status) {
-      action?.data?.cb(responseData?.data);
+      action?.data?.cb(responseData);
     } else {
       action?.data?.toastFun(responseData?.message, 'danger');
     }

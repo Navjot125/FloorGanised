@@ -1,4 +1,11 @@
-import {Image, SafeAreaView, StyleSheet, Text, View} from 'react-native';
+import {
+  Image,
+  SafeAreaView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import React, {useState} from 'react';
 import {scale} from 'react-native-size-matters';
 import {COLORS} from '../../utils/theme';
@@ -9,6 +16,7 @@ import {navigationRef} from '../../App';
 import {useDispatch, useSelector} from 'react-redux';
 import {updateProfileRequest} from '../../redux/actions/profileAction';
 import {useToast} from 'react-native-toast-notifications';
+import Feather from 'react-native-vector-icons/Feather';
 
 const ManageProfile = () => {
   const dispatch = useDispatch();
@@ -51,10 +59,20 @@ const ManageProfile = () => {
               paddingVertical: 30,
             }}>
             <Image
-              style={{height: 66, width: 66}}
+              style={{height: 80, width: 80}}
               resizeMode="contain"
               source={require('../../assets/images/profile.png')}
             />
+            <TouchableOpacity
+              style={{
+                backgroundColor: '#F3A204',
+                top: scale(-20),
+                left: scale(20),
+                padding: 5,
+                borderRadius: 30,
+              }}>
+              <Feather name="camera" size={20} color={COLORS.white} />
+            </TouchableOpacity>
             <Text style={{fontWeight: 600, fontSize: 16, marginTop: 10}}>
               {userData?.name}
             </Text>
