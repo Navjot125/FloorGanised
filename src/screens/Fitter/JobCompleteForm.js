@@ -38,7 +38,7 @@ const JobCompleteForm = ({route}) => {
       initialState[item] = true;
     });
     const param = {
-      initialState, 
+      initialState,
       toastFun: (msg, type) => {
         toast?.show(msg, {
           type: type,
@@ -48,10 +48,10 @@ const JobCompleteForm = ({route}) => {
           animationType: 'slide-in ',
         });
       },
-    }
+    };
     moment(new Date()).format('DD MM YYYY') ===
     moment(responseData?.fitter_job_date).format('DD MM YYYY')
-      ? dispatch(submitJob(initialState))
+      ? dispatch(submitJob(param))
       : toast.show('You can not Submit the Job, Before assigned time', {
           type: 'danger',
           placement: 'bottom',
