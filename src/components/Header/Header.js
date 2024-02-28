@@ -15,6 +15,7 @@ import {COLORS} from '../../utils/theme';
 import {navigationRef} from '../../App';
 import {useSelector} from 'react-redux';
 import {ImageUrl} from '../../services/Config';
+import FONTS from '../../assets/styles/fonts';
 
 const Header = ({title, back, profileDetail}) => {
   const userName = useSelector(
@@ -49,7 +50,12 @@ const Header = ({title, back, profileDetail}) => {
         </View>
       ) : null}
       <View style={{flex: 1, paddingLeft: 10}}>
-        <Text style={{color: COLORS.white, fontSize: 20, fontWeight: 600}}>
+        <Text
+          style={{
+            color: COLORS.white,
+            fontSize: 20,
+            fontFamily: FONTS.MontserratSemiBold,
+          }}>
           {title}
         </Text>
       </View>
@@ -62,7 +68,12 @@ const Header = ({title, back, profileDetail}) => {
             flexDirection: 'row',
             alignItems: 'center',
           }}>
-          <Text style={{fontSize: 14, fontWeight: 400, color: COLORS.white}}>
+          <Text
+            style={{
+              fontSize: 14,
+              color: COLORS.white,
+              fontFamily: FONTS.MontserratRegular,
+            }}>
             Hey, {userName}
           </Text>
           <TouchableOpacity onPress={() => navigationRef.navigate('Profile')}>

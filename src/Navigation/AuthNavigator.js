@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react';
 // import {createStackNavigator} from '@react-navigation/stack';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 
-import {View, StyleSheet, Text, TouchableOpacity, Image} from 'react-native';
+import {View, StyleSheet, TouchableOpacity, Image} from 'react-native';
 import Signup from '../screens/auth/signup/Signup';
 /* Svg */
 import {moderateScale, scale, verticalScale} from 'react-native-size-matters';

@@ -12,6 +12,7 @@ import {height} from '../../assets/styles/styles';
 import {COLORS} from '../../utils/theme';
 import {navigationRef} from '../../App';
 import Back from '../BackButton/Back';
+import FONTS from '../../assets/styles/fonts';
 
 const CommonBackground = ({back, title}) => {
   const onBackPress = () => {
@@ -44,7 +45,7 @@ const CommonBackground = ({back, title}) => {
         style={{
           color: COLORS.white,
           fontSize: 24,
-          fontWeight: 700,
+          fontFamily: FONTS.MontserratBold,
           bottom: 30,
         }}>
         {title}
@@ -53,7 +54,7 @@ const CommonBackground = ({back, title}) => {
         style={{
           color: COLORS.white,
           fontSize: 20,
-          fontWeight: 500,
+          fontFamily: FONTS.MontserratMedium,
           marginTop: '25%',
         }}>
         FLOORGANISED

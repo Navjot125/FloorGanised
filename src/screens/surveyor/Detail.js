@@ -22,6 +22,7 @@ import {jobDetail} from '../../redux/actions/homeAction';
 import ShimmerEffect from '../../components/ShimmerEffect/Shimmer';
 import moment from 'moment';
 import {useToast} from 'react-native-toast-notifications';
+import FONTS from '../../assets/styles/fonts';
 
 const Detail = ({route}) => {
   const toast = useToast();
@@ -80,7 +81,7 @@ const Detail = ({route}) => {
           <>
             <View style={styles.mainBox}>
               <View style={styles.userName}>
-                <Text style={{fontWeight: 700, fontSize: 16}}>
+                <Text style={{fontSize: 16, fontFamily: FONTS?.MontserratBold}}>
                   {responseData?.customer_id?.name}
                 </Text>
                 {/* <Text style={{fontWeight: 700, fontSize: 16}}>$150</Text> */}
@@ -91,9 +92,7 @@ const Detail = ({route}) => {
                   size={20}
                   color={COLORS.secondry}
                 />
-                <Text style={{fontSize: 12, fontWeight: 500, left: scale(10)}}>
-                  {responseData?.referal}
-                </Text>
+                <Text style={styles.commonText}>{responseData?.referal}</Text>
               </View>
               <View style={styles.details}>
                 <SimpleLineIcons
@@ -101,30 +100,31 @@ const Detail = ({route}) => {
                   size={20}
                   color={COLORS.secondry}
                 />
-                <Text style={{fontSize: 12, fontWeight: 500, left: scale(10)}}>
-                  {responseData?.address}
-                </Text>
+                <Text style={styles.commonText}>{responseData?.address}</Text>
               </View>
               <View style={styles.details}>
                 <Feather name="phone" size={20} color={COLORS.secondry} />
-                <Text style={{fontSize: 12, fontWeight: 500, left: scale(10)}}>
+                <Text style={styles.commonText}>
                   {responseData?.customer_id?.phone_number}
                 </Text>
               </View>
               <View style={styles.details}>
                 <Feather name="mail" size={20} color={COLORS.secondry} />
-                <Text style={{fontSize: 12, fontWeight: 500, left: scale(10)}}>
+                <Text style={styles.commonText}>
                   {responseData?.customer_id?.email}
                 </Text>
               </View>
               <View style={{marginTop: 20}}>
-                <Text style={{fontSize: 14, fontWeight: 600}}>Notes</Text>
+                <Text
+                  style={{fontSize: 14, fontFamily: FONTS?.MontserratSemiBold}}>
+                  Notes
+                </Text>
                 <Text
                   style={{
                     fontSize: 12,
-                    fontWeight: 400,
                     marginTop: 10,
                     lineHeight: 18,
+                    fontFamily: FONTS?.MontserratRegular,
                   }}>
                   {responseData?.notes}
                 </Text>
@@ -185,5 +185,10 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     height: scale(30),
     alignItems: 'center',
+  },
+  commonText: {
+    fontSize: 12,
+    fontFamily: FONTS?.MontserratMedium,
+    left: scale(10),
   },
 });

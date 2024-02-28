@@ -100,7 +100,8 @@ function* submitQuestionnaire(action) {
       toastFun(responseData?.message, 'danger');
     }
   } catch (error) {
-    console.error('An error occurred during submitQuestionnaire:', error);
+    // console.error('An error occurred during submitQuestionnaire:', error);
+    toastFun(error, 'danger');
   } finally {
     yield put(setLoader(false));
   }
@@ -135,7 +136,8 @@ function* editQuestionnaire(action) {
       toastFun(responseData?.message, 'danger');
     }
   } catch (error) {
-    console.error('An error occurred during editQuestionnaire:', error);
+    // console.error('An error occurred during editQuestionnaire:', error);
+    toastFun(error, 'danger');
   } finally {
     yield put(setLoader(false));
   }
@@ -169,7 +171,8 @@ function* deleteImage(action) {
       toastFun(responseData?.message, 'danger');
     }
   } catch (error) {
-    console.error('An error occurred during deleteImage:', error);
+    // console.error('An error occurred during deleteImage:', error);
+    toastFun(error, 'danger');
   } finally {
     yield put(setLoader(false));
   }
@@ -205,7 +208,8 @@ function* submitJob(action) {
       navigationRef.navigate('Home');
     }
   } catch (error) {
-    console.error('An error occurred during submitJob:', error);
+    // console.error('An error occurred during submitJob:', error);
+    toastFun(error, 'danger');
   } finally {
     yield put(setLoader(false));
   }

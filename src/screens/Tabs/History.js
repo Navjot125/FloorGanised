@@ -16,6 +16,7 @@ import {getJobs} from '../../redux/actions/homeAction';
 import {useFocusEffect} from '@react-navigation/native';
 import {useToast} from 'react-native-toast-notifications';
 import ShimmerEffect from '../../components/ShimmerEffect/Shimmer';
+import FONTS from '../../assets/styles/fonts';
 
 const History = () => {
   const [jobListing, setJobListing] = useState();
@@ -87,7 +88,7 @@ const History = () => {
           <Text
             style={{
               fontSize: 16,
-              fontWeight: 600,
+              fontFamily: FONTS?.MontserratSemiBold,
             }}>
             {item?.customer_id?.name}
           </Text>
@@ -112,7 +113,7 @@ const History = () => {
           <Text
             style={{
               fontSize: 12,
-              fontWeight: 500,
+              fontFamily: FONTS?.MontserratMedium,
               width: '55%',
               left: -15,
             }}>
@@ -131,7 +132,7 @@ const History = () => {
             <Text
               style={{
                 fontSize: 10,
-                fontWeight: 600,
+                fontFamily: FONTS?.MontserratSemiBold,
                 color: COLORS.white,
               }}>
               {item?.surveyor_status

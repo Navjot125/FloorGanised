@@ -3,7 +3,6 @@ import {BottomTabNavigator} from './BottomTabNavigator';
 import {
   View,
   StyleSheet,
-  Text,
   TouchableOpacity,
   Image,
   Linking,

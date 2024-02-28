@@ -20,6 +20,7 @@ import {getJobs, jobDetail} from '../../redux/actions/homeAction';
 import moment from 'moment';
 import {useToast} from 'react-native-toast-notifications';
 import ShimmerEffect from '../../components/ShimmerEffect/Shimmer';
+import {FONTS} from '../../assets/styles/fonts';
 const Home = props => {
   const userData = useSelector(state => state?.onBoardingreducer?.userData);
   const selectedDate = useSelector(state => state?.DateReducer?.selectedDate);
@@ -119,7 +120,7 @@ const Home = props => {
           <Text
             style={{
               fontSize: 16,
-              fontWeight: 700,
+              fontFamily: FONTS?.MontserratBold,
             }}>
             {item?.customer_id?.name}
           </Text>
@@ -151,7 +152,7 @@ const Home = props => {
             <Text
               style={{
                 fontSize: 12,
-                fontWeight: 500,
+                fontFamily: FONTS?.MontserratMedium,
                 width: 180,
               }}>
               {item?.address}
@@ -180,7 +181,7 @@ const Home = props => {
               <Text
                 style={{
                   fontSize: 12,
-                  fontWeight: 500,
+                  fontFamily: FONTS?.MontserratSemiBold,
                 }}>
                 {userData?.role == 'Surveyor'
                   ? item?.surveyor_status == 'Pending'
@@ -202,8 +203,8 @@ const Home = props => {
             <Text
               style={{
                 fontSize: 12,
-                fontWeight: 400,
-                left: 20,
+                fontFamily: FONTS?.MontserratMedium,
+                left: scale(15),
               }}>
               {moment(item?.surveyor_job_date).format('h:mm A')}
             </Text>

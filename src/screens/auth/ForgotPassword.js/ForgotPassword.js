@@ -21,6 +21,7 @@ import {useDispatch} from 'react-redux';
 import {sendOtp} from '../../../redux/actions/onBoardingAction';
 import {useToast} from 'react-native-toast-notifications';
 import * as Yup from 'yup';
+import FONTS from '../../../assets/styles/fonts';
 
 const ForgotPassword = () => {
   const dispatch = useDispatch();
@@ -100,9 +101,9 @@ const ForgotPassword = () => {
               paddingHorizontal: 60,
               color: COLORS.secondry,
               paddingVertical: 40,
-              fontWeight: 500,
               fontSize: 14,
               lineHeight: 22,
+              fontFamily: FONTS?.MontserratMedium,
             }}>
             Enter your email to receive an OTP for password reset.
           </Text>
@@ -125,11 +126,13 @@ const ForgotPassword = () => {
             alignSelf: 'center',
             bottom: 30,
             position: 'absolute',
-            fontWeight: 300,
+            fontFamily: FONTS?.MontserratRegular,
           }}>
           Back to
           <Text
-            style={{fontWeight: 500}}
+            style={{
+              fontFamily: FONTS?.MontserratSemiBold,
+            }}
             onPress={() => navigationRef.navigate('Login')}>
             {' '}
             Login

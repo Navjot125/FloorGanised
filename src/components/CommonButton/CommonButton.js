@@ -4,6 +4,7 @@ import {COLORS} from '../../utils/theme';
 import {scale, verticalScale, moderateScale} from 'react-native-size-matters';
 import CustomLoader from '../CustomLoader/CustomLoader';
 import {useSelector} from 'react-redux';
+import FONTS from '../../assets/styles/fonts';
 
 export default function CommonButton({style, title, onPress, disableButton}) {
   const loader = useSelector(state => state?.loaderReducer?.loader);
@@ -37,7 +38,7 @@ const styles = StyleSheet.create({
   },
 
   buttonText: {
-    // fontFamily: FONTS.PoppinsMedium,
+    fontFamily: FONTS?.MontserratSemiBold,
     color: COLORS.black,
     fontSize: scale(16),
   },

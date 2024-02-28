@@ -1,4 +1,5 @@
 import {
+  Keyboard,
   KeyboardAvoidingView,
   Platform,
   SafeAreaView,
@@ -25,6 +26,7 @@ import {PostApi} from '../../../services/ApisMethods';
 import {singUpRequest} from '../../../redux/actions/onBoardingAction';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {useToast} from 'react-native-toast-notifications';
+import FONTS from '../../../assets/styles/fonts';
 const Signup = () => {
   const toast = useToast();
   const [token, setToken] = useState();
@@ -130,7 +132,8 @@ const Signup = () => {
       style={{flex: 1, paddingTop: Platform.OS === 'android' ? 0 : scale(120)}}>
       <CommonBackground title={'Sign Up'} />
       <KeyboardAvoidingView
-        behavior="height"
+        // behavior="height"
+        behavior="padding"
         style={{
           flex: 1,
         }}>
@@ -159,7 +162,13 @@ const Signup = () => {
                     status={selectedOption === option ? 'checked' : 'unchecked'}
                     onPress={() => handleOptionPress(option)}
                   />
-                  <Text style={{color: 'black'}}>{option}</Text>
+                  <Text
+                    style={{
+                      color: 'black',
+                      fontFamily: FONTS?.MontserratRegular,
+                    }}>
+                    {option}
+                  </Text>
                 </View>
               ))}
             </View>
@@ -185,7 +194,9 @@ const Signup = () => {
                 onChangeText={newText => setPassword(newText)}
                 right={
                   <TextInput.Icon
-                    onPress={() => setHidePass(!hidePass)}
+                    onPress={() => {
+                      Keyboard.dismiss(), setHidePass(!hidePass);
+                    }}
                     style={styles.rightpad}
                     icon={hidePass ? 'eye-off' : 'eye'}
                     size={20}
@@ -199,7 +210,9 @@ const Signup = () => {
                 secureTextEntry={hideCPass ? true : false}
                 right={
                   <TextInput.Icon
-                    onPress={() => setHideCPass(!hideCPass)}
+                    onPress={() => {
+                      Keyboard.dismiss(), setHideCPass(!hideCPass);
+                    }}
                     style={styles.rightpad}
                     icon={hideCPass ? 'eye-off' : 'eye'}
                     size={20}
@@ -223,14 +236,15 @@ const Signup = () => {
           alignSelf: 'center',
           bottom: 30,
           position: 'absolute',
-          fontWeight: 300,
+          // fontWeight: 300,
+          fontFamily: FONTS?.MontserratRegular,
         }}>
         Already have an account ?
         <Text
           onPress={() => {
             navigationRef.navigate('Login');
           }}
-          style={{fontWeight: 500}}>
+          style={{fontFamily: FONTS?.MontserratSemiBold}}>
           {' '}
           Login
         </Text>

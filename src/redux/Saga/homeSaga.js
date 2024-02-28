@@ -34,7 +34,8 @@ function* getJob(action) {
       action?.data?.toastFun(responseData?.message, 'danger');
     }
   } catch (error) {
-    console.error('An error occurred during getJob:', error);
+    // console.error('An error occurred during getJob:', error);
+    action?.data?.toastFun(error, 'danger');
   } finally {
     yield put(setLoader(false));
   }
@@ -62,7 +63,8 @@ function* jobDetail(action) {
       toastFun(responseData?.message, 'danger');
     }
   } catch (error) {
-    console.error('An error occurred during jobDetail:', error);
+    // console.error('An error occurred during jobDetail:', error);
+    toastFun(error, 'danger');
   } finally {
     yield put(setLoader(false));
   }
@@ -97,7 +99,8 @@ function* startFittingSaga(action) {
       toastFun(responseData?.message, 'danger');
     }
   } catch (error) {
-    console.error('An error occurred during startFittingSaga:', error);
+    // console.error('An error occurred during startFittingSaga:', error);
+    toastFun(error, 'danger');
   } finally {
     yield put(setLoader(false));
   }

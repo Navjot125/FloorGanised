@@ -60,191 +60,6 @@ const JobCompleteForm = ({route}) => {
           animationType: 'slide-in ',
         });
   };
-  // const toggleTaskCompletion = name => {
-  //   setSelectedItems(prevTasks =>
-  //     prevTasks?.map(task =>
-  //       task.title === name
-  //         ? task?.status === 'pending'
-  //           ? {...task, status: 'completed'}
-  //           : {...task, status: 'pending'}
-  //         : task,
-  //     ),
-  //   );
-  // };
-  // const style = {
-  //   marginVertical: 10,
-  // };
-  // const onStart = () => {
-  //   const param = {
-  //     job_id: responseData?._id,
-  //     fitter_status: 'On-work',
-  //   };
-  //   // console.log(param,'param----------');
-  //   // responseData?.fitter_status == 'On-work'
-  //   responseData?.fitter_status == 'Pending'
-  //     ? dispatch(startFittingAction(param))
-  //     : // navigationRef.navigate('JobCompleteForm'),
-  //       navigationRef.navigate('Fitter', {
-  //         screen: 'JobCompleteForm',
-  //         params: {
-  //           responseData: responseData,
-  //           measurinDetails: measurinDetails,
-  //         },
-  //       });
-  //   console.log(responseData?.fitter_status, '--responseData?.fitter_status');
-  // };
-  // const onPress = () => {
-  //   navigationRef.navigate('Home');
-  // };
-  // const TypeDropDown = ({item, index}) => {
-  //   return (
-  //     <View
-  //       style={{
-  //         flexDirection: 'row',
-  //         justifyContent: 'space-between',
-  //         padding: 10,
-  //         width: '90%',
-  //         alignItems: 'center',
-  //       }}>
-  //       <Text style={{fontSize: 12, fontWeight: 600}}>
-  //         {Object.keys(jobForm)[index]}
-  //       </Text>
-  //       <Text
-  //         style={{
-  //           fontSize: 12,
-  //           fontWeight: 400,
-  //           width: 70,
-  //           textAlign: 'right',
-  //         }}>
-  //         {item?.value}
-  //       </Text>
-  //     </View>
-  //   );
-  // };
-  // const TypeDescription = ({item, index}) => {
-  //   return (
-  //     <View
-  //       style={{
-  //         padding: 10,
-  //         width: '90%',
-  //       }}>
-  //       <Text style={{fontSize: 12, fontWeight: 600}}>
-  //         {Object.keys(jobForm)[index]}
-  //       </Text>
-  //       <Text
-  //         style={{
-  //           fontSize: 12,
-  //           fontWeight: 400,
-  //           top: 10,
-  //         }}>
-  //         {item?.description}
-  //       </Text>
-  //     </View>
-  //   );
-  // };
-  // const TypeImages = ({item, index}) => {
-  //   return (
-  //     <View
-  //       style={{
-  //         padding: 10,
-  //         width: '90%',
-  //       }}>
-  //       <Text style={{fontSize: 12, fontWeight: 600}}>
-  //         {Object.keys(jobForm)[index]}
-  //       </Text>
-  //       <View
-  //         style={{
-  //           flexDirection: 'row',
-  //           justifyContent: 'space-between',
-  //           marginTop: 10,
-  //         }}>
-  //         <Image
-  //           source={item?.image1}
-  //           style={{height: 56, width: 90, borderRadius: 16}}
-  //         />
-  //         <Image
-  //           source={item?.image1}
-  //           style={{height: 56, width: 90, borderRadius: 16}}
-  //         />
-  //         <Image
-  //           source={item?.image1}
-  //           style={{height: 56, width: 90, borderRadius: 16}}
-  //         />
-  //       </View>
-  //       <Text
-  //         style={{
-  //           fontSize: 12,
-  //           fontWeight: 400,
-  //           top: 10,
-  //         }}>
-  //         {item?.description}
-  //       </Text>
-  //     </View>
-  //   );
-  // };
-  // const toggleStatus = key => {
-  //   setSelectedItems(prevData => {
-  //     const updatedData = {...prevData};
-  //     const currentItem = updatedData[key];
-  //     currentItem.status =
-  //       currentItem.status === 'pending' ? 'complete' : 'pending';
-  //     return updatedData;
-  //   });
-  // };
-  // const renderItem = ({item, index}) => {
-  //   return (
-  //     <View
-  //       style={{
-  //         flexDirection: 'row',
-  //         marginVertical: 5,
-  //         alignItems: 'center',
-  //       }}>
-  //       {item?.status == 'pending' ? (
-  //         <TouchableOpacity
-  //           style={{height: 20, width: 20}}
-  //           onPress={() => toggleStatus(Object.keys(selectedItems)[index])}>
-  //           <Image
-  //             style={{height: 20, width: 20}}
-  //             source={require('../../assets/images/unchecked.png')}
-  //           />
-  //         </TouchableOpacity>
-  //       ) : (
-  //         <TouchableOpacity
-  //           style={{height: 20, width: 20}}
-  //           onPress={() => toggleStatus(Object.keys(selectedItems)[index])}>
-  //           <Image
-  //             style={{height: 20, width: 20}}
-  //             source={require('../../assets/images/checked.png')}
-  //           />
-  //         </TouchableOpacity>
-  //       )}
-  //       {item?.type === 'DropDown' ? (
-  //         <View style={{flexDirection: 'row', alignItems: 'center'}}>
-  //           <TypeDropDown item={item} index={index} />
-  //         </View>
-  //       ) : item?.type === 'Description' ? (
-  //         <View
-  //           style={{
-  //             flexDirection: 'row',
-  //             alignItems: 'center',
-  //           }}>
-  //           <TypeDescription item={item} index={index} />
-  //         </View>
-  //       ) : item?.type === 'Images' ? (
-  //         <View
-  //           style={{
-  //             flexDirection: 'row',
-  //             alignItems: 'center',
-  //           }}>
-  //           <TypeImages item={item} index={index} />
-  //         </View>
-  //       ) : null}
-  //     </View>
-  //   );
-  // };
-  // floorImages?.filter(
-  //   sort => sort.uri !== item.uri,
-  // ),
   const addValues = value => {
     checked
       ? checked?.includes(value)
@@ -253,37 +68,18 @@ const JobCompleteForm = ({route}) => {
       : setChecked([value]);
   };
   return (
-    // <View style={{flex: 1, backgroundColor: 'black'}}>
-    //   <SafeAreaView />
-    //   <Header title={'Job Complete Form'} back={true} />
-    //   <View style={styles.container}>
-    //     <FlatList
-    //       data={Object.values(selectedItems)}
-    //       keyExtractor={item => item._id.toString()}
-    //       renderItem={renderItem}
-    //       showsVerticalScrollIndicator={false}
-    //       ListFooterComponent={
-    //         <CommonButton style={style} title={'Submit'} onPress={onPress} />
-    //       }
-    //     />
-    //   </View>
-    // </View>
     <View style={{flex: 1, backgroundColor: 'black'}}>
       <SafeAreaView />
       <Header title={'Job Complete Form'} back={true} />
       <ScrollView
         contentContainerStyle={styles.container}
-        showsVerticalScrollIndicator={false}
-        //   style={styles.container}
-      >
+        showsVerticalScrollIndicator={false}>
         <View style={[styles.mainBox, {marginTop: 20}]}>
           {measurinDetails?.type_of_room && (
             <View style={styles.commonContainer}>
               <CheckBox
                 value={checked?.includes('type_of_room')}
-                // return array.includes('floor');
                 onPress={() => addValues('type_of_room')}
-                // setChecked={setChecked}
                 checked={checked}
               />
               <View
@@ -374,7 +170,6 @@ const JobCompleteForm = ({route}) => {
               <CheckBox
                 value={checked?.includes('is_flooring_choice_selected')}
                 onPress={() => addValues('is_flooring_choice_selected')}
-                // setChecked={setChecked}
                 checked={checked}
               />
               <View

@@ -12,6 +12,7 @@ import AppIntroSlider from 'react-native-app-intro-slider';
 import {COLORS} from '../../utils/theme';
 import {NavigationContainer, useNavigation} from '@react-navigation/native';
 import {navigationRef} from '../../App';
+import FONTS from '../../assets/styles/fonts';
 export default function AppIntro() {
   const [currentSlideIndex, setCurrentSlideIndex] = useState(0);
   const navigation = useNavigation();
@@ -136,17 +137,19 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 24,
-    fontWeight: 'bold',
     color: 'white',
     marginBottom: 10,
+    fontFamily: FONTS?.MontserratBold,
   },
   description: {
     fontSize: 16,
     color: 'white',
+    fontFamily: FONTS?.MontserratRegular,
   },
   skipButton: {
     color: 'white',
     fontSize: 16,
+    fontFamily: FONTS?.MontserratSemiBold,
   },
   paginationContainer: {
     flexDirection: 'row',

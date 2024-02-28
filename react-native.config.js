@@ -27,4 +27,5 @@ module.exports = {
       unstable_reactLegacyComponentNames: ['RNShimmeringView'],
     },
   },
+  assets: ['./src/assets/fonts'],
 };

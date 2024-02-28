@@ -23,12 +23,14 @@ import Modal from 'react-native-modal';
 import {width} from '../../assets/styles/styles';
 import LaunchImageLibraryAsync from '../../components/ImagePicker/ImagePicker';
 import {ImageUrl} from '../../services/Config';
+import FONTS from '../../assets/styles/fonts';
 const ManageProfile = () => {
   const dispatch = useDispatch();
   const userData = useSelector(state => state?.onBoardingreducer?.userData);
   const [name, setName] = useState();
   const [pickLocation, setPickLocation] = useState(false);
   const [profile, setProfile] = useState(userData?.profile_image);
+  console.log('profile----------', profile);
   const toast = useToast();
   const [email, setEmail] = useState();
   const style = {
@@ -134,7 +136,6 @@ const ManageProfile = () => {
       console.log('gallery Picker Error hai...', error);
     }
   };
-  console.log(profile, 'p---------------');
   return (
     <View style={{flex: 1, backgroundColor: 'black'}}>
       <SafeAreaView />
@@ -181,7 +182,12 @@ const ManageProfile = () => {
               }}>
               <Feather name="camera" size={20} color={COLORS.white} />
             </TouchableOpacity>
-            <Text style={{fontWeight: 600, fontSize: 16, marginTop: 10}}>
+            <Text
+              style={{
+                fontSize: 16,
+                marginTop: 10,
+                fontFamily: FONTS?.MontserratSemiBold,
+              }}>
               {userData?.name}
             </Text>
           </View>
@@ -210,7 +216,7 @@ const ManageProfile = () => {
         animationInTiming={500}
         style={[styles.mainmodal]}>
         <View style={[styles.center]}>
-          <Text style={{fontSize: 17, fontWeight: 600, marginVertical: 20}}>
+          <Text style={{fontSize: 17, marginVertical: 20, fontFamily:FONTS?.MontserratSemiBold}}>
             Select Photo From
           </Text>
           <TouchableOpacity
@@ -279,7 +285,7 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   buttonText: {
-    fontWeight: 600,
+    fontFamily:FONTS?.MontserratSemiBold,
     fontSize: 16,
   },
 });

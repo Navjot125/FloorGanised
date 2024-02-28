@@ -25,6 +25,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import {loginRequest} from '../../../redux/actions/onBoardingAction';
 import {useToast} from 'react-native-toast-notifications';
 import CustomLoader from '../../../components/CustomLoader/CustomLoader';
+import FONTS from '../../../assets/styles/fonts';
 
 const Login = () => {
   const toast = useToast();
@@ -146,7 +147,12 @@ const Login = () => {
           <TouchableOpacity
             style={{alignSelf: 'flex-end', left: -60, top: 10}}
             onPress={() => navigationRef.navigate('ForgotPassword')}>
-            <Text style={{fontWeight: 500}}>Forgot Password?</Text>
+            <Text
+              style={{
+                fontFamily: FONTS?.MontserratSemiBold,
+              }}>
+              Forgot Password?
+            </Text>
           </TouchableOpacity>
           <CommonButton
             style={styles.Button}
@@ -160,11 +166,11 @@ const Login = () => {
             alignSelf: 'center',
             bottom: 30,
             position: 'absolute',
-            fontWeight: 300,
+            fontFamily: FONTS?.MontserratRegular,
           }}>
           Dont't have an account ?
           <Text
-            style={{fontWeight: 500}}
+            style={{fontFamily: FONTS?.MontserratSemiBold}}
             onPress={() => navigationRef.navigate('Signup')}>
             {' '}
             Sign Up

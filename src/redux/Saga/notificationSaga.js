@@ -28,7 +28,8 @@ function* getNotification(action) {
       action?.data?.toastFun(responseData?.message, 'danger');
     }
   } catch (error) {
-    console.error('An error occurred during getNotification:', error);
+    // console.error('An error occurred during getNotification:', error);
+    action?.data?.toastFun(error, 'danger');
   } finally {
     yield put(setLoader(false));
   }

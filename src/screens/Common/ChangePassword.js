@@ -1,4 +1,4 @@
-import {SafeAreaView, StyleSheet, Text, View} from 'react-native';
+import {SafeAreaView, StyleSheet, View} from 'react-native';
 import React, {useState} from 'react';
 import Header from '../../components/Header/Header';
 import {scale} from 'react-native-size-matters';

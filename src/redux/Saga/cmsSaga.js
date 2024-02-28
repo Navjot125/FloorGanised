@@ -35,7 +35,8 @@ function* contactUs(action) {
       action?.data?.toastFun(responseData?.message, 'danger');
     }
   } catch (error) {
-    console.error('An error occurred during contactUs:', error);
+    // console.error('An error occurred during contactUs:', error);
+    action?.data?.toastFun(error, 'danger');
   } finally {
     yield put(setLoader(false));
   }

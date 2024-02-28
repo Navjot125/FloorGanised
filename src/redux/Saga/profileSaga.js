@@ -42,7 +42,8 @@ function* getProfile(action) {
       action?.data?.toastFun(responseData?.message, 'danger');
     }
   } catch (error) {
-    console.error('An error occurred during getProfile:', error);
+    // console.error('An error occurred during getProfile:', error);
+    action?.data?.toastFun(error, 'danger');
   } finally {
     yield put(setLoader(false));
   }
@@ -77,7 +78,8 @@ function* updatePassword(action) {
       action.data?.toastFun(responseData?.message, 'danger');
     }
   } catch (error) {
-    console.error('An error occurred during updatePassword:', error);
+    // console.error('An error occurred during updatePassword:', error);
+    action.data?.toastFun(error, 'danger');
   } finally {
     yield put(setLoader(false));
   }
@@ -110,7 +112,8 @@ function* deleteAccount(action) {
       action?.data?.toastFun(responseData?.message, 'danger');
     }
   } catch (error) {
-    console.error('An error occurred during deleteAccount:', error);
+    // console.error('An error occurred during deleteAccount:', error);
+    action?.data?.toastFun(error, 'danger');
   } finally {
     yield put(setLoader(false));
   }
@@ -120,6 +123,7 @@ function* updateProfile(action) {
   try {
     yield put(setLoader(true));
     const {email, name, profile} = action.data;
+    console.log(profile,'=========profile');
     const convertToFormData = () => {
       const formData = new FormData();
       email && formData.append('email', email);
@@ -161,7 +165,8 @@ function* updateProfile(action) {
       action?.data?.toastFun(responseData?.message, 'danger');
     }
   } catch (error) {
-    console.error('An error occurred during updateProfile:', error);
+    // console.error('An error occurred during updateProfile:', error);
+    action?.data?.toastFun(error, 'danger');
   } finally {
     yield put(setLoader(false));
   }

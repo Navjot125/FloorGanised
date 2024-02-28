@@ -21,12 +21,13 @@ import {scale} from 'react-native-size-matters';
 import {useDispatch} from 'react-redux';
 import {setUserData} from '../../../redux/reducers/User';
 import {verifyOtp} from '../../../redux/actions/onBoardingAction';
-import { useToast } from 'react-native-toast-notifications';
+import {useToast} from 'react-native-toast-notifications';
+import FONTS from '../../../assets/styles/fonts';
 
 const VerifyOTP = ({route}) => {
   const GoTo = route?.params?.reset;
   const email = route?.params?.data;
-const toast = useToast()
+  const toast = useToast();
   const [code, setCode] = useState('');
   const [disableButton, setDisableButton] = useState(false);
   const dispatch = useDispatch();
@@ -53,9 +54,9 @@ const toast = useToast()
   ];
   const onPress = () => {
     setDisableButton(true);
-      setTimeout(() => {
-        setDisableButton(false);
-      }, 4000);
+    setTimeout(() => {
+      setDisableButton(false);
+    }, 4000);
     param = {
       email,
       code,
@@ -98,9 +99,9 @@ const toast = useToast()
                 paddingHorizontal: 60,
                 color: COLORS.secondry,
                 paddingVertical: 40,
-                fontWeight: 500,
                 fontSize: 14,
                 lineHeight: 22,
+                fontFamily: FONTS?.MontserratMedium,
               }}>
               Enter OTP for verification. Please check your registered email &
               enter the same below.
@@ -118,7 +119,7 @@ const toast = useToast()
               />
             </View>
             <CommonButton
-            disableButton={disableButton}
+              disableButton={disableButton}
               style={styles.Button}
               title="Verify"
               onPress={onPress}
@@ -129,10 +130,12 @@ const toast = useToast()
               alignSelf: 'center',
               bottom: 30,
               position: 'absolute',
-              fontWeight: 300,
+              fontFamily: FONTS?.MontserratRegular,
             }}>
             Not received ?
-            <Text style={{fontWeight: 500}} onPress={() => {}}>
+            <Text
+              style={{fontFamily: FONTS?.MontserratSemiBold}}
+              onPress={() => {}}>
               {' '}
               Resend OTP
             </Text>

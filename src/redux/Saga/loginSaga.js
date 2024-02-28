@@ -60,7 +60,8 @@ function* signup(action) {
       action?.data?.toastFun(errorData?.message, 'danger');
     }
   } catch (error) {
-    console.error('An error occurred during Signup:', error);
+    // console.error('An error occurred during Signup:', error);
+    action?.data?.toastFun(error, 'danger');
   } finally {
     yield put(setLoader(false));
   }
@@ -146,7 +147,8 @@ function* sendOtp(action) {
       action?.data?.toastFun(errorData?.message, 'danger');
     }
   } catch (error) {
-    console.error('An error occurred during sendOtp:', error);
+    // console.error('An error occurred during sendOtp:', error);
+    action?.data?.toastFun(error, 'danger');
   } finally {
     yield put(setLoader(false));
   }
@@ -185,7 +187,8 @@ function* verifyOtp(action) {
       action?.data?.toastFun(errorData?.message, 'danger');
     }
   } catch (error) {
-    console.error('An error occurred during verifyOtp:', error);
+    // console.error('An error occurred during verifyOtp:', error);
+    action?.data?.toastFun(error, 'danger');
   } finally {
     yield put(setLoader(false));
   }
@@ -220,7 +223,8 @@ function* resetPassword(action) {
       action?.data?.toastFun(errorData?.message, 'danger');
     }
   } catch (error) {
-    console.error('An error occurred during resetPassword:', error);
+    // console.error('An error occurred during resetPassword:', error);
+    action?.data?.toastFun(error, 'danger');
   } finally {
     yield put(setLoader(false));
   }

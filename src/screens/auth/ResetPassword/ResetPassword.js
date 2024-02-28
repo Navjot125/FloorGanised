@@ -23,6 +23,7 @@ import {useDispatch} from 'react-redux';
 import * as Yup from 'yup';
 import {resetPassword} from '../../../redux/actions/onBoardingAction';
 import {useToast} from 'react-native-toast-notifications';
+import FONTS from '../../../assets/styles/fonts';
 const ResetPassword = ({route}) => {
   const unique_id = route.params?.data;
   const toast = useToast();
@@ -122,9 +123,10 @@ const ResetPassword = ({route}) => {
               paddingHorizontal: 60,
               color: COLORS.secondry,
               paddingVertical: 40,
-              fontWeight: 500,
+              // fontWeight: 500,
               fontSize: 14,
               lineHeight: 22,
+              fontFamily: FONTS?.MontserratRegular,
             }}>
             Enter new password to reset.
           </Text>
@@ -153,11 +155,11 @@ const ResetPassword = ({route}) => {
           alignSelf: 'center',
           bottom: 30,
           position: 'absolute',
-          fontWeight: 300,
+          fontFamily: FONTS?.MontserratRegular,
         }}>
         Back to
         <Text
-          style={{fontWeight: 500}}
+          style={{fontFamily: FONTS?.MontserratSemiBold}}
           onPress={() => navigationRef.navigate('Login')}>
           {' '}
           Login
