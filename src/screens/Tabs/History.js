@@ -176,7 +176,8 @@ const History = () => {
             <Text
               style={{
                 fontSize: 15,
-                fontWeight: 500,
+
+                fontFamily: FONTS?.MontserratMedium,
                 textAlign: 'center',
                 paddingHorizontal: 50,
                 lineHeight: 25,

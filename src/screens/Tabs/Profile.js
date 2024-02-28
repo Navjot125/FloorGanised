@@ -20,6 +20,7 @@ import ResetSuccess from '../../assets/images/deleteAccount.png';
 import CommonModal from '../../components/Modal/Modal';
 import {useToast} from 'react-native-toast-notifications';
 import {ImageUrl} from '../../services/Config';
+import FONTS from '../../assets/styles/fonts';
 const Profile = () => {
   const dispatch = useDispatch();
   const toast = useToast();
@@ -91,7 +92,10 @@ const Profile = () => {
             ? setShowModal(true)
             : navigationRef.navigate(screen, {screen: item?.screen});
         }}>
-        <Text style={{fontWeight: 500, fontSize: 14}}> {item?.name} </Text>
+        <Text style={{fontSize: 14, fontFamily: FONTS?.MontserratMedium}}>
+          {' '}
+          {item?.name}{' '}
+        </Text>
         <Image
           style={{height: 10, width: 10}}
           resizeMode="contain"
@@ -145,7 +149,12 @@ const Profile = () => {
               }
             />
           </View>
-          <Text style={{fontWeight: 600, fontSize: 16, marginTop: 10}}>
+          <Text
+            style={{
+              fontSize: 16,
+              marginTop: 10,
+              fontFamily: FONTS?.MontserratSemiBold,
+            }}>
             {userData?.name}
           </Text>
         </View>

@@ -246,10 +246,10 @@ const Home = props => {
             <Text
               style={{
                 fontSize: 15,
-                fontWeight: 500,
                 textAlign: 'center',
                 paddingHorizontal: 50,
                 lineHeight: 25,
+                fontFamily: FONTS?.MontserratMedium,
               }}>
               There are no job assignments for the selected date.
             </Text>

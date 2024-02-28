@@ -9,6 +9,7 @@ import {useFocusEffect} from '@react-navigation/native';
 import moment from 'moment';
 import {useToast} from 'react-native-toast-notifications';
 import ShimmerEffect from '../../components/ShimmerEffect/Shimmer';
+import FONTS from '../../assets/styles/fonts';
 const Notifications = () => {
   const dispatch = useDispatch();
   const toast = useToast();
@@ -104,8 +105,8 @@ const Notifications = () => {
             <Text
               style={{
                 fontSize: 14,
-                fontWeight: 600,
                 marginLeft: 10,
+                fontFamily: FONTS?.MontserratSemiBold,
               }}>
               {item?.title}
             </Text>
@@ -113,7 +114,7 @@ const Notifications = () => {
           <Text
             style={{
               fontSize: 9,
-              fontWeight: 400,
+              fontFamily: FONTS?.MontserratRegular,
             }}>
             {/* {item?.time} */}
             {getTimeAgo(item?.createdAt)}
@@ -130,7 +131,7 @@ const Notifications = () => {
             <Text
               style={{
                 fontSize: 12,
-                fontWeight: 400,
+                fontFamily: FONTS?.MontserratRegular,
               }}>
               {item?.content.slice(0, 40)}...
               <Text
@@ -150,7 +151,7 @@ const Notifications = () => {
             <Text
               style={{
                 fontSize: 12,
-                fontWeight: 400,
+                fontFamily: FONTS?.MontserratRegular,
               }}>
               {item?.content?.length > 40 && item?._id == viewFullText ? (
                 <>
@@ -209,10 +210,10 @@ const Notifications = () => {
             <Text
               style={{
                 fontSize: 15,
-                fontWeight: 500,
                 textAlign: 'center',
                 paddingHorizontal: 50,
                 lineHeight: 25,
+                fontFamily: FONTS?.MontserratMedium,
               }}>
               There is no notifications for you.
             </Text>

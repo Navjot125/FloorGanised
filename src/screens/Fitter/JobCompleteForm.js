@@ -24,6 +24,7 @@ import {useDispatch} from 'react-redux';
 import {submitJob} from '../../redux/actions/job';
 import moment from 'moment';
 import {useToast} from 'react-native-toast-notifications';
+import FONTS from '../../assets/styles/fonts';
 const JobCompleteForm = ({route}) => {
   const toast = useToast();
   const dispatch = useDispatch();
@@ -90,9 +91,7 @@ const JobCompleteForm = ({route}) => {
                   paddingLeft: 10,
                   flex: 1,
                 }}>
-                <Text style={{fontSize: 12, fontWeight: 600}}>
-                  Type of room
-                </Text>
+                <Text style={styles.leftText}>Type of room</Text>
                 <Text
                   style={{
                     fontSize: 12,
@@ -121,7 +120,7 @@ const JobCompleteForm = ({route}) => {
                   paddingLeft: 10,
                   flex: 1,
                 }}>
-                <Text style={{fontSize: 12, fontWeight: 600}}>Surcharge</Text>
+                <Text style={styles.leftText}>Surcharge</Text>
                 <Text
                   style={{
                     fontSize: 12,
@@ -150,9 +149,7 @@ const JobCompleteForm = ({route}) => {
                   paddingLeft: 10,
                   flex: 1,
                 }}>
-                <Text style={{fontSize: 12, fontWeight: 600}}>
-                  Flooring Type
-                </Text>
+                <Text style={styles.leftText}>Flooring Type</Text>
                 <Text
                   style={{
                     fontSize: 12,
@@ -180,9 +177,7 @@ const JobCompleteForm = ({route}) => {
                   paddingLeft: 10,
                   flex: 1,
                 }}>
-                <Text style={{fontSize: 12, fontWeight: 600}}>
-                  Flooring Choice & Colour
-                </Text>
+                <Text style={styles.leftText}>Flooring Choice & Colour</Text>
                 <Text
                   style={{
                     fontSize: 12,
@@ -203,7 +198,7 @@ const JobCompleteForm = ({route}) => {
                 checked={checked}
               />
               <View style={styles.innerContaner}>
-                <Text style={{fontSize: 12, fontWeight: 600}}>Size</Text>
+                <Text style={styles.leftText}>Size</Text>
                 <Text
                   style={{
                     fontSize: 12,
@@ -224,7 +219,7 @@ const JobCompleteForm = ({route}) => {
                 checked={checked}
               />
               <View style={styles.innerContaner}>
-                <Text style={{fontSize: 12, fontWeight: 600}}>SQM Total</Text>
+                <Text style={styles.leftText}>SQM Total</Text>
                 <Text
                   style={{
                     fontSize: 12,
@@ -284,9 +279,7 @@ const JobCompleteForm = ({route}) => {
                 checked={checked}
               />
               <View style={styles.innerContaner}>
-                <Text style={{fontSize: 12, fontWeight: 600}}>
-                  Join In Floor
-                </Text>
+                <Text style={styles.leftText}>Join In Floor</Text>
                 <Text
                   style={{
                     fontSize: 12,
@@ -302,7 +295,7 @@ const JobCompleteForm = ({route}) => {
           {measurinDetails?.join_in_floor_notes && (
             <View style={{marginVertical: 0, marginLeft: 30}}>
               <Text style={{fontSize: 12, fontWeight: 400}}>
-                <Text style={{fontSize: 12, fontWeight: 600}}>Notes : </Text>
+                <Text style={styles.leftText}>Notes : </Text>
                 {measurinDetails?.join_in_floor_notes}
               </Text>
             </View>
@@ -378,9 +371,7 @@ const JobCompleteForm = ({route}) => {
                 checked={checked}
               />
               <View style={styles.innerContaner}>
-                <Text style={{fontSize: 12, fontWeight: 600}}>
-                  Gripper Lengths
-                </Text>
+                <Text style={styles.leftText}>Gripper Lengths</Text>
                 <Text style={{fontSize: 12, fontWeight: 400}}>
                   {measurinDetails?.gripper_length}
                 </Text>
@@ -395,9 +386,7 @@ const JobCompleteForm = ({route}) => {
                 checked={checked}
               />
               <View style={styles.innerContaner}>
-                <Text style={{fontSize: 12, fontWeight: 600}}>
-                  Underlay Type
-                </Text>
+                <Text style={styles.leftText}>Underlay Type</Text>
                 <Text style={{fontSize: 12, fontWeight: 400}}>
                   {measurinDetails?.underlay_type}
                 </Text>
@@ -412,9 +401,7 @@ const JobCompleteForm = ({route}) => {
                 checked={checked}
               />
               <View style={styles.innerContaner}>
-                <Text style={{fontSize: 12, fontWeight: 600}}>
-                  Underlay Amount
-                </Text>
+                <Text style={styles.leftText}>Underlay Amount</Text>
                 <Text
                   style={{
                     fontSize: 12,
@@ -435,7 +422,7 @@ const JobCompleteForm = ({route}) => {
                 checked={checked}
               />
               <View style={styles.innerContaner}>
-                <Text style={{fontSize: 12, fontWeight: 600}}>Door Bars</Text>
+                <Text style={styles.leftText}>Door Bars</Text>
                 <Text
                   style={{
                     fontSize: 12,
@@ -456,9 +443,7 @@ const JobCompleteForm = ({route}) => {
                 checked={checked}
               />
               <View style={styles.innerContaner}>
-                <Text style={{fontSize: 12, fontWeight: 600}}>
-                  Door Bars Notes
-                </Text>
+                <Text style={styles.leftText}>Door Bars Notes</Text>
                 <Text style={{fontSize: 12, fontWeight: 400}}>
                   {measurinDetails?.doorbar_type_text}
                 </Text>
@@ -473,9 +458,7 @@ const JobCompleteForm = ({route}) => {
                 checked={checked}
               />
               <View style={styles.innerContaner}>
-                <Text style={{fontSize: 12, fontWeight: 600}}>
-                  Door Bar Amount
-                </Text>
+                <Text style={styles.leftText}>Door Bar Amount</Text>
                 <Text
                   style={{
                     fontSize: 12,
@@ -496,9 +479,7 @@ const JobCompleteForm = ({route}) => {
                 checked={checked}
               />
               <View style={styles.innerContaner}>
-                <Text style={{fontSize: 12, fontWeight: 600}}>
-                  Uplift and waste service
-                </Text>
+                <Text style={styles.leftText}>Uplift and waste service</Text>
                 <Text
                   style={{
                     fontSize: 12,
@@ -519,7 +500,7 @@ const JobCompleteForm = ({route}) => {
                 checked={checked}
               />
               <View style={styles.innerContaner}>
-                <Text style={{fontSize: 12, fontWeight: 600}}>
+                <Text style={styles.leftText}>
                   Uplift and waste service Notes
                 </Text>
                 <Text style={{fontSize: 12, fontWeight: 400}}>
@@ -570,7 +551,7 @@ const JobCompleteForm = ({route}) => {
           {measurinDetails?.furniture_notes && (
             <View style={{marginVertical: 10, marginLeft: 30}}>
               <Text style={{fontSize: 12, fontWeight: 400, lineHeight: 20}}>
-                <Text style={{fontSize: 12, fontWeight: 600}}>Notes </Text>:{' '}
+                <Text style={styles.leftText}>Notes </Text>:{' '}
                 {measurinDetails?.furniture_notes}
               </Text>
             </View>
@@ -583,9 +564,7 @@ const JobCompleteForm = ({route}) => {
                 checked={checked}
               />
               <View style={styles.innerContaner}>
-                <Text style={{fontSize: 12, fontWeight: 600}}>
-                  Suitable for Job
-                </Text>
+                <Text style={styles.leftText}>Suitable for Job</Text>
                 <Text style={{fontSize: 12, fontWeight: 400}}>
                   {measurinDetails?.is_suitable_for_job}
                 </Text>
@@ -600,9 +579,7 @@ const JobCompleteForm = ({route}) => {
                 checked={checked}
               />
               <View style={styles.innerContaner}>
-                <Text style={{fontSize: 12, fontWeight: 600}}>
-                  Suitable for Job Notes
-                </Text>
+                <Text style={styles.leftText}>Suitable for Job Notes</Text>
                 <Text style={{fontSize: 12, fontWeight: 400}}>
                   {measurinDetails?.suitable_for_job}
                 </Text>
@@ -617,9 +594,7 @@ const JobCompleteForm = ({route}) => {
                 checked={checked}
               />
               <View style={styles.innerContaner}>
-                <Text style={{fontSize: 12, fontWeight: 600}}>
-                  Floor Preparation
-                </Text>
+                <Text style={styles.leftText}>Floor Preparation</Text>
                 <Text style={{fontSize: 12, fontWeight: 400}}>
                   {measurinDetails?.floor_preparation_notes}
                 </Text>
@@ -631,9 +606,7 @@ const JobCompleteForm = ({route}) => {
               style={{
                 paddingVertical: 15,
               }}>
-              <Text style={{fontSize: 12, fontWeight: 600}}>
-                Floor Preparation Images
-              </Text>
+              <Text style={styles.leftText}>Floor Preparation Images</Text>
               <View
                 style={{
                   flexDirection: 'row',
@@ -667,9 +640,7 @@ const JobCompleteForm = ({route}) => {
                 checked={checked}
               />
               <View style={styles.innerContaner}>
-                <Text style={{fontSize: 12, fontWeight: 600}}>
-                  How Many Doors To Cut
-                </Text>
+                <Text style={styles.leftText}>How Many Doors To Cut</Text>
                 <Text
                   style={{
                     fontSize: 12,
@@ -690,9 +661,7 @@ const JobCompleteForm = ({route}) => {
                 checked={checked}
               />
               <View style={styles.innerContaner}>
-                <Text style={{fontSize: 12, fontWeight: 600}}>
-                  Type Of Doors To Cut
-                </Text>
+                <Text style={styles.leftText}>Type Of Doors To Cut</Text>
                 <Text style={{fontSize: 12, fontWeight: 400}}>
                   {measurinDetails?.type_of_doors_to_cut}
                 </Text>
@@ -707,9 +676,7 @@ const JobCompleteForm = ({route}) => {
                 checked={checked}
               />
               <View style={styles.innerContaner}>
-                <Text style={{fontSize: 12, fontWeight: 600}}>
-                  How many fitters needed
-                </Text>
+                <Text style={styles.leftText}>How many fitters needed</Text>
                 <Text
                   style={{
                     fontSize: 12,
@@ -815,5 +782,9 @@ const styles = StyleSheet.create({
     paddingVertical: 15,
     paddingLeft: 10,
     flex: 1,
+  },
+  leftText: {
+    fontSize: 12,
+    fontFamily: FONTS?.MontserratSemiBold,
   },
 });

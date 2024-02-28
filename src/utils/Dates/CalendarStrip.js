@@ -17,6 +17,7 @@ import {setSelecteddate} from '../../redux/reducers/Dates';
 import {COLORS} from '../theme';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import {setSelectedDateReducer} from '../../redux/actions/DateAction';
+import FONTS from '../../assets/styles/fonts';
 const moment = require('moment');
 
 const CalendarStrip = ({loader}) => {
@@ -65,18 +66,6 @@ const CalendarStrip = ({loader}) => {
       {item?.id > 13 ? (
         <>
           <AntDesign name="calendar" size={30} color={COLORS.secondry} />
-          {/* <Text
-            style={[
-              styles.itemmonth,
-              {
-                color: textColor,
-                marginTop: 8,
-                fontSize: scale(12),
-                lineHeight: scale(15),
-              },
-            ]}>
-            Schedule
-          </Text> */}
         </>
       ) : (
         <>
@@ -186,18 +175,16 @@ const styles = StyleSheet.create({
     fontSize: scale(20),
     lineHeight: scale(20),
     color: COLORS.white,
-    // fontFamily: FONTS.PoppinsSemiBold,
+    fontFamily: FONTS?.MontserratSemiBold,
     textAlign: 'center',
-    fontWeight: 600,
     top: 5,
   },
   itemmonth: {
     fontSize: scale(11),
     lineHeight: scale(12),
     color: COLORS.white,
-    // fontFamily: FONTS.PoppinsRegular,
     textAlign: 'center',
-    fontWeight: 400,
+    fontFamily: FONTS?.MontserratRegular,
     marginTop: 10,
   },
   dateslider: {
