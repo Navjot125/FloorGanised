@@ -20,8 +20,8 @@ const ContactUs = () => {
   const [token, setToken] = useState();
   const toast = useToast();
   const dispatch = useDispatch();
+  //Contact Us API call
   const onPress = async () => {
-    // const token = await AsyncStorage.getItem('token');
     param = {
       message,
       toastFun: (msg, type) => {

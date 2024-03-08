@@ -61,13 +61,15 @@ const Login = () => {
       .required('Password is required')
       .min(8, 'Password must be at least 8 characters'),
   });
-
+// Login with Redux
   const handleLoginSaga = async () => {
     try {
+      //For disable button until loader hides
       setDisableButton(true);
       setTimeout(() => {
         setDisableButton(false);
       }, 4000);
+      //Validation for email and password
       await validationSchema.validate({email, password}, {abortEarly: false});
       param = {
         userDataState,
@@ -83,7 +85,7 @@ const Login = () => {
       };
       dispatch(loginRequest(param));
     } catch (error) {
-      console.log(error, '------errors');
+      console.log(error, 'error while login');
       const validationErrors = {};
       if (error.inner) {
         error.inner.forEach(err => {
@@ -101,6 +103,7 @@ const Login = () => {
       });
     }
   };
+
   return (
     <View
       style={{

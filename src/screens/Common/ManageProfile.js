@@ -40,6 +40,7 @@ const ManageProfile = () => {
   const buttonStyle = {
     marginBottom: 25,
   };
+  //Update Profile Redux
   const onPress = () => {
     const param = {
       name,
@@ -57,6 +58,7 @@ const ManageProfile = () => {
     };
     dispatch(updateProfileRequest(param));
   };
+
   const openCamera = async () => {
     const permissionResponse = await requestPermissions('CAMERA');
     if (permissionResponse.isGraned) {
@@ -216,7 +218,12 @@ const ManageProfile = () => {
         animationInTiming={500}
         style={[styles.mainmodal]}>
         <View style={[styles.center]}>
-          <Text style={{fontSize: 17, marginVertical: 20, fontFamily:FONTS?.MontserratSemiBold}}>
+          <Text
+            style={{
+              fontSize: 17,
+              marginVertical: 20,
+              fontFamily: FONTS?.MontserratSemiBold,
+            }}>
             Select Photo From
           </Text>
           <TouchableOpacity
@@ -285,7 +292,7 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   buttonText: {
-    fontFamily:FONTS?.MontserratSemiBold,
+    fontFamily: FONTS?.MontserratSemiBold,
     fontSize: 16,
   },
 });

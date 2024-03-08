@@ -42,7 +42,7 @@ const ChangePassword = () => {
   const buttonStyle = {
     marginBottom: 25,
   };
-
+//Update Password with Redux
   const handleChangePassword = async () => {
     try {
       await validationSchema.validate(
