@@ -28,7 +28,7 @@ const Profile = () => {
   console.log('userData-', userData);
   const screen = userData?.role === 'Surveyor' ? 'Main' : 'Fitter';
   const [showModal, setShowModal] = useState(false);
-  // console.log(userData,'userData--');
+  console.log(userData,'userData--');
   const screens = [
     {
       name: 'Manage Profile',

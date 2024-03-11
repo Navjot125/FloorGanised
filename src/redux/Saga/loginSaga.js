@@ -16,7 +16,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import {showMessage} from 'react-native-flash-message';
 import {useToast} from 'react-native-toast-notifications';
 import {showToastAction} from '../actions/onBoardingAction';
-import { setLoader } from '../actions/Loader';
+import {setLoader} from '../actions/Loader';
 function* signup(action) {
   console.log('signup API --------------------------');
   try {

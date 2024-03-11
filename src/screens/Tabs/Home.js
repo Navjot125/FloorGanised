@@ -108,7 +108,20 @@ const Home = props => {
       },
     };
     return (
-      <TouchableOpacity style={styles.container} disabled>
+      <TouchableOpacity
+        style={styles.container}
+        onPress={() => {
+          setDisableButton(true);
+          setTimeout(() => {
+            setDisableButton(false);
+          }, 4000);
+          // dispatch(jobDetail(param));
+          navigationRef.navigate(stack, {
+            screen: screen,
+            params: {_id: item?._id},
+          });
+        }}
+        disabled={disableButton}>
         <View
           style={{
             height: '45%',
@@ -154,8 +167,10 @@ const Home = props => {
                 fontSize: 12,
                 fontFamily: FONTS?.MontserratMedium,
                 width: 180,
+                marginLeft:scale(10)
               }}>
-              {item?.address}
+              {/* {item?.address} */}
+              nkdsnfkds kjfnsdkjfdks fds fkdsnfk kjf s
             </Text>
             <TouchableOpacity
               onPress={() => {
@@ -205,6 +220,7 @@ const Home = props => {
                 fontSize: 12,
                 fontFamily: FONTS?.MontserratMedium,
                 left: scale(15),
+                // marginLeft:scale(10)
               }}>
               {moment(item?.surveyor_job_date).format('h:mm A')}
             </Text>
